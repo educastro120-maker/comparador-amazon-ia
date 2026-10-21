@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-import google.generativeai as genai
+from google import genai
 
 # ==========================================
 # 1. LECTURA SEGURA DE CREDENCIALES
@@ -11,14 +11,11 @@ WP_URL = os.environ.get("WP_URL").rstrip('/')
 WP_USER = os.environ.get("WP_USER")
 WP_APP_PASSWORD = os.environ.get("WP_APP_PASSWORD")
 
-# Configurar Gemini
-genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash')
+# Configurar el cliente oficial de Gemini
+client = genai.Client(api_key=GEMINI_API_KEY)
 
 # ==========================================
 # 2. CATÁLOGO / ENTRADA DE PRODUCTOS
-# (En esta versión enviamos una lista de prueba. 
-#  Más adelante la API de Amazon alimentará esta lista automáticamente)
 # ==========================================
 productos_nuevos = [
     {
@@ -26,7 +23,7 @@ productos_nuevos = [
         "titulo": "Xiaomi Redmi Watch 4 - Smartwatch con Pantalla AMOLED 1.97'', Batería de 20 días, GPS",
         "especificaciones": "Pantalla AMOLED 1.97 pulgadas, Tasa de refresco 60Hz, Marco de aleación de aluminio, Sensor FC/SpO2, +150 modos deportivos, Resistencia 5 ATM, Autonomía hasta 20 días.",
         "precio": "89.99€",
-        "affiliate_link": "https://www.amazon.es/dp/B0CX12345?tag=tubrand-21" # Reemplaza con tu Tracking ID de Amazon
+        "affiliate_link": "https://www.amazon.es/dp/B0CX12345?tag=tubrand-21"
     }
 ]
 
@@ -44,7 +41,13 @@ def procesar_y_publicar(producto):
     """
 
     print(f"Analizando con Gemini: {producto['titulo']}...")
-    response = model.generate_content(prompt)
+    
+    # Usamos el modelo estándar actual con el cliente nuevo
+    response = client.models.generate_content(
+        model='gemini-2.5-flash',
+        contents=prompt,
+    )
+    
     clean_json_str = response.text.replace("```json", "").replace("```", "").strip()
     datos_ia = json.loads(clean_json_str)
 
@@ -94,7 +97,7 @@ def procesar_y_publicar(producto):
     payload = {
         "title": f"Análisis y Opinión: {producto['titulo']}",
         "content": html_content,
-        "status": "publish" # Cambia a "draft" si prefieres que queden como borradores para revisarlos
+        "status": "publish"
     }
 
     res = requests.post(wp_endpoint, json=payload, auth=(WP_USER, WP_APP_PASSWORD))
