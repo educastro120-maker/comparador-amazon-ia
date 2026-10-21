@@ -1,6 +1,7 @@
 import os
 import json
 import requests
+import urllib.parse
 from google import genai
 
 # ==========================================
@@ -22,21 +23,21 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 # ==========================================
 productos_catalogo = [
     {
-        "asin": "B0CQPY6L2V",
+        "busqueda": "Xiaomi Watch S3 Smartwatch",
         "titulo": "Xiaomi Watch S3 - Smartwatch con esfera intercambiable, Pantalla AMOLED 1.43\", Llamadas Bluetooth, GNSS de doble banda",
         "especificaciones": "Pantalla AMOLED 1.43 pulgadas, marco intercambiable, batería de hasta 15 días, llamadas por Bluetooth, GPS de doble banda, resistencia 5 ATM, monitorización avanzada de frecuencia cardiaca y SpO2.",
         "precio": "149.00€",
         "imagen": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop&q=80"
     },
     {
-        "asin": "B0CM5W2K9F",
+        "busqueda": "Huawei Watch GT 4 46mm",
         "titulo": "Huawei Watch GT 4 - Reloj Inteligente 46 mm, Autonomía hasta 14 días, Análisis de arritmias por onda de pulso, GPS de alta precisión",
         "especificaciones": "Diseño geométrico elegante, pantalla AMOLED, autonomía de hasta 14 días, GPS de doble banda y 5 sistemas por satélite, llamadas Bluetooth, compatible con iOS y Android, más de 100 modos de entrenamiento.",
         "precio": "199.00€",
         "imagen": "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&auto=format&fit=crop&q=80"
     },
     {
-        "asin": "B0CHX4D89W",
+        "busqueda": "Amazfit Balance Smartwatch",
         "titulo": "Amazfit Balance Smartwatch Deportivo con IA, Zepp Coach, GPS de Doble Banda, Llamadas y Música, Pantalla AMOLED 1.5\"",
         "especificaciones": "Pantalla AMOLED HD de 1.5 pulgadas, entrenador personal Zepp Coach basado en IA, medición de composición corporal (grasa corporal, músculo), GPS hiperpreciso, pagos sin contacto Zepp Pay, autonomía de 14 días.",
         "precio": "229.00€",
@@ -45,8 +46,9 @@ productos_catalogo = [
 ]
 
 def procesar_y_publicar(producto):
-    # Enlace de afiliado estándar, limpio y 100% compatible con Amazon.es
-    affiliate_link = f"https://www.amazon.es/dp/{producto['asin']}?tag={AMAZON_TAG}"
+    # Generar enlace de búsqueda optimizado y 100% funcional con tu Tag de afiliado
+    query_encoded = urllib.parse.quote_plus(producto['busqueda'])
+    affiliate_link = f"https://www.amazon.es/s?k={query_encoded}&tag={AMAZON_TAG}"
 
     prompt = f"""
     Actúa como analista de tecnología experto en Smartwatches y CRO.
@@ -66,7 +68,6 @@ def procesar_y_publicar(producto):
         contents=prompt,
     )
     
-    # Limpieza robusta del JSON
     texto_respuesta = response.text.strip()
     if "```json" in texto_respuesta:
         texto_respuesta = texto_respuesta.split("```json")[1].split("```")[0].strip()
@@ -79,7 +80,6 @@ def procesar_y_publicar(producto):
 
     datos_ia = json.loads(clean_json_str)
 
-    # Maquetación HTML profesional con imagen estable y enlace seguro de Amazon
     html_content = f"""
     <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; background-color: #ffffff; max-width: 750px; margin: 20px auto; font-family: system-ui, -apple-system, sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
       
@@ -133,7 +133,7 @@ def procesar_y_publicar(producto):
 
     res = requests.post(wp_endpoint, json=payload, auth=(WP_USER, WP_APP_PASSWORD))
     if res.status_code == 201:
-        print(f"¡Publicación creada exitosamente en WordPress para {producto['asin']}!")
+        print(f"¡Publicación creada exitosamente en WordPress para {producto['titulo']}!")
     else:
         print(f"Error ({res.text})")
 
