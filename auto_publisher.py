@@ -11,23 +11,42 @@ WP_URL = os.environ.get("WP_URL").rstrip('/')
 WP_USER = os.environ.get("WP_USER")
 WP_APP_PASSWORD = os.environ.get("WP_APP_PASSWORD")
 
+# Tu ID de afiliado de Amazon configurado
+AMAZON_TAG = "topcomparad00-21"
+
 # Configurar el cliente oficial de Gemini
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 # ==========================================
-# 2. CATÁLOGO / ENTRADA DE PRODUCTOS
+# 2. CATÁLOGO INTELIGENTE DE SMARTWATCHES (ASINs)
 # ==========================================
-productos_nuevos = [
+# Aquí puedes añadir los mejores relojes del mercado actual con sus datos base.
+# El script procesará cada uno de ellos y los publicará en tu web.
+productos_catalogo = [
     {
-        "asin": "B0CX12345",
-        "titulo": "Xiaomi Redmi Watch 4 - Smartwatch con Pantalla AMOLED 1.97'', Batería de 20 días, GPS",
-        "especificaciones": "Pantalla AMOLED 1.97 pulgadas, Tasa de refresco 60Hz, Marco de aleación de aluminio, Sensor FC/SpO2, +150 modos deportivos, Resistencia 5 ATM, Autonomía hasta 20 días.",
-        "precio": "89.99€",
-        "affiliate_link": "https://www.amazon.es/dp/B0CX12345?tag=tubrand-21"
+        "asin": "B0CQPY6L2V",
+        "titulo": "Xiaomi Watch S3 - Smartwatch con esfera intercambiable, Pantalla AMOLED 1.43\", Llamadas Bluetooth, GNSS de doble banda",
+        "especificaciones": "Pantalla AMOLED 1.43 pulgadas, marco intercambiable, batería de hasta 15 días, llamadas por Bluetooth, GPS de doble banda, resistencia 5 ATM, monitorización avanzada de frecuencia cardiaca y SpO2.",
+        "precio": "149.00€"
+    },
+    {
+        "asin": "B0CM5W2K9F",
+        "titulo": "Huawei Watch GT 4 - Reloj Inteligente 46 mm, Autonomía hasta 14 días, Análisis de arritmias por onda de pulso, GPS de alta precisión",
+        "especificaciones": "Diseño geométrico elegante, pantalla AMOLED, autonomía de hasta 14 días, GPS de doble banda y 5 sistemas por satélite, llamadas Bluetooth, compatible con iOS y Android, más de 100 modos de entrenamiento.",
+        "precio": "199.00€"
+    },
+    {
+        "asin": "B0CHX4D89W",
+        "titulo": "Amazfit Balance Smartwatch Deportivo con IA, Zepp Coach, GPS de Doble Banda, Llamadas y Música, Pantalla AMOLED 1.5\"",
+        "especificaciones": "Pantalla AMOLED HD de 1.5 pulgadas, entrenador personal Zepp Coach basado en IA, medición de composición corporal (grasa corporal, músculo), GPS hiperpreciso, pagos sin contacto Zepp Pay, autonomía de 14 días.",
+        "precio": "229.00€"
     }
 ]
 
 def procesar_y_publicar(producto):
+    # Generar automáticamente tu enlace de afiliado con tu tag correcto
+    affiliate_link = f"https://www.amazon.es/dp/{producto['asin']}?tag={AMAZON_TAG}"
+
     prompt = f"""
     Actúa como analista de tecnología experto en Smartwatches y CRO (Optimización de Conversión).
     Analiza este producto:
@@ -42,7 +61,6 @@ def procesar_y_publicar(producto):
 
     print(f"Analizando con Gemini: {producto['titulo']}...")
     
-    # Usamos el modelo estándar actual con el cliente nuevo
     response = client.models.generate_content(
         model='gemini-2.5-flash',
         contents=prompt,
@@ -51,7 +69,7 @@ def procesar_y_publicar(producto):
     clean_json_str = response.text.replace("```json", "").replace("```", "").strip()
     datos_ia = json.loads(clean_json_str)
 
-    # Maquetación HTML de conversión para WordPress
+    # Maquetación HTML de conversión optimizada
     html_content = f"""
     <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; background-color: #ffffff; max-width: 750px; margin: 20px auto; font-family: system-ui, -apple-system, sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
       
@@ -85,7 +103,7 @@ def procesar_y_publicar(producto):
         <p style="font-size: 1.3em; font-weight: bold; color: #111; margin-bottom: 15px;">
           Precio estimado: <span style="color: #b12704;">{producto['precio']}</span> | Puntuación: ⭐ <strong>{datos_ia['puntuacion']}/10</strong>
         </p>
-        <a href="{producto['affiliate_link']}" target="_blank" rel="sponsored nofollow" style="background-color: #ffa41c; color: #111; text-decoration: none; font-size: 1.2em; font-weight: bold; padding: 16px 32px; border-radius: 8px; border: 1px solid #ff8f00; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <a href="{affiliate_link}" target="_blank" rel="sponsored nofollow" style="background-color: #ffa41c; color: #111; text-decoration: none; font-size: 1.2em; font-weight: bold; padding: 16px 32px; border-radius: 8px; border: 1px solid #ff8f00; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
           Ver precio actualizado en Amazon 🛒
         </a>
       </div>
@@ -104,9 +122,9 @@ def procesar_y_publicar(producto):
     if res.status_code == 201:
         print(f"¡Publicación creada exitosamente en WordPress para {producto['asin']}!")
     else:
-        print(f"Error ({res.status_code}): {res.text}")
+        print(f"Error ({res.text})")
 
-# Ejecución
+# Ejecución del bucle para todo el catálogo
 if __name__ == "__main__":
-    for item in productos_nuevos:
+    for item in productos_catalogo:
         procesar_y_publicar(item)
