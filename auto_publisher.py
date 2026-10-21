@@ -45,7 +45,7 @@ productos_catalogo = [
 
 def procesar_y_publicar(producto):
     # Generar automáticamente tu enlace de afiliado con tu tag correcto
-    affiliate_link = f"https://www.amazon.es/dp/{producto['asin']}?tag={AMAZON_TAG}"
+    affiliate_link = f"https://www.amazon.es/dp/{producto['asin']}?tag={AMAZON_TAG}&linkCode=ogi&th=1&psc=1"
 
     prompt = f"""
     Actúa como analista de tecnología experto en Smartwatches y CRO (Optimización de Conversión).
