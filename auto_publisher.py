@@ -19,7 +19,6 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 
 # ==========================================
 # 2. CATÁLOGO INTELIGENTE DE SMARTWATCHES
-# (Incluye el enlace de imagen oficial de Amazon)
 # ==========================================
 productos_catalogo = [
     {
@@ -46,19 +45,17 @@ productos_catalogo = [
 ]
 
 def procesar_y_publicar(producto):
-    # Enlace de afiliado optimizado y seguro para España
     affiliate_link = f"https://www.amazon.es/dp/{producto['asin']}?tag={AMAZON_TAG}&linkCode=ogi&th=1&psc=1"
 
     prompt = f"""
-    Actúa como analista de tecnología experto en Smartwatches y CRO (Optimización de Conversión).
+    Actúa como analista de tecnología experto en Smartwatches y CRO.
     Analiza este producto:
     - Título: {producto['titulo']}
     - Especificaciones: {producto['especificaciones']}
     - Precio: {producto['precio']}
 
-    Devuelve ÚNICAMENTE un formato JSON válido con las llaves exactas:
-    "badge", "resumen_ejecutivo", "pros" (lista de 3), "contras" (lista de 2), "puntuacion" (número del 1 al 10).
-    Sin markdown extra ni bloques de código.
+    Devuelve ÚNICAMENTE un objeto JSON válido (y nada más que el JSON) con exactamente estas claves:
+    "badge", "resumen_ejecutivo", "pros" (lista de 3 strings), "contras" (lista de 2 strings), "puntuacion" (número decimal).
     """
 
     print(f"Analizando con Gemini: {producto['titulo']}...")
@@ -68,10 +65,21 @@ def procesar_y_publicar(producto):
         contents=prompt,
     )
     
-    clean_json_str = response.text.replace("```json", "").replace("```", "").strip()
+    # Limpieza robusta del JSON para evitar errores de sintaxis
+    texto_respuesta = response.text.strip()
+    if "```json" in texto_respuesta:
+        texto_respuesta = texto_respuesta.split("```json")[1].split("```")[0].strip()
+    elif "```" in texto_respuesta:
+        texto_respuesta = texto_respuesta.split("```")[1].split("```")[0].strip()
+    
+    # Asegurar que extraemos estrictamente desde la primera llave hasta la última
+    inicio = texto_respuesta.find('{')
+    fin = texto_respuesta.rfind('}')
+    clean_json_str = texto_respuesta[inicio:fin+1]
+
     datos_ia = json.loads(clean_json_str)
 
-    # Maquetación HTML profesional con la imagen centrada y diseño de conversión
+    # Maquetación HTML profesional con imagen y conversión
     html_content = f"""
     <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; background-color: #ffffff; max-width: 750px; margin: 20px auto; font-family: system-ui, -apple-system, sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
       
@@ -116,7 +124,6 @@ def procesar_y_publicar(producto):
     </div>
     """
 
-    # Envío a la API de WordPress
     wp_endpoint = f"{WP_URL}/wp-json/wp/v2/posts"
     payload = {
         "title": f"Análisis y Opinión: {producto['titulo']}",
@@ -130,7 +137,6 @@ def procesar_y_publicar(producto):
     else:
         print(f"Error ({res.text})")
 
-# Ejecución del bucle para todo el catálogo
 if __name__ == "__main__":
     for item in productos_catalogo:
         procesar_y_publicar(item)
