@@ -26,26 +26,27 @@ productos_catalogo = [
         "titulo": "Xiaomi Watch S3 - Smartwatch con esfera intercambiable, Pantalla AMOLED 1.43\", Llamadas Bluetooth, GNSS de doble banda",
         "especificaciones": "Pantalla AMOLED 1.43 pulgadas, marco intercambiable, batería de hasta 15 días, llamadas por Bluetooth, GPS de doble banda, resistencia 5 ATM, monitorización avanzada de frecuencia cardiaca y SpO2.",
         "precio": "149.00€",
-        "imagen": "https://m.media-amazon.com/images/I/61S90T5vUJL._AC_SL1500_.jpg"
+        "imagen": "https://m.media-amazon.com/images/I/61S90T5vUJL._AC_SX679_.jpg"
     },
     {
         "asin": "B0CM5W2K9F",
         "titulo": "Huawei Watch GT 4 - Reloj Inteligente 46 mm, Autonomía hasta 14 días, Análisis de arritmias por onda de pulso, GPS de alta precisión",
         "especificaciones": "Diseño geométrico elegante, pantalla AMOLED, autonomía de hasta 14 días, GPS de doble banda y 5 sistemas por satélite, llamadas Bluetooth, compatible con iOS y Android, más de 100 modos de entrenamiento.",
         "precio": "199.00€",
-        "imagen": "https://m.media-amazon.com/images/I/61kR19106kL._AC_SL1500_.jpg"
+        "imagen": "https://m.media-amazon.com/images/I/61kR19106kL._AC_SX679_.jpg"
     },
     {
         "asin": "B0CHX4D89W",
         "titulo": "Amazfit Balance Smartwatch Deportivo con IA, Zepp Coach, GPS de Doble Banda, Llamadas y Música, Pantalla AMOLED 1.5\"",
         "especificaciones": "Pantalla AMOLED HD de 1.5 pulgadas, entrenador personal Zepp Coach basado en IA, medición de composición corporal (grasa corporal, músculo), GPS hiperpreciso, pagos sin contacto Zepp Pay, autonomía de 14 días.",
         "precio": "229.00€",
-        "imagen": "https://m.media-amazon.com/images/I/61aW15xIeIL._AC_SL1500_.jpg"
+        "imagen": "https://m.media-amazon.com/images/I/61aW15xIeIL._AC_SX679_.jpg"
     }
 ]
 
 def procesar_y_publicar(producto):
-    affiliate_link = f"https://www.amazon.es/dp/{producto['asin']}?tag={AMAZON_TAG}&linkCode=ogi&th=1&psc=1"
+    # Enlace de afiliado optimizado con formato ref=nosim (100% estable para España)
+    affiliate_link = f"https://www.amazon.es/dp/{producto['asin']}/ref=nosim?tag={AMAZON_TAG}"
 
     prompt = f"""
     Actúa como analista de tecnología experto en Smartwatches y CRO.
@@ -65,26 +66,25 @@ def procesar_y_publicar(producto):
         contents=prompt,
     )
     
-    # Limpieza robusta del JSON para evitar errores de sintaxis
+    # Limpieza robusta del JSON
     texto_respuesta = response.text.strip()
     if "```json" in texto_respuesta:
         texto_respuesta = texto_respuesta.split("```json")[1].split("```")[0].strip()
     elif "```" in texto_respuesta:
         texto_respuesta = texto_respuesta.split("```")[1].split("```")[0].strip()
     
-    # Asegurar que extraemos estrictamente desde la primera llave hasta la última
     inicio = texto_respuesta.find('{')
     fin = texto_respuesta.rfind('}')
     clean_json_str = texto_respuesta[inicio:fin+1]
 
     datos_ia = json.loads(clean_json_str)
 
-    # Maquetación HTML profesional con imagen y conversión
+    # Maquetación HTML profesional con imagen estable y enlace seguro
     html_content = f"""
     <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; background-color: #ffffff; max-width: 750px; margin: 20px auto; font-family: system-ui, -apple-system, sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
       
       <div style="text-align: center; margin-bottom: 20px;">
-        <img src="{producto['imagen']}" alt="{producto['titulo']}" style="max-height: 300px; width: auto; object-fit: contain; border-radius: 8px;" />
+        <img src="{producto['imagen']}" alt="{producto['titulo']}" style="max-height: 280px; width: auto; object-fit: contain; border-radius: 8px;" />
       </div>
 
       <div style="background-color: #ff9900; color: #fff; font-weight: bold; display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 0.85em; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px;">
