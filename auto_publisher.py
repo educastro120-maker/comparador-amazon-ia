@@ -18,33 +18,35 @@ AMAZON_TAG = "topcomparad00-21"
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 # ==========================================
-# 2. CATÁLOGO INTELIGENTE DE SMARTWATCHES (ASINs)
+# 2. CATÁLOGO INTELIGENTE DE SMARTWATCHES
+# (Incluye el enlace de imagen oficial de Amazon)
 # ==========================================
-# Aquí puedes añadir los mejores relojes del mercado actual con sus datos base.
-# El script procesará cada uno de ellos y los publicará en tu web.
 productos_catalogo = [
     {
         "asin": "B0CQPY6L2V",
         "titulo": "Xiaomi Watch S3 - Smartwatch con esfera intercambiable, Pantalla AMOLED 1.43\", Llamadas Bluetooth, GNSS de doble banda",
         "especificaciones": "Pantalla AMOLED 1.43 pulgadas, marco intercambiable, batería de hasta 15 días, llamadas por Bluetooth, GPS de doble banda, resistencia 5 ATM, monitorización avanzada de frecuencia cardiaca y SpO2.",
-        "precio": "149.00€"
+        "precio": "149.00€",
+        "imagen": "https://m.media-amazon.com/images/I/61S90T5vUJL._AC_SL1500_.jpg"
     },
     {
         "asin": "B0CM5W2K9F",
         "titulo": "Huawei Watch GT 4 - Reloj Inteligente 46 mm, Autonomía hasta 14 días, Análisis de arritmias por onda de pulso, GPS de alta precisión",
         "especificaciones": "Diseño geométrico elegante, pantalla AMOLED, autonomía de hasta 14 días, GPS de doble banda y 5 sistemas por satélite, llamadas Bluetooth, compatible con iOS y Android, más de 100 modos de entrenamiento.",
-        "precio": "199.00€"
+        "precio": "199.00€",
+        "imagen": "https://m.media-amazon.com/images/I/61kR19106kL._AC_SL1500_.jpg"
     },
     {
         "asin": "B0CHX4D89W",
         "titulo": "Amazfit Balance Smartwatch Deportivo con IA, Zepp Coach, GPS de Doble Banda, Llamadas y Música, Pantalla AMOLED 1.5\"",
         "especificaciones": "Pantalla AMOLED HD de 1.5 pulgadas, entrenador personal Zepp Coach basado en IA, medición de composición corporal (grasa corporal, músculo), GPS hiperpreciso, pagos sin contacto Zepp Pay, autonomía de 14 días.",
-        "precio": "229.00€"
+        "precio": "229.00€",
+        "imagen": "https://m.media-amazon.com/images/I/61aW15xIeIL._AC_SL1500_.jpg"
     }
 ]
 
 def procesar_y_publicar(producto):
-    # Generar automáticamente tu enlace de afiliado con tu tag correcto
+    # Enlace de afiliado optimizado y seguro para España
     affiliate_link = f"https://www.amazon.es/dp/{producto['asin']}?tag={AMAZON_TAG}&linkCode=ogi&th=1&psc=1"
 
     prompt = f"""
@@ -69,10 +71,14 @@ def procesar_y_publicar(producto):
     clean_json_str = response.text.replace("```json", "").replace("```", "").strip()
     datos_ia = json.loads(clean_json_str)
 
-    # Maquetación HTML de conversión optimizada
+    # Maquetación HTML profesional con la imagen centrada y diseño de conversión
     html_content = f"""
     <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; background-color: #ffffff; max-width: 750px; margin: 20px auto; font-family: system-ui, -apple-system, sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
       
+      <div style="text-align: center; margin-bottom: 20px;">
+        <img src="{producto['imagen']}" alt="{producto['titulo']}" style="max-height: 300px; width: auto; object-fit: contain; border-radius: 8px;" />
+      </div>
+
       <div style="background-color: #ff9900; color: #fff; font-weight: bold; display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 0.85em; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px;">
         🔥 {datos_ia['badge']}
       </div>
