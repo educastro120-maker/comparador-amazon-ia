@@ -22,7 +22,6 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 # 2. CATÁLOGO INTELIGENTE DE SMARTWATCHES
 # ==========================================
 productos_catalogo = [
-[
     {
         "busqueda": "Xiaomi Redmi Watch 5 Lite",
         "titulo": "Xiaomi Redmi Watch 5 Lite - Smartwatch Pantalla AMOLED 1.96\", GPS Integrado, Llamadas Bluetooth, Resistencia 5ATM, Batería 18 días",
