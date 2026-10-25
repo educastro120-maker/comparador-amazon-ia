@@ -27,70 +27,70 @@ productos_catalogo = [
         "titulo": "Huawei Watch GT 5 - Reloj Inteligente 46mm, Sistema TruSense, Navegación por mapa en muñeca, Autonomía de hasta 14 días, Compatible con iOS y Android",
         "especificaciones": "Diseño en acero inoxidable pulido, pantalla AMOLED de 1.43\", nuevo sistema de sensores TruSense para mediciones de salud ultraprecisas, posicionamiento de antena con algoritmo Sunflower para GPS mejorado, llamadas Bluetooth y resistencia 5 ATM.",
         "precio": "249.00€",
-        "imagen": "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&auto=format&fit=crop&q=80"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
     },
     {
         "busqueda": "Xiaomi Watch 2",
         "titulo": "Xiaomi Watch 2 - Smartwatch con Wear OS de Google, Procesador Snapdragon W5+ Gen 1, Pantalla AMOLED 1.43\", GPS Dual, Batería hasta 65h",
         "especificaciones": "Sistema operativo Wear OS con acceso completo a Google Play y Google Maps, arquitectura de procesador eficiente de 4 nm, caja de aleación de aluminio ligera, monitorización de salud 24/7 y más de 160 modos deportivos.",
         "precio": "139.00€",
-        "imagen": "https://images.unsplash.com/photo-1544117519-31a4b719223d?w=600&auto=format&fit=crop&q=80"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Mi_Watch.jpg"
     },
     {
         "busqueda": "Garmin Vivoactive 5",
         "titulo": "Garmin Vivoactive 5 - Reloj Inteligente GPS con Pantalla AMOLED, Control de Energía Body Battery, Sesiones de Entrenamiento y Control del Sueño",
         "especificaciones": "Pantalla AMOLED brillante, análisis personalizado del sueño con sleep coach, sensor de salud Body Battery optimizado, más de 30 aplicaciones deportivas integradas (incluyendo modo silla de ruedas), pagos contactless Garmin Pay y hasta 11 días de autonomía.",
         "precio": "269.99€",
-        "imagen": "https://images.unsplash.com/photo-1517502884422-41eaead166d4?w=600&auto=format&fit=crop&q=80"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
     },
     {
         "busqueda": "Amazfit Balance",
         "titulo": "Amazfit Balance - Smartwatch con Análisis de Composición Corporal, Asistente de IA Zepp Aura, Pantalla AMOLED 1.5\", GPS de Doble Banda",
         "especificaciones": "Medición de composición corporal (grasa corporal, masa muscular y agua), análisis de preparación física y mental diario, pantalla AMOLED de 1,5 pulgadas con 1.500 nits, altavoz y micrófono para llamadas, pagos NFC con Zepp Pay y batería de hasta 14 días.",
         "precio": "219.00€",
-        "imagen": "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=600&auto=format&fit=crop&q=80"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Amazfit_GTR_2e.jpg"
     },
     {
         "busqueda": "COROS Pace 3",
         "titulo": "COROS Pace 3 - Reloj Deportivo Multideporte Ultraligero, GPS Multibanda, Pantalla Transflectiva, Sensor Frecuencia Cardíaca y SpO2, Batería 38h GPS",
         "especificaciones": "Peso pluma de solo 30 g, chip GPS de doble frecuencia para máxima precisión, pantalla Memory-in-Pixel siempre visible y legible bajo luz solar directa, altímetro barométrico, integración con plataformas de entrenamiento y hasta 17 días de uso diario.",
         "precio": "249.00€",
-        "imagen": "https://images.unsplash.com/photo-1510017803434-a899398421b3?w=600&auto=format&fit=crop&q=80"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
     },
     {
         "busqueda": "Samsung Galaxy Watch 7",
         "titulo": "Samsung Galaxy Watch 7 - Reloj Inteligente 40mm, Procesador de 3nm, Sensor BioActive Mejorado, Análisis del Sueño con IA, GPS de Doble Frecuencia",
         "especificaciones": "Potente chip Exynos W1000 fabricado en 3 nm para máxima fluidez, sensor BioActive de 13 LED para precisión médica en frecuencia cardíaca y apnea del sueño, motor Wear OS impulsado por Samsung, puntuación de energía diaria por Galaxy AI y resistencia IP68/5ATM.",
         "precio": "229.00€",
-        "imagen": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop&q=80"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Galaxy_Watch_7.jpg"
     },
     {
         "busqueda": "Xiaomi Watch S4",
         "titulo": "Xiaomi Watch S4 - Smartwatch con Bisel Intercambiable, Pantalla AMOLED 1.43\", HyperOS, GPS de 5 Sistemas, Resistencia 5 ATM",
         "especificaciones": "Diseño versátil con biseles e hilos de corona intercambiables por hardware, pantalla AMOLED ultrabrillante de 1.43\", sistema operativo optimizado Xiaomi HyperOS, llamadas Bluetooth con reducción de ruido, control por gestos en muñeca y 15 días de batería.",
         "precio": "149.99€",
-        "imagen": "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=600&auto=format&fit=crop&q=80"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/22/Xiaomi_Mi_Watch_S1_Active.jpg"
     },
     {
         "busqueda": "Amazfit Active",
         "titulo": "Amazfit Active - Smartwatch Elegante y Ligero, Pantalla AMOLED 1.75\", Asistente de Entrenamiento Zepp Coach, Llamadas Bluetooth, GPS Integrado",
         "especificaciones": "Cuerpo ultraligero de aleación de aluminio, pantalla HD AMOLED de 1,75 pulgadas, planes de entrenamiento guiados por inteligencia artificial con Zepp Coach, reproductor de música integrado, llamadas de voz vía Bluetooth y autonomía de hasta 14 días.",
         "precio": "119.90€",
-        "imagen": "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&auto=format&fit=crop&q=80"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/a/af/Amazfit_GTS_2_Mini.png"
     },
     {
         "busqueda": "Fitbit Charge 6",
         "titulo": "Fitbit Charge 6 - Pulsera Avanzada de Salud y Actividad Física, GPS Integrado, Controles de Google, ECG y Monitor de Estrés",
-        "especificaciones": "Format compacto premium con integración nativa de apps de Google (Maps y Wallet), transmisión de frecuencia cardíaca a máquinas de gimnasio por Bluetooth, app de electrocardiograma (ECG), sensor EDA para gestión del estrés y 7 días de autonomía.",
+        "especificaciones": "Formato compacto premium con integración nativa de apps de Google (Maps y Wallet), transmisión de frecuencia cardíaca a máquinas de gimnasio por Bluetooth, app de electrocardiograma (ECG), sensor EDA para gestión del estrés y 7 días de autonomía.",
         "precio": "159.95€",
-        "imagen": "https://images.unsplash.com/photo-1544117519-31a4b719223d?w=600&auto=format&fit=crop&q=80"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/52/Fitbit_Charge_5.jpg"
     },
     {
         "busqueda": "TicWatch Pro 5 Enduro",
         "titulo": "TicWatch Pro 5 Enduro - Smartwatch Wear OS con Pantalla Ultra-Low-Power de Doble Capa, Snapdragon W5+ Gen 1, Cristal de Zafiro, Batería 90h",
         "especificaciones": "Tecnología de pantalla dual de 2 capas (AMOLED + FSTN ultrarreactiva) para ahorrar energía, cristal de zafiro altamente resistente a arañazos, procesador Snapdragon W5+ Gen 1 con Wear OS, brújula y altímetro integrados, y batería líder de hasta 90 horas en modo inteligente.",
         "precio": "299.99€",
-        "imagen": "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=600&auto=format&fit=crop&q=80"
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/TicWatch_Pro_3.jpg"
     }
 ]
 
