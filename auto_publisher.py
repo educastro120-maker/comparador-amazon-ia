@@ -94,7 +94,6 @@ productos_catalogo = [
         "imagen": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop&q=80"
     }
 ]
-]
 
 def procesar_y_publicar(producto):
     # Generar enlace de búsqueda optimizado y 100% funcional con tu Tag de afiliado
