@@ -47,69 +47,6 @@ productos_catalogo = [
         "precio": "269.99€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
     },
-    {
-        "marca": "Amazfit",
-        "modelo_corto": "Balance",
-        "busqueda": "Amazfit Balance",
-        "titulo": "Amazfit Balance - Smartwatch con Análisis de Composición Corporal, Pantalla AMOLED 1.5\"",
-        "especificaciones": "Medición de composición corporal, pantalla AMOLED de 1.5\", altavoz y micrófono para llamadas, pagos NFC Zepp Pay y batería de 14 días.",
-        "precio": "219.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Amazfit_GTR_2e.jpg"
-    },
-    {
-        "marca": "COROS",
-        "modelo_corto": "Pace 3",
-        "busqueda": "COROS Pace 3",
-        "titulo": "COROS Pace 3 - Reloj Deportivo Multideporte Ultraligero, GPS Multibanda",
-        "especificaciones": "Peso de 30 g, chip GPS de doble frecuencia, pantalla Memory-in-Pixel, altímetro barométrico y hasta 17 días de batería.",
-        "precio": "249.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
-    },
-    {
-        "marca": "Samsung",
-        "modelo_corto": "Galaxy Watch 7",
-        "busqueda": "Samsung Galaxy Watch 7",
-        "titulo": "Samsung Galaxy Watch 7 - Reloj Inteligente 40mm, Procesador de 3nm, Sensor BioActive",
-        "especificaciones": "Chip Exynos W1000 de 3 nm, sensor BioActive de 13 LED, Wear OS impulsado por Samsung y puntuación de energía Galaxy AI.",
-        "precio": "229.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Galaxy_Watch_7.jpg"
-    },
-    {
-        "marca": "Xiaomi",
-        "modelo_corto": "Watch S4",
-        "busqueda": "Xiaomi Watch S4",
-        "titulo": "Xiaomi Watch S4 - Smartwatch con Bisel Intercambiable, HyperOS, Resistencia 5 ATM",
-        "especificaciones": "Diseño con biseles intercambiables, pantalla AMOLED ultrabrillante de 1.43\", Xiaomi HyperOS, llamadas Bluetooth y 15 días de batería.",
-        "precio": "149.99€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/22/Xiaomi_Mi_Watch_S1_Active.jpg"
-    },
-    {
-        "marca": "Amazfit",
-        "modelo_corto": "Active",
-        "busqueda": "Amazfit Active",
-        "titulo": "Amazfit Active - Smartwatch Elegante y Ligero, Pantalla AMOLED 1.75\", Llamadas Bluetooth",
-        "especificaciones": "Cuerpo ultraligero de aleación de aluminio, pantalla AMOLED de 1.75\", planes Zepp Coach con IA y autonomía de hasta 14 días.",
-        "precio": "119.90€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/a/af/Amazfit_GTS_2_Mini.png"
-    },
-    {
-        "marca": "Fitbit",
-        "modelo_corto": "Charge 6",
-        "busqueda": "Fitbit Charge 6",
-        "titulo": "Fitbit Charge 6 - Pulsera Avanzada de Salud, GPS Integrado, Controles de Google, ECG",
-        "especificaciones": "Integración nativa con Google Maps y Wallet, ECG de frecuencia cardíaca, sensor EDA para el estrés y 7 días de batería.",
-        "precio": "159.95€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/52/Fitbit_Charge_5.jpg"
-    },
-    {
-        "marca": "TicWatch",
-        "modelo_corto": "Pro 5 Enduro",
-        "busqueda": "TicWatch Pro 5 Enduro",
-        "titulo": "TicWatch Pro 5 Enduro - Smartwatch Wear OS con Pantalla de Doble Capa, Batería 90h",
-        "especificaciones": "Tecnología de pantalla dual AMOLED + FSTN, cristal de zafiro, procesador Snapdragon W5+ Gen 1 y batería de hasta 90 horas.",
-        "precio": "299.99€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/TicWatch_Pro_3.jpg"
-    }
 ]
 
 def procesar_y_publicar(producto):
