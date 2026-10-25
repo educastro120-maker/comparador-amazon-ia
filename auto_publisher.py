@@ -12,90 +12,107 @@ WP_URL = os.environ.get("WP_URL").rstrip('/')
 WP_USER = os.environ.get("WP_USER")
 WP_APP_PASSWORD = os.environ.get("WP_APP_PASSWORD")
 
-# Tu ID de afiliado de Amazon configurado
 AMAZON_TAG = "topcomparad00-21"
 
-# Configurar el cliente oficial de Gemini
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 # ==========================================
-# 2. CATÁLOGO INTELIGENTE DE SMARTWATCHES
+# 2. CATÁLOGO DE SMARTWATCHES CON CAMPOS LIMPIOS
 # ==========================================
 productos_catalogo = [
     {
+        "marca": "Huawei",
+        "modelo_corto": "Watch GT 5",
         "busqueda": "Huawei Watch GT 5",
-        "titulo": "Huawei Watch GT 5 - Reloj Inteligente 46mm, Sistema TruSense, Navegación por mapa en muñeca, Autonomía de hasta 14 días, Compatible con iOS y Android",
-        "especificaciones": "Diseño en acero inoxidable pulido, pantalla AMOLED de 1.43\", nuevo sistema de sensores TruSense para mediciones de salud ultraprecisas, posicionamiento de antena con algoritmo Sunflower para GPS mejorado, llamadas Bluetooth y resistencia 5 ATM.",
+        "titulo": "Huawei Watch GT 5 - Reloj Inteligente 46mm, Sistema TruSense, Autonomía de hasta 14 días",
+        "especificaciones": "Diseño en acero inoxidable pulido, pantalla AMOLED de 1.43\", nuevo sistema de sensores TruSense, GPS mejorado, llamadas Bluetooth y resistencia 5 ATM.",
         "precio": "249.00€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
     },
     {
+        "marca": "Xiaomi",
+        "modelo_corto": "Watch 2",
         "busqueda": "Xiaomi Watch 2",
-        "titulo": "Xiaomi Watch 2 - Smartwatch con Wear OS de Google, Procesador Snapdragon W5+ Gen 1, Pantalla AMOLED 1.43\", GPS Dual, Batería hasta 65h",
-        "especificaciones": "Sistema operativo Wear OS con acceso completo a Google Play y Google Maps, arquitectura de procesador eficiente de 4 nm, caja de aleación de aluminio ligera, monitorización de salud 24/7 y más de 160 modos deportivos.",
+        "titulo": "Xiaomi Watch 2 - Smartwatch con Wear OS de Google, Snapdragon W5+ Gen 1, Batería hasta 65h",
+        "especificaciones": "Sistema Wear OS con Google Play, arquitectura de 4 nm, caja de aleación de aluminio, GPS Dual y más de 160 modos deportivos.",
         "precio": "139.00€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Mi_Watch.jpg"
     },
     {
+        "marca": "Garmin",
+        "modelo_corto": "Vivoactive 5",
         "busqueda": "Garmin Vivoactive 5",
-        "titulo": "Garmin Vivoactive 5 - Reloj Inteligente GPS con Pantalla AMOLED, Control de Energía Body Battery, Sesiones de Entrenamiento y Control del Sueño",
-        "especificaciones": "Pantalla AMOLED brillante, análisis personalizado del sueño con sleep coach, sensor de salud Body Battery optimizado, más de 30 aplicaciones deportivas integradas (incluyendo modo silla de ruedas), pagos contactless Garmin Pay y hasta 11 días de autonomía.",
+        "titulo": "Garmin Vivoactive 5 - Reloj Inteligente GPS con Pantalla AMOLED, Control Body Battery",
+        "especificaciones": "Pantalla AMOLED brillante, análisis personalizado del sueño, más de 30 apps deportivas, Garmin Pay y hasta 11 días de autonomía.",
         "precio": "269.99€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
     },
     {
+        "marca": "Amazfit",
+        "modelo_corto": "Balance",
         "busqueda": "Amazfit Balance",
-        "titulo": "Amazfit Balance - Smartwatch con Análisis de Composición Corporal, Asistente de IA Zepp Aura, Pantalla AMOLED 1.5\", GPS de Doble Banda",
-        "especificaciones": "Medición de composición corporal (grasa corporal, masa muscular y agua), análisis de preparación física y mental diario, pantalla AMOLED de 1,5 pulgadas con 1.500 nits, altavoz y micrófono para llamadas, pagos NFC con Zepp Pay y batería de hasta 14 días.",
+        "titulo": "Amazfit Balance - Smartwatch con Análisis de Composición Corporal, Pantalla AMOLED 1.5\"",
+        "especificaciones": "Medición de composición corporal, pantalla AMOLED de 1.5\", altavoz y micrófono para llamadas, pagos NFC Zepp Pay y batería de 14 días.",
         "precio": "219.00€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Amazfit_GTR_2e.jpg"
     },
     {
+        "marca": "COROS",
+        "modelo_corto": "Pace 3",
         "busqueda": "COROS Pace 3",
-        "titulo": "COROS Pace 3 - Reloj Deportivo Multideporte Ultraligero, GPS Multibanda, Pantalla Transflectiva, Sensor Frecuencia Cardíaca y SpO2, Batería 38h GPS",
-        "especificaciones": "Peso pluma de solo 30 g, chip GPS de doble frecuencia para máxima precisión, pantalla Memory-in-Pixel siempre visible y legible bajo luz solar directa, altímetro barométrico, integración con plataformas de entrenamiento y hasta 17 días de uso diario.",
+        "titulo": "COROS Pace 3 - Reloj Deportivo Multideporte Ultraligero, GPS Multibanda",
+        "especificaciones": "Peso de 30 g, chip GPS de doble frecuencia, pantalla Memory-in-Pixel, altímetro barométrico y hasta 17 días de batería.",
         "precio": "249.00€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
     },
     {
+        "marca": "Samsung",
+        "modelo_corto": "Galaxy Watch 7",
         "busqueda": "Samsung Galaxy Watch 7",
-        "titulo": "Samsung Galaxy Watch 7 - Reloj Inteligente 40mm, Procesador de 3nm, Sensor BioActive Mejorado, Análisis del Sueño con IA, GPS de Doble Frecuencia",
-        "especificaciones": "Potente chip Exynos W1000 fabricado en 3 nm para máxima fluidez, sensor BioActive de 13 LED para precisión médica en frecuencia cardíaca y apnea del sueño, motor Wear OS impulsado por Samsung, puntuación de energía diaria por Galaxy AI y resistencia IP68/5ATM.",
+        "titulo": "Samsung Galaxy Watch 7 - Reloj Inteligente 40mm, Procesador de 3nm, Sensor BioActive",
+        "especificaciones": "Chip Exynos W1000 de 3 nm, sensor BioActive de 13 LED, Wear OS impulsado por Samsung y puntuación de energía Galaxy AI.",
         "precio": "229.00€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Galaxy_Watch_7.jpg"
     },
     {
+        "marca": "Xiaomi",
+        "modelo_corto": "Watch S4",
         "busqueda": "Xiaomi Watch S4",
-        "titulo": "Xiaomi Watch S4 - Smartwatch con Bisel Intercambiable, Pantalla AMOLED 1.43\", HyperOS, GPS de 5 Sistemas, Resistencia 5 ATM",
-        "especificaciones": "Diseño versátil con biseles e hilos de corona intercambiables por hardware, pantalla AMOLED ultrabrillante de 1.43\", sistema operativo optimizado Xiaomi HyperOS, llamadas Bluetooth con reducción de ruido, control por gestos en muñeca y 15 días de batería.",
+        "titulo": "Xiaomi Watch S4 - Smartwatch con Bisel Intercambiable, HyperOS, Resistencia 5 ATM",
+        "especificaciones": "Diseño con biseles intercambiables, pantalla AMOLED ultrabrillante de 1.43\", Xiaomi HyperOS, llamadas Bluetooth y 15 días de batería.",
         "precio": "149.99€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/22/Xiaomi_Mi_Watch_S1_Active.jpg"
     },
     {
+        "marca": "Amazfit",
+        "modelo_corto": "Active",
         "busqueda": "Amazfit Active",
-        "titulo": "Amazfit Active - Smartwatch Elegante y Ligero, Pantalla AMOLED 1.75\", Asistente de Entrenamiento Zepp Coach, Llamadas Bluetooth, GPS Integrado",
-        "especificaciones": "Cuerpo ultraligero de aleación de aluminio, pantalla HD AMOLED de 1,75 pulgadas, planes de entrenamiento guiados por inteligencia artificial con Zepp Coach, reproductor de música integrado, llamadas de voz vía Bluetooth y autonomía de hasta 14 días.",
+        "titulo": "Amazfit Active - Smartwatch Elegante y Ligero, Pantalla AMOLED 1.75\", Llamadas Bluetooth",
+        "especificaciones": "Cuerpo ultraligero de aleación de aluminio, pantalla AMOLED de 1.75\", planes Zepp Coach con IA y autonomía de hasta 14 días.",
         "precio": "119.90€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/a/af/Amazfit_GTS_2_Mini.png"
     },
     {
+        "marca": "Fitbit",
+        "modelo_corto": "Charge 6",
         "busqueda": "Fitbit Charge 6",
-        "titulo": "Fitbit Charge 6 - Pulsera Avanzada de Salud y Actividad Física, GPS Integrado, Controles de Google, ECG y Monitor de Estrés",
-        "especificaciones": "Formato compacto premium con integración nativa de apps de Google (Maps y Wallet), transmisión de frecuencia cardíaca a máquinas de gimnasio por Bluetooth, app de electrocardiograma (ECG), sensor EDA para gestión del estrés y 7 días de autonomía.",
+        "titulo": "Fitbit Charge 6 - Pulsera Avanzada de Salud, GPS Integrado, Controles de Google, ECG",
+        "especificaciones": "Integración nativa con Google Maps y Wallet, ECG de frecuencia cardíaca, sensor EDA para el estrés y 7 días de batería.",
         "precio": "159.95€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/52/Fitbit_Charge_5.jpg"
     },
     {
+        "marca": "TicWatch",
+        "modelo_corto": "Pro 5 Enduro",
         "busqueda": "TicWatch Pro 5 Enduro",
-        "titulo": "TicWatch Pro 5 Enduro - Smartwatch Wear OS con Pantalla Ultra-Low-Power de Doble Capa, Snapdragon W5+ Gen 1, Cristal de Zafiro, Batería 90h",
-        "especificaciones": "Tecnología de pantalla dual de 2 capas (AMOLED + FSTN ultrarreactiva) para ahorrar energía, cristal de zafiro altamente resistente a arañazos, procesador Snapdragon W5+ Gen 1 con Wear OS, brújula y altímetro integrados, y batería líder de hasta 90 horas en modo inteligente.",
+        "titulo": "TicWatch Pro 5 Enduro - Smartwatch Wear OS con Pantalla de Doble Capa, Batería 90h",
+        "especificaciones": "Tecnología de pantalla dual AMOLED + FSTN, cristal de zafiro, procesador Snapdragon W5+ Gen 1 y batería de hasta 90 horas.",
         "precio": "299.99€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/TicWatch_Pro_3.jpg"
     }
 ]
 
 def procesar_y_publicar(producto):
-    # Generar enlace de búsqueda optimizado y 100% funcional con tu Tag de afiliado
     query_encoded = urllib.parse.quote_plus(producto['busqueda'])
     affiliate_link = f"https://www.amazon.es/s?k={query_encoded}&tag={AMAZON_TAG}"
 
@@ -177,7 +194,12 @@ def procesar_y_publicar(producto):
     payload = {
         "title": f"Análisis y Opinión: {producto['titulo']}",
         "content": html_content,
-        "status": "publish"
+        "status": "publish",
+        "meta": {
+            "top_marca": producto['marca'],
+            "top_modelo": producto['modelo_corto'],
+            "top_busqueda": producto['busqueda']
+        }
     }
 
     res = requests.post(wp_endpoint, json=payload, auth=(WP_USER, WP_APP_PASSWORD))
