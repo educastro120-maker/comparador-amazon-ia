@@ -49,11 +49,17 @@ productos_catalogo = [
     },
 ]
 
+def render_bullets(items):
+    """Convierte una lista de strings en elementos de lista HTML con viñetas"""
+    if isinstance(items, list):
+        return "".join([f"<li style='margin-bottom: 4px;'>{item}</li>" for item in items])
+    return f"<li>{items}</li>"
+
 def procesar_y_publicar(producto):
     query_encoded = urllib.parse.quote_plus(producto['busqueda'])
     affiliate_link = f"https://www.amazon.es/s?k={query_encoded}&tag={AMAZON_TAG}"
 
-    # Prompt actualizado para que Gemini devuelva también las especificaciones técnicas ordenadas
+    # Prompt actualizado para que Gemini devuelva las especificaciones desglosadas en listas (arrays)
     prompt = f"""
     Actúa como analista de tecnología experto en Smartwatches y CRO.
     Analiza este producto:
@@ -63,7 +69,7 @@ def procesar_y_publicar(producto):
 
     Devuelve ÚNICAMENTE un objeto JSON válido (y nada más que el JSON) con exactamente estas claves:
     "badge", "resumen_ejecutivo", 
-    "specs" (un objeto JSON con estas 6 claves de texto exactas: "pantalla", "bateria", "conectividad", "sensores", "deportes", "construccion"),
+    "specs" (un objeto JSON con exactamente estas 6 claves, donde cada clave es una LISTA de strings cortos y esquemáticos: "pantalla", "bateria", "conectividad", "sensores", "deportes", "construccion"),
     "pros" (lista de 3 strings), 
     "contras" (lista de 2 strings), 
     "puntuacion" (número decimal).
@@ -89,7 +95,7 @@ def procesar_y_publicar(producto):
 
     s = datos_ia['specs']
 
-    # HTML del artículo con la lista de especificaciones colocada antes de pros y contras
+    # HTML del artículo con la tabla oculta de 6 filas x 2 columnas para las especificaciones
     html_content = f"""
     <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; background-color: #ffffff; max-width: 750px; margin: 20px auto; font-family: system-ui, -apple-system, sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
       
@@ -107,17 +113,65 @@ def procesar_y_publicar(producto):
         {datos_ia['resumen_ejecutivo']}
       </p>
 
-      <!-- Ficha de Especificaciones Ordenadas -->
+      <!-- Ficha Técnica en Tabla Oculta (6 filas x 2 columnas) -->
       <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px; margin: 20px 0;">
-        <h3 style="color: #0f172a; margin-top: 0; font-size: 1.1em; border-bottom: 2px solid #cbd5e1; padding-bottom: 8px;">⚙️ Ficha Técnica Resumida</h3>
-        <ul style="list-style: none; padding: 0; margin: 0; font-size: 0.95em; color: #334155; line-height: 1.6;">
-          <li style="padding: 6px 0; border-bottom: 1px solid #f1f5f9;"><strong>📺 Pantalla:</strong> {s['pantalla']}</li>
-          <li style="padding: 6px 0; border-bottom: 1px solid #f1f5f9;"><strong>🔋 Batería:</strong> {s['bateria']}</li>
-          <li style="padding: 6px 0; border-bottom: 1px solid #f1f5f9;"><strong>🌐 Conectividad:</strong> {s['conectividad']}</li>
-          <li style="padding: 6px 0; border-bottom: 1px solid #f1f5f9;"><strong>💓 Sensores:</strong> {s['sensores']}</li>
-          <li style="padding: 6px 0; border-bottom: 1px solid #f1f5f9;"><strong>🏃‍♂️ Deportes:</strong> {s['deportes']}</li>
-          <li style="padding: 6px 0;"><strong>🛡️ Construcción:</strong> {s['construccion']}</li>
-        </ul>
+        <h3 style="color: #0f172a; margin-top: 0; font-size: 1.1em; border-bottom: 2px solid #cbd5e1; padding-bottom: 8px; margin-bottom: 12px;">⚙️ Ficha Técnica Resumida</h3>
+        
+        <table style="width: 100%; border-collapse: collapse; border: none; font-size: 0.95em; color: #334155;">
+          <tr style="border: none; border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 10px 12px; font-weight: bold; width: 30%; vertical-align: top; border: none; background-color: #f1f5f9; border-top-left-radius: 6px;">📺 Pantalla</td>
+            <td style="padding: 10px 12px; vertical-align: top; border: none; background-color: #f8fafc;">
+              <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
+                {render_bullets(s['pantalla'])}
+              </ul>
+            </td>
+          </tr>
+          
+          <tr style="border: none; border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 10px 12px; font-weight: bold; vertical-align: top; border: none; background-color: #f1f5f9;">🔋 Batería</td>
+            <td style="padding: 10px 12px; vertical-align: top; border: none; background-color: #f8fafc;">
+              <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
+                {render_bullets(s['bateria'])}
+              </ul>
+            </td>
+          </tr>
+
+          <tr style="border: none; border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 10px 12px; font-weight: bold; vertical-align: top; border: none; background-color: #f1f5f9;">🌐 Conectividad</td>
+            <td style="padding: 10px 12px; vertical-align: top; border: none; background-color: #f8fafc;">
+              <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
+                {render_bullets(s['conectividad'])}
+              </ul>
+            </td>
+          </tr>
+
+          <tr style="border: none; border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 10px 12px; font-weight: bold; vertical-align: top; border: none; background-color: #f1f5f9;">💓 Sensores</td>
+            <td style="padding: 10px 12px; vertical-align: top; border: none; background-color: #f8fafc;">
+              <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
+                {render_bullets(s['sensores'])}
+              </ul>
+            </td>
+          </tr>
+
+          <tr style="border: none; border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 10px 12px; font-weight: bold; vertical-align: top; border: none; background-color: #f1f5f9;">🏃‍♂️ Deportes</td>
+            <td style="padding: 10px 12px; vertical-align: top; border: none; background-color: #f8fafc;">
+              <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
+                {render_bullets(s['deportes'])}
+              </ul>
+            </td>
+          </tr>
+
+          <tr style="border: none;">
+            <td style="padding: 10px 12px; font-weight: bold; vertical-align: top; border: none; background-color: #f1f5f9; border-bottom-left-radius: 6px;">🛡️ Construcción</td>
+            <td style="padding: 10px 12px; vertical-align: top; border: none; background-color: #f8fafc;">
+              <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
+                {render_bullets(s['construccion'])}
+              </ul>
+            </td>
+          </tr>
+        </table>
       </div>
 
       <div style="display: flex; gap: 15px; margin: 25px 0; flex-wrap: wrap;">
@@ -156,17 +210,16 @@ def procesar_y_publicar(producto):
             "top_marca": producto['marca'],
             "top_modelo": producto['modelo_corto'],
             "top_busqueda": producto['busqueda'],
-            # Guardamos también las especificaciones en metadatos individuales para el comparador
-            "spec_pantalla": s['pantalla'],
-            "spec_bateria": s['bateria'],
-            "spec_conectiv": s['conectividad'],
-            "spec_sensores": s['sensores'],
-            "spec_deportes": s['deportes'],
-            "spec_cuerpo": s['construccion']
+            "spec_pantalla": str(s['pantalla']),
+            "spec_bateria": str(s['bateria']),
+            "spec_conectiv": str(s['conectividad']),
+            "spec_sensores": str(s['sensores']),
+            "spec_deportes": str(s['deportes']),
+            "spec_cuerpo": str(s['construccion'])
         }
     }
 
-    res = requests.post(wp_endpoint, json=payload, auth=(WP_USER, WP_APP_PASSWORD))
+    res = requests.post(wp_json_endpoint if 'wp_json_endpoint' in locals() else wp_endpoint, json=payload, auth=(WP_USER, WP_APP_PASSWORD))
     if res.status_code == 201:
         print(f"¡Publicación creada exitosamente para {producto['titulo']}!")
     else:
