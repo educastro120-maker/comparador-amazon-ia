@@ -67,9 +67,17 @@ def procesar_y_publicar(producto):
     - Especificaciones base: {producto['especificaciones']}
     - Precio: {producto['precio']}
 
+    IMPORTANTE: Debes rellenar TODAS las siguientes especificaciones de forma exhaustiva y esquemática (nunca dejes campos vacíos o con datos faltantes como el tamaño de pantalla si se puede deducir).
+    
     Devuelve ÚNICAMENTE un objeto JSON válido (y nada más que el JSON) con exactamente estas claves:
     "badge", "resumen_ejecutivo", 
-    "specs" (un objeto JSON con exactamente estas 6 claves, donde cada clave es una LISTA de strings cortos y esquemáticos: "pantalla", "bateria", "conectividad", "sensores", "deportes", "construccion"),
+    "specs" (un objeto JSON con exactamente estas 6 claves, donde cada clave es una LISTA de strings esquemáticos: 
+       "pantalla" (incluir obligatoriamente tecnología y tamaño en pulgadas si aplica), 
+       "bateria" (incluir autonomía estimada), 
+       "conectividad" (incluir GPS y pagos NFC), 
+       "sensores" (incluir frecuencia cardíaca, SpO2, etc.), 
+       "deportes" (modos deportivos y entrenadores), 
+       "construccion" (materiales y resistencia al agua)),
     "pros" (lista de 3 strings), 
     "contras" (lista de 2 strings), 
     "puntuacion" (número decimal).
