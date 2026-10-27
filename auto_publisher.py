@@ -21,69 +21,6 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 # ==========================================
 productos_catalogo = [
     {
-        "marca": "Huawei",
-        "modelo_corto": "Watch GT 4 46mm",
-        "busqueda": "Huawei Watch GT 4 46mm",
-        "titulo": "Huawei Watch GT 4 - Reloj Inteligente 46 mm, Autonomía hasta 14 días, Análisis de arritmias por onda de pulso, GPS de alta precisión",
-        "especificaciones": "Diseño geométrico elegante, pantalla AMOLED, autonomía de hasta 14 días, GPS de doble banda y 5 sistemas por satélite, llamadas Bluetooth, compatible con iOS y Android, más de 100 modos de entrenamiento.",
-        "precio": "199.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
-    },
-    {
-        "marca": "Apple",
-        "modelo_corto": "Watch SE (2ª gen.)",
-        "busqueda": "Apple Watch SE (2ª generación)",
-        "titulo": "Apple Watch SE (2.ª gen.) - Reloj Inteligente con caja de aluminio, Detección de Accidentes, Entrenos avanzados y Control de Salud",
-        "especificaciones": "Pantalla Retina OLED, chip S8 SiP súper rápido, detección de caídas y accidentes de tráfico, resistencia al agua hasta 50 metros, seguimiento del sueño y frecuencia cardíaca, compatible con ecosistema Apple.",
-        "precio": "249.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
-    },
-    {
-        "marca": "Samsung",
-        "modelo_corto": "Galaxy Watch 6 40mm",
-        "busqueda": "Samsung Galaxy Watch 6 40mm",
-        "titulo": "Samsung Galaxy Watch 6 - Reloj inteligente 40mm, Monitorización del sueño, Sensor BioActive, Cristal de zafiro, Bisel estilizado",
-        "especificaciones": "Pantalla Super AMOLED con cristal de zafiro, procesador Exynos W930, sistema Wear OS impulsado por Samsung, sensor BioActive para análisis de composición corporal (BIA) y ECG, resistencia IP68/5ATM.",
-        "precio": "189.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Galaxy_Watch_7.jpg"
-    },
-    {
-        "marca": "Xiaomi",
-        "modelo_corto": "Redmi Watch 4",
-        "busqueda": "Xiaomi Redmi Watch 4",
-        "titulo": "Xiaomi Redmi Watch 4 - Reloj Inteligente Pantalla AMOLED 1.97\", Batería hasta 20 días, Cuadro de aleación de aluminio, Llamadas Bluetooth",
-        "especificaciones": "Pantalla AMOLED ultragrande de 1,97 pulgada a 60 Hz, marco central de aleación de aluminio con corona giratoria, autonomía de hasta 20 días, más de 150 modos deportivos, monitorización de SpO2 y ritmo cardíaco.",
-        "precio": "89.99€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Mi_Watch.jpg"
-    },
-    {
-        "marca": "Amazfit",
-        "modelo_corto": "GTS 4 Mini",
-        "busqueda": "Amazfit GTS 4 Mini",
-        "titulo": "Amazfit GTS 4 Mini - Smartwatch ultraligero, Pantalla AMOLED 1.65\", GPS con 5 sistemas, Batería 15 días, Monitorización de salud 24h",
-        "especificaciones": "Diseño ultraestilizado de 9,1 mm y 19g de peso, posicionamiento por satélite integrado con 5 sistemas, autonomía de 15 días, medición de frecuencia cardíaca, SpO2 y estrés 24/7, evaluación de salud PAI.",
-        "precio": "79.90€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/a/af/Amazfit_GTS_2_Mini.png"
-    },
-    {
-        "marca": "Garmin",
-        "modelo_corto": "Forerunner 55",
-        "busqueda": "Garmin Forerunner 55",
-        "titulo": "Garmin Forerunner 55 - Reloj para carreras con GPS integrado, Sugerencias de entrenamiento diario, Autonomía hasta 2 semanas",
-        "especificaciones": "GPS integrado de alta precisión para atletismo y ciclismo, métricas de carrera avanzadas como Garmin Coach, ritmo PacePro, control de energía Body Battery, seguimiento diario de salud y hasta 14 días de batería.",
-        "precio": "149.99€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
-    },
-    {
-        "marca": "Xiaomi",
-        "modelo_corto": "Smart Band 8 Pro",
-        "busqueda": "Xiaomi Smart Band 8 Pro",
-        "titulo": "Xiaomi Smart Band 8 Pro - Pulsómetro y reloj deportivo con pantalla AMOLED 1.74\", GPS integrado, Batería 14 días, Resistencia 5ATM",
-        "especificaciones": "Diseño híbrido entre pulsera y smartwatch con panel AMOLED rectangular a 60 Hz, GNSS de 5 satélites integrado, monitorización médica continua, más de 150 modos deportivos y resistencia al agua 5 ATM.",
-        "precio": "69.99€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/22/Xiaomi_Mi_Watch_S1_Active.jpg"
-    },
-    {
         "marca": "Amazfit",
         "modelo_corto": "Bip 5",
         "busqueda": "Amazfit Bip 5",
