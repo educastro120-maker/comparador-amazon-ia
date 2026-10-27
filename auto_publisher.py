@@ -22,15 +22,6 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 # ==========================================
 productos_catalogo = [
     {
-        "marca": "Amazfit",
-        "modelo_corto": "Bip 5",
-        "busqueda": "Amazfit Bip 5",
-        "titulo": "Amazfit Bip 5 - Smartwatch Pantalla Ultra Grande 1.91\", Llamadas Bluetooth, Amazon Alexa integrado, GPS de 4 satélites",
-        "especificaciones": "Pantalla táctil de alta resolución de 1,91\", soporte para llamadas de voz por Bluetooth y asistente Alexa integrado, más de 120 modos de entrenamiento con detección inteligente, hasta 10 días de autonomía.",
-        "precio": "64.90€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Amazfit_GTR_2e.jpg"
-    },
-    {
         "marca": "Samsung",
         "modelo_corto": "Galaxy Fit3",
         "busqueda": "Samsung Galaxy Fit3",
