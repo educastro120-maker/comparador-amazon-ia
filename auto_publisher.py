@@ -22,93 +22,93 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 # ==========================================
 productos_catalogo = [
    {
-        "marca": "Apple",
-        "modelo_corto": "Watch Ultra 2",
-        "busqueda": "Apple Watch Ultra 2",
-        "titulo": "Apple Watch Ultra 2 - Caja de titanio de 49 mm, Pantalla de 3.000 nits, GPS de doble frecuencia, Resistencia al agua 100 m",
-        "especificaciones": "Caja de titanio aeroespacial, pantalla Retina OLED de hasta 3.000 nits con cristal de zafiro, chip S9 SiP con doble toque, GPS multibanda de precisión, profundímetro para buceo y batería de hasta 72 horas.",
-        "precio": "899.00€",
+        "marca": "Huawei",
+        "modelo_corto": "Watch GT 5",
+        "busqueda": "Huawei Watch GT 5",
+        "titulo": "Huawei Watch GT 5 - Reloj Inteligente 46mm, Sistema TruSense, Navegación por mapa en muñeca, Autonomía de hasta 14 días",
+        "especificaciones": "Diseño en acero inoxidable pulido, pantalla AMOLED de 1.43\", nuevo sistema de sensores TruSense para mediciones de salud, GPS mejorado con algoritmo Sunflower y llamadas Bluetooth.",
+        "precio": "249.00€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
     },
     {
-        "marca": "Garmin",
-        "modelo_corto": "fēnix 8 AMOLED",
-        "busqueda": "Garmin fēnix 8 AMOLED 47mm",
-        "titulo": "Garmin fēnix 8 - Smartwatch multideporte premium, Pantalla AMOLED brillante, Micrófono y altavoz integrados, Linterna LED",
-        "especificaciones": "Pantalla AMOLED con lente de zafiro y bisel de titanio, resistencia militar STD-810 y 10 ATM, comandos de voz y llamadas, linterna LED integrada y mapas topográficos mundiales avanzados.",
-        "precio": "999.99€",
+        "marca": "Xiaomi",
+        "modelo_corto": "Watch 2",
+        "busqueda": "Xiaomi Watch 2",
+        "titulo": "Xiaomi Watch 2 - Smartwatch con Wear OS de Google, Procesador Snapdragon W5+ Gen 1, Pantalla AMOLED 1.43\", GPS Dual",
+        "especificaciones": "Sistema Wear OS con acceso a Google Play y Google Maps, procesador eficiente de 4 nm, caja de aleación de aluminio ligera, monitorización de salud 24/7 y más de 160 modos deportivos.",
+        "precio": "139.00€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Mi_Watch.jpg"
     },
     {
-        "marca": "Samsung",
-        "modelo_corto": "Galaxy Watch Ultra",
-        "busqueda": "Samsung Galaxy Watch Ultra",
-        "titulo": "Samsung Galaxy Watch Ultra - Smartwatch 47mm Titanio, GPS Dual, Resistencia 10 ATM e IP68, Procesador 3nm, Galaxy AI",
-        "especificaciones": "Diseño en titanio de grado 4 con resistencia extrema, procesador de 3 nm con Wear OS, GPS de frecuencia dual, análisis de salud impulsado por Galaxy AI y hasta 100 horas en ahorro de energía.",
-        "precio": "699.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Amazfit_GTR_2e.jpg"
-    },
-    {
-        "marca": "Huawei",
-        "modelo_corto": "Watch Ultimate",
-        "busqueda": "Huawei Watch Ultimate",
-        "titulo": "Huawei Watch Ultimate - Reloj Inteligente de Metal Líquido con Circonio, Sumergible 100m, Pantalla AMOLED Zafiro",
-        "especificaciones": "Cuerpo de metal líquido con base de circonio, bisel cerámico y cristal de zafiro, sumergible hasta 100 metros con ordenador de buceo profesional, GPS de 5 sistemas y autonomía de hasta 14 días.",
-        "precio": "749.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
-    },
-    {
         "marca": "Garmin",
-        "modelo_corto": "Forerunner 965",
-        "busqueda": "Garmin Forerunner 965",
-        "titulo": "Garmin Forerunner 965 - Reloj deportivo para Triatlón y Running, Pantalla AMOLED 1.4\", Bisel de Titanio, Mapas Integrados",
-        "especificaciones": "Pantalla táctil AMOLED de 1,4\", bisel ultraligero de titanio, métricas avanzadas de predisposición para entrenar, mapas TopoActive a todo color y GPS multibanda SatIQ.",
-        "precio": "649.99€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/22/Xiaomi_Mi_Watch_S1_Active.jpg"
-    },
-    {
-        "marca": "Polar",
-        "modelo_corto": "Grit X2 Pro",
-        "busqueda": "Polar Grit X2 Pro",
-        "titulo": "Polar Grit X2 Pro - Reloj multideporte outdoor con Pantalla AMOLED Zafiro, Estándar Militar MIL-STD-810H, Biometría Elixir",
-        "especificaciones": "Diseñado para deportes extremos con lente de cristal de zafiro y carcasa de titanio, mapas topográficos offline y sensor de biometría avanzada Polar Elixir con ECG y SpO2.",
-        "precio": "749.90€",
+        "modelo_corto": "Vivoactive 5",
+        "busqueda": "Garmin Vivoactive 5",
+        "titulo": "Garmin Vivoactive 5 - Reloj Inteligente GPS con Pantalla AMOLED, Control de Energía Body Battery, Control del Sueño",
+        "especificaciones": "Pantalla AMOLED brillante, análisis personalizado del sueño con sleep coach, sensor Body Battery optimizado, más de 30 apps deportivas integradas y pagos contactless Garmin Pay.",
+        "precio": "269.99€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
     },
     {
-        "marca": "Suunto",
-        "modelo_corto": "Race Titanium",
-        "busqueda": "Suunto Race Titanium",
-        "titulo": "Suunto Race Titanium - Smartwatch Deportivo con Pantalla AMOLED, Bisel de Titanio, Navegación Offline",
-        "especificaciones": "Pantalla AMOLED con cristal de zafiro, bisel de titanio de grado 5, navegación de rutas offline con precisión dual y hasta 40 horas de autonomía con GPS activo.",
-        "precio": "549.00€",
+        "marca": "Amazfit",
+        "modelo_corto": "Balance",
+        "busqueda": "Amazfit Balance",
+        "titulo": "Amazfit Balance - Smartwatch con Análisis de Composición Corporal, Asistente de IA Zepp Aura, Pantalla AMOLED 1.5\"",
+        "especificaciones": "Medición de composición corporal (grasa y músculo), análisis de preparación física y mental, pantalla AMOLED de 1.5 pulgadas con 1.500 nits, altavoz/micrófono y pagos NFC con Zepp Pay.",
+        "precio": "219.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Amazfit_GTR_2e.jpg"
+    },
+    {
+        "marca": "COROS",
+        "modelo_corto": "Pace 3",
+        "busqueda": "COROS Pace 3",
+        "titulo": "COROS Pace 3 - Reloj Deportivo Multideporte Ultraligero, GPS Multibanda, Pantalla Transflectiva, Batería 38h GPS",
+        "especificaciones": "Peso pluma de solo 30 g, chip GPS de doble frecuencia, pantalla Memory-in-Pixel siempre visible bajo luz solar, altímetro barométrico y hasta 17 días de uso diario.",
+        "precio": "249.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
+    },
+    {
+        "marca": "Samsung",
+        "modelo_corto": "Galaxy Watch 7",
+        "busqueda": "Samsung Galaxy Watch 7",
+        "titulo": "Samsung Galaxy Watch 7 - Reloj Inteligente 40mm, Procesador de 3nm, Sensor BioActive Mejorado, GPS de Doble Frecuencia",
+        "especificaciones": "Chip Exynos W1000 en 3 nm, sensor BioActive de 13 LED para precisión médica y apnea del sueño, Wear OS de Samsung, puntuación de energía por Galaxy AI y resistencia IP68/5ATM.",
+        "precio": "229.00€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Galaxy_Watch_7.jpg"
     },
     {
-        "marca": "Google",
-        "modelo_corto": "Pixel Watch 3 45mm",
-        "busqueda": "Google Pixel Watch 3 45mm",
-        "titulo": "Google Pixel Watch 3 - Pantalla Actua AMOLED 2.000 nits, Ecosistema Google y Fitbit, Formato 45mm",
-        "especificaciones": "Pantalla Actua AMOLED de alta luminosidad, chip Snapdragon W5 Gen 1, integración nativa con Google Assistant y Wallet, además de métricas avanzadas de recuperación de Fitbit.",
-        "precio": "449.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/a/af/Amazfit_GTS_2_Mini.png"
+        "marca": "Xiaomi",
+        "modelo_corto": "Watch S4",
+        "busqueda": "Xiaomi Watch S4",
+        "titulo": "Xiaomi Watch S4 - Smartwatch con Bisel Intercambiable, Pantalla AMOLED 1.43\", HyperOS, GPS de 5 Sistemas",
+        "especificaciones": "Diseño versátil con biseles e hilos de corona intercambiables, pantalla AMOLED ultrabrillante, sistema Xiaomi HyperOS, llamadas Bluetooth con reducción de ruido y 15 días de batería.",
+        "precio": "149.99€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/22/Xiaomi_Mi_Watch_S1_Active.jpg"
     },
     {
         "marca": "Amazfit",
-        "modelo_corto": "T-Rex 3",
-        "busqueda": "Amazfit T-Rex 3",
-        "titulo": "Amazfit T-Rex 3 - Smartwatch Táctico Rugerizado, Pantalla AMOLED 2.000 nits, Mapas Offline, 27 Días Batería",
-        "especificaciones": "Cuerpo con bisel de acero inoxidable resistente de -30°C a +70°C, pantalla AMOLED de 1,5\", mapas topográficos giro a giro y procesamiento con IA mediante Zepp Flow.",
-        "precio": "279.90€",
+        "modelo_corto": "Active",
+        "busqueda": "Amazfit Active",
+        "titulo": "Amazfit Active - Smartwatch Elegante y Ligero, Pantalla AMOLED 1.75\", Zepp Coach, Llamadas Bluetooth, GPS Integrado",
+        "especificaciones": "Cuerpo de aleación de aluminio, pantalla HD AMOLED de 1.75\", planes de entrenamiento guiados por inteligencia artificial con Zepp Coach, reproductor de música y llamadas Bluetooth.",
+        "precio": "119.90€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/a/af/Amazfit_GTS_2_Mini.png"
+    },
+    {
+        "marca": "Fitbit",
+        "modelo_corto": "Charge 6",
+        "busqueda": "Fitbit Charge 6",
+        "titulo": "Fitbit Charge 6 - Pulsera Avanzada de Salud y Actividad, GPS Integrado, Controles de Google, ECG y Monitor de Estrés",
+        "especificaciones": "Formato compacto con integración nativa de apps de Google (Maps y Wallet), transmisión de frecuencia cardíaca a máquinas de gimnasio, app de ECG, sensor EDA y 7 días de autonomía.",
+        "precio": "159.95€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/52/Fitbit_Charge_5.jpg"
     },
     {
-        "marca": "OnePlus",
-        "modelo_corto": "Watch 2",
-        "busqueda": "OnePlus Watch 2",
-        "titulo": "OnePlus Watch 2 - Smartwatch con Arquitectura Dual-Engine, Wear OS 4, Cristal de Zafiro, Autonomía 100h",
-        "especificaciones": "Arquitectura de doble procesador independiente para máximo rendimiento y eficiencia, cristal de zafiro 2.5D, caja de acero inoxidable y hasta 100 horas de batería en modo inteligente.",
-        "precio": "299.00€",
+        "marca": "TicWatch",
+        "modelo_corto": "Pro 5 Enduro",
+        "busqueda": "TicWatch Pro 5 Enduro",
+        "titulo": "TicWatch Pro 5 Enduro - Smartwatch Wear OS Pantalla de Doble Capa, Snapdragon W5+ Gen 1, Cristal de Zafiro, Batería 90h",
+        "especificaciones": "Pantalla dual (AMOLED + FSTN), cristal de zafiro resistente a arañazos, procesador Snapdragon W5+ Gen 1 con Wear OS, brújula, altímetro y batería líder de hasta 90 horas.",
+        "precio": "299.99€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/TicWatch_Pro_3.jpg"
     }
 ]
