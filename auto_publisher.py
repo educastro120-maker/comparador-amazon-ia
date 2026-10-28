@@ -22,21 +22,93 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 # ==========================================
 productos_catalogo = [
     {
-        "marca": "Samsung",
-        "modelo_corto": "Galaxy Fit3",
-        "busqueda": "Samsung Galaxy Fit3",
-        "titulo": "Samsung Galaxy Fit3 - Pulsera de actividad y reloj inteligente, Pantalla AMOLED 1.6\", Detección de caídas, Batería de 13 días",
-        "especificaciones": "Pantalla AMOLED rectangular de 1,6 pulgadas con cuerpo de aluminio pulido, más de 100 ejercicios guardados, detección de caídas con llamada de emergencia SOS, análisis completo del sueño y resistencia 5ATM e IP68.",
+        "marca": "Xiaomi",
+        "modelo_corto": "Redmi Watch 5 Lite",
+        "busqueda": "Xiaomi Redmi Watch 5 Lite",
+        "titulo": "Xiaomi Redmi Watch 5 Lite - Smartwatch Pantalla AMOLED 1.96\", GPS Integrado, Llamadas Bluetooth, Resistencia 5ATM, Batería 18 días",
+        "especificaciones": "Pantalla AMOLED brillante de 1,96 pulgadas, GPS autónomo compatible con 5 sistemas por satélite, llamadas de voz Bluetooth con cancelación de ruido de dos micrófonos, seguimiento de salud continuo 24/7 y más de 140 modos deportivos.",
+        "precio": "49.99€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Mi_Watch.jpg"
+    },
+    {
+        "marca": "CMF",
+        "modelo_corto": "Watch Pro",
+        "busqueda": "CMF Watch Pro by Nothing",
+        "titulo": "CMF Watch Pro - Smartwatch Pantalla AMOLED 1.96\", Llamadas Bluetooth con IA, GPS Integrado, Monitorización de Salud 24/7, IP68",
+        "especificaciones": "Diseño icónico y minimalista en aleación de aluminio, pantalla AMOLED fluida de 1,96\" a 58 fps con 600 nits, llamadas claras por Bluetooth con tecnología de reducción de ruido por IA, GPS multisistema y hasta 13 días de autonomía.",
+        "precio": "69.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
+    },
+    {
+        "marca": "Amazfit",
+        "modelo_corto": "Pop 3S",
+        "busqueda": "Amazfit Pop 3S",
+        "titulo": "Amazfit Pop 3S - Reloj Inteligente Pantalla HD AMOLED 1.96\", Llamadas Bluetooth, Monitor SpO2 y Ritmo Cardíaco, Marco Metálico",
+        "especificaciones": "Pantalla rectangular AMOLED con función Always-on Display, cuerpo de acero inoxidable con cristal curvo 2.5D, micrófono y altavoz para llamadas de voz por Bluetooth, más de 100 modos de entrenamiento y 12 días de batería.",
+        "precio": "54.90€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Amazfit_GTR_2e.jpg"
+    },
+    {
+        "marca": "Haylou",
+        "modelo_corto": "Solar Plus RT3",
+        "busqueda": "Haylou Solar Plus RT3",
+        "titulo": "Haylou Solar Plus RT3 - Smartwatch Pantalla AMOLED 1.43\", Llamadas Bluetooth, Monitor de Frecuencia Cardíaca y Estrés, Bisel de Metal",
+        "especificaciones": "Pantalla circular AMOLED de alta resolución 466x466 px, cuerpo metálico pulido con corona navegatoria, llamadas de teléfono Bluetooth, monitorización de oxígeno en sangre, seguimiento del sueño y 105 modos de deporte.",
+        "precio": "45.99€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
+    },
+    {
+        "marca": "Xiaomi",
+        "modelo_corto": "Redmi Watch 3 Active",
+        "busqueda": "Redmi Watch 3 Active",
+        "titulo": "Xiaomi Redmi Watch 3 Active - Reloj Inteligente LCD 1.83\", Llamadas por Bluetooth, 100+ Modos Deportivos, Resistencia al Agua 5 ATM",
+        "especificaciones": "Pantalla LCD ultragrande de 1,83 pulgadas con interfaz personalizable, llamadas telefónicas con un solo toque por Bluetooth, diseño curvo con acabado metalizado, monitor de SpO2 y ritmo cardíaco continuo, batería hasta 12 días.",
+        "precio": "39.99€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/22/Xiaomi_Mi_Watch_S1_Active.jpg"
+    },
+    {
+        "marca": "Mibro",
+        "modelo_corto": "GS Pro",
+        "busqueda": "Mibro GS Pro",
+        "titulo": "Mibro GS Pro - Smartwatch Deportivo Pantalla AMOLED 1.43\", GPS Dual, Caja de Acero 316L, Sensor de Salud de 9 Ejes, 5ATM",
+        "especificaciones": "Cuerpo ultrarresistente fabricado en acero inoxidable 316L, pantalla AMOLED redonda de alta definición, GPS satelital dual integrado con altímetro y barómetro, llamadas por Bluetooth, resistencia al agua de 50 metros y 20 días de batería.",
+        "precio": "69.90€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
+    },
+    {
+        "marca": "Blackview",
+        "modelo_corto": "W50",
+        "busqueda": "Blackview W50",
+        "titulo": "Blackview W50 - Reloj Inteligente Rugerizado, Pantalla 1.39\" HD, Llamadas Bluetooth, Resistencia IP68 y Antiarañazos, Linterna Integrada",
+        "especificaciones": "Construcción rugerizada de alta durabilidad resistente a golpes y caídas, cristal PANDA antiarañazos, soporte para responder llamadas vía Bluetooth, brújula, linterna LED integrada, 100+ modos deportivos y autonomía de 5 días de uso intenso.",
+        "precio": "35.99€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Galaxy_Watch_7.jpg"
+    },
+    {
+        "marca": "Realme",
+        "modelo_corto": "Watch 3",
+        "busqueda": "Realme Watch 3",
+        "titulo": "Realme Watch 3 - Smartwatch Pantalla 1.8\", Llamadas Bluetooth con Cancelación de Ruido por IA, Más de 110 Modos Deportivos",
+        "especificaciones": "Pantalla de 1,8 pulgadas con relación pantalla-cuerpo del 67.5%, altavoz potente con algoritmo de IA para llamadas sin interferencias de viento o ruido, seguimiento continuo de salud (SpO2, pulso y sueño) y resistencia IP68.",
         "precio": "49.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/a/af/Amazfit_GTS_2_Mini.png"
+    },
+    {
+        "marca": "Honor",
+        "modelo_corto": "Watch Fit",
+        "busqueda": "Honor Watch Fit",
+        "titulo": "Honor Watch Fit - Reloj Deportivo Pantalla AMOLED 1.64\", Entrenador Animado 3D, GPS Integrado, Monitor SpO2 y Batería de 10 días",
+        "especificaciones": "Pantalla AMOLED rectangular con ajuste automático de brillo, 12 cursos de entrenamiento animados con demostraciones rápidas en pantalla, GPS integrado para carreras, monitor de salud 24/7 y carga rápida de batería.",
+        "precio": "59.90€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/52/Fitbit_Charge_5.jpg"
     },
     {
-        "marca": "Huawei",
-        "modelo_corto": "Watch FIT 3",
-        "busqueda": "Huawei Watch FIT 3",
-        "titulo": "Huawei Watch FIT 3 - Reloj Inteligente ultrafino 9.9 mm, Pantalla AMOLED 1.82\", Gestión de calorías, Batería hasta 10 días",
-        "especificaciones": "Diseño ultradelgado en forma cuadrada con corona giratoria, pantalla AMOLED fluida de 1.82\", seguimiento preciso de salud y forma física Stay Fit, llamadas Bluetooth, compatible con Android e iOS.",
-        "precio": "139.00€",
+        "marca": "Ksix",
+        "modelo_corto": "Core 3",
+        "busqueda": "Ksix Core 3",
+        "titulo": "Ksix Core 3 - Smartwatch Pantalla AMOLED 1.43\", Llamadas Bluetooth, Asistente de Voz, Control de Salud Completo, IP67",
+        "especificaciones": "Pantalla AMOLED redonda táctil con colores vívidos y gran contraste, micrófono y altavoz integrados para llamadas y comandos de asistente de voz (Siri/Google Assistant), control de música y disparo de cámara remoto, más de 100 modos de deporte.",
+        "precio": "42.50€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/TicWatch_Pro_3.jpg"
     }
 ]
