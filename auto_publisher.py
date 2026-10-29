@@ -135,7 +135,8 @@ def procesar_y_publicar(producto):
             # Activamos Google Search Grounding sin forzar esquemas rígidos restrictivos
             config = types.GenerateContentConfig(
                 tools=[{"google_search": {}}],
-                temperature=0.4
+                temperature=0.3,
+                    max_output_tokens=2500
             )
             
             response = client.models.generate_content(
