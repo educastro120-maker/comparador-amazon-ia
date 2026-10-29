@@ -4,7 +4,6 @@ import time
 import requests
 import urllib.parse
 from google import genai
-from google.genai import types
 
 # ==========================================
 # 1. LECTURA SEGURA DE CREDENCIALES
@@ -22,8 +21,7 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 # 2. CATÁLOGO DE SMARTWATCHES
 # ==========================================
 productos_catalogo = [
-
-{
+    {
         "marca": "Google",
         "modelo_corto": "Pixel Watch 4 45mm",
         "busqueda": "Google Pixel Watch 4 45mm",
@@ -32,7 +30,7 @@ productos_catalogo = [
         "precio": "449.00€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/a/af/Amazfit_GTS_2_Mini.png"
     },
-{
+    {
         "marca": "Suunto",
         "modelo_corto": "Vertical 2",
         "busqueda": "Suunto Vertical 2 Titanium Solar",
@@ -41,7 +39,7 @@ productos_catalogo = [
         "precio": "799.00€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Galaxy_Watch_7.jpg"
     },
-{
+    {
         "marca": "Apple",
         "modelo_corto": "Watch Ultra 4",
         "busqueda": "Apple Watch Ultra 4",
@@ -77,8 +75,6 @@ productos_catalogo = [
         "precio": "799.00€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
     }
-
-    
 ]
 
 def render_bullets(items):
@@ -92,70 +88,54 @@ def procesar_y_publicar(producto):
     affiliate_link = f"https://www.amazon.es/s?k={query_encoded}&tag={AMAZON_TAG}"
 
     prompt = f"""
-    Eres un periodista experto en tecnología y analista de wearables para blogs de afiliados de alta conversión (CRO).
+    Actúa como un periodista tecnológico experto y redactor senior especializado en análisis exhaustivos de smartwatches para blogs de afiliación de alta conversión (CRO).
     
-    INSTRUCCIÓN OBLIGATORIA: Busca en internet información real y actualizada de las especificaciones oficiales y análisis técnicos sobre el dispositivo "{producto['busqueda']}".
+    INSTRUCCIÓN CRÍTICA: Debes navegar por internet en tiempo real para recopilar las especificaciones técnicas oficiales, características de lanzamiento y análisis más recientes sobre el dispositivo: "{producto['busqueda']}".
     
     Datos base del producto:
     - Marca: {producto['marca']}
     - Modelo: {producto['modelo_corto']}
     - Título: {producto['titulo']}
     - Especificaciones básicas: {producto['especificaciones']}
-    
-    Genera un análisis técnico exhaustivo, riguroso y detallado basándote en datos reales actualizados.
-    
-    REQUISITOS DEL JSON:
-    1. "badge": Una etiqueta corta y llamativa (Ej: "Mejor Calidad-Precio", "Top Gama Alta", "Máxima Autonomía").
-    2. "resumen_ejecutivo": Un análisis completo y detallado (de entre 120 y 180 palabras) enfocado en la experiencia de uso real, puntos fuertes, público objetivo y por qué vale la pena comprarlo frente a sus competidores directos.
-    3. "specs": Objeto con 6 categorías técnicas. Cada categoría DEBE contener entre 2 y 4 viñetas (strings) detalladas con datos técnicos específicos recuperados de internet:
-       - "pantalla": Tecnología de panel (AMOLED/OLED/TFT), tamaño exacto en pulgadas, resolución de píxeles, nits de brillo máximo y funciones (Always On, etc.).
-       - "bateria": Capacidad en mAh, autonomía estimada en uso normal e intenso, tiempo y tipo de carga.
-       - "conectividad": Versión de Bluetooth, conectividad Wi-Fi, sistemas de posicionamiento GPS (banda dual/sistemas soportados), NFC y soporte de llamadas.
-       - "sensores": Sensores ópticos y de salud (ritmo cardíaco, SpO2, ECG, temperatura, acelerómetro, giroscopio, barómetro, etc.).
-       - "deportes": Número de modos deportivos, entrenadores IA, métricas avanzadas (VO2 Max, tiempo de recuperación, carga de entrenamiento).
-       - "construccion": Materiales del bisel y caja (titanio/aluminio/acero), resistencia al agua (5ATM/IP68/100m) y dimensiones/peso aproximado.
-    4. "pros": Lista de exactamente 3 puntos fuertes concretos y bien explicados.
-    5. "contras": Lista de exactamente 2 puntos a mejorar o limitaciones reales.
-    6. "puntuacion": Número decimal entre 7.0 y 10.0 basado en su relación calidad-precio.
+    - Precio de referencia: {producto['precio']}
+
+    Tu objetivo es redactar un análisis técnico muy completo, detallado y profesional, evitando respuestas cortas o escuetas. 
+
+    Devuelve ÚNICAMENTE un objeto JSON válido (sin texto adicional fuera del bloque JSON, ni introducciones) con exactamente esta estructura y claves:
+    {{
+      "badge": "Etiqueta llamativa en mayúsculas (ej: EL REY DE LA MONTAÑA, GAMA ALTA PREMIUM, MÁXIMA AUTONOMÍA)",
+      "resumen_ejecutivo": "Un análisis profundo y redactado de manera profesional (de 150 a 220 palabras). Debe incluir una introducción atractiva del dispositivo, su posicionamiento frente a rivales directos, detalles de su rendimiento en el mundo real, los perfiles de usuario ideales a los que va dirigido y una conclusión argumentada de por qué vale cada euro que cuesta.",
+      "specs": {{
+        "pantalla": ["3 a 5 líneas muy detalladas especificando tecnología del panel, tamaño exacto en pulgadas, resolución, nits de brillo máximo y protecciones de cristal"],
+        "bateria": ["3 a 5 líneas detallando capacidad estimada, autonomía real según tipos de uso (modo reloj inteligente vs modo GPS continuo) y tecnologías de carga rápida"],
+        "conectividad": ["3 a 5 líneas explicando la versión de conectividad inalámbrica, sistemas de posicionamiento GPS multibanda, compatibilidad con pagos NFC y funciones de llamadas o LTE"],
+        "sensores": ["3 a 5 líneas detallando sensores biométricos avanzados, frecuencia cardíaca, SpO2, ECG, temperatura corporal y giroscopios/altímetros"],
+        "deportes": ["3 a 5 líneas explicando modos de entrenamiento, métricas avanzadas de rendimiento, entrenadores virtuales o dinámicas de carrera/buceo"],
+        "construccion": ["3 a 5 líneas describiendo materiales de la caja y bisel (titanio, cerámica, zafiro), certificaciones militares o de resistencia al agua y ergonomía"]
+      }},
+      "pros": [
+        "Primer punto fuerte redactado con una explicación rica y argumentada (mínimo 15 palabras)",
+        "Segundo punto fuerte redactado con detalle y profundidad técnica",
+        "Tercer punto fuerte explicando un beneficio claro para el usuario"
+      ],
+      "contras": [
+        "Primer punto negativo o limitación explicada de forma honesta y argumentada",
+        "Segundo punto a mejorar detallando el impacto real en la experiencia de uso"
+      ],
+      "puntuacion": 9.2
+    }}
     """
 
-    print(f"🌐 Buscando información en tiempo real y analizando con Gemini: {producto['titulo']}...")
+    print(f"🌐 Buscando información en tiempo real y generando contenido profundo para: {producto['titulo']}...")
     
-    # Esquema estricto de respuesta JSON para garantizar la sintaxis perfecta
-    json_schema = {
-        "type": "OBJECT",
-        "properties": {
-            "badge": {"type": "STRING"},
-            "resumen_ejecutivo": {"type": "STRING"},
-            "specs": {
-                "type": "OBJECT",
-                "properties": {
-                    "pantalla": {"type": "ARRAY", "items": {"type": "STRING"}},
-                    "bateria": {"type": "ARRAY", "items": {"type": "STRING"}},
-                    "conectividad": {"type": "ARRAY", "items": {"type": "STRING"}},
-                    "sensores": {"type": "ARRAY", "items": {"type": "STRING"}},
-                    "deportes": {"type": "ARRAY", "items": {"type": "STRING"}},
-                    "construccion": {"type": "ARRAY", "items": {"type": "STRING"}}
-                },
-                "required": ["pantalla", "bateria", "conectividad", "sensores", "deportes", "construccion"]
-            },
-            "pros": {"type": "ARRAY", "items": {"type": "STRING"}},
-            "contras": {"type": "ARRAY", "items": {"type": "STRING"}},
-            "puntuacion": {"type": "NUMBER"}
-        },
-        "required": ["badge", "resumen_ejecutivo", "specs", "pros", "contras", "puntuacion"]
-    }
-
     max_intentos = 3
     response = None
     for intento in range(1, max_intentos + 1):
         try:
-            # Habilitamos Google Search Grounding y la salida JSON estructurada
+            # Activamos Google Search Grounding sin forzar esquemas rígidos restrictivos
             config = types.GenerateContentConfig(
                 tools=[{"google_search": {}}],
-                response_mime_type="application/json",
-                response_schema=json_schema,
-                temperature=0.3
+                temperature=0.4
             )
             
             response = client.models.generate_content(
@@ -171,36 +151,47 @@ def procesar_y_publicar(producto):
             else:
                 print(f"❌ Imposible analizar {producto['titulo']} tras {max_intentos} intentos.")
 
-    # Parseo directo y seguro gracias a la respuesta forzada en JSON
+    # Extracción y limpieza segura del JSON devuelto por la IA
     datos_ia = None
     if response and hasattr(response, 'text') and response.text:
-        try:
-            datos_ia = json.loads(response.text.strip())
-        except json.JSONDecodeError as err:
-            print(f"⚠️ Error parseando JSON estructurado para {producto['titulo']}: {err}")
+        texto_respuesta = response.text.strip()
+        if "```json" in texto_respuesta:
+            texto_respuesta = texto_respuesta.split("```json")[1].split("```")[0].strip()
+        elif "```" in texto_respuesta:
+            texto_respuesta = texto_respuesta.split("```")[1].split("```")[0].strip()
+        
+        inicio = texto_respuesta.find('{')
+        fin = texto_respuesta.rfind('}')
+        
+        if inicio != -1 and fin != -1:
+            clean_json_str = texto_respuesta[inicio:fin+1]
+            try:
+                datos_ia = json.loads(clean_json_str)
+            except json.JSONDecodeError as err:
+                print(f"⚠️ Advertencia: Error analizando JSON en {producto['titulo']}: {err}")
 
-    # Plantilla por defecto de seguridad sólo en caso de fallo crítico de red
+    # Plantilla de respaldo robusta en caso de fallo excepcional de red
     if not datos_ia:
-        print(f"💡 Aplicando plantilla de respaldo para {producto['titulo']}...")
+        print(f"💡 Aplicando plantilla de respaldo detallada para {producto['titulo']}...")
         datos_ia = {
-            "badge": "Destacado Calidad-Precio",
-            "resumen_ejecutivo": producto['titulo'] + " ofrece una experiencia completa con pantalla de alta resolución, seguimiento avanzado de actividad física y excelente autonomía.",
+            "badge": "ANÁLISIS DESTACADO",
+            "resumen_ejecutivo": f"{producto['titulo']} representa una opción sobresaliente dentro del mercado actual de dispositivos wearables. Diseñado para ofrecer un rendimiento fluido y constante, combina materiales de alta calidad con una completa suite de sensores orientados a la salud y la actividad física avanzada. Su integración con el ecosistema de aplicaciones y su optimización energética lo convierten en un compañero ideal tanto para el día a día como para entrenamientos exigentes.",
             "specs": {
-                "pantalla": ["Pantalla táctil de alta definición con excelente nitidez en exteriores."],
-                "bateria": ["Batería optimizada para varios días de uso continuo sin interrupciones."],
-                "conectividad": ["Sincronización Bluetooth rápida con smartphone y seguimiento GPS."],
-                "sensores": ["Sensores ópticos para medición continua de pulso y calidad del sueño."],
-                "deportes": ["Múltiples perfiles deportivos y registro automático de actividad."],
-                "construccion": ["Chasis resistente al agua y polvo con acabado ergonómico."]
+                "pantalla": ["Panel táctil de alta definición con excelente nitidez en exteriores.", "Tratamiento antirreflejos y óptima respuesta táctil."],
+                "bateria": ["Sistema de gestión energética optimizado para varios días de uso.", "Soporte para carga rápida y modos de ahorro inteligente."],
+                "conectividad": ["Conectividad Bluetooth de alta velocidad y posicionamiento GPS integrado.", "Soporte para sincronización de datos y notificaciones en tiempo real."],
+                "sensores": ["Sensores ópticos de última generación para pulso y oxígeno en sangre.", "Monitoreo continuo de calidad de descanso y estrés."],
+                "deportes": ["Amplio catálogo de perfiles deportivos con métricas personalizadas.", "Registro automático y seguimiento de rutas."],
+                "construccion": ["Chasis ligero y resistente diseñado para soportar el uso diario.", "Certificación de resistencia frente al agua y polvo."]
             },
-            "pros": ["Gran relación calidad-precio", "Buena autonomía de batería", "Pantalla de clara visibilidad"],
-            "contras": ["Opciones de personalización limitadas según el SO", "Sin pagos NFC en algunas plataformas"],
-            "puntuacion": 8.5
+            "pros": ["Diseño ergonómico con acabados de gran durabilidad y elegancia.", "Excelente precisión en la monitorización de constantes vitales y deporte.", "Interfaz fluida con una gran variedad de herramientas y esferas personalizables."],
+            "contras": ["Autonomía sujeta al uso intensivo de las funciones avanzadas de pantalla y GPS.", "Precio elevado en comparación con alternativas de gama de entrada."],
+            "puntuacion": 8.9
         }
 
     s = datos_ia['specs']
 
-    # HTML optimizado del artículo para WordPress
+    # HTML profesional y optimizado para WordPress
     html_content = f"""
     <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; background-color: #ffffff; max-width: 750px; margin: 20px auto; font-family: system-ui, -apple-system, sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
       
@@ -218,7 +209,7 @@ def procesar_y_publicar(producto):
         {datos_ia['resumen_ejecutivo']}
       </p>
 
-      <!-- Ficha Técnica Resumida -->
+      <!-- Ficha Técnica Detallada -->
       <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px; margin: 20px 0;">
         <h3 style="color: #0f172a; margin-top: 0; font-size: 1.1em; border-bottom: 2px solid #cbd5e1; padding-bottom: 8px; margin-bottom: 12px;">⚙️ Ficha Técnica Detallada</h3>
         
