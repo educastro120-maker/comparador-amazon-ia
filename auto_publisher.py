@@ -4,6 +4,7 @@ import time
 import requests
 import urllib.parse
 from google import genai
+from google.genai import types
 
 # ==========================================
 # 1. LECTURA SEGURA DE CREDENCIALES
@@ -18,10 +19,10 @@ AMAZON_TAG = "topcomparad00-21"
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 # ==========================================
-# 2. CATÁLOGO DE SMARTWATCHES CON CAMPOS LIMPIOS
+# 2. CATÁLOGO DE SMARTWATCHES
 # ==========================================
 productos_catalogo = [
-{
+    {
         "marca": "Huawei",
         "modelo_corto": "Watch GT 5",
         "busqueda": "Huawei Watch GT 5",
@@ -105,13 +106,12 @@ productos_catalogo = [
     {
         "marca": "Fitbit",
         "modelo_corto": "Charge 6",
-        "busqueda": "Fitbit Charge 6",
+        "busqueda": "Fitbit Charge 6 - Pulsera Avanzada de Salud y Actividad, GPS Integrado, Controles de Google, ECG y Monitor de Estrés",
         "titulo": "Fitbit Charge 6 - Pulsera Avanzada de Salud y Actividad, GPS Integrado, Controles de Google, ECG y Monitor de Estrés",
         "especificaciones": "Formato compacto con integración nativa de apps de Google (Maps y Wallet), transmisión de frecuencia cardíaca a máquinas de gimnasio, app de ECG, sensor EDA y 7 días de autonomía.",
         "precio": "159.95€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/52/Fitbit_Charge_5.jpg"
     }
-
 ]
 
 def render_bullets(items):
@@ -125,88 +125,115 @@ def procesar_y_publicar(producto):
     affiliate_link = f"https://www.amazon.es/s?k={query_encoded}&tag={AMAZON_TAG}"
 
     prompt = f"""
-    Actúa como analista de tecnología experto en Smartwatches y CRO.
-    Analiza este producto:
-    - Título: {producto['titulo']}
-    - Especificaciones base: {producto['especificaciones']}
-    - Precio: {producto['precio']}
-
-    IMPORTANTE: Debes rellenar TODAS las siguientes especificaciones de forma exhaustiva y esquemática (nunca dejes campos vacíos o con datos faltantes como el tamaño de pantalla si se puede deducir).
+    Eres un periodista experto en tecnología y analista de wearables para blogs de afiliados de alta conversión (CRO).
     
-    Devuelve ÚNICAMENTE un objeto JSON válido (y nada más que el JSON) con exactamente estas claves:
-    "badge", "resumen_ejecutivo", 
-    "specs" (un objeto JSON con exactamente estas 6 claves, donde cada clave es una LISTA de strings esquemáticos: 
-       "pantalla" (incluir obligatoriamente tecnología y tamaño en pulgadas si aplica), 
-       "bateria" (incluir autonomía estimada), 
-       "conectividad" (incluir GPS y pagos NFC), 
-       "sensores" (incluir frecuencia cardíaca, SpO2, etc.), 
-       "deportes" (modos deportivos y entrenadores), 
-       "construccion" (materiales y resistencia al agua)),
-    "pros" (lista de 3 strings), 
-    "contras" (lista de 2 strings), 
-    "puntuacion" (número decimal).
+    INSTRUCCIÓN OBLIGATORIA: Busca en internet información real y actualizada de las especificaciones oficiales y análisis técnicos sobre el dispositivo "{producto['busqueda']}".
+    
+    Datos base del producto:
+    - Marca: {producto['marca']}
+    - Modelo: {producto['modelo_corto']}
+    - Título: {producto['titulo']}
+    - Especificaciones básicas: {producto['especificaciones']}
+    
+    Genera un análisis técnico exhaustivo, riguroso y detallado basándote en datos reales actualizados.
+    
+    REQUISITOS DEL JSON:
+    1. "badge": Una etiqueta corta y llamativa (Ej: "Mejor Calidad-Precio", "Top Gama Alta", "Máxima Autonomía").
+    2. "resumen_ejecutivo": Un análisis completo y detallado (de entre 120 y 180 palabras) enfocado en la experiencia de uso real, puntos fuertes, público objetivo y por qué vale la pena comprarlo frente a sus competidores directos.
+    3. "specs": Objeto con 6 categorías técnicas. Cada categoría DEBE contener entre 2 y 4 viñetas (strings) detalladas con datos técnicos específicos recuperados de internet:
+       - "pantalla": Tecnología de panel (AMOLED/OLED/TFT), tamaño exacto en pulgadas, resolución de píxeles, nits de brillo máximo y funciones (Always On, etc.).
+       - "bateria": Capacidad en mAh, autonomía estimada en uso normal e intenso, tiempo y tipo de carga.
+       - "conectividad": Versión de Bluetooth, conectividad Wi-Fi, sistemas de posicionamiento GPS (banda dual/sistemas soportados), NFC y soporte de llamadas.
+       - "sensores": Sensores ópticos y de salud (ritmo cardíaco, SpO2, ECG, temperatura, acelerómetro, giroscopio, barómetro, etc.).
+       - "deportes": Número de modos deportivos, entrenadores IA, métricas avanzadas (VO2 Max, tiempo de recuperación, carga de entrenamiento).
+       - "construccion": Materiales del bisel y caja (titanio/aluminio/acero), resistencia al agua (5ATM/IP68/100m) y dimensiones/peso aproximado.
+    4. "pros": Lista de exactamente 3 puntos fuertes concretos y bien explicados.
+    5. "contras": Lista de exactamente 2 puntos a mejorar o limitaciones reales.
+    6. "puntuacion": Número decimal entre 7.0 y 10.0 basado en su relación calidad-precio.
     """
 
-    print(f"Analizando con Gemini: {producto['titulo']}...")
+    print(f"🌐 Buscando información en tiempo real y analizando con Gemini: {producto['titulo']}...")
     
-    # --- SISTEMA DE REINTENTOS PARA EVITAR ERRORES TEMPORALES DE CONEXIÓN/SERVIDORES (503) ---
+    # Esquema estricto de respuesta JSON para garantizar la sintaxis perfecta
+    json_schema = {
+        "type": "OBJECT",
+        "properties": {
+            "badge": {"type": "STRING"},
+            "resumen_ejecutivo": {"type": "STRING"},
+            "specs": {
+                "type": "OBJECT",
+                "properties": {
+                    "pantalla": {"type": "ARRAY", "items": {"type": "STRING"}},
+                    "bateria": {"type": "ARRAY", "items": {"type": "STRING"}},
+                    "conectividad": {"type": "ARRAY", "items": {"type": "STRING"}},
+                    "sensores": {"type": "ARRAY", "items": {"type": "STRING"}},
+                    "deportes": {"type": "ARRAY", "items": {"type": "STRING"}},
+                    "construccion": {"type": "ARRAY", "items": {"type": "STRING"}}
+                },
+                "required": ["pantalla", "bateria", "conectividad", "sensores", "deportes", "construccion"]
+            },
+            "pros": {"type": "ARRAY", "items": {"type": "STRING"}},
+            "contras": {"type": "ARRAY", "items": {"type": "STRING"}},
+            "puntuacion": {"type": "NUMBER"}
+        },
+        "required": ["badge", "resumen_ejecutivo", "specs", "pros", "contras", "puntuacion"]
+    }
+
     max_intentos = 3
     response = None
     for intento in range(1, max_intentos + 1):
         try:
+            # Habilitamos Google Search Grounding y la salida JSON estructurada
+            config = types.GenerateContentConfig(
+                tools=[{"google_search": {}}],
+                response_mime_type="application/json",
+                response_schema=json_schema,
+                temperature=0.3
+            )
+            
             response = client.models.generate_content(
                 model='gemini-2.5-flash',
                 contents=prompt,
+                config=config
             )
             break
         except Exception as e:
             print(f"⚠️ Intento {intento}/{max_intentos} fallido por error en la API: {e}")
             if intento < max_intentos:
-                time.sleep(5)  # Espera 5 segundos antes de reintentar
+                time.sleep(5)
             else:
                 print(f"❌ Imposible analizar {producto['titulo']} tras {max_intentos} intentos.")
 
-    # --- EXTRACCIÓN Y LIMPIEZA SEGURA DEL JSON ---
+    # Parseo directo y seguro gracias a la respuesta forzada en JSON
     datos_ia = None
     if response and hasattr(response, 'text') and response.text:
-        texto_respuesta = response.text.strip()
-        if "```json" in texto_respuesta:
-            texto_respuesta = texto_respuesta.split("```json")[1].split("```")[0].strip()
-        elif "```" in texto_respuesta:
-            texto_respuesta = texto_respuesta.split("```")[1].split("```")[0].strip()
-        
-        inicio = texto_respuesta.find('{')
-        fin = texto_respuesta.rfind('}')
-        
-        if inicio != -1 and fin != -1:
-            clean_json_str = texto_respuesta[inicio:fin+1]
-            try:
-                datos_ia = json.loads(clean_json_str)
-            except json.JSONDecodeError as err:
-                print(f"⚠️ Advertencia: JSON mal formado por la IA en {producto['titulo']}: {err}")
+        try:
+            datos_ia = json.loads(response.text.strip())
+        except json.JSONDecodeError as err:
+            print(f"⚠️ Error parseando JSON estructurado para {producto['titulo']}: {err}")
 
-    # --- VALORES POR DEFECTO DE EMERGENCIA SI FALLA LA IA O EL JSON ---
+    # Plantilla por defecto de seguridad sólo en caso de fallo crítico de red
     if not datos_ia:
-        print(f"💡 Aplicando plantilla de respaldo segura para {producto['titulo']}...")
+        print(f"💡 Aplicando plantilla de respaldo para {producto['titulo']}...")
         datos_ia = {
             "badge": "Destacado Calidad-Precio",
-            "resumen_ejecutivo": producto['titulo'] + " ofrece un equilibrio sobresaliente entre diseño, funcionalidad y autonomía para el uso cotidiano.",
+            "resumen_ejecutivo": producto['titulo'] + " ofrece una experiencia completa con pantalla de alta resolución, seguimiento avanzado de actividad física y excelente autonomía.",
             "specs": {
-                "pantalla": ["Pantalla de alta definición y óptima visibilidad."],
-                "bateria": ["Batería de larga duración adaptada a uso continuo."],
-                "conectividad": ["Conexión Bluetooth estable y posicionamiento GPS."],
-                "sensores": ["Seguimiento de salud, pulso y calidad del sueño."],
-                "deportes": ["Múltiples modos de entrenamiento integrados."],
-                "construccion": ["Cuerpo resistente al agua y materiales ligeros."]
+                "pantalla": ["Pantalla táctil de alta definición con excelente nitidez en exteriores."],
+                "bateria": ["Batería optimizada para varios días de uso continuo sin interrupciones."],
+                "conectividad": ["Sincronización Bluetooth rápida con smartphone y seguimiento GPS."],
+                "sensores": ["Sensores ópticos para medición continua de pulso y calidad del sueño."],
+                "deportes": ["Múltiples perfiles deportivos y registro automático de actividad."],
+                "construccion": ["Chasis resistente al agua y polvo con acabado ergonómico."]
             },
-            "pros": ["Excelente relación calidad-precio", "Gran autonomía de batería", "Diseño ergonómico y cómodo"],
-            "contras": ["Funciones personalizadas según el SO", "Sin NFC para pagos en algunos mercados"],
+            "pros": ["Gran relación calidad-precio", "Buena autonomía de batería", "Pantalla de clara visibilidad"],
+            "contras": ["Opciones de personalización limitadas según el SO", "Sin pagos NFC en algunas plataformas"],
             "puntuacion": 8.5
         }
 
     s = datos_ia['specs']
 
-    # HTML del artículo con la tabla oculta de 6 filas x 2 columnas para las especificaciones
+    # HTML optimizado del artículo para WordPress
     html_content = f"""
     <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; background-color: #ffffff; max-width: 750px; margin: 20px auto; font-family: system-ui, -apple-system, sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
       
@@ -220,13 +247,13 @@ def procesar_y_publicar(producto):
 
       <h2 style="margin-top: 0; color: #111; font-size: 1.6em; line-height: 1.3;">{producto['titulo']}</h2>
       
-      <p style="font-size: 1.1em; color: #444; line-height: 1.6;">
+      <p style="font-size: 1.05em; color: #333; line-height: 1.7; text-align: justify;">
         {datos_ia['resumen_ejecutivo']}
       </p>
 
-      <!-- Ficha Técnica en Tabla Oculta (6 filas x 2 columnas) -->
+      <!-- Ficha Técnica Resumida -->
       <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px; margin: 20px 0;">
-        <h3 style="color: #0f172a; margin-top: 0; font-size: 1.1em; border-bottom: 2px solid #cbd5e1; padding-bottom: 8px; margin-bottom: 12px;">⚙️ Ficha Técnica Resumida</h3>
+        <h3 style="color: #0f172a; margin-top: 0; font-size: 1.1em; border-bottom: 2px solid #cbd5e1; padding-bottom: 8px; margin-bottom: 12px;">⚙️ Ficha Técnica Detallada</h3>
         
         <table style="width: 100%; border-collapse: collapse; border: none; font-size: 0.95em; color: #334155;">
           <tr style="border: none; border-bottom: 1px solid #f1f5f9;">
