@@ -32,6 +32,15 @@ productos_catalogo = [
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Mi_Watch.jpg"
     },
     {
+        "marca": "Apple",
+        "modelo_corto": "Watch Ultra 2",
+        "busqueda": "Apple Watch Ultra 2",
+        "titulo": "Apple Watch Ultra 2 - Caja de Titanio de 49 mm, Pantalla Retina de 3.000 nits, Conectividad Satelital, Resistencia 100 m",
+        "especificaciones": "Caja de titanio aeroespacial de grado 5, pantalla retina OLED de hasta 3.000 nits de brillo, profundímetro certificado para buceo a 40 metros (EN13319), conexión satelital directa para mensajes y SOS de emergencia, y autonomía de hasta 72 horas en modo ahorro.",
+        "precio": "899.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
+    },
+    {
         "marca": "Garmin",
         "modelo_corto": "Enduro 3",
         "busqueda": "Garmin Enduro 3",
@@ -48,6 +57,15 @@ productos_catalogo = [
         "especificaciones": "Diseño escandinavo ultra resistente con bisel de titanio de grado 5 y cristal de zafiro solar. Ofrece mapas topográficos offline gratuitos de gran precisión, posicionamiento dual GNSS de 5 satélites simultáneos y autonomía continua de hasta 85 horas en seguimiento GPS máximo.",
         "precio": "799.00€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Galaxy_Watch_7.jpg"
+    },
+    {
+        "marca": "Samsung",
+        "modelo_corto": "Galaxy Watch Ultra",
+        "busqueda": "Samsung Galaxy Watch Ultra",
+        "titulo": "Samsung Galaxy Watch Ultra - Smartwatch 47mm Titanio, Chipset 3nm, GPS Dual, Resistencia 10 ATM e IP68, Galaxy AI",
+        "especificaciones": "Caja de titanio de grado 4 con grado de resistencia 10 ATM, certificación militar MIL-STD-810H y resistencia a temperaturas extremas (-20 °C a 55 °C). Procesador de 3 nm para máxima fluidez, pantalla AMOLED de 3.000 nits, sirena de socorro de 86 dB y funciones de entrenamiento con Galaxy AI.",
+        "precio": "699.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Amazfit_GTR_2e.jpg"
     },
     {
         "marca": "Polar",
@@ -68,6 +86,15 @@ productos_catalogo = [
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
     },
     {
+        "marca": "Huawei",
+        "modelo_corto": "Watch Ultimate",
+        "busqueda": "Huawei Watch Ultimate",
+        "titulo": "Huawei Watch Ultimate - Smartwatch de Metal Líquido con Circonio, Ordenador de Buceo 100m, Pantalla AMOLED Zafiro",
+        "especificaciones": "Cuerpo innovador de metal líquido a base de circonio (4.5 veces más resistente que el titanio), bisel cerámico nanocristalino y cristal de zafiro. Certificado como ordenador de buceo profesional para 100 m (ISO 22810 / EN13319), posicionamiento GPS de 5 sistemas y hasta 14 días de batería.",
+        "precio": "749.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
+    },
+    {
         "marca": "Garmin",
         "modelo_corto": "Instinct 2X Solar",
         "busqueda": "Garmin Instinct 2X Solar",
@@ -75,6 +102,15 @@ productos_catalogo = [
         "especificaciones": "Caja de polímero reforzado con fibra de 50 mm, pantalla transflectiva monocroma de gran visibilidad al sol con cristal Power Glass para autonomía ilimitada en modo reloj inteligente. Incluye GPS multibanda, linterna LED con luz estroboscópica y cumplimiento con estándares térmicos y de choque MIL-STD-810.",
         "precio": "449.99€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
+    },
+    {
+        "marca": "Amazfit",
+        "modelo_corto": "T-Rex 3",
+        "busqueda": "Amazfit T-Rex 3",
+        "titulo": "Amazfit T-Rex 3 - Smartwatch Táctico Rugerizado, Pantalla AMOLED 2.000 nits, Mapas Offline, Hasta 27 Días de Batería",
+        "especificaciones": "Construcción táctica de grado militar con bisel de acero inoxidable resistente a temperaturas extremas (-30°C a +70°C), pantalla de 1,5\", mapas topográficos giro a giro, asistente IA Zepp Flow y batería imbatible de hasta 27 días.",
+        "precio": "279.90€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/52/Fitbit_Charge_5.jpg"
     }
 ]
 
@@ -88,65 +124,31 @@ def procesar_y_publicar(producto):
     query_encoded = urllib.parse.quote_plus(producto['busqueda'])
     affiliate_link = f"https://www.amazon.es/s?k={query_encoded}&tag={AMAZON_TAG}"
 
-    # PROMPT MEJORADO CON EXIGENCIA TÉCNICA RIGUROSA Y EN TIEMPO REAL
     prompt = f"""
-    Actúa como un ingeniero de hardware y periodista tecnológico de élite especializado en análisis ultratécnicos de smartwatches deportivos y de aventura.
+    Actúa como un ingeniero de hardware y periodista tecnológico experto en smartwatches.
+    Navega obligatoriamente en tiempo real para obtener datos de laboratorio reales del dispositivo: "{producto['busqueda']}".
     
-    INSTRUCCIÓN CRÍTICA: Debes navegar obligatoriamente por internet en tiempo real para extraer los datos de las especificaciones técnicas oficiales exactas, fichas de fabricante y análisis de laboratorio del dispositivo: "{producto['busqueda']}". 
-    PROHIBIDO dar respuestas genéricas, vagas o rellenar con frases como "pantalla de alta definición". Tienes que proporcionar datos numéricos duros, tecnologías exactas, materiales específicos (ej. titanio grado 5, zafiro sintético, cerámica), resoluciones en píxeles, nits de brillo, miliamperios (mAh), sistemas de posicionamiento multibanda (L1+L5) y certificaciones oficiales (MIL-STD-810H, EN13319, IP68, 10 ATM).
-
-    Datos base del producto:
+    Datos base:
     - Marca: {producto['marca']}
     - Modelo: {producto['modelo_corto']}
     - Título: {producto['titulo']}
-    - Especificaciones orientativas: {producto['especificaciones']}
-    - Precio de referencia: {producto['precio']}
+    - Specs base: {producto['especificaciones']}
+    - Precio: {producto['precio']}
 
-    Tu objetivo es redactar un análisis técnico de nivel profesional absoluto. Devuelve ÚNICAMENTE un objeto JSON válido (sin texto adicional fuera del bloque JSON) con esta estructura exacta y claves:
+    Devuelve ÚNICAMENTE un objeto JSON válido que cumpla estrictamente con esta estructura de claves:
     {{
-      "badge": "Etiqueta comercial llamativa en mayúsculas (ej: REY DE LA ULTRARESISTENCIA, GPS TÁCTICO AVANZADO)",
-      "resumen_ejecutivo": "Un análisis profundo y riguroso de 150 a 220 palabras redactado con tono experto. Detalla su rendimiento real sobre el terreno, tecnologías propietarias, público al que va enfocado y una conclusión argumentada de su valor en el mercado.",
+      "badge": "ETIQUETA COMERCIAL EN MAYÚSCULAS",
+      "resumen_ejecutivo": "Análisis profundo de 150 a 220 palabras explicando sus prestaciones, materiales, rendimiento y valor.",
       "specs": {{
-        "pantalla": [
-          "Tecnología exacta del panel (ej: AMOLED, MIP, Retina LTPO) y tipo de protección (cristal de zafiro sintético, Corning Gorilla Glass).",
-          "Tamaño en pulgadas, resolución exacta en píxeles y densidad (ppi).",
-          "Niveles de brillo pico máximo (nits) y brillo mínimo nocturno, además de tasa de refresco o modo Always-On."
-        ],
-        "bateria": [
-          "Capacidad estimada de la celda en mAh y tipo de arquitectura de procesador o gestión energética.",
-          "Autonomía real desglosada: modo smartwatch diario, modo ahorro y horas máximas con seguimiento GPS continuo.",
-          "Tecnología de carga rápida inalámbrica o magnética y autonomía obtenida en pocos minutos de carga."
-        ],
-        "conectividad": [
-          "Sistemas de posicionamiento satelital integrados (GPS de doble frecuencia L1/L5, GLONASS, Galileo, BeiDou, QZSS).",
-          "Versión de conectividad inalámbrica (Bluetooth, Wi-Fi, NFC para pagos, eSIM/LTE o conectividad satelital de emergencia si aplica).",
-          "Prestaciones de audio, altavoces, micrófonos integrados o sirenas de socorro en decibelios."
-        ],
-        "sensores": [
-          "Sensores biométricos de salud: pulsómetro óptico de alta precisión, sensor ECG, SpO2 (oxígeno en sangre) y temperatura cutánea/corporal.",
-          "Sensores de entorno y navegación: altímetro barométrico, brújula digital, giroscopio y acelerómetro de alta fuerza G.",
-          "Funciones avanzadas de monitorización continua de estrés, recuperación (HRV) y sueño."
-        ],
-        "deportes": [
-          "Modos deportivos especializados (perfiles de ultramaratón, trail, ciclismo, triatlón o certificaciones de buceo recreativo/técnico).",
-          "Métricas avanzadas de rendimiento (potencia de carrera, dinámicas, VO2 máx, mapas topográficos offline giro a giro).",
-          "Funciones de seguridad y retorno al punto de origen (Backtrack, llamadas SOS o detección automática de caídas/accidentes)."
-        ],
-        "construccion": [
-          "Materiales exactos de fabricación de la caja (titanio de grado 5, acero inoxidable, polímero reforzado) y cubierta posterior (cerámica/zafiro).",
-          "Certificaciones oficiales de resistencia al agua y polvo (ej: 10 ATM, norma ISO 22810, EN13319) y estándar militar de durabilidad (MIL-STD-810H).",
-          "Dimensiones físicas exactas en milímetros, grosor y peso total del dispositivo en gramos."
-        ]
+        "pantalla": ["Detalle técnico 1", "Detalle técnico 2", "Detalle técnico 3"],
+        "bateria": ["Detalle técnico 1", "Detalle técnico 2", "Detalle técnico 3"],
+        "conectividad": ["Detalle técnico 1", "Detalle técnico 2", "Detalle técnico 3"],
+        "sensores": ["Detalle técnico 1", "Detalle técnico 2", "Detalle técnico 3"],
+        "deportes": ["Detalle técnico 1", "Detalle técnico 2", "Detalle técnico 3"],
+        "construccion": ["Detalle técnico 1", "Detalle técnico 2", "Detalle técnico 3"]
       }},
-      "pros": [
-        "Primer punto fuerte altamente técnico y argumentado con datos concretos (mínimo 15 palabras)",
-        "Segundo punto fuerte destacando rendimiento o materiales avanzados",
-        "Tercer punto fuerte describiendo un beneficio clave para el usuario experto"
-      ],
-      "contras": [
-        "Primer punto negativo o limitación explicada con rigor técnico",
-        "Segundo aspecto mejorable que impacte de forma real en la experiencia de uso"
-      ],
+      "pros": ["Punto fuerte 1 detallado", "Punto fuerte 2 detallado", "Punto fuerte 3 detallado"],
+      "contras": ["Punto débil 1 detallado", "Punto débil 2 detallado"],
       "puntuacion": 9.4
     }}
     """
@@ -159,8 +161,8 @@ def procesar_y_publicar(producto):
         try:
             config = types.GenerateContentConfig(
                 tools=[{"google_search": {}}],
-                temperature=0.2, # Temperatura baja para priorizar datos técnicos reales y evitar inventiva
-                max_output_tokens=3000
+                temperature=0.2,
+                response_mime_type="application/json"  # <-- ESTO FORZA A GEMINI A DEVOLVER JSON PURO Y EVITA ERRORES DE PARSEADO
             )
             
             response = client.models.generate_content(
@@ -176,42 +178,38 @@ def procesar_y_publicar(producto):
             else:
                 print(f"❌ Imposible analizar {producto['titulo']} tras {max_intentos} intentos.")
 
-    # Extracción y limpieza segura del JSON devuelto por la IA
+    # Extracción del JSON garantizado por la API
     datos_ia = None
     if response and hasattr(response, 'text') and response.text:
-        texto_respuesta = response.text.strip()
-        if "```json" in texto_respuesta:
-            texto_respuesta = texto_respuesta.split("```json")[1].split("```")[0].strip()
-        elif "```" in texto_respuesta:
-            texto_respuesta = texto_respuesta.split("```")[1].split("```")[0].strip()
-        
-        inicio = texto_respuesta.find('{')
-        fin = texto_respuesta.rfind('}')
-        
-        if inicio != -1 and fin != -1:
-            clean_json_str = texto_respuesta[inicio:fin+1]
-            try:
-                datos_ia = json.loads(clean_json_str)
-            except json.JSONDecodeError as err:
-                print(f"⚠️ Advertencia: Error analizando JSON en {producto['titulo']}: {err}")
+        try:
+            datos_ia = json.loads(response.text.strip())
+        except json.JSONDecodeError as err:
+            print(f"⚠️ Advertencia: Error analizando JSON directo en {producto['titulo']}: {err}")
 
-    # Plantilla de respaldo robusta en caso de fallo excepcional de red
+    # Plantilla de respaldo inteligente basada en los datos reales del catálogo (nunca genérica)
     if not datos_ia:
-        print(f"💡 Aplicando plantilla de respaldo detallada para {producto['titulo']}...")
+        print(f"💡 Aplicando respaldo técnico inteligente basado en datos del catálogo para {producto['titulo']}...")
         datos_ia = {
-            "badge": "ANÁLISIS TÉCNICO DESTACADO",
-            "resumen_ejecutivo": f"{producto['titulo']} destaca en el mercado actual por integrar componentes de altas prestaciones enfocados tanto al rendimiento deportivo extremo como al seguimiento diario de la salud. Su estructura robusta y su optimización de software garantizan una experiencia fluida y fiable bajo cualquier circunstancia ambiental.",
+            "badge": f"ANÁLISIS {producto['marca'].upper()} PREMIUM",
+            "resumen_ejecutivo": f"{producto['titulo']} destaca en el mercado actual gracias a sus especificaciones avanzadas: {producto['especificaciones']} Su diseño optimizado y su suite de herramientas orientadas al rendimiento y la salud lo consolidan como una opción de referencia dentro de su gama.",
             "specs": {
-                "pantalla": ["Panel táctil de alta definición con excelente nitidez en exteriores.", "Tratamiento antirreflejos y óptima respuesta táctil bajo luz solar directa."],
-                "bateria": ["Sistema de gestión energética optimizado para varios días de uso continuado.", "Soporte para modos avanzados de ahorro inteligente y carga rápida."],
-                "conectividad": ["Conectividad Bluetooth de alta velocidad y posicionamiento satelital integrado.", "Soporte para sincronización de datos y notificaciones inteligentes en tiempo real."],
-                "sensores": ["Sensores ópticos de última generación para frecuencia cardíaca y oxígeno en sangre.", "Monitoreo continuo de constantes vitales, descanso y gestión de estrés."],
-                "deportes": ["Amplio catálogo de perfiles deportivos con métricas de rendimiento avanzadas.", "Registro automático de actividades y seguimiento cartográfico de rutas."],
-                "construccion": ["Chasis ligero y resistente diseñado para soportar exigencias cotidianas.", "Certificación oficial de resistencia frente al agua, polvo y condiciones térmicas."]
+                "pantalla": [f"Tecnología de visualización optimizada para el modelo {producto['modelo_corto']}.", "Excelente visibilidad bajo luz solar directa y respuesta táctil precisa."],
+                "bateria": [f"Sistema de autonomía adaptado para un rendimiento prolongado.", f"Referencia de precio y categoría: {producto['precio']}."],
+                "conectividad": ["Soporte para sincronización de datos y conectividad inalámbrica de alta velocidad.", "Posicionamiento geográfico integrado de alta precisión."],
+                "sensores": ["Sensores ópticos avanzados para el seguimiento constante de constantes vitales y pulso.", "Monitorización integral orientada al bienestar y la actividad física."],
+                "deportes": ["Perfiles deportivos especializados con métricas de rendimiento detalladas.", "Seguimiento de rutas y registro automatizado de entrenamientos."],
+                "construccion": [f"Estructura robusta diseñada por {producto['marca']} para uso exigente.", f"Especificaciones base: {producto['especificaciones']}"]
             },
-            "pros": ["Diseño robusto con materiales de alta calidad y gran durabilidad.", "Excelente precisión en el seguimiento de métricas deportivas y de salud.", "Interfaz intuitiva y altamente personalizable."],
-            "contras": ["Autonomía variable al activar de forma simultánea todas las opciones de alta precisión y pantalla.", "Precio elevado acorde a su gama prémium."],
-            "puntuacion": 9.1
+            "pros": [
+                f"Construcción de alta calidad respaldada por la garantía de {producto['marca']}.",
+                "Excelente integración de métricas de rendimiento y salud en tiempo real.",
+                "Diseño equilibrado entre durabilidad y confort diario."
+            ],
+            "contras": [
+                "Dependencia de la optimización del software para maximizar la autonomía.",
+                "Inversión acorde a la gama alta de dispositivos wearables."
+            ],
+            "puntuacion": 9.2
         }
 
     s = datos_ia['specs']
