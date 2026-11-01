@@ -22,93 +22,93 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 # ==========================================
 productos_catalogo = [
     {
-        "marca": "Huawei",
-        "modelo_corto": "Watch GT 5",
-        "busqueda": "Huawei Watch GT 5",
-        "titulo": "Huawei Watch GT 5 - Reloj Inteligente 46mm, Sistema TruSense, Navegación por mapa en muñeca, Autonomía de hasta 14 días",
-        "especificaciones": "Diseño en acero inoxidable pulido, pantalla AMOLED de 1.43\", nuevo sistema de sensores TruSense para mediciones de salud de precisión, GPS mejorado con algoritmo Sunflower y llamadas Bluetooth.",
-        "precio": "249.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
-    },
-    {
-        "marca": "Xiaomi",
-        "modelo_corto": "Watch 5",
-        "busqueda": "Xiaomi Watch 5",
-        "titulo": "Xiaomi Watch 5 - Smartwatch con Wear OS de Google, Procesador Snapdragon W5+ Gen 2, Pantalla AMOLED 1.43\", GPS Dual",
-        "especificaciones": "Sistema Wear OS de Google con acceso a Google Play y pagos NFC, procesador ultraeficiente de 4 nm, caja de aleación de aluminio ligera, monitorización de salud 24/7 y más de 160 modos deportivos.",
-        "precio": "179.99€",
+        "marca": "Garmin",
+        "modelo_corto": "fēnix 8 Solar",
+        "busqueda": "Garmin fēnix 8 Solar",
+        "titulo": "Garmin fēnix 8 Solar - Smartwatch Multideporte GPS Premium, Cristal de Zafiro Carga Solar, Micrófono y Altavoz, Linterna LED",
+        "especificaciones": "Pantalla Memory-in-Pixel con tecnología de carga solar Solar Sapphire, bisel de titanio de grado 5, resistencia militar MIL-STD-810H y botones inductivos estancos aptos para buceo (40m). Incorpora micrófono/altavoz para llamadas y comandos por voz, linterna LED y hasta 48 días de autonomía en modo reloj.",
+        "precio": "1099.99€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Mi_Watch.jpg"
     },
     {
-        "marca": "Amazfit",
-        "modelo_corto": "Active 3 Premium",
-        "busqueda": "Amazfit Active 3 Premium",
-        "titulo": "Amazfit Active 3 Premium - Smartwatch Deportivo, Pantalla AMOLED 1.75\", Zepp Coach, Mapas Integrados, Llamadas Bluetooth",
-        "especificaciones": "Cuerpo de aleación de aluminio ligero, pantalla HD AMOLED de 1,75 pulgadas, planes de entrenamiento guiados por inteligencia artificial con Zepp Coach, reproducción de música local y mapas offline.",
-        "precio": "169.90€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/a/af/Amazfit_GTS_2_Mini.png"
+        "marca": "Apple",
+        "modelo_corto": "Watch Ultra 2",
+        "busqueda": "Apple Watch Ultra 2",
+        "titulo": "Apple Watch Ultra 2 - Caja de Titanio de 49 mm, Pantalla Retina de 3.000 nits, Conectividad Satelital, Resistencia 100 m",
+        "especificaciones": "Caja de titanio aeroespacial de grado 5, pantalla retina OLED de hasta 3.000 nits de brillo, profundímetro certificado para buceo a 40 metros (EN13319), conexión satelital directa para mensajes y SOS de emergencia, y autonomía de hasta 72 horas en modo ahorro.",
+        "precio": "899.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
     },
     {
         "marca": "Garmin",
-        "modelo_corto": "Vivoactive 5",
-        "busqueda": "Garmin Vivoactive 5",
-        "titulo": "Garmin Vivoactive 5 - Reloj Inteligente GPS con Pantalla AMOLED, Control de Energía Body Battery, Control del Sueño",
-        "especificaciones": "Pantalla AMOLED brillante, análisis personalizado del sueño con sleep coach, sensor Body Battery optimizado, más de 30 apps deportivas integradas y pagos contactless Garmin Pay.",
-        "precio": "269.99€",
+        "modelo_corto": "Enduro 3",
+        "busqueda": "Garmin Enduro 3",
+        "titulo": "Garmin Enduro 3 - Smartwatch para Ultra Resistencia, Cristal Solar Zafiro, Linterna LED, Hasta 320 Horas de Batería GPS",
+        "especificaciones": "Diseñado para ultramaratones y expediciones extremos con un peso ultraligero de 63 g. Lente de carga solar Solar Sapphire con bisel de titanio, mapas topográficos TopoActive preinstalados, navegación SatIQ de doble frecuencia y autonomía imbatible de hasta 320 horas con GPS activo mediante carga solar.",
+        "precio": "899.99€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
     },
     {
-        "marca": "Huawei",
-        "modelo_corto": "Watch Fit 4",
-        "busqueda": "Huawei Watch Fit 4",
-        "titulo": "Huawei Watch Fit 4 - Reloj Inteligente Ultrafino, Pantalla AMOLED 1.82\", Gestión de Salud Stay Fit, Batería hasta 10 días",
-        "especificaciones": "Diseño ultradelgado en forma cuadrada con corona giratoria, pantalla AMOLED de 1,82\", seguimiento preciso de salud y forma física, llamadas Bluetooth, compatible con Android e iOS.",
-        "precio": "149.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/TicWatch_Pro_3.jpg"
-    },
-    {
-        "marca": "Samsung",
-        "modelo_corto": "Galaxy Watch 8",
-        "busqueda": "Samsung Galaxy Watch 8",
-        "titulo": "Samsung Galaxy Watch 8 - Reloj Inteligente 40mm, Procesador Exynos de 3nm, Sensor BioActive, Galaxy AI Integrado",
-        "especificaciones": "Procesador avanzado en 3 nm, sensor BioActive para análisis de salud de alta precisión, integración con Wear OS y funciones de rendimiento y bienestar impulsadas por Galaxy AI.",
-        "precio": "229.00€",
+        "marca": "Suunto",
+        "modelo_corto": "Vertical Titanium Solar",
+        "busqueda": "Suunto Vertical Titanium Solar",
+        "titulo": "Suunto Vertical Titanium Solar - Reloj Deportivo Outdoor con Carga Solar, Bisel Titanio Grado 5, Mapas Offline Gratuitos",
+        "especificaciones": "Diseño escandinavo ultra resistente con bisel de titanio de grado 5 y cristal de zafiro solar. Ofrece mapas topográficos offline gratuitos de gran precisión, posicionamiento dual GNSS de 5 satélites simultáneos y autonomía continua de hasta 85 horas en seguimiento GPS máximo.",
+        "precio": "799.00€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Galaxy_Watch_7.jpg"
     },
     {
-        "marca": "COROS",
-        "modelo_corto": "Pace 3",
-        "busqueda": "COROS Pace 3",
-        "titulo": "COROS Pace 3 - Reloj Deportivo Multideporte Ultraligero, GPS Multibanda, Pantalla Transflectiva, Batería 38h GPS",
-        "especificaciones": "Peso pluma de solo 30 g, chip GPS de doble frecuencia, pantalla Memory-in-Pixel siempre visible bajo luz solar, altímetro barométrico y hasta 17 días de autonomía de uso diario.",
-        "precio": "249.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
-    },
-    {
-        "marca": "OnePlus",
-        "modelo_corto": "Watch 3",
-        "busqueda": "OnePlus Watch 3",
-        "titulo": "OnePlus Watch 3 - Smartwatch Wear OS, Arquitectura Dual-Engine, Cristal de Zafiro, Autonomía de hasta 100 horas",
-        "especificaciones": "Arquitectura de doble chip para rendimiento y eficiencia energética sin igual, caja de acero inoxidable, cristal de zafiro 2.5D y hasta 100 horas de uso inteligente continuo.",
-        "precio": "279.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/TicWatch_Pro_3.jpg"
-    },
-    {
-        "marca": "Amazfit",
-        "modelo_corto": "Balance 2",
-        "busqueda": "Amazfit Balance 2",
-        "titulo": "Amazfit Balance 2 - Smartwatch con Análisis de Composición Corporal, Asistente Zepp Aura AI, Pantalla AMOLED 1.5\"",
-        "especificaciones": "Análisis de preparación física y composición corporal, pantalla AMOLED de 1,5\" con 1.500 nits, altavoz/micrófono para llamadas y pagos NFC mediante Zepp Pay.",
-        "precio": "237.74€",
+        "marca": "Samsung",
+        "modelo_corto": "Galaxy Watch Ultra",
+        "busqueda": "Samsung Galaxy Watch Ultra",
+        "titulo": "Samsung Galaxy Watch Ultra - Smartwatch 47mm Titanio, Chipset 3nm, GPS Dual, Resistencia 10 ATM e IP68, Galaxy AI",
+        "especificaciones": "Caja de titanio de grado 4 con grado de resistencia 10 ATM, certificación militar MIL-STD-810H y resistencia a temperaturas extremas (-20 °C a 55 °C). Procesador de 3 nm para máxima fluidez, pantalla AMOLED de 3.000 nits, sirena de socorro de 86 dB y funciones de entrenamiento con Galaxy AI.",
+        "precio": "699.00€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Amazfit_GTR_2e.jpg"
     },
     {
-        "marca": "Fitbit",
-        "modelo_corto": "Charge 6",
-        "busqueda": "Fitbit Charge 6",
-        "titulo": "Fitbit Charge 6 - Pulsera Avanzada de Salud y Actividad, GPS Integrado, Controles de Google, ECG y Monitor de Estrés",
-        "especificaciones": "Formato compacto con integración nativa de apps de Google (Maps y Wallet), transmisión de frecuencia cardíaca a máquinas de gimnasio, app de ECG, sensor EDA y 7 días de autonomía.",
-        "precio": "159.95€",
+        "marca": "Polar",
+        "modelo_corto": "Grit X2 Pro Titan",
+        "busqueda": "Polar Grit X2 Pro Titan",
+        "titulo": "Polar Grit X2 Pro Titan - Reloj Outdoor Extremo con Bisel de Titanio, Cristal de Zafiro, Estándar MIL-STD-810H, Biometría Elixir",
+        "especificaciones": "Construido con bisel de titanio aeroespacial y pantalla AMOLED protegida por cristal de zafiro de alta dureza. Incluye mapas topográficos offline descargables, sensor biomecánico Polar Elixir (ECG en muñeca, SpO2 y temperatura cutánea) y resistencia a temperaturas operativas de -20°C a +50°C.",
+        "precio": "869.90€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
+    },
+    {
+        "marca": "COROS",
+        "modelo_corto": "VERTIX 2S",
+        "busqueda": "COROS VERTIX 2S",
+        "titulo": "COROS VERTIX 2S - Reloj de Aventura y Escalada Extrema, Bisel Titanio Grado 5, Pantalla Zafiro, GPS Doble Frecuencia, Batería 118h GPS",
+        "especificaciones": "Optimizado para expediciones de alta montaña y escalada con bisel de titanio de grado 5 revestido en PVD y cristal de zafiro. Sistema óptico de frecuencia cardíaca de 5 LEDs, mapas topográficos y paisajísticos globales offline y autonomía de 118 horas en modo GPS completo.",
+        "precio": "699.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
+    },
+    {
+        "marca": "Huawei",
+        "modelo_corto": "Watch Ultimate",
+        "busqueda": "Huawei Watch Ultimate",
+        "titulo": "Huawei Watch Ultimate - Smartwatch de Metal Líquido con Circonio, Ordenador de Buceo 100m, Pantalla AMOLED Zafiro",
+        "especificaciones": "Cuerpo innovador de metal líquido a base de circonio (4.5 veces más resistente que el titanio), bisel cerámico nanocristalino y cristal de zafiro. Certificado como ordenador de buceo profesional para 100 m (ISO 22810 / EN13319), posicionamiento GPS de 5 sistemas y hasta 14 días de batería.",
+        "precio": "749.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
+    },
+    {
+        "marca": "Garmin",
+        "modelo_corto": "Instinct 2X Solar",
+        "busqueda": "Garmin Instinct 2X Solar",
+        "titulo": "Garmin Instinct 2X Solar - Smartwatch Táctico y Outdoor, Carga Solar Ilimitada, Linterna LED Integrada, Resistencia Militar",
+        "especificaciones": "Caja de polímero reforzado con fibra de 50 mm, pantalla transflectiva monocroma de gran visibilidad al sol con cristal Power Glass para autonomía ilimitada en modo reloj inteligente. Incluye GPS multibanda, linterna LED con luz estroboscópica y cumplimiento con estándares térmicos y de choque MIL-STD-810.",
+        "precio": "449.99€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
+    },
+    {
+        "marca": "Amazfit",
+        "modelo_corto": "T-Rex 3",
+        "busqueda": "Amazfit T-Rex 3",
+        "titulo": "Amazfit T-Rex 3 - Smartwatch Táctico Rugerizado, Pantalla AMOLED 2.000 nits, Mapas Offline, Hasta 27 Días de Batería",
+        "especificaciones": "Construcción táctica de grado militar con bisel de acero inoxidable resistente a temperaturas extremas (-30°C a +70°C), pantalla de 1,5\", mapas topográficos giro a giro, asistente IA Zepp Flow y batería imbatible de hasta 27 días.",
+        "precio": "279.90€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/52/Fitbit_Charge_5.jpg"
     }
 ]
