@@ -32,15 +32,6 @@ productos_catalogo = [
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Mi_Watch.jpg"
     },
     {
-        "marca": "Apple",
-        "modelo_corto": "Watch Ultra 2",
-        "busqueda": "Apple Watch Ultra 2",
-        "titulo": "Apple Watch Ultra 2 - Caja de Titanio de 49 mm, Pantalla Retina de 3.000 nits, Conectividad Satelital, Resistencia 100 m",
-        "especificaciones": "Caja de titanio aeroespacial de grado 5, pantalla retina OLED de hasta 3.000 nits de brillo, profundímetro certificado para buceo a 40 metros (EN13319), conexión satelital directa para mensajes y SOS de emergencia, y autonomía de hasta 72 horas en modo ahorro.",
-        "precio": "899.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
-    },
-    {
         "marca": "Garmin",
         "modelo_corto": "Enduro 3",
         "busqueda": "Garmin Enduro 3",
@@ -59,15 +50,6 @@ productos_catalogo = [
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Galaxy_Watch_7.jpg"
     },
     {
-        "marca": "Samsung",
-        "modelo_corto": "Galaxy Watch Ultra",
-        "busqueda": "Samsung Galaxy Watch Ultra",
-        "titulo": "Samsung Galaxy Watch Ultra - Smartwatch 47mm Titanio, Chipset 3nm, GPS Dual, Resistencia 10 ATM e IP68, Galaxy AI",
-        "especificaciones": "Caja de titanio de grado 4 con grado de resistencia 10 ATM, certificación militar MIL-STD-810H y resistencia a temperaturas extremas (-20 °C a 55 °C). Procesador de 3 nm para máxima fluidez, pantalla AMOLED de 3.000 nits, sirena de socorro de 86 dB y funciones de entrenamiento con Galaxy AI.",
-        "precio": "699.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Amazfit_GTR_2e.jpg"
-    },
-    {
         "marca": "Polar",
         "modelo_corto": "Grit X2 Pro Titan",
         "busqueda": "Polar Grit X2 Pro Titan",
@@ -84,15 +66,6 @@ productos_catalogo = [
         "especificaciones": "Optimizado para expediciones de alta montaña y escalada con bisel de titanio de grado 5 revestido en PVD y cristal de zafiro. Sistema óptico de frecuencia cardíaca de 5 LEDs, mapas topográficos y paisajísticos globales offline y autonomía de 118 horas en modo GPS completo.",
         "precio": "699.00€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
-    },
-    {
-        "marca": "Huawei",
-        "modelo_corto": "Watch Ultimate",
-        "busqueda": "Huawei Watch Ultimate",
-        "titulo": "Huawei Watch Ultimate - Smartwatch de Metal Líquido con Circonio, Ordenador de Buceo 100m, Pantalla AMOLED Zafiro",
-        "especificaciones": "Cuerpo innovador de metal líquido a base de circonio (4.5 veces más resistente que el titanio), bisel cerámico nanocristalino y cristal de zafiro. Certificado como ordenador de buceo profesional para 100 m (ISO 22810 / EN13319), posicionamiento GPS de 5 sistemas y hasta 14 días de batería.",
-        "precio": "749.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
     },
     {
         "marca": "Garmin",
