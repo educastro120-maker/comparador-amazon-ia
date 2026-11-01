@@ -34,124 +34,49 @@ productos_catalogo = [
 ]
 
 def render_bullets(items):
-    """Convierte una lista de strings en elementos de lista HTML con negritas en las claves y viñetas elegantes"""
+    """Convierte una lista de strings en elementos de lista HTML con viñetas"""
     if isinstance(items, list):
-        html_out = ""
-        for item in items:
-            if ":" in item:
-                partes = item.split(":", 1)
-                html_out += f"<li style='margin-bottom: 6px;'><strong>{partes[0].strip()}:</strong> {partes[1].strip()}</li>"
-            else:
-                html_out += f"<li style='margin-bottom: 6px;'>{item.strip()}</li>"
-        return html_out
+        return "".join([f"<li style='margin-bottom: 4px;'>{item}</li>" for item in items])
     return f"<li>{items}</li>"
 
 def procesar_y_publicar(producto):
     query_encoded = urllib.parse.quote_plus(producto['busqueda'])
     affiliate_link = f"https://www.amazon.es/s?k={query_encoded}&tag={AMAZON_TAG}"
 
+    # PROMPT REFORZADO PARA EXIGIR MÁXIMO DETALLE TÉCNICO Y EVITAR GENERALIDADES
     prompt = f"""
-    Actúa como un ingeniero jefe de hardware y analista de laboratorio tecnológico.
-    NAVEGACIÓN EN TIEMPO REAL REQUERIDA: Debes buscar en tiempo real los datos técnicos completos de lanzamiento, manuales técnicos y fichas de laboratorio del dispositivo exacto: "{producto['busqueda']}".
+    Actúa estrictamente como un ingeniero de hardware, especialista en tecnología wearable y periodista tecnológico experto en smartwatches de gama alta.
+    Utiliza obligatoriamente la herramienta de búsqueda web en tiempo real para investigar a fondo y extraer las especificaciones técnicas de laboratorio reales, exactas y exhaustivas del dispositivo: "{producto['busqueda']}".
+    
+    Datos base de referencia:
+    - Marca: {producto['marca']}
+    - Modelo: {producto['modelo_corto']}
+    - Título oficial: {producto['titulo']}
+    - Specs base orientativas: {producto['especificaciones']}
+    - Precio de referencia: {producto['precio']}
 
-    TU TAREA ES GENERAR UNA FICHA TÉCNICA ULTRA-COMPLETA Y EXHAUSTIVA.
-    Cada categoría técnica DEBE contener entre 4 y 7 viñetas hiperespecíficas usando estrictamente el formato "Parámetro: Valor/Explicación detallada".
-
-    EJEMPLO DEL NIVEL DE DETALLE EXIGIDO PARA CADA SECCIÓN:
-    - Pantalla:
-      "Panel: LTPO 2.0 AMOLED circular de 1,5 pulgadas."
-      "Resolución: 466 × 466 píxeles (310 ppp)."
-      "Brillo Máximo: 3.500 nits picos de visibilidad plena a sol directo."
-      "Tecnología: Refresco adaptativo 1 Hz a 60 Hz y Always-On Display (AOD)."
-      "Protección: Cristal de zafiro sintético de alta dureza."
-    - Batería:
-      "Capacidad: 867 mAh de alta densidad."
-      "Procesador: Dual-core especializado con gestión energética adaptativa."
-      "Autonomía: Hasta 14 días en uso típico, 40 horas continuas con GPS activo."
-      "Carga: Carga rápida magnética (0 a 100% en 60 min, 15 min equivalen a 1 día)."
-    - Conectividad:
-      "NFC: Sí (pagos móviles y tarjetas de acceso)."
-      "Red Móvil: Compatibilidad eSIM / 4G LTE para uso independiente."
-      "Sistemas Inalámbricos: Wi-Fi dual-band, Bluetooth 5.3 y Chip UWB."
-      "Posicionamiento GPS: GNSS de doble frecuencia L1+L5 (GPS, GLONASS, Galileo, BeiDou, QZSS)."
-    - Sensores:
-      "Salud: Pulsómetro óptico continuo, SpO2, sensor de ECG certificado y temperatura cutánea."
-      "Entorno: Altímetro barométrico, brújula digital, profundímetro con temperatura de agua."
-      "Seguridad: Acelerómetro de alta fuerza G para detección de caídas y colisiones."
-    - Deportes:
-      "Modos: Más de 100 modalidades deportivas con métricas avanzadas (VO2 Max, Potencia, SWOLF)."
-      "Buceo: Certificación para inmersiones hasta 100 m / 150 m (EN 13319 / ISO 22810)."
-      "Navegación: Mapas topográficos 3D offline, waypoints y función Backtrack."
-    - Construcción:
-      "Chasis: Titanio de Grado 5 / Metal Líquido a base de Circonio."
-      "Bisel y Fondo: Cerámica nanocristalina y cristal de zafiro."
-      "Resistencia: 10 ATM / 20 ATM, IP68, IP69K y norma militar MIL-STD-810H."
-      "Dimensiones y Peso: 48,5 × 48,5 × 13 mm / 80 gramos."
-
-    Devuelve ÚNICAMENTE un objeto JSON válido con esta estructura exacta y sin texto adicional afuera:
+    REQUISITOS OBLIGATORIOS PARA LA GENERACIÓN DEL JSON:
+    1. PROHIBIDO dar respuestas genéricas o vagas (como "batería optimizada" o "pantalla de alta visibilidad"). Debes buscar y rellenar con datos técnicos concretos: tipo de panel, resolución en píxeles, brillo máximo en nits, capacidad exacta en mAh, autonomía en días u horas con GPS, tipo de carga, conectividad eSIM/LTE, GPS de doble frecuencia, sensores biométricos específicos (ECG, SpO2, temperatura), profundidad máxima de inmersión y materiales exactos (ej. titanio de grado 5, zafiro).
+    2. NUNCA mezcles conceptos (por ejemplo, está prohibido colocar precios, enlaces o valoraciones comerciales dentro de las especificaciones técnicas de batería o pantalla). Cada clave de "specs" debe contener estrictamente los datos técnicos de su categoría.
+    3. Devuelve ÚNICAMENTE un objeto JSON válido que cumpla estrictamente con esta estructura exacta de claves:
     {{
-      "badge": "ETIQUETA EN MAYÚSCULAS (ej: REY DEL BUCEO Y MONTAÑA)",
-      "resumen_ejecutivo": "Redacción técnica y profesional de 150 a 220 palabras analizando el impacto del reloj en el mercado, sus materiales prémium, público objetivo y rendimiento real.",
+      "badge": "ETIQUETA COMERCIAL CORTA EN MAYÚSCULAS (ej: ANÁLISIS GPS PREMIUM)",
+      "resumen_ejecutivo": "Análisis técnico profundo de 150 a 220 palabras explicando sus prestaciones avanzadas, materiales de construcción, rendimiento real y valor en el mercado.",
       "specs": {{
-        "pantalla": [
-          "Panel: ...",
-          "Resolución: ...",
-          "Brillo Máximo: ...",
-          "Tecnología: ...",
-          "Protección: ..."
-        ],
-        "bateria": [
-          "Capacidad: ...",
-          "Procesador: ...",
-          "Autonomía: ...",
-          "Carga: ..."
-        ],
-        "conectividad": [
-          "Red Móvil / eSIM: ...",
-          "NFC: ...",
-          "Sistemas Inalámbricos: ...",
-          "Posicionamiento (GPS): ...",
-          "Audio y Micrófonos: ..."
-        ],
-        "sensores": [
-          "Monitor de Salud Continuo: ...",
-          "Electrocardiograma (ECG): ...",
-          "Temperatura: ...",
-          "Movimiento y Entorno: ...",
-          "Inmersión y Altitud: ..."
-        ],
-        "deportes": [
-          "Modos Deportivos: ...",
-          "Buceo / Resistencia al Agua: ...",
-          "Navegación y Mapas: ...",
-          "Métricas Avanzadas: ..."
-        ],
-        "construccion": [
-          "Caja: ...",
-          "Bisel y Fondo: ...",
-          "Resistencia y Certificaciones: ...",
-          "Dimensiones y Peso: ...",
-          "Control e Interacción: ..."
-        ]
+        "pantalla": ["Detalle técnico 1 (ej: Panel AMOLED circular de X pulgadas)", "Detalle técnico 2 (ej: Resolución exacta y densidad de ppp)", "Detalle técnico 3 (ej: Brillo máximo en nits y protección de zafiro)"],
+        "bateria": ["Detalle técnico 1 (ej: Capacidad exacta en mAh o celda)", "Detalle técnico 2 (ej: Autonomía real en uso típico y horas continuas con GPS)", "Detalle técnico 3 (ej: Sistema de carga inalámbrica o rápida y tiempo estimado)"],
+        "conectividad": ["Detalle técnico 1 (ej: Conectividad eSIM / 4G / LTE)", "Detalle técnico 2 (ej: Posicionamiento GNSS de doble frecuencia L1 + L5)", "Detalle técnico 3 (ej: Wi-Fi, Bluetooth avanzado y soporte NFC)"],
+        "sensores": ["Detalle técnico 1 (ej: Frecuencia cardíaca óptica y SpO2)", "Detalle técnico 2 (ej: Electrocardiograma ECG certificado / temperatura cutánea)", "Detalle técnico 3 (ej: Altímetro barométrico, brújula, giroscopio y profundidad)"],
+        "deportes": ["Detalle técnico 1 (ej: Número de modos deportivos y perfiles especializados)", "Detalle técnico 2 (ej: Certificación de buceo profesional / profundidad en metros)", "Detalle técnico 3 (ej: Mapas offline, navegación y retorno al punto de inicio)"],
+        "construccion": ["Detalle técnico 1 (ej: Material exacto de la caja, bisel y fondo)", "Detalle técnico 2 (ej: Certificaciones de resistencia militar MIL-STD-810H y ATM)", "Detalle técnico 3 (ej: Dimensiones de caja y peso sin correa)"]
       }},
-      "pros": [
-        "Punto fuerte 1 con explicación detallada de valor real (mínimo 15 palabras)",
-        "Punto fuerte 2 detallando especificaciones concretas",
-        "Punto fuerte 3 sobre rendimiento o materiales",
-        "Punto fuerte 4 adicional",
-        "Punto fuerte 5 adicional"
-      ],
-      "contras": [
-        "Punto negativo 1 redactado con criterio técnico",
-        "Punto negativo 2 sobre ergonomía, precio o ecosistema",
-        "Punto negativo 3 adicional",
-        "Punto negativo 4 adicional"
-      ],
+      "pros": ["Punto fuerte técnico 1 detallado y específico", "Punto fuerte técnico 2 detallado", "Punto fuerte técnico 3 detallado"],
+      "contras": ["Punto débil 1 detallado", "Punto débil 2 detallado"],
       "puntuacion": 9.4
     }}
     """
 
-    print(f"🌐 Extrayendo ficha técnica masiva y datos de laboratorio para: {producto['titulo']}...")
+    print(f"🌐 Navegando y extrayendo especificaciones técnicas profundas en tiempo real para: {producto['titulo']}...")
     
     max_intentos = 3
     response = None
@@ -159,9 +84,8 @@ def procesar_y_publicar(producto):
         try:
             config = types.GenerateContentConfig(
                 tools=[{"google_search": {}}],
-                temperature=0.1,  # Temperatura ultra baja para precisión máxima sin alucinaciones
-                response_mime_type="application/json",
-                max_output_tokens=5000  # Expandido a 5000 tokens para permitir JSONs extensos y detallados
+                temperature=0.1,  # Temperatura baja para mayor precisión en datos técnicos
+                response_mime_type="application/json"
             )
             
             response = client.models.generate_content(
@@ -177,36 +101,43 @@ def procesar_y_publicar(producto):
             else:
                 print(f"❌ Imposible analizar {producto['titulo']} tras {max_intentos} intentos.")
 
-    # Parseo estricto del JSON
+    # Extracción del JSON garantizado por la API
     datos_ia = None
     if response and hasattr(response, 'text') and response.text:
         try:
             datos_ia = json.loads(response.text.strip())
         except json.JSONDecodeError as err:
-            print(f"⚠️ Advertencia: Error analizando JSON en {producto['titulo']}: {err}")
+            print(f"⚠️ Advertencia: Error analizando JSON directo en {producto['titulo']}: {err}")
 
-    # Fallback contextual inteligente si la llamada remota falla
+    # Respaldo inteligente mejorado con nivel técnico alto en caso de fallo de red/API
     if not datos_ia:
-        print(f"💡 Aplicando respaldo estructurado para {producto['titulo']}...")
+        print(f"💡 Aplicando respaldo técnico avanzado basado en datos del catálogo para {producto['titulo']}...")
         datos_ia = {
             "badge": f"ANÁLISIS TÉCNICO {producto['marca'].upper()}",
-            "resumen_ejecutivo": f"{producto['titulo']} representa una alternativa de ingeniería avanzada en el catálogo actual. Integra componentes de alta durabilidad y un paquete integral de sensores biométricos para deportistas exigentes.",
+            "resumen_ejecutivo": f"{producto['titulo']} representa una opción sobresaliente dentro del mercado de dispositivos wearables avanzados. Diseñado para ofrecer un rendimiento fluido y constante, combina materiales de alta durabilidad con una completa suite de sensores orientados al deporte de alto rendimiento y la salud. Su optimización de hardware lo convierte en un compañero ideal para usuarios exigentes.",
             "specs": {
-                "pantalla": [f"Modelo: {producto['modelo_corto']}", "Panel: Pantalla táctil de alta visibilidad en exteriores.", "Protección: Cristal reforzado."],
-                "bateria": ["Autonomía: Optimizada para uso continuo en modo multideporte y GPS.", f"Precio de referencia: {producto['precio']}"],
-                "conectividad": ["Sistemas de posicionamiento: GPS / GNSS integrado.", "Inalámbrico: Bluetooth de alta velocidad."],
-                "sensores": ["Biometría: Frecuencia cardíaca óptica y oxígeno en sangre (SpO2).", "Navegación: Altímetro barométrico y brújula."],
-                "deportes": ["Modalidades: Perfiles multideporte y métricas de entrenamiento.", "Resistencia: Apto para uso deportivo intenso."],
-                "construccion": [f"Fabricante: {producto['marca']}", f"Especificaciones base: {producto['especificaciones']}"]
+                "pantalla": [f"Tecnología optimizada para visualización avanzada en exteriores.", f"Especificación base integrada: {producto['especificaciones']}."],
+                "bateria": ["Sistema de gestión energética de alta eficiencia para uso prolongado.", "Autonomía extendida optimizada para seguimiento GPS multideporte."],
+                "conectividad": ["Soporte completo para sincronización de datos y conectividad inalámbrica de alta velocidad.", "Sistemas de posicionamiento geográfico por satélite integrados."],
+                "sensores": ["Monitoreo continuo de frecuencia cardíaca y saturación de oxígeno (SpO2).", "Sensores barométricos y de movimiento para métricas de altitud y entorno."],
+                "deportes": ["Perfiles multideporte avanzados con métricas detalladas de entrenamiento.", "Resistencia certificada para entornos de alta exigencia."],
+                "construccion": [f"Estructura robusta de alta gama desarrollada por {producto['marca']}.", f"Detalle de construcción: {producto['especificaciones']}"]
             },
-            "pros": ["Diseño resistente y materiales de primera línea.", "Precisión en mediciones deportivas.", "Buena visibilidad."],
-            "contras": ["Dimensiones adaptadas a uso deportivo.", "Precio en rango de gama alta."],
-            "puntuacion": 9.0
+            "pros": [
+                f"Construcción robusta y materiales de primera línea respaldados por {producto['marca']}.",
+                "Excelente precisión en el registro de métricas deportivas y de salud.",
+                "Interfaz optimizada para visibilidad y usabilidad bajo condiciones extremas."
+            ],
+            "contras": [
+                "Dimensiones y peso adaptados al formato deportivo robusto.",
+                "Inversión económica acorde a la gama alta de la categoría."
+            ],
+            "puntuacion": 9.2
         }
 
     s = datos_ia['specs']
 
-    # HTML profesional y dinámico con negritas automáticas
+    # HTML profesional y optimizado para WordPress
     html_content = f"""
     <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; background-color: #ffffff; max-width: 750px; margin: 20px auto; font-family: system-ui, -apple-system, sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
       
@@ -230,7 +161,7 @@ def procesar_y_publicar(producto):
         
         <table style="width: 100%; border-collapse: collapse; border: none; font-size: 0.95em; color: #334155;">
           <tr style="border: none; border-bottom: 1px solid #f1f5f9;">
-            <td style="padding: 10px 12px; font-weight: bold; width: 28%; vertical-align: top; border: none; background-color: #f1f5f9; border-top-left-radius: 6px;">📺 Pantalla</td>
+            <td style="padding: 10px 12px; font-weight: bold; width: 30%; vertical-align: top; border: none; background-color: #f1f5f9; border-top-left-radius: 6px;">📺 Pantalla</td>
             <td style="padding: 10px 12px; vertical-align: top; border: none; background-color: #f8fafc;">
               <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
                 {render_bullets(s.get('pantalla', []))}
