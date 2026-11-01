@@ -30,6 +30,87 @@ productos_catalogo = [
         "especificaciones": "Pantalla Memory-in-Pixel con tecnología de carga solar Solar Sapphire, bisel de titanio de grado 5, resistencia militar MIL-STD-810H y botones inductivos estancos aptos para buceo (40m). Incorpora micrófono/altavoz para llamadas y comandos por voz, linterna LED y hasta 48 días de autonomía en modo reloj.",
         "precio": "1099.99€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Mi_Watch.jpg"
+    },
+    {
+        "marca": "Apple",
+        "modelo_corto": "Watch Ultra 2",
+        "busqueda": "Apple Watch Ultra 2",
+        "titulo": "Apple Watch Ultra 2 - Caja de Titanio de 49 mm, Pantalla Retina de 3.000 nits, Conectividad Satelital, Resistencia 100 m",
+        "especificaciones": "Caja de titanio aeroespacial de grado 5, pantalla retina OLED de hasta 3.000 nits de brillo, profundímetro certificado para buceo a 40 metros (EN13319), conexión satelital directa para mensajes y SOS de emergencia, y autonomía de hasta 72 horas en modo ahorro.",
+        "precio": "899.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
+    },
+    {
+        "marca": "Garmin",
+        "modelo_corto": "Enduro 3",
+        "busqueda": "Garmin Enduro 3",
+        "titulo": "Garmin Enduro 3 - Smartwatch para Ultra Resistencia, Cristal Solar Zafiro, Linterna LED, Hasta 320 Horas de Batería GPS",
+        "especificaciones": "Diseñado para ultramaratones y expediciones extremos con un peso ultraligero de 63 g. Lente de carga solar Solar Sapphire con bisel de titanio, mapas topográficos TopoActive preinstalados, navegación SatIQ de doble frecuencia y autonomía imbatible de hasta 320 horas con GPS activo mediante carga solar.",
+        "precio": "899.99€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
+    },
+    {
+        "marca": "Suunto",
+        "modelo_corto": "Vertical Titanium Solar",
+        "busqueda": "Suunto Vertical Titanium Solar",
+        "titulo": "Suunto Vertical Titanium Solar - Reloj Deportivo Outdoor con Carga Solar, Bisel Titanio Grado 5, Mapas Offline Gratuitos",
+        "especificaciones": "Diseño escandinavo ultra resistente con bisel de titanio de grado 5 y cristal de zafiro solar. Ofrece mapas topográficos offline gratuitos de gran precisión, posicionamiento dual GNSS de 5 satélites simultáneos y autonomía continua de hasta 85 horas en seguimiento GPS máximo.",
+        "precio": "799.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Galaxy_Watch_7.jpg"
+    },
+    {
+        "marca": "Samsung",
+        "modelo_corto": "Galaxy Watch Ultra",
+        "busqueda": "Samsung Galaxy Watch Ultra",
+        "titulo": "Samsung Galaxy Watch Ultra - Smartwatch 47mm Titanio, Chipset 3nm, GPS Dual, Resistencia 10 ATM e IP68, Galaxy AI",
+        "especificaciones": "Caja de titanio de grado 4 con grado de resistencia 10 ATM, certificación militar MIL-STD-810H y resistencia a temperaturas extremas (-20 °C a 55 °C). Procesador de 3 nm para máxima fluidez, pantalla AMOLED de 3.000 nits, sirena de socorro de 86 dB y funciones de entrenamiento com Galaxy AI.",
+        "precio": "699.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Amazfit_GTR_2e.jpg"
+    },
+    {
+        "marca": "Polar",
+        "modelo_corto": "Grit X2 Pro Titan",
+        "busqueda": "Polar Grit X2 Pro Titan",
+        "titulo": "Polar Grit X2 Pro Titan - Reloj Outdoor Extremo con Bisel de Titanio, Cristal de Zafiro, Estándar MIL-STD-810H, Biometría Elixir",
+        "especificaciones": "Construido con bisel de titanio aeroespacial y pantalla AMOLED protegida por cristal de zafiro de alta dureza. Incluye mapas topográficos offline descargables, sensor biomecánico Polar Elixir (ECG en muñeca, SpO2 y temperatura cutánea) y resistencia a temperaturas operativas de -20°C a +50°C.",
+        "precio": "869.90€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
+    },
+    {
+        "marca": "COROS",
+        "modelo_corto": "VERTIX 2S",
+        "busqueda": "COROS VERTIX 2S",
+        "titulo": "COROS VERTIX 2S - Reloj de Aventura y Escalada Extrema, Bisel Titanio Grado 5, Pantalla Zafiro, GPS Doble Frecuencia, Batería 118h GPS",
+        "especificaciones": "Optimizado para expediciones de alta montaña y escalada con bisel de titanio de grado 5 revestido en PVD y cristal de zafiro. Sistema óptico de frecuencia cardíaca de 5 LEDs, mapas topográficos y paisajísticos globales offline y autonomía de 118 horas en modo GPS completo.",
+        "precio": "699.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
+    },
+    {
+        "marca": "Huawei",
+        "modelo_corto": "Watch Ultimate",
+        "busqueda": "Huawei Watch Ultimate",
+        "titulo": "Huawei Watch Ultimate - Smartwatch de Metal Líquido con Circonio, Ordenador de Buceo 100m, Pantalla AMOLED Zafiro",
+        "especificaciones": "Cuerpo innovador de metal líquido a base de circonio (4.5 veces más resistente que el titanio), bisel cerámico nanocristalino y cristal de zafiro. Certificado como ordenador de buceo profesional para 100 m (ISO 22810 / EN13319), posicionamiento GPS de 5 sistemas y hasta 14 días de batería.",
+        "precio": "749.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
+    },
+    {
+        "marca": "Garmin",
+        "modelo_corto": "Instinct 2X Solar",
+        "busqueda": "Garmin Instinct 2X Solar",
+        "titulo": "Garmin Instinct 2X Solar - Smartwatch Táctico y Outdoor, Carga Solar Ilimitada, Linterna LED Integrada, Resistencia Militar",
+        "especificaciones": "Caja de polímero reforzado con fibra de 50 mm, pantalla transflectiva monocroma de gran visibilidad al sol con cristal Power Glass para autonomía ilimitada en modo reloj inteligente. Incluye GPS multibanda, linterna LED con luz estroboscópica y cumplimiento con estándares térmicos y de choque MIL-STD-810.",
+        "precio": "449.99€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
+    },
+    {
+        "marca": "Amazfit",
+        "modelo_corto": "T-Rex 3",
+        "busqueda": "Amazfit T-Rex 3",
+        "titulo": "Amazfit T-Rex 3 - Smartwatch Táctico Rugerizado, Pantalla AMOLED 2.000 nits, Mapas Offline, Hasta 27 Días de Batería",
+        "especificaciones": "Construcción táctica de grado militar con bisel de acero inoxidable resistente a temperaturas extremas (-30°C a +70°C), pantalla de 1,5\", mapas topográficos giro a giro, asistente IA Zepp Flow y batería imbatible de hasta 27 días.",
+        "precio": "279.90€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/52/Fitbit_Charge_5.jpg"
     }
 ]
 
@@ -43,10 +124,10 @@ def procesar_y_publicar(producto):
     query_encoded = urllib.parse.quote_plus(producto['busqueda'])
     affiliate_link = f"https://www.amazon.es/s?k={query_encoded}&tag={AMAZON_TAG}"
 
-    # PROMPT REFORZADO PARA EXIGIR MÁXIMO DETALLE TÉCNICO Y EVITAR GENERALIDADES
+    # PROMPT EXHAUSTIVO CON EXIGENCIA DE DATOS NUMÉRICOS Y TÉCNICOS ESPECÍFICOS
     prompt = f"""
     Actúa estrictamente como un ingeniero de hardware, especialista en tecnología wearable y periodista tecnológico experto en smartwatches de gama alta.
-    Utiliza obligatoriamente la herramienta de búsqueda web en tiempo real para investigar a fondo y extraer las especificaciones técnicas de laboratorio reales, exactas y exhaustivas del dispositivo: "{producto['busqueda']}".
+    Utiliza obligatoriamente la herramienta de búsqueda web en tiempo real para investigar a fondo y extraer los DATOS TÉCNICOS, MÉTRICAS Y CIFRAS REALES (horas exactas de batería, número exacto de modos deportivos, resolución de pantalla, brillo en nits, profundidad en metros) del dispositivo: "{producto['busqueda']}".
     
     Datos base de referencia:
     - Marca: {producto['marca']}
@@ -55,28 +136,34 @@ def procesar_y_publicar(producto):
     - Specs base orientativas: {producto['especificaciones']}
     - Precio de referencia: {producto['precio']}
 
-    REQUISITOS OBLIGATORIOS PARA LA GENERACIÓN DEL JSON:
-    1. PROHIBIDO dar respuestas genéricas o vagas (como "batería optimizada" o "pantalla de alta visibilidad"). Debes buscar y rellenar con datos técnicos concretos: tipo de panel, resolución en píxeles, brillo máximo en nits, capacidad exacta en mAh, autonomía en días u horas con GPS, tipo de carga, conectividad eSIM/LTE, GPS de doble frecuencia, sensores biométricos específicos (ECG, SpO2, temperatura), profundidad máxima de inmersión y materiales exactos (ej. titanio de grado 5, zafiro).
-    2. NUNCA mezcles conceptos (por ejemplo, está prohibido colocar precios, enlaces o valoraciones comerciales dentro de las especificaciones técnicas de batería o pantalla). Cada clave de "specs" debe contener estrictamente los datos técnicos de su categoría.
-    3. Devuelve ÚNICAMENTE un objeto JSON válido que cumpla estrictamente con esta estructura exacta de claves:
+    REQUISITOS OBLIGATORIOS PARA LA GENERACIÓN DEL JSON (MÁXIMO NIVEL DE DETALLE Y RIGOR):
+    1. PROHIBIDO dar respuestas vagas o generales (como "batería de larga duración" o "múltiples deportes"). DEBES APORTAR CIFRAS Y DATOS CONCRETOS:
+       - En Pantalla: Tipo exacto de panel, tamaño en pulgadas, resolución exacta en píxeles y brillo máximo en nits.
+       - En Batería: Días exactos de autonomía en modo smartwatch y horas exactas continuas con GPS activo (ej. "Hasta 40 horas continuas con GPS").
+       - En Conectividad: Sistemas GNSS de doble frecuencia (ej. L1 + L5, GPS, GLONASS, Galileo), NFC, Bluetooth y soporte eSIM/LTE si aplica.
+       - En Sensores: Sensores biométricos (frecuencia cardíaca, SpO2, ECG, temperatura) y barómetro/brújula.
+       - En Deportes: El número exacto o aproximado de modos deportivos (ej. "Más de 100 modalidades"), profundidad exacta de inmersión en metros (ej. "Sumergible hasta 40m o 100m con certificación EN13319") y mapas offline.
+       - En Construcción: Material exacto de la caja (ej. Titanio de grado 5), bisel, certificaciones militares (MIL-STD-810H), resistencia (ATM) y dimensiones/peso exactos.
+    2. NUNCA mezcles conceptos (está prohibido poner precios o enlaces dentro de las especificaciones de batería o pantalla).
+    3. Devuelve ÚNICAMENTE un objeto JSON válido que cumpla estrictamente con esta estructura de claves:
     {{
-      "badge": "ETIQUETA COMERCIAL CORTA EN MAYÚSCULAS (ej: ANÁLISIS GPS PREMIUM)",
-      "resumen_ejecutivo": "Análisis técnico profundo de 150 a 220 palabras explicando sus prestaciones avanzadas, materiales de construcción, rendimiento real y valor en el mercado.",
+      "badge": "ETIQUETA COMERCIAL CORTA EN MAYÚSCULAS",
+      "resumen_ejecutivo": "Análisis técnico profundo de 150 a 220 palabras explicando sus prestaciones, materiales, rendimiento y valor en el mercado.",
       "specs": {{
-        "pantalla": ["Detalle técnico 1 (ej: Panel AMOLED circular de X pulgadas)", "Detalle técnico 2 (ej: Resolución exacta y densidad de ppp)", "Detalle técnico 3 (ej: Brillo máximo en nits y protección de zafiro)"],
-        "bateria": ["Detalle técnico 1 (ej: Capacidad exacta en mAh o celda)", "Detalle técnico 2 (ej: Autonomía real en uso típico y horas continuas con GPS)", "Detalle técnico 3 (ej: Sistema de carga inalámbrica o rápida y tiempo estimado)"],
-        "conectividad": ["Detalle técnico 1 (ej: Conectividad eSIM / 4G / LTE)", "Detalle técnico 2 (ej: Posicionamiento GNSS de doble frecuencia L1 + L5)", "Detalle técnico 3 (ej: Wi-Fi, Bluetooth avanzado y soporte NFC)"],
-        "sensores": ["Detalle técnico 1 (ej: Frecuencia cardíaca óptica y SpO2)", "Detalle técnico 2 (ej: Electrocardiograma ECG certificado / temperatura cutánea)", "Detalle técnico 3 (ej: Altímetro barométrico, brújula, giroscopio y profundidad)"],
-        "deportes": ["Detalle técnico 1 (ej: Número de modos deportivos y perfiles especializados)", "Detalle técnico 2 (ej: Certificación de buceo profesional / profundidad en metros)", "Detalle técnico 3 (ej: Mapas offline, navegación y retorno al punto de inicio)"],
-        "construccion": ["Detalle técnico 1 (ej: Material exacto de la caja, bisel y fondo)", "Detalle técnico 2 (ej: Certificaciones de resistencia militar MIL-STD-810H y ATM)", "Detalle técnico 3 (ej: Dimensiones de caja y peso sin correa)"]
+        "pantalla": ["Detalle técnico con tamaño y panel exacto", "Resolución en píxeles y densidad", "Brillo máximo en nits y tipo de cristal protector"],
+        "bateria": ["Autonomía exacta en días para uso normal/ahorro", "Autonomía exacta en horas con GPS continuo activo", "Tecnología de carga y tiempo estimado de 0 a 100%"],
+        "conectividad": ["Sistemas de posicionamiento GNSS (doble frecuencia y satélites soportados)", "Conectividad inalámbrica (Bluetooth, Wi-Fi, NFC y eSIM si procede)", "Funciones de llamada o altavoz/micrófono"],
+        "sensores": ["Sensores de salud y biometría (frecuencia cardíaca, SpO2, ECG, temperatura cutánea)", "Sensores de entorno y orientación (altímetro barométrico, brújula, giroscopio)"],
+        "deportes": ["Número exacto de modos deportivos y perfiles de entrenamiento especializados", "Profundidad de inmersión y certificación de buceo/multideporte", "Mapas offline y navegación avanzada"],
+        "construccion": ["Material exacto de caja, bisel y fondo (ej. titanio grado 5, zafiro)", "Certificaciones de resistencia (MIL-STD-810H, ATM)", "Dimensiones de caja y peso sin correa"]
       }},
-      "pros": ["Punto fuerte técnico 1 detallado y específico", "Punto fuerte técnico 2 detallado", "Punto fuerte técnico 3 detallado"],
+      "pros": ["Punto fuerte técnico 1 muy detallado y específico", "Punto fuerte técnico 2 muy detallado", "Punto fuerte técnico 3 muy detallado"],
       "contras": ["Punto débil 1 detallado", "Punto débil 2 detallado"],
       "puntuacion": 9.4
     }}
     """
 
-    print(f"🌐 Navegando y extrayendo especificaciones técnicas profundas en tiempo real para: {producto['titulo']}...")
+    print(f"🌐 Navegando y extrayendo datos cuantitativos exhaustivos en tiempo real para: {producto['titulo']}...")
     
     max_intentos = 3
     response = None
@@ -84,7 +171,7 @@ def procesar_y_publicar(producto):
         try:
             config = types.GenerateContentConfig(
                 tools=[{"google_search": {}}],
-                temperature=0.1,  # Temperatura baja para mayor precisión en datos técnicos
+                temperature=0.1,  # Temperatura muy baja para máxima precisión factual
                 response_mime_type="application/json"
             )
             
@@ -109,22 +196,22 @@ def procesar_y_publicar(producto):
         except json.JSONDecodeError as err:
             print(f"⚠️ Advertencia: Error analizando JSON directo en {producto['titulo']}: {err}")
 
-    # Respaldo inteligente mejorado con nivel técnico alto en caso de fallo de red/API
+    # Respaldo inteligente enriquecido con métricas estimadas y datos técnicos reales del catálogo
     if not datos_ia:
-        print(f"💡 Aplicando respaldo técnico avanzado basado en datos del catálogo para {producto['titulo']}...")
+        print(f"💡 Aplicando respaldo técnico estructurado con métricas para {producto['titulo']}...")
         datos_ia = {
             "badge": f"ANÁLISIS TÉCNICO {producto['marca'].upper()}",
-            "resumen_ejecutivo": f"{producto['titulo']} representa una opción sobresaliente dentro del mercado de dispositivos wearables avanzados. Diseñado para ofrecer un rendimiento fluido y constante, combina materiales de alta durabilidad con una completa suite de sensores orientados al deporte de alto rendimiento y la salud. Su optimización de hardware lo convierte en un compañero ideal para usuarios exigentes.",
+            "resumen_ejecutivo": f"{producto['titulo']} representa una opción sobresaliente dentro del mercado actual de dispositivos wearables. Diseñado para ofrecer un rendimiento fluido y constante, combina materiales de alta durabilidad con una completa suite de sensores orientados al deporte de alto rendimiento y la salud. Su optimización de hardware lo convierte en un compañero ideal para entrenamientos exigentes.",
             "specs": {
-                "pantalla": [f"Tecnología optimizada para visualización avanzada en exteriores.", f"Especificación base integrada: {producto['especificaciones']}."],
-                "bateria": ["Sistema de gestión energética de alta eficiencia para uso prolongado.", "Autonomía extendida optimizada para seguimiento GPS multideporte."],
-                "conectividad": ["Soporte completo para sincronización de datos y conectividad inalámbrica de alta velocidad.", "Sistemas de posicionamiento geográfico por satélite integrados."],
-                "sensores": ["Monitoreo continuo de frecuencia cardíaca y saturación de oxígeno (SpO2).", "Sensores barométricos y de movimiento para métricas de altitud y entorno."],
-                "deportes": ["Perfiles multideporte avanzados con métricas detalladas de entrenamiento.", "Resistencia certificada para entornos de alta exigencia."],
-                "construccion": [f"Estructura robusta de alta gama desarrollada por {producto['marca']}.", f"Detalle de construcción: {producto['especificaciones']}"]
+                "pantalla": [f"Panel optimizado de alta visibilidad en exteriores para el modelo {producto['modelo_corto']}.", f"Especificación base integrada: {producto['especificaciones']}."],
+                "bateria": ["Sistema de gestión energética de alta eficiencia adaptado para uso prolongado.", "Autonomía optimizada para soporte de seguimiento GPS multideporte continuo."],
+                "conectividad": ["Soporte para sincronización de datos y conectividad inalámbrica de alta velocidad.", "Sistemas de posicionamiento geográfico por satélite de alta precisión integrados."],
+                "sensores": ["Monitoreo continuo de frecuencia cardíaca óptica y saturación de oxígeno (SpO2).", "Sensores barométricos y de movimiento para métricas de altitud y entorno."],
+                "deportes": ["Perfiles multideporte avanzados con más de 30 a 100 modalidades especializadas según el perfil.", "Resistencia certificada para entornos de alta exigencia al aire libre."],
+                "construccion": [f"Estructura robusta de alta gama desarrollada por {producto['marca']}.", f"Detalle de construcción base: {producto['especificaciones']}"]
             },
             "pros": [
-                f"Construcción robusta y materiales de primera línea respaldados por {producto['marca']}.",
+                f"Construcción robusta y materiales de primera línea respaldados por la ingeniería de {producto['marca']}.",
                 "Excelente precisión en el registro de métricas deportivas y de salud.",
                 "Interfaz optimizada para visibilidad y usabilidad bajo condiciones extremas."
             ],
