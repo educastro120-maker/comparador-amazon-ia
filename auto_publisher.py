@@ -30,94 +30,20 @@ productos_catalogo = [
         "especificaciones": "Pantalla Memory-in-Pixel con tecnología de carga solar Solar Sapphire, bisel de titanio de grado 5, resistencia militar MIL-STD-810H y botones inductivos estancos aptos para buceo (40m). Incorpora micrófono/altavoz para llamadas y comandos por voz, linterna LED y hasta 48 días de autonomía en modo reloj.",
         "precio": "1099.99€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Mi_Watch.jpg"
-    },
-    {
-        "marca": "Apple",
-        "modelo_corto": "Watch Ultra 2",
-        "busqueda": "Apple Watch Ultra 2",
-        "titulo": "Apple Watch Ultra 2 - Caja de Titanio de 49 mm, Pantalla Retina de 3.000 nits, Conectividad Satelital, Resistencia 100 m",
-        "especificaciones": "Caja de titanio aeroespacial de grado 5, pantalla retina OLED de hasta 3.000 nits de brillo, profundímetro certificado para buceo a 40 metros (EN13319), conexión satelital directa para mensajes y SOS de emergencia, y autonomía de hasta 72 horas en modo ahorro.",
-        "precio": "899.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
-    },
-    {
-        "marca": "Garmin",
-        "modelo_corto": "Enduro 3",
-        "busqueda": "Garmin Enduro 3",
-        "titulo": "Garmin Enduro 3 - Smartwatch para Ultra Resistencia, Cristal Solar Zafiro, Linterna LED, Hasta 320 Horas de Batería GPS",
-        "especificaciones": "Diseñado para ultramaratones y expediciones extremos con un peso ultraligero de 63 g. Lente de carga solar Solar Sapphire con bisel de titanio, mapas topográficos TopoActive preinstalados, navegación SatIQ de doble frecuencia y autonomía imbatible de hasta 320 horas con GPS activo mediante carga solar.",
-        "precio": "899.99€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
-    },
-    {
-        "marca": "Suunto",
-        "modelo_corto": "Vertical Titanium Solar",
-        "busqueda": "Suunto Vertical Titanium Solar",
-        "titulo": "Suunto Vertical Titanium Solar - Reloj Deportivo Outdoor con Carga Solar, Bisel Titanio Grado 5, Mapas Offline Gratuitos",
-        "especificaciones": "Diseño escandinavo ultra resistente con bisel de titanio de grado 5 y cristal de zafiro solar. Ofrece mapas topográficos offline gratuitos de gran precisión, posicionamiento dual GNSS de 5 satélites simultáneos y autonomía continua de hasta 85 horas en seguimiento GPS máximo.",
-        "precio": "799.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Galaxy_Watch_7.jpg"
-    },
-    {
-        "marca": "Samsung",
-        "modelo_corto": "Galaxy Watch Ultra",
-        "busqueda": "Samsung Galaxy Watch Ultra",
-        "titulo": "Samsung Galaxy Watch Ultra - Smartwatch 47mm Titanio, Chipset 3nm, GPS Dual, Resistencia 10 ATM e IP68, Galaxy AI",
-        "especificaciones": "Caja de titanio de grado 4 con grado de resistencia 10 ATM, certificación militar MIL-STD-810H y resistencia a temperaturas extremas (-20 °C a 55 °C). Procesador de 3 nm para máxima fluidez, pantalla AMOLED de 3.000 nits, sirena de socorro de 86 dB y funciones de entrenamiento con Galaxy AI.",
-        "precio": "699.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Amazfit_GTR_2e.jpg"
-    },
-    {
-        "marca": "Polar",
-        "modelo_corto": "Grit X2 Pro Titan",
-        "busqueda": "Polar Grit X2 Pro Titan",
-        "titulo": "Polar Grit X2 Pro Titan - Reloj Outdoor Extremo con Bisel de Titanio, Cristal de Zafiro, Estándar MIL-STD-810H, Biometría Elixir",
-        "especificaciones": "Construido con bisel de titanio aeroespacial y pantalla AMOLED protegida por cristal de zafiro de alta dureza. Incluye mapas topográficos offline descargables, sensor biomecánico Polar Elixir (ECG en muñeca, SpO2 y temperatura cutánea) y resistencia a temperaturas operativas de -20°C a +50°C.",
-        "precio": "869.90€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
-    },
-    {
-        "marca": "COROS",
-        "modelo_corto": "VERTIX 2S",
-        "busqueda": "COROS VERTIX 2S",
-        "titulo": "COROS VERTIX 2S - Reloj de Aventura y Escalada Extrema, Bisel Titanio Grado 5, Pantalla Zafiro, GPS Doble Frecuencia, Batería 118h GPS",
-        "especificaciones": "Optimizado para expediciones de alta montaña y escalada con bisel de titanio de grado 5 revestido en PVD y cristal de zafiro. Sistema óptico de frecuencia cardíaca de 5 LEDs, mapas topográficos y paisajísticos globales offline y autonomía de 118 horas en modo GPS completo.",
-        "precio": "699.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
-    },
-    {
-        "marca": "Huawei",
-        "modelo_corto": "Watch Ultimate",
-        "busqueda": "Huawei Watch Ultimate",
-        "titulo": "Huawei Watch Ultimate - Smartwatch de Metal Líquido con Circonio, Ordenador de Buceo 100m, Pantalla AMOLED Zafiro",
-        "especificaciones": "Cuerpo innovador de metal líquido a base de circonio (4.5 veces más resistente que el titanio), bisel cerámico nanocristalino y cristal de zafiro. Certificado como ordenador de buceo profesional para 100 m (ISO 22810 / EN13319), posicionamiento GPS de 5 sistemas y hasta 14 días de batería.",
-        "precio": "749.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
-    },
-    {
-        "marca": "Garmin",
-        "modelo_corto": "Instinct 2X Solar",
-        "busqueda": "Garmin Instinct 2X Solar",
-        "titulo": "Garmin Instinct 2X Solar - Smartwatch Táctico y Outdoor, Carga Solar Ilimitada, Linterna LED Integrada, Resistencia Militar",
-        "especificaciones": "Caja de polímero reforzado con fibra de 50 mm, pantalla transflectiva monocroma de gran visibilidad al sol con cristal Power Glass para autonomía ilimitada en modo reloj inteligente. Incluye GPS multibanda, linterna LED con luz estroboscópica y cumplimiento con estándares térmicos y de choque MIL-STD-810.",
-        "precio": "449.99€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
-    },
-    {
-        "marca": "Amazfit",
-        "modelo_corto": "T-Rex 3",
-        "busqueda": "Amazfit T-Rex 3",
-        "titulo": "Amazfit T-Rex 3 - Smartwatch Táctico Rugerizado, Pantalla AMOLED 2.000 nits, Mapas Offline, Hasta 27 Días de Batería",
-        "especificaciones": "Construcción táctica de grado militar con bisel de acero inoxidable resistente a temperaturas extremas (-30°C a +70°C), pantalla de 1,5\", mapas topográficos giro a giro, asistente IA Zepp Flow y batería imbatible de hasta 27 días.",
-        "precio": "279.90€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/52/Fitbit_Charge_5.jpg"
     }
 ]
 
 def render_bullets(items):
-    """Convierte una lista de strings en elementos de lista HTML con viñetas"""
+    """Convierte una lista de strings en elementos de lista HTML con negritas en las claves y viñetas elegantes"""
     if isinstance(items, list):
-        return "".join([f"<li style='margin-bottom: 4px;'>{item}</li>" for item in items])
+        html_out = ""
+        for item in items:
+            if ":" in item:
+                partes = item.split(":", 1)
+                html_out += f"<li style='margin-bottom: 6px;'><strong>{partes[0].strip()}:</strong> {partes[1].strip()}</li>"
+            else:
+                html_out += f"<li style='margin-bottom: 6px;'>{item.strip()}</li>"
+        return html_out
     return f"<li>{items}</li>"
 
 def procesar_y_publicar(producto):
@@ -125,35 +51,107 @@ def procesar_y_publicar(producto):
     affiliate_link = f"https://www.amazon.es/s?k={query_encoded}&tag={AMAZON_TAG}"
 
     prompt = f"""
-    Actúa como un ingeniero de hardware y periodista tecnológico experto en smartwatches.
-    Navega obligatoriamente en tiempo real para obtener datos de laboratorio reales del dispositivo: "{producto['busqueda']}".
-    
-    Datos base:
-    - Marca: {producto['marca']}
-    - Modelo: {producto['modelo_corto']}
-    - Título: {producto['titulo']}
-    - Specs base: {producto['especificaciones']}
-    - Precio: {producto['precio']}
+    Actúa como un ingeniero jefe de hardware y analista de laboratorio tecnológico.
+    NAVEGACIÓN EN TIEMPO REAL REQUERIDA: Debes buscar en tiempo real los datos técnicos completos de lanzamiento, manuales técnicos y fichas de laboratorio del dispositivo exacto: "{producto['busqueda']}".
 
-    Devuelve ÚNICAMENTE un objeto JSON válido que cumpla estrictamente con esta estructura de claves:
+    TU TAREA ES GENERAR UNA FICHA TÉCNICA ULTRA-COMPLETA Y EXHAUSTIVA.
+    Cada categoría técnica DEBE contener entre 4 y 7 viñetas hiperespecíficas usando estrictamente el formato "Parámetro: Valor/Explicación detallada".
+
+    EJEMPLO DEL NIVEL DE DETALLE EXIGIDO PARA CADA SECCIÓN:
+    - Pantalla:
+      "Panel: LTPO 2.0 AMOLED circular de 1,5 pulgadas."
+      "Resolución: 466 × 466 píxeles (310 ppp)."
+      "Brillo Máximo: 3.500 nits picos de visibilidad plena a sol directo."
+      "Tecnología: Refresco adaptativo 1 Hz a 60 Hz y Always-On Display (AOD)."
+      "Protección: Cristal de zafiro sintético de alta dureza."
+    - Batería:
+      "Capacidad: 867 mAh de alta densidad."
+      "Procesador: Dual-core especializado con gestión energética adaptativa."
+      "Autonomía: Hasta 14 días en uso típico, 40 horas continuas con GPS activo."
+      "Carga: Carga rápida magnética (0 a 100% en 60 min, 15 min equivalen a 1 día)."
+    - Conectividad:
+      "NFC: Sí (pagos móviles y tarjetas de acceso)."
+      "Red Móvil: Compatibilidad eSIM / 4G LTE para uso independiente."
+      "Sistemas Inalámbricos: Wi-Fi dual-band, Bluetooth 5.3 y Chip UWB."
+      "Posicionamiento GPS: GNSS de doble frecuencia L1+L5 (GPS, GLONASS, Galileo, BeiDou, QZSS)."
+    - Sensores:
+      "Salud: Pulsómetro óptico continuo, SpO2, sensor de ECG certificado y temperatura cutánea."
+      "Entorno: Altímetro barométrico, brújula digital, profundímetro con temperatura de agua."
+      "Seguridad: Acelerómetro de alta fuerza G para detección de caídas y colisiones."
+    - Deportes:
+      "Modos: Más de 100 modalidades deportivas con métricas avanzadas (VO2 Max, Potencia, SWOLF)."
+      "Buceo: Certificación para inmersiones hasta 100 m / 150 m (EN 13319 / ISO 22810)."
+      "Navegación: Mapas topográficos 3D offline, waypoints y función Backtrack."
+    - Construcción:
+      "Chasis: Titanio de Grado 5 / Metal Líquido a base de Circonio."
+      "Bisel y Fondo: Cerámica nanocristalina y cristal de zafiro."
+      "Resistencia: 10 ATM / 20 ATM, IP68, IP69K y norma militar MIL-STD-810H."
+      "Dimensiones y Peso: 48,5 × 48,5 × 13 mm / 80 gramos."
+
+    Devuelve ÚNICAMENTE un objeto JSON válido con esta estructura exacta y sin texto adicional afuera:
     {{
-      "badge": "ETIQUETA COMERCIAL EN MAYÚSCULAS",
-      "resumen_ejecutivo": "Análisis profundo de 150 a 220 palabras explicando sus prestaciones, materiales, rendimiento y valor.",
+      "badge": "ETIQUETA EN MAYÚSCULAS (ej: REY DEL BUCEO Y MONTAÑA)",
+      "resumen_ejecutivo": "Redacción técnica y profesional de 150 a 220 palabras analizando el impacto del reloj en el mercado, sus materiales prémium, público objetivo y rendimiento real.",
       "specs": {{
-        "pantalla": ["Detalle técnico 1", "Detalle técnico 2", "Detalle técnico 3"],
-        "bateria": ["Detalle técnico 1", "Detalle técnico 2", "Detalle técnico 3"],
-        "conectividad": ["Detalle técnico 1", "Detalle técnico 2", "Detalle técnico 3"],
-        "sensores": ["Detalle técnico 1", "Detalle técnico 2", "Detalle técnico 3"],
-        "deportes": ["Detalle técnico 1", "Detalle técnico 2", "Detalle técnico 3"],
-        "construccion": ["Detalle técnico 1", "Detalle técnico 2", "Detalle técnico 3"]
+        "pantalla": [
+          "Panel: ...",
+          "Resolución: ...",
+          "Brillo Máximo: ...",
+          "Tecnología: ...",
+          "Protección: ..."
+        ],
+        "bateria": [
+          "Capacidad: ...",
+          "Procesador: ...",
+          "Autonomía: ...",
+          "Carga: ..."
+        ],
+        "conectividad": [
+          "Red Móvil / eSIM: ...",
+          "NFC: ...",
+          "Sistemas Inalámbricos: ...",
+          "Posicionamiento (GPS): ...",
+          "Audio y Micrófonos: ..."
+        ],
+        "sensores": [
+          "Monitor de Salud Continuo: ...",
+          "Electrocardiograma (ECG): ...",
+          "Temperatura: ...",
+          "Movimiento y Entorno: ...",
+          "Inmersión y Altitud: ..."
+        ],
+        "deportes": [
+          "Modos Deportivos: ...",
+          "Buceo / Resistencia al Agua: ...",
+          "Navegación y Mapas: ...",
+          "Métricas Avanzadas: ..."
+        ],
+        "construccion": [
+          "Caja: ...",
+          "Bisel y Fondo: ...",
+          "Resistencia y Certificaciones: ...",
+          "Dimensiones y Peso: ...",
+          "Control e Interacción: ..."
+        ]
       }},
-      "pros": ["Punto fuerte 1 detallado", "Punto fuerte 2 detallado", "Punto fuerte 3 detallado"],
-      "contras": ["Punto débil 1 detallado", "Punto débil 2 detallado"],
+      "pros": [
+        "Punto fuerte 1 con explicación detallada de valor real (mínimo 15 palabras)",
+        "Punto fuerte 2 detallando especificaciones concretas",
+        "Punto fuerte 3 sobre rendimiento o materiales",
+        "Punto fuerte 4 adicional",
+        "Punto fuerte 5 adicional"
+      ],
+      "contras": [
+        "Punto negativo 1 redactado con criterio técnico",
+        "Punto negativo 2 sobre ergonomía, precio o ecosistema",
+        "Punto negativo 3 adicional",
+        "Punto negativo 4 adicional"
+      ],
       "puntuacion": 9.4
     }}
     """
 
-    print(f"🌐 Navegando y extrayendo especificaciones técnicas en tiempo real para: {producto['titulo']}...")
+    print(f"🌐 Extrayendo ficha técnica masiva y datos de laboratorio para: {producto['titulo']}...")
     
     max_intentos = 3
     response = None
@@ -161,8 +159,9 @@ def procesar_y_publicar(producto):
         try:
             config = types.GenerateContentConfig(
                 tools=[{"google_search": {}}],
-                temperature=0.2,
-                response_mime_type="application/json"  # <-- ESTO FORZA A GEMINI A DEVOLVER JSON PURO Y EVITA ERRORES DE PARSEADO
+                temperature=0.1,  # Temperatura ultra baja para precisión máxima sin alucinaciones
+                response_mime_type="application/json",
+                max_output_tokens=5000  # Expandido a 5000 tokens para permitir JSONs extensos y detallados
             )
             
             response = client.models.generate_content(
@@ -178,43 +177,36 @@ def procesar_y_publicar(producto):
             else:
                 print(f"❌ Imposible analizar {producto['titulo']} tras {max_intentos} intentos.")
 
-    # Extracción del JSON garantizado por la API
+    # Parseo estricto del JSON
     datos_ia = None
     if response and hasattr(response, 'text') and response.text:
         try:
             datos_ia = json.loads(response.text.strip())
         except json.JSONDecodeError as err:
-            print(f"⚠️ Advertencia: Error analizando JSON directo en {producto['titulo']}: {err}")
+            print(f"⚠️ Advertencia: Error analizando JSON en {producto['titulo']}: {err}")
 
-    # Plantilla de respaldo inteligente basada en los datos reales del catálogo (nunca genérica)
+    # Fallback contextual inteligente si la llamada remota falla
     if not datos_ia:
-        print(f"💡 Aplicando respaldo técnico inteligente basado en datos del catálogo para {producto['titulo']}...")
+        print(f"💡 Aplicando respaldo estructurado para {producto['titulo']}...")
         datos_ia = {
-            "badge": f"ANÁLISIS {producto['marca'].upper()} PREMIUM",
-            "resumen_ejecutivo": f"{producto['titulo']} destaca en el mercado actual gracias a sus especificaciones avanzadas: {producto['especificaciones']} Su diseño optimizado y su suite de herramientas orientadas al rendimiento y la salud lo consolidan como una opción de referencia dentro de su gama.",
+            "badge": f"ANÁLISIS TÉCNICO {producto['marca'].upper()}",
+            "resumen_ejecutivo": f"{producto['titulo']} representa una alternativa de ingeniería avanzada en el catálogo actual. Integra componentes de alta durabilidad y un paquete integral de sensores biométricos para deportistas exigentes.",
             "specs": {
-                "pantalla": [f"Tecnología de visualización optimizada para el modelo {producto['modelo_corto']}.", "Excelente visibilidad bajo luz solar directa y respuesta táctil precisa."],
-                "bateria": [f"Sistema de autonomía adaptado para un rendimiento prolongado.", f"Referencia de precio y categoría: {producto['precio']}."],
-                "conectividad": ["Soporte para sincronización de datos y conectividad inalámbrica de alta velocidad.", "Posicionamiento geográfico integrado de alta precisión."],
-                "sensores": ["Sensores ópticos avanzados para el seguimiento constante de constantes vitales y pulso.", "Monitorización integral orientada al bienestar y la actividad física."],
-                "deportes": ["Perfiles deportivos especializados con métricas de rendimiento detalladas.", "Seguimiento de rutas y registro automatizado de entrenamientos."],
-                "construccion": [f"Estructura robusta diseñada por {producto['marca']} para uso exigente.", f"Especificaciones base: {producto['especificaciones']}"]
+                "pantalla": [f"Modelo: {producto['modelo_corto']}", "Panel: Pantalla táctil de alta visibilidad en exteriores.", "Protección: Cristal reforzado."],
+                "bateria": ["Autonomía: Optimizada para uso continuo en modo multideporte y GPS.", f"Precio de referencia: {producto['precio']}"],
+                "conectividad": ["Sistemas de posicionamiento: GPS / GNSS integrado.", "Inalámbrico: Bluetooth de alta velocidad."],
+                "sensores": ["Biometría: Frecuencia cardíaca óptica y oxígeno en sangre (SpO2).", "Navegación: Altímetro barométrico y brújula."],
+                "deportes": ["Modalidades: Perfiles multideporte y métricas de entrenamiento.", "Resistencia: Apto para uso deportivo intenso."],
+                "construccion": [f"Fabricante: {producto['marca']}", f"Especificaciones base: {producto['especificaciones']}"]
             },
-            "pros": [
-                f"Construcción de alta calidad respaldada por la garantía de {producto['marca']}.",
-                "Excelente integración de métricas de rendimiento y salud en tiempo real.",
-                "Diseño equilibrado entre durabilidad y confort diario."
-            ],
-            "contras": [
-                "Dependencia de la optimización del software para maximizar la autonomía.",
-                "Inversión acorde a la gama alta de dispositivos wearables."
-            ],
-            "puntuacion": 9.2
+            "pros": ["Diseño resistente y materiales de primera línea.", "Precisión en mediciones deportivas.", "Buena visibilidad."],
+            "contras": ["Dimensiones adaptadas a uso deportivo.", "Precio en rango de gama alta."],
+            "puntuacion": 9.0
         }
 
     s = datos_ia['specs']
 
-    # HTML profesional y optimizado para WordPress
+    # HTML profesional y dinámico con negritas automáticas
     html_content = f"""
     <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; background-color: #ffffff; max-width: 750px; margin: 20px auto; font-family: system-ui, -apple-system, sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
       
@@ -238,7 +230,7 @@ def procesar_y_publicar(producto):
         
         <table style="width: 100%; border-collapse: collapse; border: none; font-size: 0.95em; color: #334155;">
           <tr style="border: none; border-bottom: 1px solid #f1f5f9;">
-            <td style="padding: 10px 12px; font-weight: bold; width: 30%; vertical-align: top; border: none; background-color: #f1f5f9; border-top-left-radius: 6px;">📺 Pantalla</td>
+            <td style="padding: 10px 12px; font-weight: bold; width: 28%; vertical-align: top; border: none; background-color: #f1f5f9; border-top-left-radius: 6px;">📺 Pantalla</td>
             <td style="padding: 10px 12px; vertical-align: top; border: none; background-color: #f8fafc;">
               <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
                 {render_bullets(s.get('pantalla', []))}
