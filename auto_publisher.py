@@ -4,6 +4,7 @@ import time
 import requests
 import urllib.parse
 from google import genai
+from google.genai import types
 
 # ==========================================
 # 1. LECTURA SEGURA DE CREDENCIALES
@@ -123,56 +124,79 @@ def procesar_y_publicar(producto):
     query_encoded = urllib.parse.quote_plus(producto['busqueda'])
     affiliate_link = f"https://www.amazon.es/s?k={query_encoded}&tag={AMAZON_TAG}"
 
+    # PROMPT MEJORADO CON EXIGENCIA TÉCNICA RIGUROSA Y EN TIEMPO REAL
     prompt = f"""
-    Actúa como un periodista tecnológico experto y redactor senior especializado en análisis exhaustivos de smartwatches para blogs de afiliación de alta conversión (CRO).
+    Actúa como un ingeniero de hardware y periodista tecnológico de élite especializado en análisis ultratécnicos de smartwatches deportivos y de aventura.
     
-    INSTRUCCIÓN CRÍTICA: Debes navegar por internet en tiempo real para recopilar las especificaciones técnicas oficiales, características de lanzamiento y análisis más recientes sobre el dispositivo: "{producto['busqueda']}".
-    
+    INSTRUCCIÓN CRÍTICA: Debes navegar obligatoriamente por internet en tiempo real para extraer los datos de las especificaciones técnicas oficiales exactas, fichas de fabricante y análisis de laboratorio del dispositivo: "{producto['busqueda']}". 
+    PROHIBIDO dar respuestas genéricas, vagas o rellenar con frases como "pantalla de alta definición". Tienes que proporcionar datos numéricos duros, tecnologías exactas, materiales específicos (ej. titanio grado 5, zafiro sintético, cerámica), resoluciones en píxeles, nits de brillo, miliamperios (mAh), sistemas de posicionamiento multibanda (L1+L5) y certificaciones oficiales (MIL-STD-810H, EN13319, IP68, 10 ATM).
+
     Datos base del producto:
     - Marca: {producto['marca']}
     - Modelo: {producto['modelo_corto']}
     - Título: {producto['titulo']}
-    - Especificaciones básicas: {producto['especificaciones']}
+    - Especificaciones orientativas: {producto['especificaciones']}
     - Precio de referencia: {producto['precio']}
 
-    Tu objetivo es redactar un análisis técnico muy completo, detallado y profesional, evitando respuestas cortas o escuetas. 
-
-    Devuelve ÚNICAMENTE un objeto JSON válido (sin texto adicional fuera del bloque JSON, ni introducciones) con exactamente esta estructura y claves:
+    Tu objetivo es redactar un análisis técnico de nivel profesional absoluto. Devuelve ÚNICAMENTE un objeto JSON válido (sin texto adicional fuera del bloque JSON) con esta estructura exacta y claves:
     {{
-      "badge": "Etiqueta llamativa en mayúsculas (ej: EL REY DE LA MONTAÑA, GAMA ALTA PREMIUM, MÁXIMA AUTONOMÍA)",
-      "resumen_ejecutivo": "Un análisis profundo y redactado de manera profesional (de 150 a 220 palabras). Debe incluir una introducción atractiva del dispositivo, su posicionamiento frente a rivales directos, detalles de su rendimiento en el mundo real, los perfiles de usuario ideales a los que va dirigido y una conclusión argumentada de por qué vale cada euro que cuesta.",
+      "badge": "Etiqueta comercial llamativa en mayúsculas (ej: REY DE LA ULTRARESISTENCIA, GPS TÁCTICO AVANZADO)",
+      "resumen_ejecutivo": "Un análisis profundo y riguroso de 150 a 220 palabras redactado con tono experto. Detalla su rendimiento real sobre el terreno, tecnologías propietarias, público al que va enfocado y una conclusión argumentada de su valor en el mercado.",
       "specs": {{
-        "pantalla": ["3 a 5 líneas muy detalladas especificando tecnología del panel, tamaño exacto en pulgadas, resolución, nits de brillo máximo y protecciones de cristal"],
-        "bateria": ["3 a 5 líneas detallando capacidad estimada, autonomía real según tipos de uso (modo reloj inteligente vs modo GPS continuo) y tecnologías de carga rápida"],
-        "conectividad": ["3 a 5 líneas explicando la versión de conectividad inalámbrica, sistemas de posicionamiento GPS multibanda, compatibilidad con pagos NFC y funciones de llamadas o LTE"],
-        "sensores": ["3 a 5 líneas detallando sensores biométricos avanzados, frecuencia cardíaca, SpO2, ECG, temperatura corporal y giroscopios/altímetros"],
-        "deportes": ["3 a 5 líneas explicando modos de entrenamiento, métricas avanzadas de rendimiento, entrenadores virtuales o dinámicas de carrera/buceo"],
-        "construccion": ["3 a 5 líneas describiendo materiales de la caja y bisel (titanio, cerámica, zafiro), certificaciones militares o de resistencia al agua y ergonomía"]
+        "pantalla": [
+          "Tecnología exacta del panel (ej: AMOLED, MIP, Retina LTPO) y tipo de protección (cristal de zafiro sintético, Corning Gorilla Glass).",
+          "Tamaño en pulgadas, resolución exacta en píxeles y densidad (ppi).",
+          "Niveles de brillo pico máximo (nits) y brillo mínimo nocturno, además de tasa de refresco o modo Always-On."
+        ],
+        "bateria": [
+          "Capacidad estimada de la celda en mAh y tipo de arquitectura de procesador o gestión energética.",
+          "Autonomía real desglosada: modo smartwatch diario, modo ahorro y horas máximas con seguimiento GPS continuo.",
+          "Tecnología de carga rápida inalámbrica o magnética y autonomía obtenida en pocos minutos de carga."
+        ],
+        "conectividad": [
+          "Sistemas de posicionamiento satelital integrados (GPS de doble frecuencia L1/L5, GLONASS, Galileo, BeiDou, QZSS).",
+          "Versión de conectividad inalámbrica (Bluetooth, Wi-Fi, NFC para pagos, eSIM/LTE o conectividad satelital de emergencia si aplica).",
+          "Prestaciones de audio, altavoces, micrófonos integrados o sirenas de socorro en decibelios."
+        ],
+        "sensores": [
+          "Sensores biométricos de salud: pulsómetro óptico de alta precisión, sensor ECG, SpO2 (oxígeno en sangre) y temperatura cutánea/corporal.",
+          "Sensores de entorno y navegación: altímetro barométrico, brújula digital, giroscopio y acelerómetro de alta fuerza G.",
+          "Funciones avanzadas de monitorización continua de estrés, recuperación (HRV) y sueño."
+        ],
+        "deportes": [
+          "Modos deportivos especializados (perfiles de ultramaratón, trail, ciclismo, triatlón o certificaciones de buceo recreativo/técnico).",
+          "Métricas avanzadas de rendimiento (potencia de carrera, dinámicas, VO2 máx, mapas topográficos offline giro a giro).",
+          "Funciones de seguridad y retorno al punto de origen (Backtrack, llamadas SOS o detección automática de caídas/accidentes)."
+        ],
+        "construccion": [
+          "Materiales exactos de fabricación de la caja (titanio de grado 5, acero inoxidable, polímero reforzado) y cubierta posterior (cerámica/zafiro).",
+          "Certificaciones oficiales de resistencia al agua y polvo (ej: 10 ATM, norma ISO 22810, EN13319) y estándar militar de durabilidad (MIL-STD-810H).",
+          "Dimensiones físicas exactas en milímetros, grosor y peso total del dispositivo en gramos."
+        ]
       }},
       "pros": [
-        "Primer punto fuerte redactado con una explicación rica y argumentada (mínimo 15 palabras)",
-        "Segundo punto fuerte redactado con detalle y profundidad técnica",
-        "Tercer punto fuerte explicando un beneficio claro para el usuario"
+        "Primer punto fuerte altamente técnico y argumentado con datos concretos (mínimo 15 palabras)",
+        "Segundo punto fuerte destacando rendimiento o materiales avanzados",
+        "Tercer punto fuerte describiendo un beneficio clave para el usuario experto"
       ],
       "contras": [
-        "Primer punto negativo o limitación explicada de forma honesta y argumentada",
-        "Segundo punto a mejorar detallando el impacto real en la experiencia de uso"
+        "Primer punto negativo o limitación explicada con rigor técnico",
+        "Segundo aspecto mejorable que impacte de forma real en la experiencia de uso"
       ],
-      "puntuacion": 9.2
+      "puntuacion": 9.4
     }}
     """
 
-    print(f"🌐 Buscando información en tiempo real y generando contenido profundo para: {producto['titulo']}...")
+    print(f"🌐 Navegando y extrayendo especificaciones técnicas en tiempo real para: {producto['titulo']}...")
     
     max_intentos = 3
     response = None
     for intento in range(1, max_intentos + 1):
         try:
-            # Activamos Google Search Grounding sin forzar esquemas rígidos restrictivos
             config = types.GenerateContentConfig(
                 tools=[{"google_search": {}}],
-                temperature=0.3,
-                    max_output_tokens=2500
+                temperature=0.2, # Temperatura baja para priorizar datos técnicos reales y evitar inventiva
+                max_output_tokens=3000
             )
             
             response = client.models.generate_content(
@@ -211,19 +235,19 @@ def procesar_y_publicar(producto):
     if not datos_ia:
         print(f"💡 Aplicando plantilla de respaldo detallada para {producto['titulo']}...")
         datos_ia = {
-            "badge": "ANÁLISIS DESTACADO",
-            "resumen_ejecutivo": f"{producto['titulo']} representa una opción sobresaliente dentro del mercado actual de dispositivos wearables. Diseñado para ofrecer un rendimiento fluido y constante, combina materiales de alta calidad con una completa suite de sensores orientados a la salud y la actividad física avanzada. Su integración con el ecosistema de aplicaciones y su optimización energética lo convierten en un compañero ideal tanto para el día a día como para entrenamientos exigentes.",
+            "badge": "ANÁLISIS TÉCNICO DESTACADO",
+            "resumen_ejecutivo": f"{producto['titulo']} destaca en el mercado actual por integrar componentes de altas prestaciones enfocados tanto al rendimiento deportivo extremo como al seguimiento diario de la salud. Su estructura robusta y su optimización de software garantizan una experiencia fluida y fiable bajo cualquier circunstancia ambiental.",
             "specs": {
-                "pantalla": ["Panel táctil de alta definición con excelente nitidez en exteriores.", "Tratamiento antirreflejos y óptima respuesta táctil."],
-                "bateria": ["Sistema de gestión energética optimizado para varios días de uso.", "Soporte para carga rápida y modos de ahorro inteligente."],
-                "conectividad": ["Conectividad Bluetooth de alta velocidad y posicionamiento GPS integrado.", "Soporte para sincronización de datos y notificaciones en tiempo real."],
-                "sensores": ["Sensores ópticos de última generación para pulso y oxígeno en sangre.", "Monitoreo continuo de calidad de descanso y estrés."],
-                "deportes": ["Amplio catálogo de perfiles deportivos con métricas personalizadas.", "Registro automático y seguimiento de rutas."],
-                "construccion": ["Chasis ligero y resistente diseñado para soportar el uso diario.", "Certificación de resistencia frente al agua y polvo."]
+                "pantalla": ["Panel táctil de alta definición con excelente nitidez en exteriores.", "Tratamiento antirreflejos y óptima respuesta táctil bajo luz solar directa."],
+                "bateria": ["Sistema de gestión energética optimizado para varios días de uso continuado.", "Soporte para modos avanzados de ahorro inteligente y carga rápida."],
+                "conectividad": ["Conectividad Bluetooth de alta velocidad y posicionamiento satelital integrado.", "Soporte para sincronización de datos y notificaciones inteligentes en tiempo real."],
+                "sensores": ["Sensores ópticos de última generación para frecuencia cardíaca y oxígeno en sangre.", "Monitoreo continuo de constantes vitales, descanso y gestión de estrés."],
+                "deportes": ["Amplio catálogo de perfiles deportivos con métricas de rendimiento avanzadas.", "Registro automático de actividades y seguimiento cartográfico de rutas."],
+                "construccion": ["Chasis ligero y resistente diseñado para soportar exigencias cotidianas.", "Certificación oficial de resistencia frente al agua, polvo y condiciones térmicas."]
             },
-            "pros": ["Diseño ergonómico con acabados de gran durabilidad y elegancia.", "Excelente precisión en la monitorización de constantes vitales y deporte.", "Interfaz fluida con una gran variedad de herramientas y esferas personalizables."],
-            "contras": ["Autonomía sujeta al uso intensivo de las funciones avanzadas de pantalla y GPS.", "Precio elevado en comparación con alternativas de gama de entrada."],
-            "puntuacion": 8.9
+            "pros": ["Diseño robusto con materiales de alta calidad y gran durabilidad.", "Excelente precisión en el seguimiento de métricas deportivas y de salud.", "Interfaz intuitiva y altamente personalizable."],
+            "contras": ["Autonomía variable al activar de forma simultánea todas las opciones de alta precisión y pantalla.", "Precio elevado acorde a su gama prémium."],
+            "puntuacion": 9.1
         }
 
     s = datos_ia['specs']
