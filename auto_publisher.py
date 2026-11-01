@@ -1,8 +1,12 @@
 import os
+import sys
+import re
 import json
 import time
+import html
 import requests
 import urllib.parse
+from pydantic import BaseModel
 from google import genai
 from google.genai import types
 
@@ -10,16 +14,75 @@ from google.genai import types
 # 1. LECTURA SEGURA DE CREDENCIALES
 # ==========================================
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-WP_URL = os.environ.get("WP_URL").rstrip('/')
+WP_URL = (os.environ.get("WP_URL") or "").rstrip("/")
 WP_USER = os.environ.get("WP_USER")
 WP_APP_PASSWORD = os.environ.get("WP_APP_PASSWORD")
 
+faltan = [n for n, v in {
+    "GEMINI_API_KEY": GEMINI_API_KEY, "WP_URL": WP_URL,
+    "WP_USER": WP_USER, "WP_APP_PASSWORD": WP_APP_PASSWORD,
+}.items() if not v]
+if faltan:
+    sys.exit(f"❌ Faltan variables de entorno: {', '.join(faltan)}")
+
 AMAZON_TAG = "topcomparad00-21"
+
+# ==========================================
+# 2. AJUSTES DE CALIDAD
+# ==========================================
+# Modelo con Google Search. Si quieres más profundidad: GEMINI_MODEL=gemini-2.5-pro
+MODELO = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+
+MAX_INTENTOS_API = 3          # reintentos por llamada a la API (errores 429/500...)
+MAX_RONDAS = 3                # veces que se repite investigación+estructurado si la ficha sale pobre
+MIN_ITEMS_SECCION = 3         # mínimo de líneas por sección de la ficha técnica
+MIN_ITEMS_TOTAL = 24          # mínimo total de líneas de especificaciones
+PAUSA_ENTRE_PRODUCTOS = 4     # segundos (evita límites de cuota)
+
+# True: usa el precio que encuentre Gemini si es coherente con el del catálogo (±40%)
+USAR_PRECIO_EN_TIEMPO_REAL = True
+
+# True: NO publica fichas pobres (el workflow termina en rojo para que lo veas)
+# False: publica igualmente con lo que haya
+SALTAR_SI_FICHA_POBRE = True
 
 client = genai.Client(api_key=GEMINI_API_KEY)
 
+# Secciones de la ficha técnica (clave JSON, título visible)
+SECCIONES = [
+    ("pantalla", "📺 Pantalla"),
+    ("bateria", "🔋 Batería"),
+    ("conectividad", "🌐 Conectividad"),
+    ("sensores", "💓 Sensores"),
+    ("deportes", "🏃‍♂️ Deportes"),
+    ("construccion", "🛡️ Construcción"),
+]
+
+
 # ==========================================
-# 2. CATÁLOGO DE SMARTWATCHES
+# 3. ESQUEMA DE SALIDA (JSON estructurado)
+# ==========================================
+class Specs(BaseModel):
+    pantalla: list[str]
+    bateria: list[str]
+    conectividad: list[str]
+    sensores: list[str]
+    deportes: list[str]
+    construccion: list[str]
+
+
+class Ficha(BaseModel):
+    badge: str
+    resumen_ejecutivo: str
+    specs: Specs
+    pros: list[str]
+    contras: list[str]
+    puntuacion: float
+    precio_actual_eur: str  # "" si no se ha encontrado
+
+
+# ==========================================
+# 4. CATÁLOGO DE SMARTWATCHES
 # ==========================================
 productos_catalogo = [
     {
@@ -63,7 +126,7 @@ productos_catalogo = [
         "modelo_corto": "Galaxy Watch Ultra",
         "busqueda": "Samsung Galaxy Watch Ultra",
         "titulo": "Samsung Galaxy Watch Ultra - Smartwatch 47mm Titanio, Chipset 3nm, GPS Dual, Resistencia 10 ATM e IP68, Galaxy AI",
-        "especificaciones": "Caja de titanio de grado 4 con grado de resistencia 10 ATM, certificación militar MIL-STD-810H y resistencia a temperaturas extremas (-20 °C a 55 °C). Procesador de 3 nm para máxima fluidez, pantalla AMOLED de 3.000 nits, sirena de socorro de 86 dB y funciones de entrenamiento com Galaxy AI.",
+        "especificaciones": "Caja de titanio de grado 4 con grado de resistencia 10 ATM, certificación militar MIL-STD-810H y resistencia a temperaturas extremas (-20 °C a 55 °C). Procesador de 3 nm para máxima fluidez, pantalla AMOLED de 3.000 nits, sirena de socorro de 86 dB y funciones de entrenamiento con Galaxy AI.",
         "precio": "699.00€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Amazfit_GTR_2e.jpg"
     },
@@ -114,214 +177,337 @@ productos_catalogo = [
     }
 ]
 
-def render_bullets(items):
-    """Convierte una lista de strings en elementos de lista HTML con viñetas"""
-    if isinstance(items, list):
-        return "".join([f"<li style='margin-bottom: 4px;'>{item}</li>" for item in items])
-    return f"<li>{items}</li>"
+# ==========================================
+# 5. UTILIDADES
+# ==========================================
+def render_item(texto):
+    """'Etiqueta: valor' -> <strong>Etiqueta:</strong> valor (con HTML escapado)."""
+    texto = str(texto).strip()
+    if ": " in texto:
+        etiqueta, valor = texto.split(": ", 1)
+        if len(etiqueta) <= 45:
+            return f"<strong>{html.escape(etiqueta)}:</strong> {html.escape(valor)}"
+    return html.escape(texto)
 
-def procesar_y_publicar(producto):
-    query_encoded = urllib.parse.quote_plus(producto['busqueda'])
-    affiliate_link = f"https://www.amazon.es/s?k={query_encoded}&tag={AMAZON_TAG}"
 
-    # PROMPT EXHAUSTIVO CON EXIGENCIA DE DATOS NUMÉRICOS Y TÉCNICOS ESPECÍFICOS
-    prompt = f"""
-    Actúa estrictamente como un ingeniero de hardware, especialista en tecnología wearable y periodista tecnológico experto en smartwatches de gama alta.
-    Utiliza obligatoriamente la herramienta de búsqueda web en tiempo real para investigar a fondo y extraer los DATOS TÉCNICOS, MÉTRICAS Y CIFRAS REALES (horas exactas de batería, número exacto de modos deportivos, resolución de pantalla, brillo en nits, profundidad en metros) del dispositivo: "{producto['busqueda']}".
-    
-    Datos base de referencia:
-    - Marca: {producto['marca']}
-    - Modelo: {producto['modelo_corto']}
-    - Título oficial: {producto['titulo']}
-    - Specs base orientativas: {producto['especificaciones']}
-    - Precio de referencia: {producto['precio']}
+def a_numero(texto):
+    """Convierte '1.099,99€' / '799.00 €' / '799' en float. None si no se puede."""
+    if not texto:
+        return None
+    m = re.search(r"\d[\d.,]*", str(texto))
+    if not m:
+        return None
+    n = m.group(0).rstrip(".,")
+    if "," in n and "." in n:
+        # el último separador es el decimal
+        if n.rfind(",") > n.rfind("."):
+            n = n.replace(".", "").replace(",", ".")
+        else:
+            n = n.replace(",", "")
+    elif "," in n:
+        n = n.replace(",", ".")
+    elif n.count(".") > 1 or (n.count(".") == 1 and len(n.split(".")[1]) == 3):
+        n = n.replace(".", "")
+    try:
+        return float(n)
+    except ValueError:
+        return None
 
-    REQUISITOS OBLIGATORIOS PARA LA GENERACIÓN DEL JSON (MÁXIMO NIVEL DE DETALLE Y RIGOR):
-    1. PROHIBIDO dar respuestas vagas o generales (como "batería de larga duración" o "múltiples deportes"). DEBES APORTAR CIFRAS Y DATOS CONCRETOS:
-       - En Pantalla: Tipo exacto de panel, tamaño en pulgadas, resolución exacta en píxeles y brillo máximo en nits.
-       - En Batería: Días exactos de autonomía en modo smartwatch y horas exactas continuas con GPS activo (ej. "Hasta 40 horas continuas con GPS").
-       - En Conectividad: Sistemas GNSS de doble frecuencia (ej. L1 + L5, GPS, GLONASS, Galileo), NFC, Bluetooth y soporte eSIM/LTE si aplica.
-       - En Sensores: Sensores biométricos (frecuencia cardíaca, SpO2, ECG, temperatura) y barómetro/brújula.
-       - En Deportes: El número exacto o aproximado de modos deportivos (ej. "Más de 100 modalidades"), profundidad exacta de inmersión en metros (ej. "Sumergible hasta 40m o 100m con certificación EN13319") y mapas offline.
-       - En Construcción: Material exacto de la caja (ej. Titanio de grado 5), bisel, certificaciones militares (MIL-STD-810H), resistencia (ATM) y dimensiones/peso exactos.
-    2. NUNCA mezcles conceptos (está prohibido poner precios o enlaces dentro de las especificaciones de batería o pantalla).
-    3. Devuelve ÚNICAMENTE un objeto JSON válido que cumpla estrictamente con esta estructura de claves:
-    {{
-      "badge": "ETIQUETA COMERCIAL CORTA EN MAYÚSCULAS",
-      "resumen_ejecutivo": "Análisis técnico profundo de 150 a 220 palabras explicando sus prestaciones, materiales, rendimiento y valor en el mercado.",
-      "specs": {{
-        "pantalla": ["Detalle técnico con tamaño y panel exacto", "Resolución en píxeles y densidad", "Brillo máximo en nits y tipo de cristal protector"],
-        "bateria": ["Autonomía exacta en días para uso normal/ahorro", "Autonomía exacta en horas con GPS continuo activo", "Tecnología de carga y tiempo estimado de 0 a 100%"],
-        "conectividad": ["Sistemas de posicionamiento GNSS (doble frecuencia y satélites soportados)", "Conectividad inalámbrica (Bluetooth, Wi-Fi, NFC y eSIM si procede)", "Funciones de llamada o altavoz/micrófono"],
-        "sensores": ["Sensores de salud y biometría (frecuencia cardíaca, SpO2, ECG, temperatura cutánea)", "Sensores de entorno y orientación (altímetro barométrico, brújula, giroscopio)"],
-        "deportes": ["Número exacto de modos deportivos y perfiles de entrenamiento especializados", "Profundidad de inmersión y certificación de buceo/multideporte", "Mapas offline y navegación avanzada"],
-        "construccion": ["Material exacto de caja, bisel y fondo (ej. titanio grado 5, zafiro)", "Certificaciones de resistencia (MIL-STD-810H, ATM)", "Dimensiones de caja y peso sin correa"]
-      }},
-      "pros": ["Punto fuerte técnico 1 muy detallado y específico", "Punto fuerte técnico 2 muy detallado", "Punto fuerte técnico 3 muy detallado"],
-      "contras": ["Punto débil 1 detallado", "Punto débil 2 detallado"],
-      "puntuacion": 9.4
-    }}
-    """
 
-    print(f"🌐 Navegando y extrayendo datos cuantitativos exhaustivos en tiempo real para: {producto['titulo']}...")
-    
-    max_intentos = 3
-    response = None
-    for intento in range(1, max_intentos + 1):
+def resolver_precio(producto, precio_ia):
+    base = producto["precio"]
+    if not USAR_PRECIO_EN_TIEMPO_REAL:
+        return base
+    n_base, n_ia = a_numero(base), a_numero(precio_ia)
+    if n_base and n_ia and 0.6 * n_base <= n_ia <= 1.4 * n_base:
+        return f"{n_ia:.2f}€"
+    return base
+
+
+def llamar_gemini(contents, config, etiqueta):
+    """Llama a la API con reintentos y espera progresiva."""
+    for intento in range(1, MAX_INTENTOS_API + 1):
         try:
-            config = types.GenerateContentConfig(
-                tools=[{"google_search": {}}],
-                temperature=0.1,  # Temperatura muy baja para máxima precisión factual
-                response_mime_type="application/json"
-            )
-            
-            response = client.models.generate_content(
-                model='gemini-2.5-flash',
-                contents=prompt,
-                config=config
-            )
-            break
+            r = client.models.generate_content(model=MODELO, contents=contents, config=config)
+            if getattr(r, "text", None):
+                return r
+            print(f"   ⚠️ [{etiqueta}] respuesta vacía (intento {intento}/{MAX_INTENTOS_API})")
         except Exception as e:
-            print(f"⚠️ Intento {intento}/{max_intentos} fallido por error en la API: {e}")
-            if intento < max_intentos:
-                time.sleep(5)
-            else:
-                print(f"❌ Imposible analizar {producto['titulo']} tras {max_intentos} intentos.")
+            print(f"   ⚠️ [{etiqueta}] error de API (intento {intento}/{MAX_INTENTOS_API}): {e}")
+        if intento < MAX_INTENTOS_API:
+            time.sleep(6 * intento)
+    return None
 
-    # Extracción del JSON garantizado por la API
-    datos_ia = None
-    if response and hasattr(response, 'text') and response.text:
-        try:
-            datos_ia = json.loads(response.text.strip())
-        except json.JSONDecodeError as err:
-            print(f"⚠️ Advertencia: Error analizando JSON directo en {producto['titulo']}: {err}")
 
-    # Respaldo inteligente enriquecido con métricas estimadas y datos técnicos reales del catálogo
-    if not datos_ia:
-        print(f"💡 Aplicando respaldo técnico estructurado con métricas para {producto['titulo']}...")
-        datos_ia = {
-            "badge": f"ANÁLISIS TÉCNICO {producto['marca'].upper()}",
-            "resumen_ejecutivo": f"{producto['titulo']} representa una opción sobresaliente dentro del mercado actual de dispositivos wearables. Diseñado para ofrecer un rendimiento fluido y constante, combina materiales de alta durabilidad con una completa suite de sensores orientados al deporte de alto rendimiento y la salud. Su optimización de hardware lo convierte en un compañero ideal para entrenamientos exigentes.",
-            "specs": {
-                "pantalla": [f"Panel optimizado de alta visibilidad en exteriores para el modelo {producto['modelo_corto']}.", f"Especificación base integrada: {producto['especificaciones']}."],
-                "bateria": ["Sistema de gestión energética de alta eficiencia adaptado para uso prolongado.", "Autonomía optimizada para soporte de seguimiento GPS multideporte continuo."],
-                "conectividad": ["Soporte para sincronización de datos y conectividad inalámbrica de alta velocidad.", "Sistemas de posicionamiento geográfico por satélite de alta precisión integrados."],
-                "sensores": ["Monitoreo continuo de frecuencia cardíaca óptica y saturación de oxígeno (SpO2).", "Sensores barométricos y de movimiento para métricas de altitud y entorno."],
-                "deportes": ["Perfiles multideporte avanzados con más de 30 a 100 modalidades especializadas según el perfil.", "Resistencia certificada para entornos de alta exigencia al aire libre."],
-                "construccion": [f"Estructura robusta de alta gama desarrollada por {producto['marca']}.", f"Detalle de construcción base: {producto['especificaciones']}"]
-            },
-            "pros": [
-                f"Construcción robusta y materiales de primera línea respaldados por la ingeniería de {producto['marca']}.",
-                "Excelente precisión en el registro de métricas deportivas y de salud.",
-                "Interfaz optimizada para visibilidad y usabilidad bajo condiciones extremas."
-            ],
-            "contras": [
-                "Dimensiones y peso adaptados al formato deportivo robusto.",
-                "Inversión económica acorde a la gama alta de la categoría."
-            ],
-            "puntuacion": 9.2
-        }
+def fuentes_usadas(respuesta):
+    """Devuelve los dominios que Google Search ha usado (solo para el log)."""
+    try:
+        chunks = respuesta.candidates[0].grounding_metadata.grounding_chunks or []
+        return sorted({c.web.title for c in chunks if c.web and c.web.title})
+    except Exception:
+        return []
 
-    s = datos_ia['specs']
 
-    # HTML profesional y optimizado para WordPress
-    html_content = f"""
+# ==========================================
+# 6. FASE 1: INVESTIGACIÓN EN TIEMPO REAL (Google Search, texto libre)
+# ==========================================
+def investigar(producto):
+    prompt = f"""
+Eres un ingeniero de hardware y analista de wearables. Usa Google Search AHORA para localizar
+la ficha técnica COMPLETA y ACTUAL del producto: "{producto['busqueda']}" ({producto['marca']}).
+
+Prioriza fuentes en este orden: 1) web oficial del fabricante, 2) pruebas de laboratorio de
+medios especializados (DC Rainmaker, Notebookcheck, GSMArena, Wareable, Xataka, etc.),
+3) tiendas fiables. Haz varias búsquedas si hace falta (por ejemplo: "specs", "autonomía GPS",
+"sensores", "dimensiones peso", "precio España").
+
+Datos de referencia del catálogo (verifícalos y AMPLÍALOS, no te limites a ellos):
+{producto['especificaciones']}
+
+Devuelve un informe en texto plano con TODAS estas secciones y datos EXACTOS (cifras, unidades,
+nombres de tecnologías, versiones, certificaciones):
+
+PANTALLA: tipo de panel, tamaño en pulgadas, resolución, densidad (ppp), brillo máximo en nits,
+  frecuencia de refresco, Always-On, tipo de cristal/protección, táctil/botones.
+BATERÍA: capacidad (mAh) si existe, autonomía en modo reloj, autonomía con GPS (distintos modos),
+  autonomía en modo ahorro/expedición, carga solar si aplica, tipo de carga, tiempo de carga.
+CONECTIVIDAD: Bluetooth (versión), Wi-Fi, NFC/pagos, eSIM/LTE, GNSS (sistemas y doble frecuencia),
+  satélite, ANT+, almacenamiento/música, altavoz/micrófono, mapas, llamadas.
+SENSORES: frecuencia cardíaca óptica (generación), SpO2, ECG, temperatura, altímetro, barómetro,
+  brújula, giroscopio, acelerómetro, profundidad, luz ambiental, métricas de salud y sueño.
+DEPORTES: nº de perfiles/modos, buceo (profundidad y certificación), golf, running, ciclismo,
+  natación, trail, esquí, métricas avanzadas de entrenamiento, navegación/rutas, alertas de seguridad.
+CONSTRUCCIÓN: material de caja, bisel, fondo, correa, resistencia al agua (ATM/IP), certificaciones
+  militares, dimensiones (mm), peso (g), botones/corona, colores o tallas, sistema operativo.
+PRECIO: precio actual aproximado en euros en España y año de lanzamiento.
+PUNTOS FUERTES Y DÉBILES REALES: según las pruebas y reseñas encontradas.
+
+REGLAS: no inventes. Si un dato no aparece en las fuentes, escribe "NO CONFIRMADO" en lugar de
+suponerlo. No mezcles datos de otras generaciones del mismo modelo (comprueba que es exactamente
+"{producto['modelo_corto']}").
+"""
+    config = types.GenerateContentConfig(
+        tools=[types.Tool(google_search=types.GoogleSearch())],
+        temperature=0.1,
+    )
+    r = llamar_gemini(prompt, config, "investigación")
+    if not r:
+        return None
+    fuentes = fuentes_usadas(r)
+    if fuentes:
+        print(f"   🔎 Fuentes consultadas: {', '.join(fuentes[:8])}")
+    else:
+        print("   ⚠️ Gemini no devolvió fuentes de búsqueda (datos posiblemente de memoria)")
+    return r.text
+
+
+# ==========================================
+# 7. FASE 2: ESTRUCTURADO EN JSON (sin herramientas, esquema forzado)
+# ==========================================
+def estructurar(producto, investigacion):
+    prompt = f"""
+Eres redactor técnico de una web de comparativas de smartwatches en España.
+Con el INFORME DE INVESTIGACIÓN de abajo, redacta la ficha del producto en español.
+
+PRODUCTO: {producto['titulo']}
+MARCA: {producto['marca']}  |  MODELO: {producto['modelo_corto']}
+
+=== INFORME DE INVESTIGACIÓN (fuente de verdad) ===
+{investigacion}
+=== FIN DEL INFORME ===
+
+=== DATOS BASE DEL CATÁLOGO (complemento) ===
+{producto['especificaciones']}
+=== FIN ===
+
+INSTRUCCIONES:
+
+1. "badge": etiqueta comercial corta en MAYÚSCULAS (p. ej. "MEJOR RELOJ DE BUCEO", "REFERENCIA OUTDOOR").
+
+2. "resumen_ejecutivo": 90-140 palabras, un único párrafo. Debe EMPEZAR con el nombre completo del
+   producto ("{producto['titulo']} representa..." / "... se posiciona como...") y hablar de
+   rendimiento, materiales, sensores/salud, ecosistema/energía y a quién va dirigido.
+   Sin listas ni cifras repetidas de la ficha.
+
+3. "specs": 6 secciones (pantalla, bateria, conectividad, sensores, deportes, construccion).
+   - Cada sección tiene entre 5 y 8 líneas.
+   - FORMATO OBLIGATORIO de cada línea: "Etiqueta: valor concreto con cifras y unidades".
+   - Etiquetas cortas (1-4 palabras) y distintas dentro de la sección.
+   - Datos concretos, exactos y con explicación breve útil entre paréntesis cuando aporte.
+   - Si un dato figura como "NO CONFIRMADO" en el informe, NO lo incluyas (no rellenes con vaguedades).
+   - PROHIBIDO poner el precio, la marca o el nombre del modelo como línea de especificación.
+   - Cada dato va en su sección correcta (el precio no va nunca en batería).
+
+   Ejemplo del nivel de detalle y formato esperado (de otro modelo, solo como guía de estilo):
+   pantalla:
+     "Panel: LTPO 2.0 AMOLED circular de 1,5 pulgadas."
+     "Resolución: 466 × 466 píxeles (310 ppp)."
+     "Brillo Máximo: 3.500 nits (ideal bajo el sol directo)."
+     "Protección: Cristal de zafiro sintético de alta dureza."
+   bateria:
+     "Autonomía: 11-14 días en modo ahorro. Hasta 40 horas continuas con GPS."
+     "Carga: Inalámbrica Qi; de 0 a 100% en aprox. 60-90 minutos."
+
+4. "pros": 5 o 6 puntos. Formato "Título corto: explicación con datos reales (1-2 frases)".
+
+5. "contras": 4 puntos, honestos y concretos (peso, ecosistema, autonomía real, precio, etc.),
+   mismo formato "Título corto: explicación".
+
+6. "puntuacion": número entre 7.5 y 9.8 con un decimal, coherente con los pros/contras y el precio.
+
+7. "precio_actual_eur": precio actual en España en euros según el informe (ej. "799.00€"),
+   o "" si no está confirmado.
+
+Todo en español de España. No inventes ningún dato que no esté en el informe o en el catálogo.
+"""
+    config = types.GenerateContentConfig(
+        temperature=0.3,
+        response_mime_type="application/json",
+        response_schema=Ficha,
+    )
+    r = llamar_gemini(prompt, config, "estructurado")
+    if not r:
+        return None
+    try:
+        return json.loads(r.text.strip())
+    except json.JSONDecodeError as err:
+        print(f"   ⚠️ JSON inválido en fase de estructurado: {err}")
+        return None
+
+
+# ==========================================
+# 8. LIMPIEZA Y VALIDACIÓN DE CALIDAD
+# ==========================================
+RE_BASURA = re.compile(r"^\s*(precio|price|coste|fabricante|marca|modelo)\b", re.I)
+RE_VAGO = re.compile(r"no confirmado|no disponible|n/a|optimizad[ao] para", re.I)
+
+
+def limpiar(datos):
+    """Quita líneas basura (precio/marca como spec, datos vagos o sin confirmar)."""
+    specs = datos.get("specs", {})
+    for clave, _ in SECCIONES:
+        limpias = []
+        for it in specs.get(clave, []):
+            it = str(it).strip()
+            if it and not RE_BASURA.match(it) and not RE_VAGO.search(it):
+                limpias.append(it)
+        specs[clave] = limpias
+    datos["specs"] = specs
+    datos["pros"] = [str(p).strip() for p in datos.get("pros", []) if str(p).strip()]
+    datos["contras"] = [str(c).strip() for c in datos.get("contras", []) if str(c).strip()]
+    return datos
+
+
+def validar(datos):
+    """Devuelve (ok, motivo)."""
+    specs = datos["specs"]
+    total = 0
+    for clave, titulo in SECCIONES:
+        n = len(specs.get(clave, []))
+        total += n
+        if n < MIN_ITEMS_SECCION:
+            return False, f"sección '{titulo}' con solo {n} líneas (mínimo {MIN_ITEMS_SECCION})"
+    if total < MIN_ITEMS_TOTAL:
+        return False, f"solo {total} líneas de especificaciones (mínimo {MIN_ITEMS_TOTAL})"
+    if len(datos["pros"]) < 4 or len(datos["contras"]) < 3:
+        return False, "pros/contras insuficientes"
+    if len(datos.get("resumen_ejecutivo", "").split()) < 50:
+        return False, "resumen demasiado corto"
+    return True, ""
+
+
+def obtener_ficha(producto):
+    """Investiga + estructura + valida, repitiendo hasta MAX_RONDAS veces."""
+    mejor = None
+    for ronda in range(1, MAX_RONDAS + 1):
+        print(f"   🔁 Ronda {ronda}/{MAX_RONDAS}")
+        investigacion = investigar(producto)
+        if not investigacion:
+            continue
+        datos = estructurar(producto, investigacion)
+        if not datos:
+            continue
+        datos = limpiar(datos)
+        ok, motivo = validar(datos)
+        if ok:
+            return datos
+        print(f"   ⚠️ Ficha pobre: {motivo}")
+        total = sum(len(datos["specs"][c]) for c, _ in SECCIONES)
+        if mejor is None or total > mejor[0]:
+            mejor = (total, datos)
+    if mejor and not SALTAR_SI_FICHA_POBRE:
+        print("   ⚠️ Se usa la mejor ficha obtenida aunque sea incompleta.")
+        return mejor[1]
+    return None
+
+
+# ==========================================
+# 9. GENERACIÓN DE HTML Y PUBLICACIÓN
+# ==========================================
+def construir_html(producto, datos, precio, affiliate_link):
+    s = datos["specs"]
+    e = html.escape
+
+    filas = []
+    for i, (clave, titulo) in enumerate(SECCIONES):
+        lis = "".join(f"<li style='margin-bottom: 4px;'>{render_item(it)}</li>" for it in s[clave])
+        filas.append(f"""
+          <tr style="border: none; border-bottom: 1px solid #f1f5f9;">
+            <td style="padding: 10px 12px; font-weight: bold; width: 30%; vertical-align: top; border: none; background-color: #f1f5f9;">{titulo}</td>
+            <td style="padding: 10px 12px; vertical-align: top; border: none; background-color: #f8fafc;">
+              <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">{lis}</ul>
+            </td>
+          </tr>""")
+    filas_html = "".join(filas)
+
+    pros = "".join(f'<li style="margin-bottom: 6px;">{render_item(p)}</li>' for p in datos["pros"])
+    contras = "".join(f'<li style="margin-bottom: 6px;">{render_item(c)}</li>' for c in datos["contras"])
+
+    try:
+        puntuacion = f"{float(datos['puntuacion']):.1f}"
+    except (TypeError, ValueError):
+        puntuacion = "9.0"
+
+    return f"""
     <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; background-color: #ffffff; max-width: 750px; margin: 20px auto; font-family: system-ui, -apple-system, sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-      
+
       <div style="text-align: center; margin-bottom: 20px;">
-        <img src="{producto['imagen']}" alt="{producto['titulo']}" style="max-height: 280px; width: auto; object-fit: contain; border-radius: 8px;" />
+        <img src="{e(producto['imagen'])}" alt="{e(producto['titulo'])}" style="max-height: 280px; width: auto; object-fit: contain; border-radius: 8px;" />
       </div>
 
       <div style="background-color: #ff9900; color: #fff; font-weight: bold; display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 0.85em; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px;">
-        🔥 {datos_ia['badge']}
+        🔥 {e(datos['badge'])}
       </div>
 
-      <h2 style="margin-top: 0; color: #111; font-size: 1.6em; line-height: 1.3;">{producto['titulo']}</h2>
-      
+      <h2 style="margin-top: 0; color: #111; font-size: 1.6em; line-height: 1.3;">{e(producto['titulo'])}</h2>
+
       <p style="font-size: 1.05em; color: #333; line-height: 1.7; text-align: justify;">
-        {datos_ia['resumen_ejecutivo']}
+        {e(datos['resumen_ejecutivo'])}
       </p>
 
       <!-- Ficha Técnica Detallada -->
       <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px; margin: 20px 0;">
         <h3 style="color: #0f172a; margin-top: 0; font-size: 1.1em; border-bottom: 2px solid #cbd5e1; padding-bottom: 8px; margin-bottom: 12px;">⚙️ Ficha Técnica Detallada</h3>
-        
         <table style="width: 100%; border-collapse: collapse; border: none; font-size: 0.95em; color: #334155;">
-          <tr style="border: none; border-bottom: 1px solid #f1f5f9;">
-            <td style="padding: 10px 12px; font-weight: bold; width: 30%; vertical-align: top; border: none; background-color: #f1f5f9; border-top-left-radius: 6px;">📺 Pantalla</td>
-            <td style="padding: 10px 12px; vertical-align: top; border: none; background-color: #f8fafc;">
-              <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
-                {render_bullets(s.get('pantalla', []))}
-              </ul>
-            </td>
-          </tr>
-          
-          <tr style="border: none; border-bottom: 1px solid #f1f5f9;">
-            <td style="padding: 10px 12px; font-weight: bold; vertical-align: top; border: none; background-color: #f1f5f9;">🔋 Batería</td>
-            <td style="padding: 10px 12px; vertical-align: top; border: none; background-color: #f8fafc;">
-              <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
-                {render_bullets(s.get('bateria', []))}
-              </ul>
-            </td>
-          </tr>
-
-          <tr style="border: none; border-bottom: 1px solid #f1f5f9;">
-            <td style="padding: 10px 12px; font-weight: bold; vertical-align: top; border: none; background-color: #f1f5f9;">🌐 Conectividad</td>
-            <td style="padding: 10px 12px; vertical-align: top; border: none; background-color: #f8fafc;">
-              <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
-                {render_bullets(s.get('conectividad', []))}
-              </ul>
-            </td>
-          </tr>
-
-          <tr style="border: none; border-bottom: 1px solid #f1f5f9;">
-            <td style="padding: 10px 12px; font-weight: bold; vertical-align: top; border: none; background-color: #f1f5f9;">💓 Sensores</td>
-            <td style="padding: 10px 12px; vertical-align: top; border: none; background-color: #f8fafc;">
-              <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
-                {render_bullets(s.get('sensores', []))}
-              </ul>
-            </td>
-          </tr>
-
-          <tr style="border: none; border-bottom: 1px solid #f1f5f9;">
-            <td style="padding: 10px 12px; font-weight: bold; vertical-align: top; border: none; background-color: #f1f5f9;">🏃‍♂️ Deportes</td>
-            <td style="padding: 10px 12px; vertical-align: top; border: none; background-color: #f8fafc;">
-              <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
-                {render_bullets(s.get('deportes', []))}
-              </ul>
-            </td>
-          </tr>
-
-          <tr style="border: none;">
-            <td style="padding: 10px 12px; font-weight: bold; vertical-align: top; border: none; background-color: #f1f5f9; border-bottom-left-radius: 6px;">🛡️ Construcción</td>
-            <td style="padding: 10px 12px; vertical-align: top; border: none; background-color: #f8fafc;">
-              <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
-                {render_bullets(s.get('construccion', []))}
-              </ul>
-            </td>
-          </tr>
+          {filas_html}
         </table>
       </div>
 
       <div style="display: flex; gap: 15px; margin: 25px 0; flex-wrap: wrap;">
         <div style="flex: 1; min-width: 250px; background-color: #f0fdf4; padding: 18px; border-radius: 8px; border-left: 4px solid #22c55e;">
           <h4 style="color: #15803d; margin-top: 0; font-size: 1.1em;">✅ Lo Mejor (Pros)</h4>
-          <ul style="padding-left: 18px; color: #166534; margin-bottom: 0; line-height: 1.5;">
-            {"".join([f'<li style="margin-bottom: 6px;">{p}</li>' for p in datos_ia['pros']])}
-          </ul>
+          <ul style="padding-left: 18px; color: #166534; margin-bottom: 0; line-height: 1.5;">{pros}</ul>
         </div>
-        
+
         <div style="flex: 1; min-width: 250px; background-color: #fef2f2; padding: 18px; border-radius: 8px; border-left: 4px solid #ef4444;">
           <h4 style="color: #b91c1c; margin-top: 0; font-size: 1.1em;">❌ A mejorar (Contras)</h4>
-          <ul style="padding-left: 18px; color: #991b1b; margin-bottom: 0; line-height: 1.5;">
-            {"".join([f'<li style="margin-bottom: 6px;">{c}</li>' for c in datos_ia['contras']])}
-          </ul>
+          <ul style="padding-left: 18px; color: #991b1b; margin-bottom: 0; line-height: 1.5;">{contras}</ul>
         </div>
       </div>
 
       <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #f0f0f0;">
         <p style="font-size: 1.3em; font-weight: bold; color: #111; margin-bottom: 15px;">
-          Precio estimado: <span style="color: #b12704;">{producto['precio']}</span> | Puntuación: ⭐ <strong>{datos_ia['puntuacion']}/10</strong>
+          Precio estimado: <span style="color: #b12704;">{e(precio)}</span> | Puntuación: ⭐ <strong>{puntuacion}/10</strong>
         </p>
         <a href="{affiliate_link}" target="_blank" rel="sponsored nofollow" style="background-color: #ffa41c; color: #111; text-decoration: none; font-size: 1.2em; font-weight: bold; padding: 16px 32px; border-radius: 8px; border: 1px solid #ff8f00; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
           Ver precio actualizado en Amazon 🛒
@@ -330,30 +516,67 @@ def procesar_y_publicar(producto):
     </div>
     """
 
+
+def procesar_y_publicar(producto):
+    print(f"\n🌐 Investigando en tiempo real: {producto['titulo']}")
+    query_encoded = urllib.parse.quote_plus(producto["busqueda"])
+    affiliate_link = f"https://www.amazon.es/s?k={query_encoded}&tag={AMAZON_TAG}"
+
+    datos = obtener_ficha(producto)
+    if not datos:
+        print(f"❌ No se ha podido generar una ficha completa para {producto['titulo']}. NO se publica.")
+        return False
+
+    s = datos["specs"]
+    total = sum(len(s[c]) for c, _ in SECCIONES)
+    print(f"   ✅ Ficha completa: {total} líneas de especificaciones")
+
+    precio = resolver_precio(producto, datos.get("precio_actual_eur", ""))
+    html_content = construir_html(producto, datos, precio, affiliate_link)
+
     wp_endpoint = f"{WP_URL}/wp-json/wp/v2/posts"
     payload = {
         "title": f"Análisis y Opinión: {producto['titulo']}",
         "content": html_content,
         "status": "publish",
         "meta": {
-            "top_marca": producto['marca'],
-            "top_modelo": producto['modelo_corto'],
-            "top_busqueda": producto['busqueda'],
-            "spec_pantalla": str(s.get('pantalla', [])),
-            "spec_bateria": str(s.get('bateria', [])),
-            "spec_conectiv": str(s.get('conectividad', [])),
-            "spec_sensores": str(s.get('sensores', [])),
-            "spec_deportes": str(s.get('deportes', [])),
-            "spec_cuerpo": str(s.get('construccion', []))
-        }
+            "top_marca": producto["marca"],
+            "top_modelo": producto["modelo_corto"],
+            "top_busqueda": producto["busqueda"],
+            "spec_pantalla": str(s.get("pantalla", [])),
+            "spec_bateria": str(s.get("bateria", [])),
+            "spec_conectiv": str(s.get("conectividad", [])),
+            "spec_sensores": str(s.get("sensores", [])),
+            "spec_deportes": str(s.get("deportes", [])),
+            "spec_cuerpo": str(s.get("construccion", [])),
+        },
     }
 
-    res = requests.post(wp_endpoint, json=payload, auth=(WP_USER, WP_APP_PASSWORD))
+    try:
+        res = requests.post(wp_endpoint, json=payload, auth=(WP_USER, WP_APP_PASSWORD), timeout=60)
+    except requests.RequestException as err:
+        print(f"❌ Error de conexión con WordPress: {err}")
+        return False
+
     if res.status_code == 201:
-        print(f"¡Publicación creada exitosamente para {producto['titulo']}!")
-    else:
-        print(f"Error ({res.text})")
+        print(f"🎉 Publicación creada: {producto['titulo']}")
+        return True
+    print(f"❌ Error WordPress ({res.status_code}): {res.text[:300]}")
+    return False
+
 
 if __name__ == "__main__":
-    for item in productos_catalogo:
-        procesar_y_publicar(item)
+    fallidos = []
+    for i, item in enumerate(productos_catalogo):
+        if not procesar_y_publicar(item):
+            fallidos.append(item["titulo"])
+        if i < len(productos_catalogo) - 1:
+            time.sleep(PAUSA_ENTRE_PRODUCTOS)
+
+    print("\n==============================")
+    print(f"Publicados: {len(productos_catalogo) - len(fallidos)}/{len(productos_catalogo)}")
+    if fallidos:
+        print("Con problemas:")
+        for t in fallidos:
+            print(f"  - {t}")
+        sys.exit(1)  # marca el workflow de GitHub en rojo para que lo veas
