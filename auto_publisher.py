@@ -34,7 +34,7 @@ AMAZON_TAG = "topcomparad00-21"
 MODELO = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
 
 MAX_INTENTOS_API = 3          # reintentos por llamada a la API (errores 429/500...)
-MAX_RONDAS = 3                # veces que se repite investigación+estructurado si la ficha sale pobre
+MAX_RONDAS = 2                # veces que se repite investigación+estructurado si la ficha sale pobre
 MIN_ITEMS_SECCION = 3         # mínimo de líneas por sección de la ficha técnica
 MIN_ITEMS_TOTAL = 24          # mínimo total de líneas de especificaciones
 PAUSA_ENTRE_PRODUCTOS = 4     # segundos (evita límites de cuota)
@@ -45,6 +45,10 @@ USAR_PRECIO_EN_TIEMPO_REAL = True
 # True: NO publica fichas pobres (el workflow termina en rojo para que lo veas)
 # False: publica igualmente con lo que haya
 SALTAR_SI_FICHA_POBRE = True
+
+# UNA_LLAMADA=1 -> 1 petición por producto (búsqueda + JSON en la misma llamada).
+# Ideal para la capa gratuita (20 peticiones/día). Por defecto: 2 llamadas (más fiable).
+UNA_LLAMADA = os.environ.get("UNA_LLAMADA", "0") == "1"
 
 client = genai.Client(api_key=GEMINI_API_KEY)
 
@@ -93,6 +97,87 @@ productos_catalogo = [
         "especificaciones": "Pantalla Memory-in-Pixel con tecnología de carga solar Solar Sapphire, bisel de titanio de grado 5, resistencia militar MIL-STD-810H y botones inductivos estancos aptos para buceo (40m). Incorpora micrófono/altavoz para llamadas y comandos por voz, linterna LED y hasta 48 días de autonomía en modo reloj.",
         "precio": "1099.99€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Mi_Watch.jpg"
+    },
+    {
+        "marca": "Apple",
+        "modelo_corto": "Watch Ultra 2",
+        "busqueda": "Apple Watch Ultra 2",
+        "titulo": "Apple Watch Ultra 2 - Caja de Titanio de 49 mm, Pantalla Retina de 3.000 nits, Conectividad Satelital, Resistencia 100 m",
+        "especificaciones": "Caja de titanio aeroespacial de grado 5, pantalla retina OLED de hasta 3.000 nits de brillo, profundímetro certificado para buceo a 40 metros (EN13319), conexión satelital directa para mensajes y SOS de emergencia, y autonomía de hasta 72 horas en modo ahorro.",
+        "precio": "899.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
+    },
+    {
+        "marca": "Garmin",
+        "modelo_corto": "Enduro 3",
+        "busqueda": "Garmin Enduro 3",
+        "titulo": "Garmin Enduro 3 - Smartwatch para Ultra Resistencia, Cristal Solar Zafiro, Linterna LED, Hasta 320 Horas de Batería GPS",
+        "especificaciones": "Diseñado para ultramaratones y expediciones extremos con un peso ultraligero de 63 g. Lente de carga solar Solar Sapphire con bisel de titanio, mapas topográficos TopoActive preinstalados, navegación SatIQ de doble frecuencia y autonomía imbatible de hasta 320 horas con GPS activo mediante carga solar.",
+        "precio": "899.99€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
+    },
+    {
+        "marca": "Suunto",
+        "modelo_corto": "Vertical Titanium Solar",
+        "busqueda": "Suunto Vertical Titanium Solar",
+        "titulo": "Suunto Vertical Titanium Solar - Reloj Deportivo Outdoor con Carga Solar, Bisel Titanio Grado 5, Mapas Offline Gratuitos",
+        "especificaciones": "Diseño escandinavo ultra resistente con bisel de titanio de grado 5 y cristal de zafiro solar. Ofrece mapas topográficos offline gratuitos de gran precisión, posicionamiento dual GNSS de 5 satélites simultáneos y autonomía continua de hasta 85 horas en seguimiento GPS máximo.",
+        "precio": "799.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Galaxy_Watch_7.jpg"
+    },
+    {
+        "marca": "Samsung",
+        "modelo_corto": "Galaxy Watch Ultra",
+        "busqueda": "Samsung Galaxy Watch Ultra",
+        "titulo": "Samsung Galaxy Watch Ultra - Smartwatch 47mm Titanio, Chipset 3nm, GPS Dual, Resistencia 10 ATM e IP68, Galaxy AI",
+        "especificaciones": "Caja de titanio de grado 4 con grado de resistencia 10 ATM, certificación militar MIL-STD-810H y resistencia a temperaturas extremas (-20 °C a 55 °C). Procesador de 3 nm para máxima fluidez, pantalla AMOLED de 3.000 nits, sirena de socorro de 86 dB y funciones de entrenamiento con Galaxy AI.",
+        "precio": "699.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Amazfit_GTR_2e.jpg"
+    },
+    {
+        "marca": "Polar",
+        "modelo_corto": "Grit X2 Pro Titan",
+        "busqueda": "Polar Grit X2 Pro Titan",
+        "titulo": "Polar Grit X2 Pro Titan - Reloj Outdoor Extremo con Bisel de Titanio, Cristal de Zafiro, Estándar MIL-STD-810H, Biometría Elixir",
+        "especificaciones": "Construido con bisel de titanio aeroespacial y pantalla AMOLED protegida por cristal de zafiro de alta dureza. Incluye mapas topográficos offline descargables, sensor biomecánico Polar Elixir (ECG en muñeca, SpO2 y temperatura cutánea) y resistencia a temperaturas operativas de -20°C a +50°C.",
+        "precio": "869.90€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
+    },
+    {
+        "marca": "COROS",
+        "modelo_corto": "VERTIX 2S",
+        "busqueda": "COROS VERTIX 2S",
+        "titulo": "COROS VERTIX 2S - Reloj de Aventura y Escalada Extrema, Bisel Titanio Grado 5, Pantalla Zafiro, GPS Doble Frecuencia, Batería 118h GPS",
+        "especificaciones": "Optimizado para expediciones de alta montaña y escalada con bisel de titanio de grado 5 revestido en PVD y cristal de zafiro. Sistema óptico de frecuencia cardíaca de 5 LEDs, mapas topográficos y paisajísticos globales offline y autonomía de 118 horas en modo GPS completo.",
+        "precio": "699.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/29/Coros_Pace_3.jpeg"
+    },
+    {
+        "marca": "Huawei",
+        "modelo_corto": "Watch Ultimate",
+        "busqueda": "Huawei Watch Ultimate",
+        "titulo": "Huawei Watch Ultimate - Smartwatch de Metal Líquido con Circonio, Ordenador de Buceo 100m, Pantalla AMOLED Zafiro",
+        "especificaciones": "Cuerpo innovador de metal líquido a base de circonio (4.5 veces más resistente que el titanio), bisel cerámico nanocristalino y cristal de zafiro. Certificado como ordenador de buceo profesional para 100 m (ISO 22810 / EN13319), posicionamiento GPS de 5 sistemas y hasta 14 días de batería.",
+        "precio": "749.00€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
+    },
+    {
+        "marca": "Garmin",
+        "modelo_corto": "Instinct 2X Solar",
+        "busqueda": "Garmin Instinct 2X Solar",
+        "titulo": "Garmin Instinct 2X Solar - Smartwatch Táctico y Outdoor, Carga Solar Ilimitada, Linterna LED Integrada, Resistencia Militar",
+        "especificaciones": "Caja de polímero reforzado con fibra de 50 mm, pantalla transflectiva monocroma de gran visibilidad al sol con cristal Power Glass para autonomía ilimitada en modo reloj inteligente. Incluye GPS multibanda, linterna LED con luz estroboscópica y cumplimiento con estándares térmicos y de choque MIL-STD-810.",
+        "precio": "449.99€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
+    },
+    {
+        "marca": "Amazfit",
+        "modelo_corto": "T-Rex 3",
+        "busqueda": "Amazfit T-Rex 3",
+        "titulo": "Amazfit T-Rex 3 - Smartwatch Táctico Rugerizado, Pantalla AMOLED 2.000 nits, Mapas Offline, Hasta 27 Días de Batería",
+        "especificaciones": "Construcción táctica de grado militar con bisel de acero inoxidable resistente a temperaturas extremas (-30°C a +70°C), pantalla de 1,5\", mapas topográficos giro a giro, asistente IA Zepp Flow y batería imbatible de hasta 27 días.",
+        "precio": "279.90€",
+        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/52/Fitbit_Charge_5.jpg"
     }
 ]
 
@@ -143,8 +228,12 @@ def resolver_precio(producto, precio_ia):
     return base
 
 
+class QuotaAgotada(Exception):
+    """Cuota diaria de la API agotada: reintentar no sirve de nada."""
+
+
 def llamar_gemini(contents, config, etiqueta):
-    """Llama a la API con reintentos y espera progresiva."""
+    """Llama a la API con reintentos. Si la cuota DIARIA se agota, aborta al instante."""
     for intento in range(1, MAX_INTENTOS_API + 1):
         try:
             r = client.models.generate_content(model=MODELO, contents=contents, config=config)
@@ -152,7 +241,16 @@ def llamar_gemini(contents, config, etiqueta):
                 return r
             print(f"   ⚠️ [{etiqueta}] respuesta vacía (intento {intento}/{MAX_INTENTOS_API})")
         except Exception as e:
-            print(f"   ⚠️ [{etiqueta}] error de API (intento {intento}/{MAX_INTENTOS_API}): {e}")
+            txt = str(e)
+            if "429" in txt or "RESOURCE_EXHAUSTED" in txt:
+                if "PerDay" in txt or "per day" in txt.lower():
+                    raise QuotaAgotada(f"Cuota diaria agotada para el modelo {MODELO}.")
+                m = re.search(r"retryDelay\D{0,6}(\d+)", txt)
+                espera = min(int(m.group(1)) + 2, 70) if m else 30
+                print(f"   ⏳ [{etiqueta}] límite por minuto; esperando {espera}s...")
+                time.sleep(espera)
+                continue
+            print(f"   ⚠️ [{etiqueta}] error de API (intento {intento}/{MAX_INTENTOS_API}): {txt[:300]}")
         if intento < MAX_INTENTOS_API:
             time.sleep(6 * intento)
     return None
@@ -223,7 +321,31 @@ suponerlo. No mezcles datos de otras generaciones del mismo modelo (comprueba qu
 # ==========================================
 # 7. FASE 2: ESTRUCTURADO EN JSON (sin herramientas, esquema forzado)
 # ==========================================
-def estructurar(producto, investigacion):
+def extraer_json(texto):
+    """Extrae el primer objeto JSON de un texto (por si viene con ``` o explicaciones)."""
+    texto = texto.strip()
+    a, b = texto.find("{"), texto.rfind("}")
+    if a == -1 or b == -1:
+        raise json.JSONDecodeError("sin JSON", texto, 0)
+    return json.loads(texto[a:b + 1])
+
+
+ESQUEMA_TEXTO = """Responde ÚNICAMENTE con un objeto JSON válido (sin ``` ni texto extra) con estas claves:
+{"badge": str, "resumen_ejecutivo": str,
+ "specs": {"pantalla": [str], "bateria": [str], "conectividad": [str], "sensores": [str], "deportes": [str], "construccion": [str]},
+ "pros": [str], "contras": [str], "puntuacion": number, "precio_actual_eur": str}"""
+
+
+def estructurar(producto, investigacion=None):
+    if investigacion:
+        bloque_fuente = f"""=== INFORME DE INVESTIGACIÓN (fuente de verdad) ===
+{investigacion}
+=== FIN DEL INFORME ==="""
+    else:
+        bloque_fuente = f"""Usa Google Search AHORA para obtener la ficha técnica completa y ACTUAL de "{producto['busqueda']}"
+(prioriza la web del fabricante y pruebas de laboratorio de medios especializados; comprueba que es
+exactamente el modelo "{producto['modelo_corto']}" y no otra generación). Haz varias búsquedas si hace falta.
+Si un dato no aparece en las fuentes, NO lo incluyas."""
     prompt = f"""
 Eres redactor técnico de una web de comparativas de smartwatches en España.
 Con el INFORME DE INVESTIGACIÓN de abajo, redacta la ficha del producto en español.
@@ -231,9 +353,7 @@ Con el INFORME DE INVESTIGACIÓN de abajo, redacta la ficha del producto en espa
 PRODUCTO: {producto['titulo']}
 MARCA: {producto['marca']}  |  MODELO: {producto['modelo_corto']}
 
-=== INFORME DE INVESTIGACIÓN (fuente de verdad) ===
-{investigacion}
-=== FIN DEL INFORME ===
+{bloque_fuente}
 
 === DATOS BASE DEL CATÁLOGO (complemento) ===
 {producto['especificaciones']}
@@ -277,18 +397,30 @@ INSTRUCCIONES:
 7. "precio_actual_eur": precio actual en España en euros según el informe (ej. "799.00€"),
    o "" si no está confirmado.
 
-Todo en español de España. No inventes ningún dato que no esté en el informe o en el catálogo.
+Todo en español de España. No inventes ningún dato que no esté en las fuentes o en el catálogo.
 """
-    config = types.GenerateContentConfig(
-        temperature=0.3,
-        response_mime_type="application/json",
-        response_schema=Ficha,
-    )
-    r = llamar_gemini(prompt, config, "estructurado")
+    if investigacion:
+        config = types.GenerateContentConfig(
+            temperature=0.3,
+            response_mime_type="application/json",
+            response_schema=Ficha,
+        )
+    else:
+        # Modo 1 llamada: búsqueda + JSON en texto (Gemini no admite JSON forzado junto a search)
+        prompt += "\n" + ESQUEMA_TEXTO
+        config = types.GenerateContentConfig(
+            tools=[types.Tool(google_search=types.GoogleSearch())],
+            temperature=0.2,
+        )
+    r = llamar_gemini(prompt, config, "estructurado" if investigacion else "búsqueda+ficha")
     if not r:
         return None
+    if not investigacion:
+        fuentes = fuentes_usadas(r)
+        print(f"   🔎 Fuentes consultadas: {', '.join(fuentes[:8])}" if fuentes
+              else "   ⚠️ Sin fuentes de búsqueda (datos posiblemente de memoria)")
     try:
-        return json.loads(r.text.strip())
+        return extraer_json(r.text)
     except json.JSONDecodeError as err:
         print(f"   ⚠️ JSON inválido en fase de estructurado: {err}")
         return None
@@ -340,10 +472,13 @@ def obtener_ficha(producto):
     mejor = None
     for ronda in range(1, MAX_RONDAS + 1):
         print(f"   🔁 Ronda {ronda}/{MAX_RONDAS}")
-        investigacion = investigar(producto)
-        if not investigacion:
-            continue
-        datos = estructurar(producto, investigacion)
+        if UNA_LLAMADA:
+            datos = estructurar(producto)
+        else:
+            investigacion = investigar(producto)
+            if not investigacion:
+                continue
+            datos = estructurar(producto, investigacion)
         if not datos:
             continue
         datos = limpiar(datos)
@@ -487,8 +622,15 @@ def procesar_y_publicar(producto):
 if __name__ == "__main__":
     fallidos = []
     for i, item in enumerate(productos_catalogo):
-        if not procesar_y_publicar(item):
-            fallidos.append(item["titulo"])
+        try:
+            if not procesar_y_publicar(item):
+                fallidos.append(item["titulo"])
+        except QuotaAgotada as q:
+            print(f"\n🛑 {q} Se detiene la ejecución para no gastar más peticiones.")
+            print("   Soluciones: esperar al reinicio diario, activar facturación en Google AI Studio,")
+            print("   usar otro modelo (GEMINI_MODEL) o activar UNA_LLAMADA=1.")
+            fallidos.extend(p["titulo"] for p in productos_catalogo[i:])
+            break
         if i < len(productos_catalogo) - 1:
             time.sleep(PAUSA_ENTRE_PRODUCTOS)
 
