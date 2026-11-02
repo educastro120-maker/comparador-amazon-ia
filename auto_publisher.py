@@ -89,16 +89,7 @@ class Ficha(BaseModel):
 # 4. CATÁLOGO DE SMARTWATCHES
 # ==========================================
 productos_catalogo = [
-    {
-        "marca": "Huawei",
-        "modelo_corto": "Watch Ultimate",
-        "busqueda": "Huawei Watch Ultimate",
-        "titulo": "Huawei Watch Ultimate - Smartwatch de Metal Líquido con Circonio, Ordenador de Buceo 100m, Pantalla AMOLED Zafiro",
-        "especificaciones": "Cuerpo innovador de metal líquido a base de circonio (4.5 veces más resistente que el titanio), bisel cerámico nanocristalino y cristal de zafiro. Certificado como ordenador de buceo profesional para 100 m (ISO 22810 / EN13319), posicionamiento GPS de 5 sistemas y hasta 14 días de batería.",
-        "precio": "749.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/23/Huawei_Watch_GT_2_Smartwatch.jpg"
-    },
-    {
+     {
         "marca": "Garmin",
         "modelo_corto": "Instinct 2X Solar",
         "busqueda": "Garmin Instinct 2X Solar",
