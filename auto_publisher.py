@@ -89,69 +89,7 @@ class Ficha(BaseModel):
 # 4. CATÁLOGO DE SMARTWATCHES
 # ==========================================
 productos_catalogo = [
-     {
-        "marca": "Garmin",
-        "modelo_corto": "Instinct 2X Solar",
-        "busqueda": "Garmin Instinct 2X Solar",
-        "titulo": "Garmin Instinct 2X Solar - Smartwatch Táctico y Outdoor, Carga Solar Ilimitada, Linterna LED Integrada, Resistencia Militar",
-        "especificaciones": "Caja de polímero reforzado con fibra de 50 mm, pantalla transflectiva monocroma de gran visibilidad al sol con cristal Power Glass para autonomía ilimitada en modo reloj inteligente. Incluye GPS multibanda, linterna LED con luz estroboscópica y cumplimiento con estándares térmicos y de choque MIL-STD-810.",
-        "precio": "449.99€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
-    },
-    {
-        "marca": "Amazfit",
-        "modelo_corto": "T-Rex 3",
-        "busqueda": "Amazfit T-Rex 3",
-        "titulo": "Amazfit T-Rex 3 - Smartwatch Táctico Rugerizado, Pantalla AMOLED 2.000 nits, Mapas Offline, Hasta 27 Días de Batería",
-        "especificaciones": "Construcción táctica de grado militar con bisel de acero inoxidable resistente a temperaturas extremas (-30°C a +70°C), pantalla de 1,5\", mapas topográficos giro a giro, asistente IA Zepp Flow y batería imbatible de hasta 27 días.",
-        "precio": "279.90€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/52/Fitbit_Charge_5.jpg"
-    },
-{
-        "marca": "Garmin",
-        "modelo_corto": "Lily 2 Active",
-        "busqueda": "Garmin Lily 2 Active",
-        "titulo": "Garmin Lily 2 Active - Smartwatch Petite para Mujer (38mm), GPS Integrado, Bisel de Aluminio y Salud Femenina",
-        "especificaciones": "Caja compacta de 38 mm ultraligera (29 g) con lente estampada de alta elegancia, pantalla táctil oculta, GPS integrado, seguimiento del ciclo menstrual y embarazo, sensor de energía Body Battery y hasta 9 días de batería.",
-        "precio": "299.99€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Garmin_Vivoactive_4.jpg"
-    },
-    {
-        "marca": "Garmin",
-        "modelo_corto": "Venu 3S",
-        "busqueda": "Garmin Venu 3S",
-        "titulo": "Garmin Venu 3S (41mm) - Smartwatch Fitness Elegante, Pantalla AMOLED 1.2\", Bisel de Acero Inoxidable, Llamadas y Sleep Coach",
-        "especificaciones": "Caja fina de 41 mm con bisel de acero inoxidable pulido, pantalla AMOLED de 1,2 pulgadas, altavoz/micrófono para llamadas Bluetooth, métricas avanzadas de descanso con Sleep Coach, Garmin Pay y autonomía de hasta 10 días.",
-        "precio": "399.99€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Mi_Watch.jpg"
-    },
-    {
-        "marca": "Samsung",
-        "modelo_corto": "Galaxy Watch 7 (40mm)",
-        "busqueda": "Samsung Galaxy Watch 7 40mm",
-        "titulo": "Samsung Galaxy Watch 7 40mm - Smartwatch Compacto con Cristal Zafiro, Procesador 3nm, Sensor BioActive y Galaxy AI",
-        "especificaciones": "Formato minimalista de 40 mm ultraligero (28,8 g) con cristal de zafiro, procesador de 3 nm para máxima fluidez, sensor BioActive para análisis de composición corporal, índice de AGEs (envejecimiento celular) y Wear OS.",
-        "precio": "229.00€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Galaxy_Watch_7.jpg"
-    },
-    {
-        "marca": "Amazfit",
-        "modelo_corto": "Active",
-        "busqueda": "Amazfit Active",
-        "titulo": "Amazfit Active - Smartwatch Cuadrado Ligero para Muñeca Fina, Pantalla AMOLED 1.75\", Entrenador Zepp Coach AI, Llamadas BT",
-        "especificaciones": "Diseño elegante y ligero de 24 g con marco metálico, pantalla AMOLED HD de 1,75 pulgadas, planes de recuperación y entrenamiento impulsados por Zepp Coach AI, reproductor de música local y hasta 14 días de batería.",
-        "precio": "119.90€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/a/af/Amazfit_GTS_2_Mini.png"
-    },
-    {
-        "marca": "Xiaomi",
-        "modelo_corto": "Watch S4 41mm",
-        "busqueda": "Xiaomi Watch S4 41mm",
-        "titulo": "Xiaomi Watch S4 41mm - Smartwatch Elegante con Bisel Intercambiable, Pantalla AMOLED, Sensor de Salud 24/7, Batería 8 Días",
-        "especificaciones": "Caja compacta de acero de 41 mm (32 g) con sistema de biseles decorativos intercambiables, pantalla AMOLED de alto contraste, seguimiento de temperatura cutánea y pulso continuo, y hasta 8 días de batería.",
-        "precio": "149.99€",
-        "imagen": "https://upload.wikimedia.org/wikipedia/commons/2/22/Xiaomi_Mi_Watch_S1_Active.jpg"
-    },
+
     {
         "marca": "Fitbit",
         "modelo_corto": "Versa 4",
