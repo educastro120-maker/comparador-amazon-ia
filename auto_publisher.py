@@ -106,7 +106,7 @@ productos_catalogo = [
         "especificaciones": "Construcción táctica de grado militar con bisel de acero inoxidable resistente a temperaturas extremas (-30°C a +70°C), pantalla de 1,5\", mapas topográficos giro a giro, asistente IA Zepp Flow y batería imbatible de hasta 27 días.",
         "precio": "279.90€",
         "imagen": "https://upload.wikimedia.org/wikipedia/commons/5/52/Fitbit_Charge_5.jpg"
-    }
+    },
 {
         "marca": "Garmin",
         "modelo_corto": "Lily 2 Active",
