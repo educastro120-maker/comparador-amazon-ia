@@ -6,6 +6,16 @@ on:
     - cron: '0 8 * * *'
   # Permite ejecutarlo manualmente con un botón cuando quieras probarlo
   workflow_dispatch:
+    inputs:
+      regenerar:
+        description: 'Regenerar TODOS los productos aunque ya estén en products.json'
+        type: boolean
+        default: false
+
+# NUEVO: permiso para que el workflow pueda GUARDAR archivos (products.json) en tu repositorio.
+# Sin esto, el paso final de guardado fallaría con un error de permisos.
+permissions:
+  contents: write
 
 jobs:
   run-python-script:
@@ -13,10 +23,10 @@ jobs:
 
     steps:
       - name: Descargar el código del repositorio
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Configurar Entorno de Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
@@ -31,4 +41,24 @@ jobs:
           WP_URL: ${{ secrets.WP_URL }}
           WP_USER: ${{ secrets.WP_USER }}
           WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
+          # NUEVO: si marcas la casilla al ejecutarlo a mano, se regeneran todos los productos.
+          # En las ejecuciones automáticas diarias vale '0' (solo se procesan los productos nuevos).
+          REGENERAR: ${{ inputs.regenerar && '1' || '0' }}
         run: python auto_publisher.py
+
+      # NUEVO: guarda data/products.json en tu repositorio.
+      # "if: always()" hace que se guarde aunque algún producto haya fallado en el paso anterior.
+      - name: Guardar products.json en el repositorio
+        if: always()
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          if [ -f data/products.json ]; then
+            git add data/products.json
+            # Solo hace commit si el archivo ha cambiado (evita errores cuando no hay novedades)
+            git diff --staged --quiet || git commit -m "Actualizar products.json"
+            git pull --rebase
+            git push
+          else
+            echo "No existe data/products.json todavía; no hay nada que guardar."
+          fi
