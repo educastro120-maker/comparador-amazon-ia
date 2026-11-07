@@ -5,12 +5,12 @@
     "marca": "Fitbit",
     "modelo": "Versa 4",
     "titulo": "Fitbit Versa 4 - Reloj Inteligente Delgado de Salud y Forma Física, GPS Integrado, Perfil Diálogo de Sueño, 6+ Días Batería",
-    "imagen": "https://cdn.idealo.com/folder/Product/202080/7/202080735/s11_produktbild_max_19/fitbit-versa-4-black-graphite-aluminium.jpg",
+    "imagen": "",
     "url_post": "https://topcomparador.es/analisis-fitbit-versa-4/",
-    "link_afiliado": "https://www.amazon.es/dp/B03Hvqc60?tag=topcomparad00-21",
+    "link_afiliado": "https://link.amazon/B08PeAFV6",
     "precio_ref_eur": 179.95,
-    "puntuacion": 8.6,
-    "badge": "SALUD Y FITNESS ESENCIAL",
+    "puntuacion": 8.7,
+    "badge": "SALUD Y FITNESS CON GRAN AUTONOMÍA",
     "filtros": {
       "panel": "AMOLED",
       "sistema": "Fitbit OS",
@@ -24,7 +24,7 @@
       "altimetro": true,
       "pantalla_pulgadas": 1.6,
       "bateria_dias_uso_normal": 6.0,
-      "bateria_horas_gps": null,
+      "bateria_horas_gps": 48.0,
       "agua_atm": 5,
       "peso_g": 37.6,
       "perfiles_deporte": 40,
@@ -34,63 +34,64 @@
       "pantalla": [
         "Panel: AMOLED",
         "Tamaño: 1.58 pulgadas (40.13 mm)",
-        "Resolución: 336 x 336 píxeles",
-        "Brillo: Hasta 1.000 nits",
+        "Resolución: 336x336 píxeles",
+        "Brillo: 1.000 nits (excelente visibilidad)",
         "Always-On: Sí",
-        "Protección: Corning® Gorilla® Glass 3",
-        "Interacción: Táctil y un botón físico"
+        "Protección: Corning Gorilla Glass 3",
+        "Interacción: Táctil y botón físico lateral"
       ],
       "bateria": [
-        "Autonomía normal: Más de 6 días",
-        "Autonomía GPS: Aproximadamente 3-4 días (uso intensivo)",
-        "Tipo de carga: Rápida mediante conector magnético",
+        "Autonomía normal: Hasta 6 días (5-6 días en uso real)",
+        "Autonomía GPS: Hasta 48 horas (con pantalla Always-On y GPS)",
+        "Carga: Magnética rápida",
         "Tiempo de carga: 0-100% en 2 horas",
-        "Carga rápida: Un día de autonomía con 12 minutos"
+        "Carga rápida: 12 minutos para 1 día de autonomía"
       ],
       "conectividad": [
-        "Bluetooth: Bluetooth® 5.0",
-        "Wi-Fi: Desactivado (no se puede encender)",
-        "NFC: Sí (Google Wallet y Fitbit Pay)",
-        "GNSS: GPS integrado + GLONASS",
-        "Música: No soporta almacenamiento ni apps de terceros",
-        "Llamadas: Permite responder por Bluetooth",
-        "Mapas: Integración con Google Maps (próximamente)"
+        "Bluetooth: Bluetooth 5.0",
+        "NFC: Sí (para pagos Fitbit Pay y Google Wallet)",
+        "GNSS: GPS integrado y GLONASS",
+        "Llamadas: Sí (responder llamadas por Bluetooth)",
+        "Micrófono: Sí",
+        "Altavoz: Sí (75 dB SPL @10cm)"
       ],
       "sensores": [
-        "Frecuencia cardíaca: Óptico multirruta 24/7",
-        "SpO2: Sensores de luz roja e infrarroja",
-        "Temperatura: Sensor de temperatura del dispositivo (variaciones cutáneas)",
-        "Altímetro: Sí (barométrico)",
+        "Frecuencia cardíaca: Óptico multirruta",
+        "Oxígeno en sangre: SpO2 (luz roja e infrarroja)",
+        "Temperatura: Sensor de piel (variación cutánea)",
+        "Altímetro: Barométrico",
         "Giroscopio: Sí",
-        "Acelerómetro: Acelerómetro de tres ejes",
-        "Luz ambiental: Sí"
+        "Acelerómetro: Tres ejes",
+        "Luz ambiental: Sí",
+        "Salud y sueño: Perfil de sueño, estrés, FC en reposo"
       ],
       "deportes": [
-        "Modos: Más de 40 modos de ejercicio",
-        "Resistencia agua: 50 metros (5 ATM)",
-        "Actividades: Running, ciclismo, natación, senderismo, esquí",
-        "Métricas: Minutos en zona activa, nivel de estado físico cardiovascular",
-        "Navegación: GPS integrado para rutas, Google Maps (próximamente)",
-        "Detección: Detección automática de ejercicio"
+        "Modos ejercicio: Más de 40 (incluye HIIT, baile, esquí)",
+        "Resistencia agua: 5 ATM (hasta 50 metros, apto para natación)",
+        "Actividades: Running, ciclismo, natación, esquí",
+        "Métricas: Minutos en zona activa, estado físico cardiovascular",
+        "Detección: Monitorización automática de ejercicio",
+        "Navegación: GPS integrado para seguimiento de rutas"
       ],
       "construccion": [
         "Material caja: Aluminio",
-        "Correa: Silicona flexible (24mm)",
+        "Correa: Silicona (intercambiable)",
         "Resistencia agua: 5 ATM (50 metros)",
-        "Dimensiones: 40,5 x 40,5 x 11,2 mm",
-        "Peso: 37,64 g (sin correa)",
+        "Dimensiones: 40.5 x 40.5 x 11.2 mm",
+        "Peso: 37.64 g",
         "Botones: Un botón físico lateral",
-        "Sistema operativo: Fitbit OS"
+        "Sistema operativo: Fitbit OS",
+        "Colores: Negro, Arena Rosa, Azul Cascada, Beet Juice"
       ]
     },
     "fuentes": [
-      "bestbuy.ca",
+      "androidcentral.com",
       "canaltech.com.br",
       "carrefour.es",
+      "chipman.pt",
+      "connectthewatts.com",
       "correasmartwatch.es",
       "digitec.ch",
-      "gadgets360.com",
-      "galaxus.ch",
       "google.com"
     ],
     "actualizado": "2026-11-07"
