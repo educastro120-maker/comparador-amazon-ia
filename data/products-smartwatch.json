@@ -10,7 +10,7 @@
     "link_afiliado": "https://www.amazon.es/dp/B03Hvqc60?tag=topcomparad00-21",
     "precio_ref_eur": 179.95,
     "puntuacion": 8.6,
-    "badge": "SMARTWATCH SALUD Y FITNESS",
+    "badge": "SALUD Y FITNESS ESENCIAL",
     "filtros": {
       "panel": "AMOLED",
       "sistema": "Fitbit OS",
@@ -24,7 +24,7 @@
       "altimetro": true,
       "pantalla_pulgadas": 1.6,
       "bateria_dias_uso_normal": 6.0,
-      "bateria_horas_gps": 24.0,
+      "bateria_horas_gps": null,
       "agua_atm": 5,
       "peso_g": 37.6,
       "perfiles_deporte": 40,
@@ -33,61 +33,65 @@
     "specs": {
       "pantalla": [
         "Panel: AMOLED",
-        "Tamaño: 1.58 pulgadas",
+        "Tamaño: 1.58 pulgadas (40.13 mm)",
         "Resolución: 336 x 336 píxeles",
+        "Brillo: Hasta 1.000 nits",
         "Always-On: Sí",
         "Protección: Corning® Gorilla® Glass 3",
-        "Interacción: Táctil y un botón físico lateral"
+        "Interacción: Táctil y un botón físico"
       ],
       "bateria": [
-        "Autonomía normal: Hasta 6 días (uso típico)",
-        "Autonomía GPS: Más de 24 horas (uso intensivo)",
-        "Tipo de carga: Carga rápida magnética",
-        "Tiempo de carga: 0-100% en dos horas",
+        "Autonomía normal: Más de 6 días",
+        "Autonomía GPS: Aproximadamente 3-4 días (uso intensivo)",
+        "Tipo de carga: Rápida mediante conector magnético",
+        "Tiempo de carga: 0-100% en 2 horas",
         "Carga rápida: Un día de autonomía con 12 minutos"
       ],
       "conectividad": [
-        "Bluetooth: Bluetooth 5.0",
-        "Pagos: NFC con Google Wallet",
-        "GNSS: GPS integrado y GLONASS",
-        "Llamadas: Permite responder llamadas por Bluetooth",
-        "Navegación: Integración con Google Maps (avisos giro a giro)",
-        "Altavoz/Micrófono: Sí, altavoz y micrófono"
+        "Bluetooth: Bluetooth® 5.0",
+        "Wi-Fi: Desactivado (no se puede encender)",
+        "NFC: Sí (Google Wallet y Fitbit Pay)",
+        "GNSS: GPS integrado + GLONASS",
+        "Música: No soporta almacenamiento ni apps de terceros",
+        "Llamadas: Permite responder por Bluetooth",
+        "Mapas: Integración con Google Maps (próximamente)"
       ],
       "sensores": [
-        "Frecuencia cardíaca: Sensor óptico multirruta mejorado",
-        "Oxígeno en sangre: SpO2 (luz roja e infrarroja)",
+        "Frecuencia cardíaca: Óptico multirruta 24/7",
+        "SpO2: Sensores de luz roja e infrarroja",
         "Temperatura: Sensor de temperatura del dispositivo (variaciones cutáneas)",
-        "Altímetro: Sí, barométrico",
-        "Movimiento: Acelerómetro de tres ejes y giroscopio",
+        "Altímetro: Sí (barométrico)",
+        "Giroscopio: Sí",
+        "Acelerómetro: Acelerómetro de tres ejes",
         "Luz ambiental: Sí"
       ],
       "deportes": [
-        "Modos de ejercicio: Más de 40 perfiles de deporte",
-        "GPS: Integrado para registro de rutas",
-        "Resistencia al agua: 5 ATM (hasta 50 metros)",
-        "Actividades: Natación, running, ciclismo, senderismo",
-        "Métricas: Minutos en Zona Activa, VO2 Max estimado"
+        "Modos: Más de 40 modos de ejercicio",
+        "Resistencia agua: 50 metros (5 ATM)",
+        "Actividades: Running, ciclismo, natación, senderismo, esquí",
+        "Métricas: Minutos en zona activa, nivel de estado físico cardiovascular",
+        "Navegación: GPS integrado para rutas, Google Maps (próximamente)",
+        "Detección: Detección automática de ejercicio"
       ],
       "construccion": [
         "Material caja: Aluminio",
-        "Correa: Material flexible (silicona) con hebilla de aluminio",
-        "Resistencia agua: 5 ATM (hasta 50 metros)",
+        "Correa: Silicona flexible (24mm)",
+        "Resistencia agua: 5 ATM (50 metros)",
         "Dimensiones: 40,5 x 40,5 x 11,2 mm",
-        "Peso: 37,64 g",
-        "Sistema operativo: Fitbit OS",
-        "Botones: Un botón físico lateral"
+        "Peso: 37,64 g (sin correa)",
+        "Botones: Un botón físico lateral",
+        "Sistema operativo: Fitbit OS"
       ]
     },
     "fuentes": [
+      "bestbuy.ca",
       "canaltech.com.br",
+      "carrefour.es",
       "correasmartwatch.es",
       "digitec.ch",
-      "euronics.it",
-      "gizmodo.com",
-      "google.com",
-      "hdblog.it",
-      "idealo.es"
+      "gadgets360.com",
+      "galaxus.ch",
+      "google.com"
     ],
     "actualizado": "2026-11-07"
   }
