@@ -182,7 +182,7 @@ productos_catalogo = [
         "marca": "Fitbit",
         "modelo_corto": "Versa 4",
         "busqueda": "Fitbit Versa 4",
-        "asin": "B06jhDXe8",
+        "asin": "B0i52x5AV",
         "titulo": "Fitbit Versa 4 - Reloj Inteligente Delgado de Salud y Forma Física, GPS Integrado, Perfil Diálogo de Sueño, 6+ Días Batería",
         "especificaciones": "Formato ergonómico de bordes redondeados diseñado para máxima comodidad nocturna, GPS integrado, análisis continuo de estrés con sensor EDA, minutos en zona activa, integración con Google Maps y más de 6 días de batería.",
         "precio": "179.95€",
