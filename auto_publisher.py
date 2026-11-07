@@ -8,14 +8,15 @@ Qué hace este programa, de principio a fin:
        a) Texto bonito (resumen, specs, pros, contras)  -> para el post de WordPress
        b) "filtros": datos NORMALIZADOS (números y valores cerrados) -> para el futuro Analizador
   3. Publica (o ACTUALIZA si ya existe) el post en WordPress.
-  4. Guarda todos los productos en un archivo data/products.json, que será la
-     "base de datos" que leerá tu comparador/Analizador en JavaScript.
+  4. Guarda los productos en un archivo JSON POR CATEGORÍA (data/products-smartwatch.json,
+     data/products-smartphone.json...), que será la "base de datos" que leerá tu
+     comparador/Analizador en JavaScript.
 
 NOVEDADES respecto a la versión anterior:
   - Bloque "filtros" estructurado (batería en número, tipo de pantalla en lista cerrada...)
-  - Exporta data/products.json
+  - Exporta un JSON por categoría: data/products-<categoria>.json
   - Ya no crea posts duplicados (busca el post por su slug y lo actualiza)
-  - Salta los productos que ya están en products.json (ahorra cuota de Gemini)
+  - Salta los productos que ya están en su JSON (ahorra cuota de Gemini)
   - Enlace de afiliado directo por ASIN (si lo indicas), si no, enlace de búsqueda
   - Aviso de afiliado en la tarjeta y precio mostrado como "orientativo"
 """
@@ -74,12 +75,14 @@ SALTAR_SI_FICHA_POBRE = True
 # UNA_LLAMADA=1 -> 1 petición a Gemini por producto (ideal para la capa gratuita)
 UNA_LLAMADA = os.environ.get("UNA_LLAMADA", "0") == "1"
 
-# REGENERAR=1 -> vuelve a generar TODOS los productos aunque ya estén en products.json
+# REGENERAR=1 -> vuelve a generar TODOS los productos aunque ya estén guardados en su JSON
 # (por defecto los que ya están se saltan, para no gastar cuota de Gemini)
 REGENERAR = os.environ.get("REGENERAR", "0") == "1"
 
-# Dónde se guarda la "base de datos" de productos (ruta dentro del repositorio de GitHub)
-RUTA_JSON = os.environ.get("RUTA_JSON", "data/products.json")
+# Carpeta del repositorio donde se guardan los JSON. Se crea un archivo por categoría:
+#   categoría "smartwatch" -> data/products-smartwatch.json
+#   categoría "smartphone" -> data/products-smartphone.json
+CARPETA_DATOS = os.environ.get("CARPETA_DATOS", "data")
 
 client = genai.Client(api_key=GEMINI_API_KEY)
 
@@ -179,11 +182,11 @@ productos_catalogo = [
         "marca": "Fitbit",
         "modelo_corto": "Versa 4",
         "busqueda": "Fitbit Versa 4",
-        "asin": "B0392z55u",
+        "asin": "",
         "titulo": "Fitbit Versa 4 - Reloj Inteligente Delgado de Salud y Forma Física, GPS Integrado, Perfil Diálogo de Sueño, 6+ Días Batería",
         "especificaciones": "Formato ergonómico de bordes redondeados diseñado para máxima comodidad nocturna, GPS integrado, análisis continuo de estrés con sensor EDA, minutos en zona activa, integración con Google Maps y más de 6 días de batería.",
         "precio": "179.95€",
-        "imagen": "https://cdn.idealo.com/folder/Product/202080/7/202080735/s11_produktbild_max_19/fitbit-versa-4-black-graphite-aluminium.jpg",
+        "imagen": "",
     },
 ]
 
@@ -598,36 +601,42 @@ def obtener_ficha(producto):
 
 
 # ==========================================
-# 9. products.json: LA "BASE DE DATOS" PARA TU COMPARADOR / ANALIZADOR
+# 9. JSON POR CATEGORÍA: LA "BASE DE DATOS" PARA TU COMPARADOR / ANALIZADOR
 # ==========================================
-def cargar_productos_json():
-    """Lee data/products.json si existe; si no, devuelve una lista vacía."""
-    if not os.path.exists(RUTA_JSON):
+def ruta_json(categoria):
+    """'smartwatch' -> data/products-smartwatch.json (un archivo por categoría)."""
+    return os.path.join(CARPETA_DATOS, f"products-{slugify(categoria)}.json")
+
+
+def cargar_productos_json(categoria):
+    """Lee el JSON de esa categoría si existe; si no, devuelve una lista vacía."""
+    ruta = ruta_json(categoria)
+    if not os.path.exists(ruta):
         return []
     try:
-        with open(RUTA_JSON, "r", encoding="utf-8") as fh:
+        with open(ruta, "r", encoding="utf-8") as fh:
             return json.load(fh)
     except (json.JSONDecodeError, OSError) as err:
-        print(f"⚠️ No se pudo leer {RUTA_JSON} ({err}). Se empieza con una lista vacía.")
+        print(f"⚠️ No se pudo leer {ruta} ({err}). Se empieza con una lista vacía.")
         return []
 
 
-def guardar_productos_json(lista):
-    """Guarda la lista completa en data/products.json (crea la carpeta si no existe)."""
-    carpeta = os.path.dirname(RUTA_JSON)
-    if carpeta:
-        os.makedirs(carpeta, exist_ok=True)
-    lista = sorted(lista, key=lambda p: (p.get("categoria", ""), p.get("marca", ""), p.get("modelo", "")))
-    with open(RUTA_JSON, "w", encoding="utf-8") as fh:
+def guardar_productos_json(categoria, lista):
+    """Guarda la lista completa de esa categoría (crea la carpeta si no existe)."""
+    ruta = ruta_json(categoria)
+    os.makedirs(os.path.dirname(ruta) or ".", exist_ok=True)
+    lista = sorted(lista, key=lambda p: (p.get("marca", ""), p.get("modelo", "")))
+    with open(ruta, "w", encoding="utf-8") as fh:
         json.dump(lista, fh, ensure_ascii=False, indent=2)
 
 
 def actualizar_json(entrada):
-    """Añade el producto al JSON, o reemplaza el que ya existe con el mismo id."""
-    lista = cargar_productos_json()
+    """Añade el producto al JSON de su categoría, o reemplaza el que ya existe con el mismo id."""
+    categoria = entrada["categoria"]
+    lista = cargar_productos_json(categoria)
     lista = [p for p in lista if p.get("id") != entrada["id"]]
     lista.append(entrada)
-    guardar_productos_json(lista)
+    guardar_productos_json(categoria, lista)
 
 
 # ==========================================
@@ -748,9 +757,11 @@ def procesar_y_publicar(producto):
     pid = id_producto(producto)
     print(f"\n🌐 Producto: {producto['titulo']}  [{pid}]")
 
-    # Si ya está en products.json no gastamos cuota de Gemini (salvo que REGENERAR=1)
-    if not REGENERAR and any(p.get("id") == pid for p in cargar_productos_json()):
-        print("   ⏭️ Ya está en products.json. Se salta (usa REGENERAR=1 para forzar).")
+    # COMPROBACIÓN AUTOMÁTICA DE DUPLICADOS:
+    # miramos si el id ya existe en el JSON de su categoría. Si existe, no gastamos cuota de Gemini
+    # (salvo que REGENERAR=1). No tienes que indicarlo tú: el script lo decide solo.
+    if not REGENERAR and any(p.get("id") == pid for p in cargar_productos_json(producto["categoria"])):
+        print(f"   ⏭️ Ya está en {ruta_json(producto['categoria'])}. Se salta (usa REGENERAR=1 para forzar).")
         return "saltado"
 
     affiliate_link = construir_link_afiliado(producto)
@@ -813,7 +824,7 @@ def procesar_y_publicar(producto):
     url_post = res.json().get("link", "")
     print(f"🎉 Publicación {accion}: {producto['titulo']}")
 
-    # --- Paso 3: guardar el producto en products.json ---
+    # --- Paso 3: guardar el producto en el JSON de su categoría ---
     entrada = {
         "id": pid,
         "categoria": producto["categoria"],
@@ -832,7 +843,7 @@ def procesar_y_publicar(producto):
         "actualizado": datetime.date.today().isoformat(),
     }
     actualizar_json(entrada)
-    print(f"   💾 Guardado en {RUTA_JSON}")
+    print(f"   💾 Guardado en {ruta_json(producto['categoria'])}")
     return "publicado"
 
 
