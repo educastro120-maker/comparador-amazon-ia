@@ -188,11 +188,11 @@ productos_catalogo = [
         "modelo_corto": "Versa 4",
         "busqueda": "Fitbit Versa 4",
         "link_afiliado": "https://link.amazon/B08PeAFV6",   # <- pega aquí tu enlace corto, p. ej. "https://link.amazon/XXXXXXX"
-        "asin": "",
+        "asin": "https://link.amazon/B08PeAFV6",
         "titulo": "Fitbit Versa 4 - Reloj Inteligente Delgado de Salud y Forma Física, GPS Integrado, Perfil Diálogo de Sueño, 6+ Días Batería",
         "especificaciones": "Formato ergonómico de bordes redondeados diseñado para máxima comodidad nocturna, GPS integrado, análisis continuo de estrés con sensor EDA, minutos en zona activa, integración con Google Maps y más de 6 días de batería.",
         "precio": "179.95€",
-        "imagen": "",
+        "imagen": "https://topcomparador.es/wp-content/uploads/2026/11/fitbit-versa-4-black-graphite-aluminium.jpg",
     },
 ]
 
