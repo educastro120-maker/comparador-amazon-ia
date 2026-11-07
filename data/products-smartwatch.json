@@ -9,8 +9,8 @@
     "url_post": "https://topcomparador.es/analisis-fitbit-versa-4/",
     "link_afiliado": "https://link.amazon/B08PeAFV6",
     "precio_ref_eur": 179.95,
-    "puntuacion": 8.7,
-    "badge": "SALUD Y FITNESS CON GRAN AUTONOMÍA",
+    "puntuacion": 8.6,
+    "badge": "SALUD Y FITNESS ESENCIAL",
     "filtros": {
       "panel": "AMOLED",
       "sistema": "Fitbit OS",
@@ -24,7 +24,7 @@
       "altimetro": true,
       "pantalla_pulgadas": 1.6,
       "bateria_dias_uso_normal": 6.0,
-      "bateria_horas_gps": 48.0,
+      "bateria_horas_gps": 24.0,
       "agua_atm": 5,
       "peso_g": 37.6,
       "perfiles_deporte": 40,
@@ -34,65 +34,58 @@
       "pantalla": [
         "Panel: AMOLED",
         "Tamaño: 1.58 pulgadas (40.13 mm)",
-        "Resolución: 336x336 píxeles",
-        "Brillo: 1.000 nits (excelente visibilidad)",
-        "Always-On: Sí",
+        "Resolución: 336 x 336 píxeles",
         "Protección: Corning Gorilla Glass 3",
-        "Interacción: Táctil y botón físico lateral"
+        "Always-On: Sí",
+        "Interacción: Táctil con botón físico lateral"
       ],
       "bateria": [
-        "Autonomía normal: Hasta 6 días (5-6 días en uso real)",
-        "Autonomía GPS: Hasta 48 horas (con pantalla Always-On y GPS)",
-        "Carga: Magnética rápida",
+        "Autonomía normal: Más de 6 días",
+        "Autonomía GPS: Más de 24 horas (uso intensivo)",
+        "Tipo de carga: Magnética rápida",
         "Tiempo de carga: 0-100% en 2 horas",
-        "Carga rápida: 12 minutos para 1 día de autonomía"
+        "Carga rápida: Un día en 12 minutos"
       ],
       "conectividad": [
-        "Bluetooth: Bluetooth 5.0",
-        "NFC: Sí (para pagos Fitbit Pay y Google Wallet)",
-        "GNSS: GPS integrado y GLONASS",
-        "Llamadas: Sí (responder llamadas por Bluetooth)",
-        "Micrófono: Sí",
-        "Altavoz: Sí (75 dB SPL @10cm)"
+        "Bluetooth: Versión 5.0",
+        "Pagos: NFC (Fitbit Pay y Google Wallet)",
+        "GPS: Integrado (GPS + GLONASS)",
+        "Llamadas: Permite responder por Bluetooth",
+        "Micrófono/Altavoz: Integrados"
       ],
       "sensores": [
-        "Frecuencia cardíaca: Óptico multirruta",
-        "Oxígeno en sangre: SpO2 (luz roja e infrarroja)",
-        "Temperatura: Sensor de piel (variación cutánea)",
+        "Frecuencia Cardíaca: Óptico multirruta",
+        "Oxígeno en Sangre: SpO2 (luz roja e infrarroja)",
+        "Temperatura: Del dispositivo (variaciones cutáneas)",
         "Altímetro: Barométrico",
-        "Giroscopio: Sí",
-        "Acelerómetro: Tres ejes",
-        "Luz ambiental: Sí",
-        "Salud y sueño: Perfil de sueño, estrés, FC en reposo"
+        "Movimiento: Acelerómetro de tres ejes, giroscopio",
+        "Luz: Ambiental"
       ],
       "deportes": [
-        "Modos ejercicio: Más de 40 (incluye HIIT, baile, esquí)",
-        "Resistencia agua: 5 ATM (hasta 50 metros, apto para natación)",
-        "Actividades: Running, ciclismo, natación, esquí",
-        "Métricas: Minutos en zona activa, estado físico cardiovascular",
-        "Detección: Monitorización automática de ejercicio",
-        "Navegación: GPS integrado para seguimiento de rutas"
+        "Modos ejercicio: Más de 40 perfiles",
+        "Resistencia agua: 5 ATM (hasta 50 metros)",
+        "Actividades: Running, natación, ciclismo, golf",
+        "Seguimiento: Minutos en zona activa, SmartTrack",
+        "Rutas: GPS integrado para registro"
       ],
       "construccion": [
         "Material caja: Aluminio",
-        "Correa: Silicona (intercambiable)",
-        "Resistencia agua: 5 ATM (50 metros)",
         "Dimensiones: 40.5 x 40.5 x 11.2 mm",
-        "Peso: 37.64 g",
+        "Peso: 37.64 gramos",
+        "Correa: Silicona (intercambiable)",
         "Botones: Un botón físico lateral",
-        "Sistema operativo: Fitbit OS",
-        "Colores: Negro, Arena Rosa, Azul Cascada, Beet Juice"
+        "Sistema Operativo: Fitbit OS"
       ]
     },
     "fuentes": [
-      "androidcentral.com",
       "canaltech.com.br",
-      "carrefour.es",
-      "chipman.pt",
-      "connectthewatts.com",
       "correasmartwatch.es",
-      "digitec.ch",
-      "google.com"
+      "expertreviews.co.uk",
+      "gizmodo.com",
+      "google.com",
+      "idealo.es",
+      "ifixit.com",
+      "kaufland.es"
     ],
     "actualizado": "2026-11-07"
   }
