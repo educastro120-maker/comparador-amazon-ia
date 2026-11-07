@@ -9,8 +9,8 @@
     "url_post": "https://topcomparador.es/analisis-fitbit-versa-4/",
     "link_afiliado": "https://link.amazon/B08PeAFV6",
     "precio_ref_eur": 179.95,
-    "puntuacion": 8.6,
-    "badge": "SALUD Y FITNESS ESENCIAL",
+    "puntuacion": 8.7,
+    "badge": "SALUD Y FITNESS CON AUTONOMÍA",
     "filtros": {
       "panel": "AMOLED",
       "sistema": "Fitbit OS",
@@ -24,7 +24,7 @@
       "altimetro": true,
       "pantalla_pulgadas": 1.6,
       "bateria_dias_uso_normal": 6.0,
-      "bateria_horas_gps": 24.0,
+      "bateria_horas_gps": null,
       "agua_atm": 5,
       "peso_g": 37.6,
       "perfiles_deporte": 40,
@@ -33,59 +33,66 @@
     "specs": {
       "pantalla": [
         "Panel: AMOLED",
-        "Tamaño: 1.58 pulgadas (40.13 mm)",
+        "Tamaño: 1.58 pulgadas",
         "Resolución: 336 x 336 píxeles",
-        "Protección: Corning Gorilla Glass 3",
+        "Brillo: Hasta 1.000 nits",
         "Always-On: Sí",
-        "Interacción: Táctil con botón físico lateral"
+        "Protección: Corning Gorilla Glass 3",
+        "Control: Táctil a color y botón físico"
       ],
       "bateria": [
-        "Autonomía normal: Más de 6 días",
-        "Autonomía GPS: Más de 24 horas (uso intensivo)",
-        "Tipo de carga: Magnética rápida",
+        "Capacidad: 160-162 mAh (Polímero de Litio)",
+        "Autonomía normal: Hasta 6 días",
+        "Carga: Rápida magnética",
         "Tiempo de carga: 0-100% en 2 horas",
-        "Carga rápida: Un día en 12 minutos"
+        "Carga rápida: 1 día de autonomía con 12 minutos"
       ],
       "conectividad": [
-        "Bluetooth: Versión 5.0",
-        "Pagos: NFC (Fitbit Pay y Google Wallet)",
-        "GPS: Integrado (GPS + GLONASS)",
-        "Llamadas: Permite responder por Bluetooth",
-        "Micrófono/Altavoz: Integrados"
+        "Bluetooth: Bluetooth 5.0",
+        "NFC: Sí (Google Wallet y Fitbit Pay)",
+        "GNSS: GPS integrado + GLONASS",
+        "Llamadas: Sí (por Bluetooth en muñeca)",
+        "Micrófono/Altavoz: Sí (integrados)",
+        "Mapas: Google Maps (navegación giro a giro)"
       ],
       "sensores": [
-        "Frecuencia Cardíaca: Óptico multirruta",
-        "Oxígeno en Sangre: SpO2 (luz roja e infrarroja)",
-        "Temperatura: Del dispositivo (variaciones cutáneas)",
-        "Altímetro: Barométrico",
-        "Movimiento: Acelerómetro de tres ejes, giroscopio",
-        "Luz: Ambiental"
+        "Frecuencia cardíaca: Óptico de trayectoria múltiple",
+        "Saturación oxígeno: SpO2 (sensores rojos e infrarrojos)",
+        "Temperatura: De dispositivo (variación de piel nocturna)",
+        "Altímetro: Sí",
+        "Giroscopio: Sí",
+        "Acelerómetro: Acelerómetro de tres ejes",
+        "Luz ambiental: Sí"
       ],
       "deportes": [
-        "Modos ejercicio: Más de 40 perfiles",
-        "Resistencia agua: 5 ATM (hasta 50 metros)",
-        "Actividades: Running, natación, ciclismo, golf",
-        "Seguimiento: Minutos en zona activa, SmartTrack",
-        "Rutas: GPS integrado para registro"
+        "Modos ejercicio: Más de 40 (HIIT, fuerza, yoga, natación)",
+        "Resistencia agua: 50 metros (5 ATM)",
+        "GPS: Integrado para rutas, ritmo y distancia",
+        "Natación: Sí (apto para natación)",
+        "Senderismo: Sí",
+        "Esquí: Sí",
+        "Métricas avanzadas: Minutos en Zona Activa, Nivel estado físico"
       ],
       "construccion": [
         "Material caja: Aluminio",
+        "Cristal: Corning Gorilla Glass 3",
+        "Correa: Silicona (intercambiables)",
+        "Resistencia agua: 5 ATM (50 metros)",
         "Dimensiones: 40.5 x 40.5 x 11.2 mm",
-        "Peso: 37.64 gramos",
-        "Correa: Silicona (intercambiable)",
+        "Peso: 37.64 g",
         "Botones: Un botón físico lateral",
-        "Sistema Operativo: Fitbit OS"
+        "Sistema operativo: Fitbit OS"
       ]
     },
     "fuentes": [
+      "batterymart.com",
       "canaltech.com.br",
+      "carrefour.es",
       "correasmartwatch.es",
-      "expertreviews.co.uk",
-      "gizmodo.com",
+      "ebay.com",
       "google.com",
-      "idealo.es",
-      "ifixit.com",
-      "kaufland.es"
+      "hdblog.it",
+      "i-run.es"
     ],
     "actualizado": "2026-11-07"
   }
