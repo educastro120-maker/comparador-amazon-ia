@@ -170,8 +170,13 @@ class Ficha(BaseModel):
 # ==========================================
 # Campos nuevos:
 #   "categoria": smartwatch, smartphone, monitor... (para el selector del Analizador)
-#   "asin": código de producto de Amazon (opcional). Con ASIN el enlace va DIRECTO al producto,
-#           lo que convierte mejor que un enlace de búsqueda. Está en la URL de Amazon: /dp/B0XXXXXXXX
+#   "link_afiliado": el enlace corto que te da Amazon con SiteStripe (barra superior de Amazon
+#           cuando estás logueado como afiliado -> "Obtener enlace" -> "Enlace corto").
+#           Tiene el formato https://link.amazon/XXXXXXX (o https://amzn.to/XXXXXXX).
+#           Amazon lo genera al azar, NO se puede calcular a partir del ASIN, por eso hay que
+#           copiarlo a mano UNA vez por producto. Este es el enlace PREFERIDO.
+#   "asin": (opcional, solo como plan B si no pones link_afiliado) código de 10 caracteres
+#           del producto de Amazon (empieza por B0...). Se ve en la URL: amazon.es/dp/B0XXXXXXXX
 #   "imagen": URL de la imagen. Si la dejas vacía "", el post se publica sin imagen.
 #
 # OJO: la imagen que tenías para el Versa 4 era de un Fitbit Charge 5 (otro modelo),
@@ -182,11 +187,12 @@ productos_catalogo = [
         "marca": "Fitbit",
         "modelo_corto": "Versa 4",
         "busqueda": "Fitbit Versa 4",
-        "asin": "B03Hvqc60",
+        "link_afiliado": "https://link.amazon/B08PeAFV6",   # <- pega aquí tu enlace corto, p. ej. "https://link.amazon/XXXXXXX"
+        "asin": "",
         "titulo": "Fitbit Versa 4 - Reloj Inteligente Delgado de Salud y Forma Física, GPS Integrado, Perfil Diálogo de Sueño, 6+ Días Batería",
         "especificaciones": "Formato ergonómico de bordes redondeados diseñado para máxima comodidad nocturna, GPS integrado, análisis continuo de estrés con sensor EDA, minutos en zona activa, integración con Google Maps y más de 6 días de batería.",
         "precio": "179.95€",
-        "imagen": "https://cdn.idealo.com/folder/Product/202080/7/202080735/s11_produktbild_max_19/fitbit-versa-4-black-graphite-aluminium.jpg",
+        "imagen": "",
     },
 ]
 
@@ -249,11 +255,35 @@ def resolver_precio(producto, precio_ia):
     return base
 
 
+# Un ASIN válido tiene exactamente 10 caracteres (letras mayúsculas y números), p. ej. B0BDKXXXXX
+RE_ASIN = re.compile(r"^[A-Z0-9]{10}$")
+# Prefijos de los enlaces cortos oficiales de Amazon Afiliados
+PREFIJOS_LINK_CORTO = ("https://link.amazon/", "https://amzn.to/", "https://amzn.eu/")
+
+
 def construir_link_afiliado(producto):
-    """Con ASIN: enlace directo al producto. Sin ASIN: búsqueda en Amazon con tu tag."""
-    asin = (producto.get("asin") or "").strip()
+    """
+    Elige el enlace de afiliado, por orden de preferencia:
+      1) "link_afiliado": tu enlace corto de SiteStripe (https://link.amazon/...). Se usa TAL CUAL:
+         ya lleva tu ID de afiliado dentro, así que NO se le añade ningún "?tag=".
+      2) "asin": enlace directo amazon.es/dp/ASIN?tag=... (solo si el ASIN tiene formato válido).
+      3) Búsqueda en Amazon con tu tag (siempre funciona, pero convierte peor).
+    """
+    link = (producto.get("link_afiliado") or "").strip()
+    if link:
+        if link.startswith(PREFIJOS_LINK_CORTO):
+            return link
+        print(f"   ⚠️ link_afiliado '{link}' no parece un enlace corto de Amazon "
+              f"(debe empezar por {' o '.join(PREFIJOS_LINK_CORTO)}). Se ignora.")
+
+    asin = (producto.get("asin") or "").strip().upper()
     if asin:
-        return f"https://www.amazon.es/dp/{asin}?tag={AMAZON_TAG}"
+        if RE_ASIN.match(asin):
+            print("   ℹ️ Sin link_afiliado: se usa el enlace /dp/ASIN. Mejor pon tu enlace corto de SiteStripe.")
+            return f"https://www.amazon.es/dp/{asin}?tag={AMAZON_TAG}"
+        print(f"   ⚠️ ASIN '{asin}' no válido (debe tener 10 caracteres). Se ignora.")
+
+    print("   ℹ️ Sin link_afiliado ni ASIN válido: se usa enlace de búsqueda (convierte peor).")
     q = urllib.parse.quote_plus(producto["busqueda"])
     return f"https://www.amazon.es/s?k={q}&tag={AMAZON_TAG}"
 
