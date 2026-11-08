@@ -182,7 +182,6 @@ class Ficha(BaseModel):
 # OJO: la imagen que tenías para el Versa 4 era de un Fitbit Charge 5 (otro modelo),
 # por eso la he dejado vacía. Pon aquí una imagen correcta del Versa 4.
 productos_catalogo = [
-[
     {
         "categoria": "smartwatch",
         "marca": "Garmin",
@@ -303,7 +302,6 @@ productos_catalogo = [
         "precio": "279.90€",
         "imagen": ""
     }
-]
 ]
 
 
