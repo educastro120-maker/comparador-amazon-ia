@@ -1,5 +1,109 @@
 [
   {
+    "id": "amazfit-t-rex-3",
+    "categoria": "smartwatch",
+    "marca": "Amazfit",
+    "modelo": "T-Rex 3",
+    "titulo": "Amazfit T-Rex 3 - Smartwatch Táctico Rugerizado, Pantalla AMOLED 2.000 nits, Mapas Offline, Hasta 27 Días de Batería",
+    "imagen": "",
+    "url_post": "https://topcomparador.es/analisis-amazfit-t-rex-3/",
+    "link_afiliado": "https://www.amazon.es/s?k=Amazfit+T-Rex+3&tag=topcomparad00-21",
+    "precio_ref_eur": 279.9,
+    "puntuacion": 9.0,
+    "badge": "REFERENCIA OUTDOOR",
+    "filtros": {
+      "panel": "AMOLED",
+      "sistema": "Zepp OS",
+      "gps": true,
+      "gps_doble_frecuencia": true,
+      "nfc": true,
+      "lte_esim": false,
+      "ecg": false,
+      "spo2": true,
+      "temperatura": true,
+      "altimetro": true,
+      "pantalla_pulgadas": 1.5,
+      "bateria_dias_uso_normal": 27.0,
+      "bateria_horas_gps": 42.0,
+      "agua_atm": 10,
+      "peso_g": 68.3,
+      "perfiles_deporte": 170,
+      "anio_lanzamiento": 2024
+    },
+    "specs": {
+      "pantalla": [
+        "Panel: AMOLED de 1,5 pulgadas.",
+        "Resolución: 480 x 480 píxeles (322 ppp).",
+        "Brillo Máximo: 2.000 nits (excelente visibilidad exterior).",
+        "Always-On: Sí, configurable para mantener la pantalla encendida.",
+        "Protección: Gorilla Glass (resistente a arañazos).",
+        "Interacción: Táctil y 4 botones físicos."
+      ],
+      "bateria": [
+        "Capacidad: 700 mAh.",
+        "Autonomía Típica: Hasta 27 días de uso normal.",
+        "Autonomía GPS: 42 horas en modo preciso.",
+        "Modo Ahorro GPS: 180 horas (en senderismo y escalada).",
+        "Modo Expedición: Hasta 40 días en ahorro de energía.",
+        "Carga: Magnética (base con USB-C).",
+        "Tiempo de Carga: Hasta 3 horas."
+      ],
+      "conectividad": [
+        "Bluetooth: Versión 5.2.",
+        "Wi-Fi: 2.4GHz.",
+        "Pagos: NFC para Zepp Pay (en 31 países europeos).",
+        "GNSS: Doble banda y seis sistemas (GPS, GLONASS, Galileo, BeiDou, IRNSS, QZSS).",
+        "Almacenamiento: 26GB utilizables para mapas y música.",
+        "Música: Reproducción a auriculares Bluetooth.",
+        "Mapas: Offline gratuitos con indicaciones giro a giro.",
+        "Micrófono: Integrado para Zepp Flow y respuestas de voz."
+      ],
+      "sensores": [
+        "Frecuencia Cardíaca: Sensor biométrico BioTracker PPG.",
+        "Oxígeno en Sangre: SpO2 para monitorización continua.",
+        "Temperatura: Sensor de temperatura de la piel.",
+        "Altímetro: Barométrico para altitud y presión.",
+        "Brújula: Sensor geomagnético.",
+        "Movimiento: Giroscopio y acelerómetro.",
+        "Profundidad: Hasta 45 metros (para buceo libre).",
+        "Luz Ambiental: Ajuste automático de brillo.",
+        "Salud: Monitorización 24h de FC, SpO2, estrés, sueño y PAI."
+      ],
+      "deportes": [
+        "Modos Deportivos: Más de 170 perfiles integrados.",
+        "Buceo: Hasta 45 metros (certificaciones EN13319, ISO 6425, GB/T 18828).",
+        "Natación: Resistencia 10 ATM (apto para aguas abiertas).",
+        "Entrenamiento IA: Zepp Coach para planes personalizados.",
+        "Fuerza: 25 ejercicios auto-reconocidos.",
+        "Navegación: Mapas offline con rutas GPX y giro a giro.",
+        "Carrera: Modos específicos para running y trail running.",
+        "Esquí: Incluye esquí de fondo."
+      ],
+      "construccion": [
+        "Caja: Marco medio de polímero.",
+        "Bisel: Acero inoxidable.",
+        "Correa: Silicona de 22 mm (acople estándar).",
+        "Resistencia al Agua: 10 ATM (hasta 100 metros).",
+        "Certificación: Grado militar (MIL-STD-810H).",
+        "Temperaturas: Resistente de -30°C a +70°C.",
+        "Dimensiones: 48,5 x 48,5 x 13,75 mm (sin base FC).",
+        "Peso: 68,3 g (sin correa).",
+        "Sistema Operativo: Zepp OS 4.0 (actualizable a 4.5)."
+      ]
+    },
+    "fuentes": [
+      "advnture.com",
+      "amazfit.com",
+      "canaltech.com.br",
+      "cleverhiker.com",
+      "desnivel.com",
+      "mynavyexchange.com",
+      "outdoorgearlab.com",
+      "pccomponentes.com"
+    ],
+    "actualizado": "2026-11-08"
+  },
+  {
     "id": "apple-watch-ultra-2",
     "categoria": "smartwatch",
     "marca": "Apple",
@@ -101,6 +205,108 @@
       "idealo.es",
       "macstoreonline.com.mx",
       "notebookcheck.com"
+    ],
+    "actualizado": "2026-11-08"
+  },
+  {
+    "id": "coros-vertix-2s",
+    "categoria": "smartwatch",
+    "marca": "COROS",
+    "modelo": "VERTIX 2S",
+    "titulo": "COROS VERTIX 2S - Reloj de Aventura y Escalada Extrema, Bisel Titanio Grado 5, Pantalla Zafiro, GPS Doble Frecuencia, Batería 118h GPS",
+    "imagen": "",
+    "url_post": "https://topcomparador.es/analisis-coros-vertix-2s/",
+    "link_afiliado": "https://www.amazon.es/s?k=COROS+VERTIX+2S&tag=topcomparad00-21",
+    "precio_ref_eur": 699.0,
+    "puntuacion": 9.0,
+    "badge": "REFERENCIA AVENTURA EXTREMA",
+    "filtros": {
+      "panel": "MIP",
+      "sistema": "Propio",
+      "gps": true,
+      "gps_doble_frecuencia": true,
+      "nfc": false,
+      "lte_esim": false,
+      "ecg": true,
+      "spo2": true,
+      "temperatura": true,
+      "altimetro": true,
+      "pantalla_pulgadas": 1.4,
+      "bateria_dias_uso_normal": 40.0,
+      "bateria_horas_gps": 118.0,
+      "agua_atm": 10,
+      "peso_g": 61.0,
+      "perfiles_deporte": null,
+      "anio_lanzamiento": 2024
+    },
+    "specs": {
+      "pantalla": [
+        "Panel: Always-On Memory LCD / Transflective MIP",
+        "Tamaño: 1.4 pulgadas (35.6 mm)",
+        "Resolución: 280 x 280 píxeles",
+        "Densidad: 200 ppi",
+        "Protección: Cristal de zafiro",
+        "Controles: Táctil y botones (corona digital, retroceso, luz)"
+      ],
+      "bateria": [
+        "Autonomía normal: 40 días (uso diario)",
+        "Autonomía GPS estándar: 118 horas (GPS/QZSS)",
+        "Autonomía GPS completo: 73 horas (Todos los sistemas)",
+        "Autonomía GPS doble frecuencia: 43 horas",
+        "Modo UltraMax: Hasta 140 horas",
+        "Carga: Cable propietario (3 pines)",
+        "Tiempo de carga: Menos de 2 horas"
+      ],
+      "conectividad": [
+        "Bluetooth: Sí (versión no especificada)",
+        "Wi-Fi: Sí (actualizaciones firmware)",
+        "GNSS: GPS, GLONASS, Galileo, Beidou, QZSS",
+        "Doble frecuencia: Sí (L1+L5)",
+        "Música: 32 GB (almacenamiento offline)",
+        "Mapas: Topográficos y paisajísticos globales offline",
+        "Alertas: Llamadas (no directas)"
+      ],
+      "sensores": [
+        "Frecuencia cardíaca: Óptico de última generación (5 LEDs, 4 fotodetectores)",
+        "SpO2: Pulsioxímetro óptico",
+        "ECG: Sí (sensor de electrocardiograma)",
+        "Temperatura: Sí (termómetro)",
+        "Altímetro: Barométrico",
+        "Brújula: 3D",
+        "Giroscopio: Sí",
+        "Acelerómetro: Sí",
+        "Métricas salud: Sueño (REM), estrés, VFC, VO2 Max"
+      ],
+      "deportes": [
+        "Perfiles: Numerosos (running, ciclismo, natación, escalada, esquí)",
+        "Resistencia agua: 10 ATM (100 metros)",
+        "Running: Sí (carretera, trail, ultratrail, métricas avanzadas)",
+        "Ciclismo: Sí (FTP con potenciómetro)",
+        "Natación: Sí (aguas abiertas)",
+        "Esquí: Sí (esquí, snowboard, esquí de montaña)",
+        "Navegación: Mapas offline, Check point, Volver al inicio, Alerta desvío",
+        "Métricas avanzadas: VO2 Max, carga entrenamiento, recuperación"
+      ],
+      "construccion": [
+        "Caja: Polímero reforzado con fibra y aleación de titanio",
+        "Bisel: Aleación de titanio grado 5 (revestimiento PVD)",
+        "Fondo: Aleación de titanio",
+        "Correa: Silicona y Nylon (26 mm, acople rápido)",
+        "Resistencia agua: 10 ATM (100 metros)",
+        "Dimensiones: 50.3 x 50.3 x 17.6 mm (con sensor FC)",
+        "Peso: 61 g (solo reloj)",
+        "Sistema operativo: COROS (firmware actualizable)"
+      ]
+    },
+    "fuentes": [
+      "365rider.com",
+      "aristarun.es",
+      "barrabes.com",
+      "carrerasdemontana.com",
+      "coros.com",
+      "cyclingweekly.com",
+      "dcrainmaker.com",
+      "deporvillage.com"
     ],
     "actualizado": "2026-11-08"
   },
@@ -297,6 +503,101 @@
     "actualizado": "2026-11-08"
   },
   {
+    "id": "garmin-instinct-2x-solar",
+    "categoria": "smartwatch",
+    "marca": "Garmin",
+    "modelo": "Instinct 2X Solar",
+    "titulo": "Garmin Instinct 2X Solar - Smartwatch Táctico y Outdoor, Carga Solar Ilimitada, Linterna LED Integrada, Resistencia Militar",
+    "imagen": "",
+    "url_post": "https://topcomparador.es/analisis-garmin-instinct-2x-solar/",
+    "link_afiliado": "https://www.amazon.es/s?k=Garmin+Instinct+2X+Solar&tag=topcomparad00-21",
+    "precio_ref_eur": 449.99,
+    "puntuacion": 9.1,
+    "badge": "REFERENCIA OUTDOOR",
+    "filtros": {
+      "panel": "MIP",
+      "sistema": "Garmin OS",
+      "gps": true,
+      "gps_doble_frecuencia": true,
+      "nfc": true,
+      "lte_esim": false,
+      "ecg": false,
+      "spo2": true,
+      "temperatura": true,
+      "altimetro": true,
+      "pantalla_pulgadas": 1.1,
+      "bateria_dias_uso_normal": 40.0,
+      "bateria_horas_gps": 60.0,
+      "agua_atm": 10,
+      "peso_g": 67.0,
+      "perfiles_deporte": 40,
+      "anio_lanzamiento": 2023
+    },
+    "specs": {
+      "pantalla": [
+        "Panel: MIP transflectiva monocroma (visible al sol, siempre activa)",
+        "Tamaño: 1.1 pulgadas (27 x 27 mm)",
+        "Resolución: 176 x 176 píxeles",
+        "Protección: Power Glass™ (químicamente reforzado)",
+        "Navegación: 5 botones físicos (no táctil)"
+      ],
+      "bateria": [
+        "Autonomía Reloj: Hasta 40 días (ilimitada con carga solar)",
+        "Autonomía GPS: Hasta 60 horas (145h con carga solar continua)",
+        "Modo Ahorro: Hasta 100 días (ilimitada con carga solar)",
+        "Carga Solar: Lente Power Glass™ (50% más superficie solar)",
+        "Tipo de Carga: Solar y cable USB Tipo C"
+      ],
+      "conectividad": [
+        "Bluetooth: Sí",
+        "NFC: Sí (Garmin Pay™)",
+        "GNSS: GPS, GLONASS, Galileo (multibanda/multifrecuencia)",
+        "ANT+: Sí",
+        "Almacenamiento: 64 MB (sin música, solo control)",
+        "Mapas: Navegación por \"migas de pan\" (sin mapas topográficos)"
+      ],
+      "sensores": [
+        "Frecuencia Cardíaca: Óptico Elevate Gen 4 en muñeca",
+        "Oxígeno en Sangre: Sí (Pulsioxímetro Pulse Ox)",
+        "Temperatura: Sí (termómetro)",
+        "Altímetro: Sí (barométrico)",
+        "Barómetro: Sí",
+        "Brújula: Sí (electrónica de 3 ejes)",
+        "Giroscopio: Sí",
+        "Acelerómetro: Sí"
+      ],
+      "deportes": [
+        "Perfiles: Más de 40 actividades preinstaladas",
+        "Resistencia Agua: 10 ATM (100 metros, apto para natación)",
+        "Deportes Incluidos: Buceo, Golf, Running, Ciclismo, Natación, Trail, Esquí",
+        "Métricas Avanzadas: Training Readiness, HRV Status, VO2 Max, Body Battery",
+        "Navegación: GPS multibanda, TracBack®, navegación punto a punto",
+        "Seguridad: Detección de incidentes y asistencia SOS"
+      ],
+      "construccion": [
+        "Material Caja: Polímero reforzado con fibra",
+        "Bisel: Polímero reforzado con fibra (elevado para protección)",
+        "Correa: Silicona (compatible QuickFit® 26 mm)",
+        "Resistencia Agua: 10 ATM (100 metros)",
+        "Certificación: Estándar militar MIL-STD-810",
+        "Dimensiones: 50 x 50 x 14.5 mm",
+        "Peso: 67 g",
+        "Sistema Operativo: Garmin OS (propietario)"
+      ]
+    },
+    "fuentes": [
+      "basspro.com",
+      "correrunamaraton.com",
+      "dcrainmaker.com",
+      "deporvillage.com",
+      "ebay.com",
+      "facilisimo.com",
+      "fccracing.com",
+      "forumsport.com"
+    ],
+    "actualizado": "2026-11-08"
+  },
+  {
     "id": "garmin-fenix-8-solar",
     "categoria": "smartwatch",
     "marca": "Garmin",
@@ -390,6 +691,394 @@
       "garmin.com",
       "garminrumors.com",
       "gearjunkie.com"
+    ],
+    "actualizado": "2026-11-08"
+  },
+  {
+    "id": "huawei-watch-ultimate",
+    "categoria": "smartwatch",
+    "marca": "Huawei",
+    "modelo": "Watch Ultimate",
+    "titulo": "Huawei Watch Ultimate - Smartwatch de Metal Líquido con Circonio, Ordenador de Buceo 100m, Pantalla AMOLED Zafiro",
+    "imagen": "",
+    "url_post": "https://topcomparador.es/analisis-huawei-watch-ultimate/",
+    "link_afiliado": "https://www.amazon.es/s?k=Huawei+Watch+Ultimate&tag=topcomparad00-21",
+    "precio_ref_eur": 749.0,
+    "puntuacion": 9.1,
+    "badge": "REFERENCIA BUCEO Y MATERIALES PREMIUM",
+    "filtros": {
+      "panel": "AMOLED",
+      "sistema": "HarmonyOS",
+      "gps": true,
+      "gps_doble_frecuencia": true,
+      "nfc": true,
+      "lte_esim": false,
+      "ecg": true,
+      "spo2": true,
+      "temperatura": true,
+      "altimetro": true,
+      "pantalla_pulgadas": 1.5,
+      "bateria_dias_uso_normal": 14.0,
+      "bateria_horas_gps": 10.0,
+      "agua_atm": 10,
+      "peso_g": 76.0,
+      "perfiles_deporte": 100,
+      "anio_lanzamiento": 2023
+    },
+    "specs": {
+      "pantalla": [
+        "Panel: AMOLED LTPO de 1.5 pulgadas",
+        "Resolución: 466 x 466 píxeles (311 ppp)",
+        "Brillo: 1.000 nits (máximo)",
+        "Refresco: Dinámico (hasta 1Hz con AOD)",
+        "Protección: Cristal de zafiro (2.35 mm)",
+        "Controles: Táctil y tres botones físicos",
+        "Always-On: Sí (compatible)"
+      ],
+      "bateria": [
+        "Capacidad: 530 mAh",
+        "Autonomía normal: Hasta 14 días (uso típico)",
+        "Autonomía intensiva: Hasta 8 días",
+        "Autonomía GPS: Aproximadamente 10 horas",
+        "Carga: Inalámbrica (compatible Qi)",
+        "Tiempo de carga: 100% en 60 minutos"
+      ],
+      "conectividad": [
+        "Bluetooth: Versión 5.2 (A2DP, LE, BR+BLE)",
+        "NFC: Sí (para pagos)",
+        "GNSS: GPS doble banda (5 sistemas)",
+        "Almacenamiento: 32 GB (para música)",
+        "Comunicación: Altavoz y micrófono",
+        "Llamadas: Sí (Bluetooth)",
+        "Mapas: Navegación de ruta de regreso"
+      ],
+      "sensores": [
+        "Frecuencia cardíaca: Sensor óptico",
+        "Oxígeno en sangre: SpO2",
+        "Electrocardiograma: ECG",
+        "Temperatura: Sensor de temperatura",
+        "Altitud/Presión: Altímetro y barómetro",
+        "Movimiento: Acelerómetro y giroscopio",
+        "Orientación: Brújula (magnetómetro)",
+        "Profundidad: Sensor de profundidad"
+      ],
+      "deportes": [
+        "Modos: Más de 100 perfiles deportivos",
+        "Buceo: Profesional 100m (10 ATM, ISO 22810, EN 13319)",
+        "Modos buceo: Recreativo, técnico, libre, inmersión",
+        "Golf: Modo de campo de golf",
+        "Navegación: Modo Expedición con ruta de regreso",
+        "Métricas: Recuperación, umbral láctico, autonomía oxígeno"
+      ],
+      "construccion": [
+        "Caja: Metal líquido de circonio",
+        "Bisel: Cerámica nanocristalina",
+        "Fondo: Cerámica nanocristalina",
+        "Correa: Titanio o caucho HNBR",
+        "Resistencia agua: 10 ATM (100 metros) y IP68",
+        "Dimensiones: 48.5 x 48.5 x 13 mm",
+        "Peso: 76 g (sin correa)",
+        "Sistema: HarmonyOS 3"
+      ]
+    },
+    "fuentes": [
+      "20minutos.es",
+      "cnet.com",
+      "elcomercio.pe",
+      "elcorteingles.es",
+      "elgrupoinformatico.com",
+      "expertreviews.co.uk",
+      "gsmarena.com",
+      "huawei.com"
+    ],
+    "actualizado": "2026-11-08"
+  },
+  {
+    "id": "polar-grit-x2-pro-titan",
+    "categoria": "smartwatch",
+    "marca": "Polar",
+    "modelo": "Grit X2 Pro Titan",
+    "titulo": "Polar Grit X2 Pro Titan - Reloj Outdoor Extremo con Bisel de Titanio, Cristal de Zafiro, Estándar MIL-STD-810H, Biometría Elixir",
+    "imagen": "",
+    "url_post": "https://topcomparador.es/analisis-polar-grit-x2-pro-titan/",
+    "link_afiliado": "https://www.amazon.es/s?k=Polar+Grit+X2+Pro+Titan&tag=topcomparad00-21",
+    "precio_ref_eur": 869.9,
+    "puntuacion": 9.0,
+    "badge": "REFERENCIA OUTDOOR EXTREMO",
+    "filtros": {
+      "panel": "AMOLED",
+      "sistema": "Propio",
+      "gps": true,
+      "gps_doble_frecuencia": true,
+      "nfc": false,
+      "lte_esim": false,
+      "ecg": true,
+      "spo2": true,
+      "temperatura": true,
+      "altimetro": true,
+      "pantalla_pulgadas": 1.4,
+      "bateria_dias_uso_normal": 10.0,
+      "bateria_horas_gps": 43.0,
+      "agua_atm": 10,
+      "peso_g": 48.0,
+      "perfiles_deporte": 150,
+      "anio_lanzamiento": 2024
+    },
+    "specs": {
+      "pantalla": [
+        "Panel: AMOLED de 1.39 pulgadas",
+        "Resolución: 454 x 454 píxeles (326 ppp)",
+        "Brillo Máximo: 1050 nits (excelente visibilidad exterior)",
+        "Protección: Cristal de zafiro de alta dureza",
+        "Interacción: Táctil y botones físicos",
+        "Modo: Always-On Display"
+      ],
+      "bateria": [
+        "Capacidad: 488 mAh Li-Pol",
+        "Autonomía Smartwatch: Hasta 10 días (uso normal con FC y notificaciones)",
+        "Autonomía GPS Preciso: Hasta 43 horas (doble frecuencia y FC óptica)",
+        "Autonomía GPS Eco: Hasta 140 horas (frecuencia única y ahorro de energía)",
+        "Carga: Cable USB-C propietario (Polar Charge 2.0)",
+        "Tiempo de Carga: Aproximadamente 2 horas"
+      ],
+      "conectividad": [
+        "Bluetooth: Versión 5.1",
+        "GNSS: GPS de doble frecuencia (L1/L5), GLONASS, Galileo, BeiDou, QZSS",
+        "Almacenamiento: 32 GB (para música sin reproducción en reloj)",
+        "Audio: Micrófono y altavoz integrados",
+        "Mapas: Topográficos offline descargables (Europa y Norteamérica preinstalados)",
+        "Llamadas: Soporte para llamadas Bluetooth"
+      ],
+      "sensores": [
+        "Frecuencia Cardíaca: Óptico Polar Elixir (4ª generación)",
+        "Oxígeno en Sangre: SpO2 Polar Elixir (1ª generación)",
+        "Electrocardiograma: ECG en muñeca Polar Elixir (1ª generación)",
+        "Temperatura: Cutánea nocturna Polar Elixir (1ª generación)",
+        "Altímetro: Barométrico integrado",
+        "Navegación: Barómetro, brújula magnetómetro, giroscopio, acelerómetro",
+        "Luz: Sensor de luminosidad ambiental"
+      ],
+      "deportes": [
+        "Perfiles: Más de 150 perfiles deportivos",
+        "Resistencia Agua: WR100 (10 ATM)",
+        "Actividades: Running, ciclismo, natación en piscina, trail running",
+        "Métricas Avanzadas: Hill Splitter, VAM, Training Load Pro, Recovery Pro, SleepWise",
+        "Navegación Rutas: Mapas offline, Track Back, rutas planificadas, navegación giro a giro (Komoot)"
+      ],
+      "construccion": [
+        "Caja: Titanio aeroespacial",
+        "Bisel: Titanio aeroespacial",
+        "Fondo: Plástico de origen biológico (PA11+30GF)",
+        "Correa: Incluye cuero (marrón) y silicona (negra)",
+        "Resistencia: WR100 (10 ATM)",
+        "Certificación: MIL-STD-810H (estándar militar)",
+        "Dimensiones: 48.6 x 48.6 x 13.4 mm",
+        "Peso: 64 g (total con correa), 48 g (sin correa)",
+        "Sistema Operativo: Basado en la plataforma Polar Flow"
+      ]
+    },
+    "fuentes": [
+      "alltricks.com",
+      "bike24.es",
+      "carrerasdemontana.com",
+      "clickforfoot.com",
+      "correrunamaraton.com",
+      "corriendovoy.com",
+      "dcrainmaker.com",
+      "deporvillage.net"
+    ],
+    "actualizado": "2026-11-08"
+  },
+  {
+    "id": "samsung-galaxy-watch-ultra",
+    "categoria": "smartwatch",
+    "marca": "Samsung",
+    "modelo": "Galaxy Watch Ultra",
+    "titulo": "Samsung Galaxy Watch Ultra - Smartwatch 47mm Titanio, Chipset 3nm, GPS Dual, Resistencia 10 ATM e IP68, Galaxy AI",
+    "imagen": "",
+    "url_post": "https://topcomparador.es/analisis-samsung-galaxy-watch-ultra/",
+    "link_afiliado": "https://www.amazon.es/s?k=Samsung+Galaxy+Watch+Ultra&tag=topcomparad00-21",
+    "precio_ref_eur": 699.0,
+    "puntuacion": 9.1,
+    "badge": "ULTRA PREMIUM Y RESISTENTE",
+    "filtros": {
+      "panel": "AMOLED",
+      "sistema": "Wear OS",
+      "gps": true,
+      "gps_doble_frecuencia": true,
+      "nfc": true,
+      "lte_esim": true,
+      "ecg": true,
+      "spo2": true,
+      "temperatura": true,
+      "altimetro": true,
+      "pantalla_pulgadas": 1.5,
+      "bateria_dias_uso_normal": 2.0,
+      "bateria_horas_gps": 48.0,
+      "agua_atm": 10,
+      "peso_g": 60.5,
+      "perfiles_deporte": null,
+      "anio_lanzamiento": 2025
+    },
+    "specs": {
+      "pantalla": [
+        "Panel: Super AMOLED",
+        "Tamaño: 1.5 pulgadas",
+        "Resolución: 480 x 480 píxeles",
+        "Brillo: 3.000 nits (excelente visibilidad)",
+        "Protección: Cristal de zafiro",
+        "Interacción: Táctil y botones físicos",
+        "Always-On: Sí"
+      ],
+      "bateria": [
+        "Capacidad: 590 mAh",
+        "Autonomía normal: Hasta 2 días (uso continuo)",
+        "Autonomía GPS: Hasta 48 horas (modo optimizado)",
+        "Ahorro energía: Hasta 100 horas (modo expedición)",
+        "Carga: Inalámbrica rápida (estándar propietario)"
+      ],
+      "conectividad": [
+        "Bluetooth: Versión 5.3",
+        "Wi-Fi: Wi-Fi ac (2.4/5 GHz)",
+        "Pagos: NFC (Samsung Pay)",
+        "Red móvil: LTE con eSIM",
+        "Navegación: GPS doble banda (GPS, GLONASS, Galileo, BeiDou)",
+        "Almacenamiento: 64 GB",
+        "Comunicación: Altavoz y micrófono"
+      ],
+      "sensores": [
+        "Frecuencia cardíaca: Sensor BioActive (óptico)",
+        "Oxígeno en sangre: SpO2",
+        "Electrocardiograma: ECG",
+        "Temperatura: Sensor de piel",
+        "Altitud: Barómetro integrado",
+        "Movimiento: Acelerómetro y giroscopio",
+        "Geomagnético: Brújula"
+      ],
+      "deportes": [
+        "Perfiles: Múltiples deportes",
+        "Resistencia: 10 ATM y IP68 (apto para natación y buceo)",
+        "Actividades: Running, ciclismo, natación, trail",
+        "Entrenamiento: Galaxy AI (entrenador personalizado)",
+        "Navegación: GPS integrado (función Track Back)",
+        "Seguridad: Sirena de socorro (86 dB)"
+      ],
+      "construccion": [
+        "Caja: Titanio grado 4",
+        "Dimensiones: 47,4 x 47,4 x 12,1 mm",
+        "Peso: 60,5 g",
+        "Resistencia: 10 ATM, IP68, MIL-STD-810H",
+        "Sistema operativo: Wear OS 5 (con One UI Watch 6)",
+        "Correa: Sistema propietario",
+        "Bisel: Táctil (no giratorio físico)"
+      ]
+    },
+    "fuentes": [
+      "backmarket.es",
+      "canaltech.com.br",
+      "dcrainmaker.com",
+      "gsmarena.com",
+      "idealo.es",
+      "kelkoo.es",
+      "klarna.com",
+      "larazon.es"
+    ],
+    "actualizado": "2026-11-08"
+  },
+  {
+    "id": "suunto-vertical-titanium-solar",
+    "categoria": "smartwatch",
+    "marca": "Suunto",
+    "modelo": "Vertical Titanium Solar",
+    "titulo": "Suunto Vertical Titanium Solar - Reloj Deportivo Outdoor con Carga Solar, Bisel Titanio Grado 5, Mapas Offline Gratuitos",
+    "imagen": "",
+    "url_post": "https://topcomparador.es/analisis-suunto-vertical-titanium-solar/",
+    "link_afiliado": "https://www.amazon.es/s?k=Suunto+Vertical+Titanium+Solar&tag=topcomparad00-21",
+    "precio_ref_eur": 799.0,
+    "puntuacion": 9.1,
+    "badge": "REFERENCIA OUTDOOR",
+    "filtros": {
+      "panel": "MIP",
+      "sistema": "Propio",
+      "gps": true,
+      "gps_doble_frecuencia": true,
+      "nfc": false,
+      "lte_esim": false,
+      "ecg": false,
+      "spo2": true,
+      "temperatura": true,
+      "altimetro": true,
+      "pantalla_pulgadas": 1.4,
+      "bateria_dias_uso_normal": 30.0,
+      "bateria_horas_gps": 60.0,
+      "agua_atm": 10,
+      "peso_g": 74.0,
+      "perfiles_deporte": 95,
+      "anio_lanzamiento": 2023
+    },
+    "specs": {
+      "pantalla": [
+        "Panel: Matriz de color MIP de 1,4 pulgadas.",
+        "Resolución: 280 x 280 píxeles.",
+        "Protección: Cristal de zafiro (alta resistencia a arañazos).",
+        "Legibilidad: Nítida y legible bajo luz solar directa.",
+        "Control: Táctil y botones físicos (con bloqueo de pantalla)."
+      ],
+      "bateria": [
+        "Autonomía diaria: Hasta 30 días (con FC 24/7 y notificaciones).",
+        "Autonomía GPS: Hasta 60 horas (GPS preciso, sin carga solar).",
+        "Modo Tour: Hasta 500 horas (registro GPS cada 2 minutos).",
+        "Carga solar: Aporta al menos un 30% extra en días soleados.",
+        "Tipo de carga: Magnética.",
+        "Carga rápida: 10 minutos de carga para 10 horas de actividad."
+      ],
+      "conectividad": [
+        "Bluetooth: Sí (para conexión con smartphone).",
+        "Wi-Fi: Sí (para descarga de mapas y actualizaciones).",
+        "GNSS: GPS, GLONASS, GALILEO, QZSS, BEIDOU.",
+        "Precisión GPS: Doble banda L1+L5 (mayor exactitud).",
+        "Almacenamiento: 32 GB (para mapas).",
+        "Música: Control de música del teléfono."
+      ],
+      "sensores": [
+        "Frecuencia cardíaca: Óptica en muñeca (24x7, cada segundo).",
+        "Oxígeno en sangre: SpO2 (pulsioximetría).",
+        "Temperatura: Ambiente (rango de -20°C a +55°C).",
+        "Altímetro: Barométrico, GPS y combinado (FusedAlti™).",
+        "Barómetro: Sí (previsión meteorológica, alarma de tormenta).",
+        "Brújula: Digital con compensación de inclinación.",
+        "Profundidad: Sí (hasta 10 metros para buceo libre).",
+        "Salud: Seguimiento de sueño, HRV, estrés y recuperación."
+      ],
+      "deportes": [
+        "Modos deportivos: Más de 95 perfiles predefinidos.",
+        "Aplicaciones: Más de 50 aplicaciones deportivas SuuntoPlus.",
+        "Resistencia al agua: 100 metros (10 ATM).",
+        "Navegación: Mapas topográficos offline gratuitos.",
+        "Rutas: Navegación por rutas y puntos de interés.",
+        "Métricas avanzadas: Carga de entrenamiento, recuperación, Suunto Coach.",
+        "Integración: Compatible con Strava, TrainingPeaks y otras 200 apps."
+      ],
+      "construccion": [
+        "Material caja: Poliamida reforzada con fibra de vidrio.",
+        "Bisel: Titanio de grado 5 (alta durabilidad).",
+        "Correa: Silicona de 22 mm de ancho.",
+        "Resistencia agua: 100 metros (10 ATM).",
+        "Certificación: Probado según estándares militares de EE. UU.",
+        "Dimensiones: 49 x 49 x 13,6 mm (diámetro de caja de 49 mm).",
+        "Peso: 74 g (con correa de silicona).",
+        "Botones: Direccionales, táctiles y aptos para guantes."
+      ]
+    },
+    "fuentes": [
+      "base-mag.com",
+      "bike24.com",
+      "correrunamaraton.com",
+      "dcrainmaker.com",
+      "elcorteingles.es",
+      "findyoureverest.es",
+      "forumsport.com",
+      "idealo.es"
     ],
     "actualizado": "2026-11-08"
   }
