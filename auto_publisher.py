@@ -32,17 +32,30 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 
 productos_catalogo = [
 
-    # 7) Unos 27 días de uso típico / 180 h con GPS
+    # 1) Hasta 36 días en modo reloj / 90 días con solar
     {
         "categoria": "smartwatch",
-        "marca": "Amazfit",
-        "modelo_corto": "T-Rex 3",
-        "busqueda": "Amazfit T-Rex 3",
+        "marca": "Garmin",
+        "modelo_corto": "Enduro 4",
+        "busqueda": "Garmin Enduro 4",
         "link_afiliado": "",
         "asin": "",
-        "titulo": "Amazfit T-Rex 3 - Smartwatch Outdoor Resistente con Pantalla AMOLED de 1,5 Pulgadas, GPS de Doble Banda, Mapas Offline y hasta 27 Días de Batería",
-        "especificaciones": "Pantalla AMOLED de 1,5 pulgadas, caja con bisel de acero inoxidable de aspecto robusto, GPS de doble banda y mapas topográficos. Batería de 700 mAh con unos 27 días de autonomía en uso típico y hasta 180 horas con el GPS activo.",
-        "precio": "249.00€",
+        "titulo": "Garmin Enduro 4 - Smartwatch GPS Ultra Resistente con Carga Solar Power Sapphire, Pantalla MIP de 1,4 Pulgadas, Bisel de Titanio, ECG y Linterna LED, hasta 90 Días de Batería",
+        "especificaciones": "Caja de 51 mm y 66 g con bisel de titanio y cristal solar Power Sapphire, pantalla MIP transflectiva táctil de 1,4 pulgadas (280 x 280), resistencia al agua de 5 ATM, ECG, linterna LED y 64 GB de memoria. Hasta 36 días de autonomía en modo reloj inteligente y hasta 90 días con carga solar (3 horas diarias a 50.000 lux), con autonomía ilimitada en los modos de ahorro y expedición si hay suficiente luz solar.",
+        "precio": "899.99€",
+        "imagen": "",
+    },
+    # 2) Hasta 30 días en modo reloj / 57 días con solar
+    {
+        "categoria": "smartwatch",
+        "marca": "Garmin",
+        "modelo_corto": "fēnix 9 Pro Solar 51 mm",
+        "busqueda": "Garmin fēnix 9 Pro Solar 51mm",
+        "link_afiliado": "",
+        "asin": "",
+        "titulo": "Garmin fēnix 9 Pro Solar 51 mm - Smartwatch Multideporte GPS Premium con Pantalla AMOLED, Caja de Titanio, Carga Solar, Mapas y Linterna LED con Modo Verde",
+        "especificaciones": "Caja de titanio con pantalla AMOLED (la más grande de la familia en 51 mm), carga solar, 64 GB de almacenamiento y linterna LED con modo verde. Hasta 30 días de autonomía en modo reloj inteligente y hasta 57 días con carga solar (3 horas diarias a 50.000 lux); en el modo de máxima autonomía llega a 186 horas de GPS, o hasta 1.000 horas con sol. La conectividad inReach (satélite y LTE) es opcional, con un sobrecoste de 100 € y suscripción.",
+        "precio": "1199.99€",
         "imagen": "",
     }
 ]
@@ -100,24 +113,30 @@ def procesar_y_publicar(producto):
             else:
                 print(f"❌ Imposible analizar {producto['titulo']} tras {max_intentos} intentos.")
 
-    # --- EXTRACCIÓN Y LIMPIEZA SEGURA DEL JSON ---
+# --- EXTRACCIÓN Y LIMPIEZA SEGURA DEL JSON ---
     datos_ia = None
     if response and hasattr(response, 'text') and response.text:
         texto_respuesta = response.text.strip()
+        
+        # Limpieza robusta de bloques de código Markdown
         if "```json" in texto_respuesta:
             texto_respuesta = texto_respuesta.split("```json")[1].split("```")[0].strip()
         elif "```" in texto_respuesta:
             texto_respuesta = texto_respuesta.split("```")[1].split("```")[0].strip()
         
-        inicio = texto_respuesta.find('{')
-        fin = texto_respuesta.rfind('}')
-        
-        if inicio != -1 and fin != -1:
-            clean_json_str = texto_respuesta[inicio:fin+1]
-            try:
-                datos_ia = json.loads(clean_json_str)
-            except json.JSONDecodeError as err:
-                print(f"⚠️ Advertencia: JSON mal formado por la IA en {producto['titulo']}: {err}")
+        # Intentar parsear el JSON directamente o buscar llaves
+        try:
+            datos_ia = json.loads(texto_respuesta)
+        except json.JSONDecodeError:
+            inicio = texto_respuesta.find('{')
+            fin = texto_respuesta.rfind('}')
+            if inicio != -1 and fin != -1:
+                clean_json_str = texto_respuesta[inicio:fin+1]
+                try:
+                    datos_ia = json.loads(clean_json_str)
+                except json.JSONDecodeError as err:
+                    print(f"⚠️ Error crítico de JSON en {producto['titulo']}: {err}")
+                    print(f"Respuesta recibida de la IA:\n{texto_respuesta}")
 
     # --- VALORES POR DEFECTO DE EMERGENCIA SI FALLA LA IA O EL JSON ---
     if not datos_ia:
