@@ -31,84 +31,7 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 #  - Los precios son orientativos (PVP o precio de mercado reciente) y cambian a menudo.
 
 productos_catalogo = [
-    # 1) Hasta 36 días en modo reloj / 90 días con solar
-    {
-        "categoria": "smartwatch",
-        "marca": "Garmin",
-        "modelo_corto": "Enduro 4",
-        "busqueda": "Garmin Enduro 4",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Garmin Enduro 4 - Smartwatch GPS Ultra Resistente con Carga Solar Power Sapphire, Pantalla MIP de 1,4 Pulgadas, Bisel de Titanio, ECG y Linterna LED, hasta 90 Días de Batería",
-        "especificaciones": "Caja de 51 mm y 66 g con bisel de titanio y cristal solar Power Sapphire, pantalla MIP transflectiva táctil de 1,4 pulgadas (280 x 280), resistencia al agua de 5 ATM, ECG, linterna LED y 64 GB de memoria. Hasta 36 días de autonomía en modo reloj inteligente y hasta 90 días con carga solar (3 horas diarias a 50.000 lux), con autonomía ilimitada en los modos de ahorro y expedición si hay suficiente luz solar.",
-        "precio": "899.99€",
-        "imagen": "",
-    },
-    # 2) Hasta 30 días en modo reloj / 57 días con solar
-    {
-        "categoria": "smartwatch",
-        "marca": "Garmin",
-        "modelo_corto": "fēnix 9 Pro Solar 51 mm",
-        "busqueda": "Garmin fēnix 9 Pro Solar 51mm",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Garmin fēnix 9 Pro Solar 51 mm - Smartwatch Multideporte GPS Premium con Pantalla AMOLED, Caja de Titanio, Carga Solar, Mapas y Linterna LED con Modo Verde",
-        "especificaciones": "Caja de titanio con pantalla AMOLED (la más grande de la familia en 51 mm), carga solar, 64 GB de almacenamiento y linterna LED con modo verde. Hasta 30 días de autonomía en modo reloj inteligente y hasta 57 días con carga solar (3 horas diarias a 50.000 lux); en el modo de máxima autonomía llega a 186 horas de GPS, o hasta 1.000 horas con sol. La conectividad inReach (satélite y LTE) es opcional, con un sobrecoste de 100 € y suscripción.",
-        "precio": "1199.99€",
-        "imagen": "",
-    },
-    # 3) Hasta 25 días / 51 días con doble panel solar / 180 días en modo extremo
-    {
-        "categoria": "smartwatch",
-        "marca": "Amazfit",
-        "modelo_corto": "T-Rex Dual Solar",
-        "busqueda": "Amazfit T-Rex Dual Solar",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Amazfit T-Rex Dual Solar - Smartwatch Outdoor con Doble Carga Solar, Pantalla AMOLED de 1,32 Pulgadas, Cristal de Zafiro, Titanio, GPS Multisatélite y Linterna LED SOS",
-        "especificaciones": "Primer reloj deportivo con paneles solares en ambos lados: uno sobre la pantalla AMOLED de 1,32 pulgadas (hasta 3.000 nits) y otro en la tapa trasera, con el doble de superficie. Cristal de zafiro, bisel y cuatro botones de titanio grado 5, GPS compatible con seis sistemas de satélite, mapas topográficos y linterna LED con SOS. Autonomía de hasta 25 días en uso diario, 34 con el panel frontal y 51 usando también el trasero (3 horas diarias a 50.000 lux), y hasta 180 días en el modo Outdoor Extreme.",
-        "precio": "649.90€",
-        "imagen": "",
-    },
-    # 4) Hasta 40 días en modo reloj / ilimitada con solar
-    {
-        "categoria": "smartwatch",
-        "marca": "Garmin",
-        "modelo_corto": "Instinct 3 Solar 50 mm",
-        "busqueda": "Garmin Instinct 3 Solar 50mm",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Garmin Instinct 3 Solar 50 mm - Smartwatch GPS Resistente con Carga Solar, Linterna LED, Pulsioxímetro y hasta 40 Días de Batería",
-        "especificaciones": "Caja de polímero de 50 mm y 58 g con pantalla de 1,1 pulgadas, bisel reforzado, carga solar, linterna LED y pulsioxímetro. Hasta 40 días de autonomía en modo reloj inteligente y hasta 100 días en modo ahorro de energía; con carga solar (3 horas diarias a 50.000 lux) Garmin indica autonomía ilimitada. Hasta 60 horas de GPS, o 260 con carga solar.",
-        "precio": "278.99€",
-        "imagen": "",
-    },
-    # 5) Hasta 36 días en uso normal / 118 h con GPS
-    {
-        "categoria": "smartwatch",
-        "marca": "COROS",
-        "modelo_corto": "VERTIX 2S",
-        "busqueda": "COROS VERTIX 2S",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "COROS VERTIX 2S - Reloj GPS Multideporte de Aventura con Titanio y Zafiro, GPS de Doble Banda, Mapas y hasta 118 Horas de Batería en GPS",
-        "especificaciones": "Pantalla Memory LCD siempre activa de 1,4 pulgadas, construcción de titanio y zafiro, GPS de doble banda, mapas para navegación de rutas y sensor óptico de frecuencia cardíaca de 5 LED. Incluye dos correas (silicona y nailon). Hasta 36 días de autonomía en uso normal y hasta 118 horas con el GPS en modo estándar.",
-        "precio": "699.00€",
-        "imagen": "",
-    },
-    # 6) Hasta 35 días
-    {
-        "categoria": "smartwatch",
-        "marca": "HONOR",
-        "modelo_corto": "Watch 6",
-        "busqueda": "HONOR Watch 6",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "HONOR Watch 6 - Smartwatch con Pantalla de 1,46 Pulgadas y 3.000 nits, GPS de Doble Banda, Batería de 980 mAh y hasta 35 Días de Autonomía",
-        "especificaciones": "Batería de 980 mAh que, según el fabricante, ofrece hasta 35 días de autonomía. Pantalla de 1,46 pulgadas con brillo máximo de 3.000 nits, caja de aluminio reciclado de unos 41 g, GPS de doble banda, más de 120 modos deportivos y medición de frecuencia cardíaca, saturación de oxígeno, estrés y sueño. La medición de presión arterial no está disponible en Europa.",
-        "precio": "249.00€",
-        "imagen": "",
-    },
+
     # 7) Unos 27 días de uso típico / 180 h con GPS
     {
         "categoria": "smartwatch",
@@ -121,46 +44,7 @@ productos_catalogo = [
         "especificaciones": "Pantalla AMOLED de 1,5 pulgadas, caja con bisel de acero inoxidable de aspecto robusto, GPS de doble banda y mapas topográficos. Batería de 700 mAh con unos 27 días de autonomía en uso típico y hasta 180 horas con el GPS activo.",
         "precio": "249.00€",
         "imagen": "",
-    },
-    # 8) Hasta 25 días
-    {
-        "categoria": "smartwatch",
-        "marca": "Amazfit",
-        "modelo_corto": "Active Max",
-        "busqueda": "Amazfit Active Max",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Amazfit Active Max - Reloj Inteligente de 48 mm con Pantalla AMOLED de 1,5 Pulgadas, 25 Días de Batería, Mapas Offline, NFC, GPS y más de 160 Deportes",
-        "especificaciones": "Pantalla AMOLED de 1,5 pulgadas con hasta 3.000 nits, caja de aleación de aluminio de unos 39,5 g, 4 GB de almacenamiento para mapas sin conexión, más de 160 modos deportivos, GPS y pagos sin contacto con Zepp Pay (según banco y tarjeta). Batería de 658 mAh con hasta 25 días de autonomía.",
-        "precio": "169.90€",
-        "imagen": "",
-    },
-    # 9) Hasta 22 días en modo reloj (16 con FC y notificaciones)
-    {
-        "categoria": "smartwatch",
-        "marca": "Suunto",
-        "modelo_corto": "Vertical 2",
-        "busqueda": "Suunto Vertical 2",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "SUUNTO Vertical 2 - Reloj Deportivo GPS de Aventura con Pantalla AMOLED de 1,5 Pulgadas, Mapas Offline, Linterna LED y hasta 22 Días de Batería",
-        "especificaciones": "Pantalla AMOLED LTPO de 1,5 pulgadas (466 x 466) con frecuencia de refresco variable, GPS de doble banda, mapas sin conexión, linterna LED y sumergible hasta 100 m. Hasta 22 días en modo reloj (16 con seguimiento de frecuencia cardíaca y notificaciones) y hasta 65 horas de entrenamiento con GPS. No tiene carga solar. Versión de acero a 599 € y de titanio a 699 €.",
-        "precio": "599.00€",
-        "imagen": "",
-    },
-    # 10) Hasta 21 días (uso ligero) / 12 días típico
-    {
-        "categoria": "smartwatch",
-        "marca": "Huawei",
-        "modelo_corto": "Watch GT 7 Pro",
-        "busqueda": "HUAWEI Watch GT 7 Pro 46mm",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "HUAWEI Watch GT 7 Pro 46 mm - Smartwatch con Caja de Titanio, Cristal de Zafiro, ECG, GPS de Doble Banda y hasta 21 Días de Batería",
-        "especificaciones": "Caja de titanio de 46 mm, pantalla AMOLED de 1,47 pulgadas (466 x 466) con cristal de zafiro, ECG, GPS de doble banda y carga inalámbrica; sin eSIM. Batería de 587 mAh con hasta 21 días de autonomía en uso ligero, unos 12 días en uso típico y 7 días con la pantalla siempre encendida; unas 51 horas con GPS.",
-        "precio": "429.00€",
-        "imagen": "",
-    },
+    }
 ]
 
 
