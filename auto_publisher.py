@@ -4,16 +4,20 @@ import time
 import requests
 import urllib.parse
 from google import genai
+from google.genai import types
 
 # ==========================================
 # 1. LECTURA SEGURA DE CREDENCIALES
 # ==========================================
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-WP_URL = os.environ.get("WP_URL").rstrip('/')
-WP_USER = os.environ.get("WP_USER")
-WP_APP_PASSWORD = os.environ.get("WP_APP_PASSWORD")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
+WP_URL = os.environ.get("WP_URL", "").rstrip('/')
+WP_USER = os.environ.get("WP_USER", "").strip()
+WP_APP_PASSWORD = os.environ.get("WP_APP_PASSWORD", "").strip()
 
 AMAZON_TAG = "topcomparad00-21"
+
+if not GEMINI_API_KEY:
+    raise ValueError("❌ ERROR CRÍTICO: La variable de entorno GEMINI_API_KEY está vacía en GitHub Secrets.")
 
 client = genai.Client(api_key=GEMINI_API_KEY)
 
@@ -67,6 +71,31 @@ def render_bullets(items):
         return "".join([f"<li style='margin-bottom: 4px;'>{item}</li>" for item in items])
     return f"<li>{items}</li>"
 
+
+def llamar_gemini_con_respaldo(prompt):
+    """Intenta generar el JSON con gemini-3.8-flash y usa gemini-3.5-flash-lite como respaldo."""
+    modelos_a_probar = ['gemini-3.8-flash', 'gemini-3.5-flash-lite']
+    
+    for modelo in modelos_a_probar:
+        for intento in range(1, 3):
+            try:
+                print(f"   🤖 Llamando a {modelo} (Intento {intento})...")
+                response = client.models.generate_content(
+                    model=modelo,
+                    contents=prompt,
+                    config=types.GenerateContentConfig(
+                        response_mime_type="application/json",
+                        temperature=0.3,
+                    )
+                )
+                if response and response.text:
+                    return json.loads(response.text)
+            except Exception as e:
+                print(f"   ⚠️ Fallo con {modelo} (Intento {intento}): {type(e).__name__} -> {e}")
+                time.sleep(3)
+    return None
+
+
 def procesar_y_publicar(producto):
     asin = producto.get('asin', '').strip()
     if asin:
@@ -77,20 +106,22 @@ def procesar_y_publicar(producto):
     
     categoria = producto.get('categoria', 'smartwatch').lower()
     imagen_url = producto.get('imagen', '').strip()
-    if not imagen_url:
-        imagen_url = "https://via.placeholder.com/600x400?text=Imagen+No+Disponibe"
 
     # --- PROMPTS ESTRUCTURADOS ---
     if categoria == 'smartphone':
         prompt = f"""
-        Actúa como analista senior de tecnología y experto en CRO. Analiza detalladamente este smartphone:
+        Actúa como analista senior de tecnología y experto en SEO y CRO para afiliación de Amazon.
+        Analiza detalladamente este smartphone basándote en los datos proporcionados:
         - Título: {producto['titulo']}
         - Especificaciones base: {producto['especificaciones']}
         - Precio: {producto['precio']}
 
-        Genera un análisis completo y profesional. Rellena todas las especificaciones con datos técnicos exactos.
+        INSTRUCCIONES:
+        - Extrae todos los datos técnicos exactos (pulgadas, resolución, Hz, procesador, RAM, megapíxeles, apertura focal, mAh, W de carga, etc.).
+        - Redacta un resumen ejecutivo persuasivo de 3 a 4 líneas enfocado a convencer al comprador.
+        - Cada lista dentro de "specs" debe tener entre 2 y 3 puntos detallados y técnicos.
         
-        Debes devolver un JSON con esta estructura exacta:
+        Devuelve ÚNICAMENTE un JSON válido con esta estructura exacta:
         {{
             "badge": "texto corto persuasivo (ej: Destacado Fotografía o Rey del Zoom)",
             "resumen_ejecutivo": "párrafo comercial y atractivo sobre el rendimiento y valor del móvil",
@@ -114,7 +145,7 @@ def procesar_y_publicar(producto):
         - Especificaciones base: {producto['especificaciones']}
         - Precio: {producto['precio']}
 
-        Debes devolver un JSON con esta estructura exacta:
+        Devuelve ÚNICAMENTE un JSON válido con esta estructura exacta:
         {{
             "badge": "texto corto persuasivo",
             "resumen_ejecutivo": "párrafo comercial y atractivo",
@@ -132,59 +163,13 @@ def procesar_y_publicar(producto):
         }}
         """
 
-    print(f"Analizando con Gemini ({categoria.upper()}) el producto: {producto['modelo_corto']}...")
-    
-    max_intentos = 3
-    response = None
-    datos_ia = None
+    print(f"\n🚀 Analizando con Gemini ({categoria.upper()}) el producto: {producto['modelo_corto']}...")
+    datos_ia = llamar_gemini_con_respaldo(prompt)
 
-    for intento in range(1, max_intentos + 1):
-        try:
-            # CONFIGURACIÓN CLAVE: Forzar salida estricta en formato JSON desde la API
-            response = client.models.generate_content(
-                model='gemini-2.5-flash',
-                contents=prompt,
-                config={
-                    'response_mime_type': 'application/json',
-                    'temperature': 0.3
-                }
-            )
-            
-            if response and response.text:
-                datos_ia = json.loads(response.text)
-                break
-        except Exception as e:
-            print(f"⚠️ Intento {intento}/{max_intentos} fallido: {e}")
-            if intento < max_intentos:
-                time.sleep(5)
-            else:
-                print(f"❌ Error crítico procesando la IA para {producto['titulo']}.")
-
-    # --- RESPALDO DE EMERGENCIA (Solo si falla totalmente la API) ---
+    # Si la IA falla tras los reintentos, abortamos este producto para evitar publicaciones vacías o pobres
     if not datos_ia:
-        print(f"💡 Aplicando plantilla de respaldo de emergencia para {producto['titulo']}...")
-        datos_ia = {
-            "badge": "Destacado Gama Alta",
-            "resumen_ejecutivo": producto['titulo'] + " destaca en el mercado actual por ofrecer especificaciones de primer nivel y un rendimiento excepcional.",
-            "specs": {
-                "pantalla": ["Panel de alta definición con excelente calibración de color."],
-                "rendimiento": ["Hardware optimizado para máxima fluidez multitarea."],
-                "camaras": ["Sistema fotográfico avanzado con múltiples lentes."],
-                "bateria": ["Autonomía optimizada para todo el día con carga rápida."],
-                "almacenamiento": ["Amplia capacidad interna para archivos y aplicaciones."],
-                "conectividad": ["Conectividad de última generación (5G, Wi-Fi, NFC)."]
-            } if categoria == 'smartphone' else {
-                "pantalla": ["Panel de alta visibilidad en exteriores."],
-                "bateria": ["Batería de larga duración."],
-                "conectividad": ["GPS y Bluetooth."],
-                "sensores": ["Monitor de pulso y salud."],
-                "deportes": ["Múltiples perfiles deportivos."],
-                "construccion": ["Diseño resistente."]
-            },
-            "pros": ["Rendimiento excelente", "Pantalla de gran calidad", "Diseño prémium"],
-            "contras": ["Precio elevado", "Cargador no siempre incluido"],
-            "puntuacion": 9.0
-        }
+        print(f"❌ ABORTANDO PUBLICACIÓN de '{producto['modelo_corto']}': Gemini no devolvió datos válidos. Revisa el error mostrado arriba.")
+        return
 
     s = datos_ia.get('specs', {})
 
@@ -227,13 +212,19 @@ def procesar_y_publicar(producto):
           </tr>
         """
 
+    bloque_imagen = ""
+    if imagen_url:
+        bloque_imagen = f"""
+        <div style="text-align: center; margin-bottom: 20px;">
+          <img src="{imagen_url}" alt="{producto['titulo']}" style="max-height: 280px; width: auto; object-fit: contain; border-radius: 8px;" />
+        </div>
+        """
+
     # --- HTML DE LA ENTRADA ---
     html_content = f"""
     <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; background-color: #ffffff; max-width: 750px; margin: 20px auto; font-family: system-ui, -apple-system, sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
       
-      <div style="text-align: center; margin-bottom: 20px;">
-        <img src="{imagen_url}" alt="{producto['titulo']}" style="max-height: 280px; width: auto; object-fit: contain; border-radius: 8px;" />
-      </div>
+      {bloque_imagen}
 
       <div style="background-color: #ff9900; color: #fff; font-weight: bold; display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 0.85em; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px;">
         🔥 {datos_ia.get('badge', 'Destacado')}
@@ -316,9 +307,9 @@ def procesar_y_publicar(producto):
 
     res = requests.post(wp_endpoint, json=payload, auth=(WP_USER, WP_APP_PASSWORD))
     if res.status_code == 201:
-        print(f"¡Publicación creada exitosamente para {producto['titulo']}!")
+        print(f"✅ ¡Publicación creada exitosamente para {producto['titulo']}!")
     else:
-        print(f"Error al publicar en WordPress ({res.status_code}): {res.text}")
+        print(f"❌ Error al publicar en WordPress ({res.status_code}): {res.text}")
 
 if __name__ == "__main__":
     for item in productos_catalogo:
