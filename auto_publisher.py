@@ -27,7 +27,7 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 # ==========================================
 productos_catalogo = [
     {
-        "categoria": "smartphone",
+        "categoria": "smartphone", # Coincidirá con la categoría en WordPress (ej: "Smartphones")
         "marca": "Xiaomi",
         "modelo_corto": "17 Ultra",
         "busqueda": "Xiaomi 17 Ultra",
@@ -51,7 +51,7 @@ productos_catalogo = [
         "imagen": "",
     },
     {
-        "categoria": "smartwatch",
+        "categoria": "smartwatch", # Coincidirá con la categoría en WordPress (ej: "Smartwatches")
         "marca": "Garmin",
         "modelo_corto": "Fenix 8",
         "busqueda": "Garmin Fenix 8 AMOLED 51mm",
@@ -78,6 +78,36 @@ def render_bullets(items):
     if isinstance(items, list):
         return "".join([f"<li style='margin-bottom: 5px;'>{formatear_item_negrita(item)}</li>" for item in items])
     return f"<li>{formatear_item_negrita(str(items))}</li>"
+
+
+def obtener_o_crear_categoria(nombre_cat_input):
+    """Busca la categoría en WordPress por su nombre (ej: 'Smartphones'). Si no existe, la crea."""
+    nombre_categoria = nombre_cat_input.capitalize()
+    if nombre_categoria.lower() == 'smartphone':
+        nombre_categoria = 'Smartphones'
+    elif nombre_categoria.lower() == 'smartwatch':
+        nombre_categoria = 'Smartwatches'
+
+    cat_endpoint = f"{WP_URL}/wp-json/wp/v2/categories"
+    
+    try:
+        # Buscar si ya existe
+        res = requests.get(cat_endpoint, params={"search": nombre_categoria}, auth=(WP_USER, WP_APP_PASSWORD), timeout=15)
+        if res.status_code == 200:
+            categorias = res.json()
+            for cat in categorias:
+                if cat['name'].lower() == nombre_categoria.lower():
+                    return cat['id']
+        
+        # Si no existe, crearla
+        payload_cat = {"name": nombre_categoria}
+        res_crear = requests.post(cat_endpoint, json=payload_cat, auth=(WP_USER, WP_APP_PASSWORD), timeout=15)
+        if res_crear.status_code == 201:
+            return res_crear.json()['id']
+    except Exception as e:
+        print(f"   ⚠️ Advertencia al gestionar categoría en WordPress: {e}")
+    
+    return None
 
 
 def llamar_gemini_con_respaldo(prompt):
@@ -113,12 +143,12 @@ def procesar_y_publicar(producto):
         query_encoded = urllib.parse.quote_plus(producto['busqueda'])
         affiliate_link = f"https://www.amazon.es/s?k={query_encoded}&tag={AMAZON_TAG}"
     
-    categoria = producto.get('categoria', 'smartwatch').lower()
+    categoria_str = producto.get('categoria', 'smartwatch').lower()
     imagen_url = producto.get('imagen', '').strip()
     fecha_hoy = datetime.now().strftime("%d/%m/%Y")
 
     # --- PROMPTS EXHAUSTIVOS PARA FICHA TÉCNICA DETALLADA ---
-    if categoria == 'smartphone':
+    if categoria_str == 'smartphone':
         prompt = f"""
         Actúa como un analista experto en hardware móvil, SEO técnico y CRO para una web comparadora de productos de Amazon.
         Analiza en máxima profundidad este smartphone basándote en los datos aportados y tu conocimiento técnico del modelo exacto:
@@ -291,7 +321,7 @@ def procesar_y_publicar(producto):
         }}
         """
 
-    print(f"   🔍 Analizando en profundidad ({categoria.upper()}): {producto['modelo_corto']}...")
+    print(f"   🔍 Analizando en profundidad ({categoria_str.upper()}): {producto['modelo_corto']}...")
     datos_ia = llamar_gemini_con_respaldo(prompt)
 
     if not datos_ia:
@@ -301,7 +331,7 @@ def procesar_y_publicar(producto):
     s = datos_ia.get('specs', {})
 
     # --- CONSTRUCCIÓN DE FILAS DE LA TABLA ---
-    if categoria == 'smartphone':
+    if categoria_str == 'smartphone':
         spec_rows = [
             ("📺 Pantalla", s.get('pantalla', [])),
             ("⚡ Rendimiento", s.get('rendimiento', [])),
@@ -401,14 +431,17 @@ def procesar_y_publicar(producto):
     </div>
     """
 
+    # Obtener el ID de la categoría dinámicamente en WordPress
+    categoria_id = obtener_o_crear_categoria(categoria_str)
+
     meta_payload = {
         "top_marca": producto['marca'],
         "top_modelo": producto['modelo_corto'],
         "top_busqueda": producto['busqueda'],
-        "producto_categoria": categoria
+        "producto_categoria": categoria_str
     }
 
-    if categoria == 'smartphone':
+    if categoria_str == 'smartphone':
         meta_payload.update({
             "spec_pantalla": str(s.get('pantalla', [])),
             "spec_rendimiento": str(s.get('rendimiento', [])),
@@ -435,11 +468,21 @@ def procesar_y_publicar(producto):
         "meta": meta_payload
     }
 
-    res = requests.post(wp_endpoint, json=payload, auth=(WP_USER, WP_APP_PASSWORD))
-    if res.status_code == 201:
-        print(f"✅ ¡Publicación detallada creada exitosamente para {producto['titulo']}!")
-    else:
-        print(f"❌ Error al publicar en WordPress ({res.status_code}): {res.text}")
+    # Asignar la categoría en WordPress si se encontró/creó con éxito
+    if categoria_id:
+        payload["categories"] = [categoria_id]
+
+    try:
+        # TIMEOUT DE 30 SEGUNDOS PARA EVITAR BLOQUEOS INFINITOS EN GITHUB
+        res = requests.post(wp_endpoint, json=payload, auth=(WP_USER, WP_APP_PASSWORD), timeout=30)
+        if res.status_code == 201:
+            print(f"✅ ¡Publicación detallada creada exitosamente para {producto['titulo']} (Categoría ID: {categoria_id})!")
+        else:
+            print(f"❌ Error al publicar en WordPress ({res.status_code}): {res.text}")
+    except requests.exceptions.Timeout:
+        print(f"❌ Error de tiempo de espera (Timeout) al conectar con WordPress para {producto['titulo']}.")
+    except Exception as e:
+        print(f"❌ Error crítico de red al publicar en WordPress: {e}")
 
 
 if __name__ == "__main__":
@@ -450,7 +493,7 @@ if __name__ == "__main__":
         print(f"\n[{index + 1}/{total_productos}] Procesando: {item['modelo_corto']}")
         procesar_y_publicar(item)
         
-        # Pausa de seguridad de 6 segundos entre productos para respetar los límites RPM de la API
+        # Pausa de seguridad de 6 segundos entre productos para respetar los límites RPM de la IA
         if index < total_productos - 1:
             print("⏳ Esperando 6 segundos para respetar los límites de la IA y asegurar una entrega limpia...")
             time.sleep(6)
