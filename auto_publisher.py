@@ -26,18 +26,7 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 # 2. CATÁLOGO MULTI-CATEGORÍA
 # ==========================================
 productos_catalogo = [
-    {
-        "categoria": "smartphone", # Coincidirá con la categoría en WordPress (ej: "Smartphones")
-        "marca": "Xiaomi",
-        "modelo_corto": "17 Ultra",
-        "busqueda": "Xiaomi 17 Ultra",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Xiaomi 17 Ultra - Smartphone con Óptica Leica Summilux, Sensor Principal de Gran Tamaño y Teleobjetivo para Retrato y Zoom a Distancia, con Kit Fotográfico",
-        "especificaciones": "166 puntos en DXOMARK, aunque Xataka lo elige como su mejor propuesta para fotografía sin kits adicionales: un sistema de cámaras muy versátil con óptica Leica Summilux, un sensor principal que consideran posiblemente el mejor de su categoría y un teleobjetivo pensado para retrato y fotografía a distancia. Según Xataka se vende en España en pack con kit fotográfico y su precio parte de 2.259 €, así que es de los más caros. Comprueba si ya existe una versión sin kit más barata.",
-        "precio": "2259.00€",
-        "imagen": "",
-    },
+
     {
         "categoria": "smartphone",
         "marca": "Samsung",
