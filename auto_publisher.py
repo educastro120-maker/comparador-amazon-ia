@@ -18,7 +18,7 @@ AMAZON_TAG = "topcomparad00-21"
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 # ==========================================
-# 2. CATÁLOGO MULTI-CATEGORÍA (Smartphones y Smartwatches)
+# 2. CATÁLOGO MULTI-CATEGORÍA OPTIMIZADO
 # ==========================================
 productos_catalogo = [
     # 1) DXOMARK 175 - número 1 del ranking mundial
@@ -150,7 +150,7 @@ productos_catalogo = [
         "especificaciones": "En la clasificación global de DXOMARK queda en torno al puesto 20, pero es el único de los mejores que se vende en tienda en todas partes y, según Xataka, tiene el mejor vídeo de Android y cámaras consistentes aunque poco ambiciosas. Cámara principal de 200 MP con f/1.4, ultra gran angular de 50 MP y dos teleobjetivos (10 MP con zoom óptico 3x y 50 MP con zoom óptico 5x), pantalla QHD+ de 6,9 pulgadas, Snapdragon 8 Elite Gen 5 y batería de 5.000 mAh. PVP de 1.549 € (256 GB) en España; se ha visto a 1.098,99 € en PcComponentes, así que puede ser la mejor compra de la lista por precio.",
         "precio": "1549.00€",
         "imagen": "",
-    }
+    },
 ]
 
 
@@ -161,34 +161,45 @@ def render_bullets(items):
     return f"<li>{items}</li>"
 
 def procesar_y_publicar(producto):
-    query_encoded = urllib.parse.quote_plus(producto['busqueda'])
-    affiliate_link = f"https://www.amazon.es/s?k={query_encoded}&tag={AMAZON_TAG}"
+    # Generación inteligente del enlace de afiliado (Prioriza ASIN si existe, sino usa búsqueda)
+    asin = producto.get('asin', '').strip()
+    if asin:
+        affiliate_link = f"https://www.amazon.es/dp/{asin}?tag={AMAZON_TAG}"
+    else:
+        query_encoded = urllib.parse.quote_plus(producto['busqueda'])
+        affiliate_link = f"https://www.amazon.es/s?k={query_encoded}&tag={AMAZON_TAG}"
     
     categoria = producto.get('categoria', 'smartwatch').lower()
+    imagen_url = producto.get('imagen', '').strip()
+    if not imagen_url:
+        print(f"⚠️ Aviso: '{producto['titulo']}' no tiene URL de imagen configurada.")
+        imagen_url = "https://via.placeholder.com/600x400?text=Imagen+No+Disponible"
 
-    # --- GENERACIÓN DE PROMPT DINÁMICO SEGÚN LA CATEGORÍA ---
+    # --- PROMPT ULTRA-TÉCNICO Y DE ALTA DENSIDAD PARA SMARTPHONES ---
     if categoria == 'smartphone':
         prompt = f"""
-        Actúa como analista de tecnología experto en Smartphones y CRO.
-        Analiza este producto:
+        Actúa como analista senior de tecnología y experto en CRO para comercio electrónico.
+        Analiza detalladamente este smartphone basándote en la información proporcionada:
         - Título: {producto['titulo']}
         - Especificaciones base: {producto['especificaciones']}
         - Precio: {producto['precio']}
 
-        IMPORTANTE: Debes rellenar TODAS las siguientes especificaciones de forma exhaustiva y esquemática para un teléfono inteligente (nunca dejes campos vacíos).
+        INSTRUCCIONES CRÍTICAS:
+        1. Rellena las especificaciones técnicas de forma exhaustiva, incluyendo datos numéricos exactos (tamaño de pantalla, tecnología, tasa de refresco, procesador, memoria, megapíxeles de cámaras, capacidad de batería en mAh y carga rápida). No dejes campos vacíos ni uses frases vagas.
+        2. El resumen ejecutivo debe ser comercial, persuasivo (enfocado en conversión) y destacar por qué este móvil vale lo que cuesta.
         
-        Devuelve ÚNICAMENTE un objeto JSON válido (y nada más que el JSON) con exactamente estas claves:
+        Devuelve ÚNICAMENTE un objeto JSON válido (sin texto adicional ni bloques fuera del JSON) con exactamente estas claves:
         "badge", "resumen_ejecutivo", 
-        "specs" (un objeto JSON con exactamente estas 6 claves, donde cada clave es una LISTA de strings esquemáticos: 
-           "pantalla" (tecnología, tamaño en pulgadas y tasa de refresco), 
-           "rendimiento" (procesador, memoria RAM y fluidez), 
-           "camaras" (cámara principal, sensores secundarios y frontal), 
-           "bateria" (capacidad en mAh y potencia de carga rápida), 
-           "almacenamiento" (capacidad de memoria interna), 
-           "conectividad" (5G, Wi-Fi, NFC para pagos y Bluetooth)),
-        "pros" (lista de 3 strings), 
-        "contras" (lista de 2 strings), 
-        "puntuacion" (número decimal).
+        "specs" (un objeto JSON con exactamente estas 6 claves, donde cada clave es una LISTA de strings muy técnicos y detallados):
+           "pantalla" (ej: ["Panel LTPO OLED de 6.8 pulgadas", "Resolución QHD+ y 120 Hz adaptativos"]), 
+           "rendimiento" (ej: ["Procesador de última generación", "16 GB de memoria RAM LPDDR5X"]), 
+           "camaras" (ej: ["Principal de 50 MP con estabilización óptica OIS", "Teleobjetivo periscópico y ultra gran angular"]), 
+           "bateria" (ej: ["5.170 mAh de capacidad", "Carga rápida por cable de alta potencia y carga inalámbrica"]), 
+           "almacenamiento" (ej: ["512 GB de memoria interna UFS"]), 
+           "conectividad" (ej: ["Compatibilidad 5G, Wi-Fi 7", "NFC integrado para pagos móviles y Bluetooth"])),
+        "pros" (lista de 3 strings comerciales y atractivos), 
+        "contras" (lista de 2 contras objetivos o puntos débiles), 
+        "puntuacion" (número decimal entre 8.0 y 9.8).
         """
     else:
         prompt = f"""
@@ -198,25 +209,17 @@ def procesar_y_publicar(producto):
         - Especificaciones base: {producto['especificaciones']}
         - Precio: {producto['precio']}
 
-        IMPORTANTE: Debes rellenar TODAS las siguientes especificaciones de forma exhaustiva y esquemática (nunca dejes campos vacíos o con datos faltantes).
-        
         Devuelve ÚNICAMENTE un objeto JSON válido (y nada más que el JSON) con exactamente estas claves:
         "badge", "resumen_ejecutivo", 
         "specs" (un objeto JSON con exactamente estas 6 claves, donde cada clave es una LISTA de strings esquemáticos: 
-           "pantalla" (incluir obligatoriamente tecnología y tamaño en pulgadas si aplica), 
-           "bateria" (incluir autonomía estimada), 
-           "conectividad" (incluir GPS y pagos NFC), 
-           "sensores" (incluir frecuencia cardíaca, SpO2, etc.), 
-           "deportes" (modos deportivos y entrenadores), 
-           "construccion" (materiales y resistencia al agua)),
+           "pantalla", "bateria", "conectividad", "sensores", "deportes", "construccion"),
         "pros" (lista de 3 strings), 
         "contras" (lista de 2 strings), 
         "puntuacion" (número decimal).
         """
 
-    print(f"Analizando con Gemini ({categoria.upper()}): {producto['titulo']}...")
+    print(f"Analizando con Gemini ({categoria.upper()}) el producto: {producto['modelo_corto']}...")
     
-    # --- SISTEMA DE REINTENTOS PARA ERRORES TEMPORALES (503) ---
     max_intentos = 3
     response = None
     for intento in range(1, max_intentos + 1):
@@ -227,17 +230,16 @@ def procesar_y_publicar(producto):
             )
             break
         except Exception as e:
-            print(f"⚠️ Intento {intento}/{max_intentos} fallido por error en la API: {e}")
+            print(f"⚠️ Intento {intento}/{max_intentos} fallido: {e}")
             if intento < max_intentos:
                 time.sleep(5)
             else:
-                print(f"❌ Imposible analizar {producto['titulo']} tras {max_intentos} intentos.")
+                print(f"❌ Imposible analizar {producto['titulo']}.")
 
-    # --- EXTRACCIÓN Y LIMPIEZA SEGURA DEL JSON ---
+    # --- EXTRACCIÓN Y LIMPIEZA DE JSON ---
     datos_ia = None
     if response and hasattr(response, 'text') and response.text:
         texto_respuesta = response.text.strip()
-        
         if "```json" in texto_respuesta:
             texto_respuesta = texto_respuesta.split("```json")[1].split("```")[0].strip()
         elif "```" in texto_respuesta:
@@ -249,51 +251,40 @@ def procesar_y_publicar(producto):
             inicio = texto_respuesta.find('{')
             fin = texto_respuesta.rfind('}')
             if inicio != -1 and fin != -1:
-                clean_json_str = texto_respuesta[inicio:fin+1]
                 try:
-                    datos_ia = json.loads(clean_json_str)
+                    datos_ia = json.loads(texto_respuesta[inicio:fin+1])
                 except json.JSONDecodeError as err:
-                    print(f"⚠️ Error crítico de JSON en {producto['titulo']}: {err}")
+                    print(f"⚠️ Error JSON en {producto['titulo']}: {err}")
 
-    # --- VALORES POR DEFECTO DE EMERGENCIA SEGÚN CATEGORÍA ---
+    # --- RESPALDO DE EMERGENCIA ---
     if not datos_ia:
-        print(f"💡 Aplicando plantilla de respaldo segura para {producto['titulo']}...")
-        if categoria == 'smartphone':
-            datos_ia = {
-                "badge": "Destacado Calidad-Precio",
-                "resumen_ejecutivo": producto['titulo'] + " ofrece un rendimiento sobresaliente, cámaras versátiles y una experiencia de usuario fluida.",
-                "specs": {
-                    "pantalla": ["Pantalla de alta definición y gran tasa de refresco."],
-                    "rendimiento": ["Procesador potente y memoria RAM optimizada."],
-                    "camaras": ["Sistema fotográfico avanzado de alta resolución."],
-                    "bateria": ["Batería de larga duración con carga rápida."],
-                    "almacenamiento": ["Amplio espacio de almacenamiento interno."],
-                    "conectividad": ["Conectividad 5G, Wi-Fi avanzado y NFC."]
-                },
-                "pros": ["Excelente rendimiento general", "Pantalla fluida y brillante", "Gran calidad fotográfica"],
-                "contras": ["Precio elevado en versiones tope de gama", "Cargador no incluido"],
-                "puntuacion": 8.8
-            }
-        else:
-            datos_ia = {
-                "badge": "Destacado Calidad-Precio",
-                "resumen_ejecutivo": producto['titulo'] + " ofrece un equilibrio sobresaliente entre diseño, funcionalidad y autonomía para el uso cotidiano.",
-                "specs": {
-                    "pantalla": ["Pantalla de alta definición y óptima visibilidad."],
-                    "bateria": ["Batería de larga duración adaptada a uso continuo."],
-                    "conectividad": ["Conexión Bluetooth estable y posicionamiento GPS."],
-                    "sensores": ["Seguimiento de salud, pulso y calidad del sueño."],
-                    "deportes": ["Múltiples modos de entrenamiento integrados."],
-                    "construccion": ["Cuerpo resistente al agua y materiales ligeros."]
-                },
-                "pros": ["Excelente relación calidad-precio", "Gran autonomía de batería", "Diseño ergonómico y cómodo"],
-                "contras": ["Funciones personalizadas según el SO", "Sin NFC para pagos en algunos mercados"],
-                "puntuacion": 8.5
-            }
+        print(f"💡 Aplicando plantilla de respaldo para {producto['titulo']}...")
+        datos_ia = {
+            "badge": "Destacado Gama Alta",
+            "resumen_ejecutivo": producto['titulo'] + " destaca en el mercado actual por ofrecer especificaciones de primer nivel y un rendimiento excepcional.",
+            "specs": {
+                "pantalla": ["Pantalla de alta definición con excelente calibración de color."],
+                "rendimiento": ["Hardware optimizado para máxima fluidez multitarea."],
+                "camaras": ["Sistema fotográfico avanzado con múltiples lentes."],
+                "bateria": ["Autonomía optimizada para todo el día con carga rápida."],
+                "almacenamiento": ["Amplia capacidad interna para archivos y aplicaciones."],
+                "conectividad": ["Conectividad de última generación (5G, Wi-Fi, NFC)."]
+            } if categoria == 'smartphone' else {
+                "pantalla": ["Panel de alta visibilidad en exteriores."],
+                "bateria": ["Batería de larga duración."],
+                "conectividad": ["GPS y Bluetooth."],
+                "sensores": ["Monitor de pulso y salud."],
+                "deportes": ["Múltiples perfiles deportivos."],
+                "construccion": ["Diseño resistente."]
+            },
+            "pros": ["Rendimiento excelente", "Pantalla de gran calidad", "Diseño prémium"],
+            "contras": ["Precio elevado", "Cargador no siempre incluido"],
+            "puntuacion": 9.0
+        }
 
     s = datos_ia['specs']
 
-    # --- CONFIGURACIÓN DE ETIQUETAS DE LA TABLA SEGÚN CATEGORÍA ---
+    # --- TABLA DINÁMICA SEGÚN CATEGORÍA ---
     if categoria == 'smartphone':
         spec_rows = [
             ("📺 Pantalla", s.get('pantalla', [])),
@@ -313,7 +304,6 @@ def procesar_y_publicar(producto):
             ("🛡️ Construcción", s.get('construccion', []))
         ]
 
-    # Construcción dinámica de las filas de la tabla HTML
     html_rows_str = ""
     for idx, (label, values) in enumerate(spec_rows):
         is_first = (idx == 0)
@@ -333,12 +323,12 @@ def procesar_y_publicar(producto):
           </tr>
         """
 
-    # HTML del artículo optimizado para conversión (CRO)
+    # --- HTML DE LA ENTRADA ---
     html_content = f"""
     <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; background-color: #ffffff; max-width: 750px; margin: 20px auto; font-family: system-ui, -apple-system, sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
       
       <div style="text-align: center; margin-bottom: 20px;">
-        <img src="{producto['imagen']}" alt="{producto['titulo']}" style="max-height: 280px; width: auto; object-fit: contain; border-radius: 8px;" />
+        <img src="{imagen_url}" alt="{producto['titulo']}" style="max-height: 280px; width: auto; object-fit: contain; border-radius: 8px;" />
       </div>
 
       <div style="background-color: #ff9900; color: #fff; font-weight: bold; display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 0.85em; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px;">
@@ -351,7 +341,6 @@ def procesar_y_publicar(producto):
         {datos_ia['resumen_ejecutivo']}
       </p>
 
-      <!-- Ficha Técnica Adaptativa -->
       <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px; margin: 20px 0;">
         <h3 style="color: #0f172a; margin-top: 0; font-size: 1.1em; border-bottom: 2px solid #cbd5e1; padding-bottom: 8px; margin-bottom: 12px;">⚙️ Ficha Técnica Resumida</h3>
         
@@ -387,7 +376,6 @@ def procesar_y_publicar(producto):
     </div>
     """
 
-    # --- PAYLOAD DE METADATOS PARA WORDPRESS ---
     meta_payload = {
         "top_marca": producto['marca'],
         "top_modelo": producto['modelo_corto'],
@@ -426,7 +414,7 @@ def procesar_y_publicar(producto):
     if res.status_code == 201:
         print(f"¡Publicación creada exitosamente para {producto['titulo']}!")
     else:
-        print(f"Error ({res.text})")
+        print(f"Error al publicar en WordPress ({res.text})")
 
 if __name__ == "__main__":
     for item in productos_catalogo:
