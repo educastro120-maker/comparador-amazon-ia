@@ -1,6 +1,7 @@
 import os
 import json
 import time
+from datetime import datetime
 import requests
 import urllib.parse
 from google import genai
@@ -25,7 +26,6 @@ client = genai.Client(api_key=GEMINI_API_KEY)
 # 2. CATÁLOGO MULTI-CATEGORÍA
 # ==========================================
 productos_catalogo = [
-    # 9) DXOMARK 166 - Leica
     {
         "categoria": "smartphone",
         "marca": "Xiaomi",
@@ -65,11 +65,19 @@ productos_catalogo = [
 ]
 
 
+def formatear_item_negrita(texto):
+    """Si un item tiene formato 'Etiqueta: Valor', pone la etiqueta en negrita automáticamente."""
+    if ":" in texto:
+        partes = texto.split(":", 1)
+        return f"<strong>{partes[0].strip()}:</strong> {partes[1].strip()}"
+    return texto
+
+
 def render_bullets(items):
-    """Convierte una lista de strings en elementos de lista HTML con viñetas"""
+    """Convierte una lista de strings en elementos de lista HTML con viñetas y etiquetas en negrita."""
     if isinstance(items, list):
-        return "".join([f"<li style='margin-bottom: 4px;'>{item}</li>" for item in items])
-    return f"<li>{items}</li>"
+        return "".join([f"<li style='margin-bottom: 5px;'>{formatear_item_negrita(item)}</li>" for item in items])
+    return f"<li>{formatear_item_negrita(str(items))}</li>"
 
 
 def llamar_gemini_con_respaldo(prompt):
@@ -86,6 +94,7 @@ def llamar_gemini_con_respaldo(prompt):
                     config=types.GenerateContentConfig(
                         response_mime_type="application/json",
                         temperature=0.3,
+                        max_output_tokens=4096,
                     )
                 )
                 if response and response.text:
@@ -106,69 +115,187 @@ def procesar_y_publicar(producto):
     
     categoria = producto.get('categoria', 'smartwatch').lower()
     imagen_url = producto.get('imagen', '').strip()
+    fecha_hoy = datetime.now().strftime("%d/%m/%Y")
 
-    # --- PROMPTS ESTRUCTURADOS ---
+    # --- PROMPTS EXHAUSTIVOS PARA FICHA TÉCNICA DETALLADA ---
     if categoria == 'smartphone':
         prompt = f"""
-        Actúa como analista senior de tecnología y experto en SEO y CRO para afiliación de Amazon.
-        Analiza detalladamente este smartphone basándote en los datos proporcionados:
+        Actúa como un analista experto en hardware móvil, SEO técnico y CRO para una web comparadora de productos de Amazon.
+        Analiza en máxima profundidad este smartphone basándote en los datos aportados y tu conocimiento técnico del modelo exacto:
+        - Marca y Modelo: {producto['marca']} {producto['modelo_corto']}
         - Título: {producto['titulo']}
         - Especificaciones base: {producto['especificaciones']}
         - Precio: {producto['precio']}
 
-        INSTRUCCIONES:
-        - Extrae todos los datos técnicos exactos (pulgadas, resolución, Hz, procesador, RAM, megapíxeles, apertura focal, mAh, W de carga, etc.).
-        - Redacta un resumen ejecutivo persuasivo de 3 a 4 líneas enfocado a convencer al comprador.
-        - Cada lista dentro de "specs" debe tener entre 2 y 3 puntos detallados y técnicos.
-        
-        Devuelve ÚNICAMENTE un JSON válido con esta estructura exacta:
+        REGLAS ESTRICTAS DE CONTENIDO (MUY IMPORTANTE):
+        1. No hagas resúmenes cortos. Queremos una Ficha Técnica Detallada y exhaustiva donde cada categoría de "specs" tenga entre 5 y 8 viñetas individuales.
+        2. Usa SIEMPRE el formato "Característica: Dato técnico exacto" en cada viñeta (ej. "Panel: LTPO AMOLED de 6,8 pulgadas", "Tasa de refresco: 1-120 Hz adaptativos", etc.). Nunca dejes datos genéricos si se conocen las especificaciones reales del modelo.
+        3. El "resumen_ejecutivo" debe ser un párrafo rico, experto y persuasivo de unas 90-120 palabras.
+        4. Incluye exactamente 6 Pros detallados y 4 Contras detallados, todos con formato "Título corto: Explicación detallada".
+
+        Devuelve ÚNICAMENTE un objeto JSON válido con esta estructura exacta:
         {{
-            "badge": "texto corto persuasivo (ej: Destacado Fotografía o Rey del Zoom)",
-            "resumen_ejecutivo": "párrafo comercial y atractivo sobre el rendimiento y valor del móvil",
+            "badge": "ETIQUETA CORTA EN MAYÚSCULAS (ej: REFERENCIA EN FOTOGRAFÍA MÓVIL)",
+            "resumen_ejecutivo": "Párrafo extenso, técnico y persuasivo de 90-120 palabras.",
             "specs": {{
-                "pantalla": ["detalle 1", "detalle 2"],
-                "rendimiento": ["detalle 1", "detalle 2"],
-                "camaras": ["detalle 1", "detalle 2"],
-                "bateria": ["detalle 1", "detalle 2"],
-                "almacenamiento": ["detalle 1", "detalle 2"],
-                "conectividad": ["detalle 1", "detalle 2"]
+                "pantalla": [
+                    "Panel: ...",
+                    "Tamaño: ...",
+                    "Resolución: ...",
+                    "Tasa de refresco: ...",
+                    "Brillo máximo: ...",
+                    "Protección: ..."
+                ],
+                "rendimiento": [
+                    "Procesador: ...",
+                    "Arquitectura / GPU: ...",
+                    "Memoria RAM: ...",
+                    "Sistema operativo: ...",
+                    "Inteligencia Artificial: ...",
+                    "Refrigeración: ..."
+                ],
+                "camaras": [
+                    "Sensor principal: ...",
+                    "Teleobjetivo(s): ...",
+                    "Ultra gran angular: ...",
+                    "Cámara frontal: ...",
+                    "Grabación de vídeo: ...",
+                    "Óptica / Procesado: ..."
+                ],
+                "bateria": [
+                    "Capacidad: ...",
+                    "Carga rápida por cable: ...",
+                    "Carga inalámbrica: ...",
+                    "Carga inversa: ...",
+                    "Autonomía estimada: ..."
+                ],
+                "almacenamiento": [
+                    "Capacidad interna: ...",
+                    "Tecnología de memoria: ...",
+                    "Ampliación microSD: ...",
+                    "Versiones disponibles: ..."
+                ],
+                "conectividad": [
+                    "Redes móviles: ...",
+                    "Wi-Fi: ...",
+                    "Bluetooth: ...",
+                    "NFC: ...",
+                    "Navegación / GPS: ...",
+                    "Puerto y audio: ...",
+                    "Resistencia y construcción: ..."
+                ]
             }},
-            "pros": ["pro 1", "pro 2", "pro 3"],
-            "contras": ["contra 1", "contra 2"],
-            "puntuacion": 9.2
+            "pros": [
+                "Ventaja 1: Explicación detallada...",
+                "Ventaja 2: Explicación detallada...",
+                "Ventaja 3: Explicación detallada...",
+                "Ventaja 4: Explicación detallada...",
+                "Ventaja 5: Explicación detallada...",
+                "Ventaja 6: Explicación detallada..."
+            ],
+            "contras": [
+                "Desventaja 1: Explicación detallada...",
+                "Desventaja 2: Explicación detallada...",
+                "Desventaja 3: Explicación detallada...",
+                "Desventaja 4: Explicación detallada..."
+            ],
+            "puntuacion": 9.4
         }}
         """
     else:
         prompt = f"""
-        Actúa como analista de tecnología experto en Smartwatches y CRO. Analiza este producto:
+        Actúa como un analista experto en wearables, deporte, SEO técnico y CRO para una web comparadora de productos de Amazon.
+        Analiza en máxima profundidad este smartwatch basándote en los datos aportados y tu conocimiento técnico del modelo exacto:
+        - Marca y Modelo: {producto['marca']} {producto['modelo_corto']}
         - Título: {producto['titulo']}
         - Especificaciones base: {producto['especificaciones']}
         - Precio: {producto['precio']}
 
-        Devuelve ÚNICAMENTE un JSON válido con esta estructura exacta:
+        REGLAS ESTRICTAS DE CONTENIDO (MUY IMPORTANTE):
+        1. Queremos una Ficha Técnica Detallada y exhaustiva donde cada categoría de "specs" tenga entre 5 y 8 viñetas individuales.
+        2. Usa SIEMPRE el formato "Característica: Dato técnico exacto" en cada viñeta (ej. "Panel: AMOLED", "Tamaño: 1.4 pulgadas", "Resolución: 454x454 píxeles", "Autonomía reloj: Hasta 16 días", etc.).
+        3. El "resumen_ejecutivo" debe ser un párrafo rico, experto y persuasivo de unas 90-120 palabras.
+        4. Incluye exactamente 6 Pros detallados y 4 Contras detallados, todos con formato "Título corto: Explicación detallada".
+
+        Devuelve ÚNICAMENTE un objeto JSON válido con esta estructura exacta:
         {{
-            "badge": "texto corto persuasivo",
-            "resumen_ejecutivo": "párrafo comercial y atractivo",
+            "badge": "ETIQUETA CORTA EN MAYÚSCULAS (ej: REFERENCIA MULTIDEPORTE PREMIUM)",
+            "resumen_ejecutivo": "Párrafo extenso, técnico y persuasivo de 90-120 palabras.",
             "specs": {{
-                "pantalla": ["detalle 1"],
-                "bateria": ["detalle 1"],
-                "conectividad": ["detalle 1"],
-                "sensores": ["detalle 1"],
-                "deportes": ["detalle 1"],
-                "construccion": ["detalle 1"]
+                "pantalla": [
+                    "Panel: ...",
+                    "Tamaño: ...",
+                    "Resolución: ...",
+                    "Protección: ...",
+                    "Siempre activa: ...",
+                    "Control: ..."
+                ],
+                "bateria": [
+                    "Autonomía reloj: ...",
+                    "Autonomía GPS: ...",
+                    "Carga solar / rápida: ...",
+                    "Modo ahorro: ...",
+                    "Tipo de carga: ..."
+                ],
+                "conectividad": [
+                    "Wi-Fi: ...",
+                    "NFC: ...",
+                    "GNSS: ...",
+                    "Almacenamiento: ...",
+                    "Audio: ...",
+                    "Llamadas: ...",
+                    "Mapas: ..."
+                ],
+                "sensores": [
+                    "Frecuencia cardíaca: ...",
+                    "Oxígeno en sangre: ...",
+                    "ECG: ...",
+                    "Temperatura: ...",
+                    "Altímetro: ...",
+                    "Profundidad: ...",
+                    "Otros: ..."
+                ],
+                "deportes": [
+                    "Perfiles: ...",
+                    "Buceo / Agua: ...",
+                    "Entrenamiento: ...",
+                    "Navegación: ...",
+                    "Salud: ..."
+                ],
+                "construccion": [
+                    "Caja: ...",
+                    "Bisel: ...",
+                    "Fondo: ...",
+                    "Correa: ...",
+                    "Resistencia agua: ...",
+                    "Dimensiones: ...",
+                    "Peso: ...",
+                    "Sistema operativo: ..."
+                ]
             }},
-            "pros": ["pro 1", "pro 2", "pro 3"],
-            "contras": ["contra 1", "contra 2"],
-            "puntuacion": 8.8
+            "pros": [
+                "Ventaja 1: Explicación detallada...",
+                "Ventaja 2: Explicación detallada...",
+                "Ventaja 3: Explicación detallada...",
+                "Ventaja 4: Explicación detallada...",
+                "Ventaja 5: Explicación detallada...",
+                "Ventaja 6: Explicación detallada..."
+            ],
+            "contras": [
+                "Desventaja 1: Explicación detallada...",
+                "Desventaja 2: Explicación detallada...",
+                "Desventaja 3: Explicación detallada...",
+                "Desventaja 4: Explicación detallada..."
+            ],
+            "puntuacion": 9.3
         }}
         """
 
-    print(f"\n🚀 Analizando con Gemini ({categoria.upper()}) el producto: {producto['modelo_corto']}...")
+    print(f"   🔍 Analizando en profundidad ({categoria.upper()}): {producto['modelo_corto']}...")
     datos_ia = llamar_gemini_con_respaldo(prompt)
 
-    # Si la IA falla tras los reintentos, abortamos este producto para evitar publicaciones vacías o pobres
     if not datos_ia:
-        print(f"❌ ABORTANDO PUBLICACIÓN de '{producto['modelo_corto']}': Gemini no devolvió datos válidos. Revisa el error mostrado arriba.")
+        print(f"❌ ABORTANDO PUBLICACIÓN de '{producto['modelo_corto']}': Gemini no devolvió datos válidos.")
         return
 
     s = datos_ia.get('specs', {})
@@ -199,13 +326,13 @@ def procesar_y_publicar(producto):
         is_last = (idx == len(spec_rows) - 1)
         td_top_left = " border-top-left-radius: 6px;" if is_first else ""
         td_bottom_left = " border-bottom-left-radius: 6px;" if is_last else ""
-        border_bottom = " border-bottom: 1px solid #f1f5f9;" if not is_last else ""
+        border_bottom = " border-bottom: 1px solid #e2e8f0;" if not is_last else ""
         
         html_rows_str += f"""
           <tr style="border: none;{border_bottom}">
-            <td style="padding: 10px 12px; font-weight: bold; width: 30%; vertical-align: top; border: none; background-color: #f1f5f9;{td_top_left}{td_bottom_left}">{label}</td>
-            <td style="padding: 10px 12px; vertical-align: top; border: none; background-color: #f8fafc;">
-              <ul style="margin: 0; padding-left: 18px; line-height: 1.5;">
+            <td style="padding: 12px 14px; font-weight: bold; width: 28%; vertical-align: top; border: none; background-color: #f1f5f9;{td_top_left}{td_bottom_left}">{label}</td>
+            <td style="padding: 12px 14px; vertical-align: top; border: none; background-color: #f8fafc;">
+              <ul style="margin: 0; padding-left: 18px; line-height: 1.55;">
                 {render_bullets(values)}
               </ul>
             </td>
@@ -222,47 +349,50 @@ def procesar_y_publicar(producto):
 
     # --- HTML DE LA ENTRADA ---
     html_content = f"""
-    <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; background-color: #ffffff; max-width: 750px; margin: 20px auto; font-family: system-ui, -apple-system, sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+    <div style="border: 2px solid #e0e0e0; border-radius: 12px; padding: 24px; background-color: #ffffff; max-width: 780px; margin: 20px auto; font-family: system-ui, -apple-system, sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
       
       {bloque_imagen}
 
       <div style="background-color: #ff9900; color: #fff; font-weight: bold; display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 0.85em; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px;">
-        🔥 {datos_ia.get('badge', 'Destacado')}
+        🔥 {datos_ia.get('badge', 'DESTACADO')}
       </div>
 
       <h2 style="margin-top: 0; color: #111; font-size: 1.6em; line-height: 1.3;">{producto['titulo']}</h2>
       
-      <p style="font-size: 1.1em; color: #444; line-height: 1.6;">
+      <p style="font-size: 1.08em; color: #334155; line-height: 1.65;">
         {datos_ia.get('resumen_ejecutivo', '')}
       </p>
 
-      <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 18px; margin: 20px 0;">
-        <h3 style="color: #0f172a; margin-top: 0; font-size: 1.1em; border-bottom: 2px solid #cbd5e1; padding-bottom: 8px; margin-bottom: 12px;">⚙️ Ficha Técnica Resumida</h3>
+      <div style="background-color: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px; padding: 18px; margin: 24px 0;">
+        <h3 style="color: #0f172a; margin-top: 0; font-size: 1.15em; border-bottom: 2px solid #cbd5e1; padding-bottom: 8px; margin-bottom: 12px;">⚙️ Ficha Técnica Detallada</h3>
         
-        <table style="width: 100%; border-collapse: collapse; border: none; font-size: 0.95em; color: #334155;">
+        <table style="width: 100%; border-collapse: collapse; border: none; font-size: 0.95em; color: #1e293b;">
           {html_rows_str}
         </table>
       </div>
 
       <div style="display: flex; gap: 15px; margin: 25px 0; flex-wrap: wrap;">
-        <div style="flex: 1; min-width: 250px; background-color: #f0fdf4; padding: 18px; border-radius: 8px; border-left: 4px solid #22c55e;">
+        <div style="flex: 1; min-width: 280px; background-color: #f0fdf4; padding: 18px; border-radius: 8px; border-left: 4px solid #22c55e;">
           <h4 style="color: #15803d; margin-top: 0; font-size: 1.1em;">✅ Lo Mejor (Pros)</h4>
-          <ul style="padding-left: 18px; color: #166534; margin-bottom: 0; line-height: 1.5;">
-            {"".join([f'<li style="margin-bottom: 6px;">{p}</li>' for p in datos_ia.get('pros', [])])}
+          <ul style="padding-left: 18px; color: #166534; margin-bottom: 0; line-height: 1.55;">
+            {render_bullets(datos_ia.get('pros', []))}
           </ul>
         </div>
         
-        <div style="flex: 1; min-width: 250px; background-color: #fef2f2; padding: 18px; border-radius: 8px; border-left: 4px solid #ef4444;">
+        <div style="flex: 1; min-width: 280px; background-color: #fef2f2; padding: 18px; border-radius: 8px; border-left: 4px solid #ef4444;">
           <h4 style="color: #b91c1c; margin-top: 0; font-size: 1.1em;">❌ A mejorar (Contras)</h4>
-          <ul style="padding-left: 18px; color: #991b1b; margin-bottom: 0; line-height: 1.5;">
-            {"".join([f'<li style="margin-bottom: 6px;">{c}</li>' for c in datos_ia.get('contras', [])])}
+          <ul style="padding-left: 18px; color: #991b1b; margin-bottom: 0; line-height: 1.55;">
+            {render_bullets(datos_ia.get('contras', []))}
           </ul>
         </div>
       </div>
 
-      <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #f0f0f0;">
-        <p style="font-size: 1.3em; font-weight: bold; color: #111; margin-bottom: 15px;">
-          Precio estimado: <span style="color: #b12704;">{producto['precio']}</span> | Puntuación: ⭐ <strong>{datos_ia.get('puntuacion', 8.5)}/10</strong>
+      <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
+        <p style="font-size: 1.3em; font-weight: bold; color: #111; margin-bottom: 6px;">
+          Precio orientativo: <span style="color: #b12704;">{producto['precio']}</span> | Puntuación: ⭐ <strong>{datos_ia.get('puntuacion', 9.0)}/10</strong>
+        </p>
+        <p style="font-size: 0.85em; color: #64748b; margin-top: 0; margin-bottom: 18px;">
+          Precio de referencia a fecha {fecha_hoy}; puede variar. Consulta el precio actual en Amazon.
         </p>
         <a href="{affiliate_link}" target="_blank" rel="sponsored nofollow" style="background-color: #ffa41c; color: #111; text-decoration: none; font-size: 1.2em; font-weight: bold; padding: 16px 32px; border-radius: 8px; border: 1px solid #ff8f00; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
           Ver precio actualizado en Amazon 🛒
@@ -307,10 +437,22 @@ def procesar_y_publicar(producto):
 
     res = requests.post(wp_endpoint, json=payload, auth=(WP_USER, WP_APP_PASSWORD))
     if res.status_code == 201:
-        print(f"✅ ¡Publicación creada exitosamente para {producto['titulo']}!")
+        print(f"✅ ¡Publicación detallada creada exitosamente para {producto['titulo']}!")
     else:
         print(f"❌ Error al publicar en WordPress ({res.status_code}): {res.text}")
 
+
 if __name__ == "__main__":
-    for item in productos_catalogo:
+    total_productos = len(productos_catalogo)
+    print(f"🚀 Iniciando procesamiento de {total_productos} productos...")
+    
+    for index, item in enumerate(productos_catalogo):
+        print(f"\n[{index + 1}/{total_productos}] Procesando: {item['modelo_corto']}")
         procesar_y_publicar(item)
+        
+        # Pausa de seguridad de 6 segundos entre productos para respetar los límites RPM de la API
+        if index < total_productos - 1:
+            print("⏳ Esperando 6 segundos para respetar los límites de la IA y asegurar una entrega limpia...")
+            time.sleep(6)
+            
+    print("\n✨ ¡Proceso de publicación completado con éxito!")
