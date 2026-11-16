@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import time
 from datetime import datetime
@@ -20,14 +21,17 @@ AMAZON_TAG = "topcomparad00-21"
 if not GEMINI_API_KEY:
     raise ValueError("❌ ERROR CRÍTICO: La variable de entorno GEMINI_API_KEY está vacía en GitHub Secrets.")
 
-client = genai.Client(api_key=GEMINI_API_KEY)
+# Timeout estricto de 35 segundos (35000 ms) en la API de Google para evitar bloqueos eternos
+client = genai.Client(
+    api_key=GEMINI_API_KEY,
+    http_options={'timeout': 35000}
+)
 
 # ==========================================
 # 2. CATÁLOGO MULTI-CATEGORÍA
 # ==========================================
 productos_catalogo = [
-
-# 1) Abril de 2026: 44.387 unidades, 6,7 % de cuota, precio medio de venta de 927 euros
+    # 1) Abril de 2026: 44.387 unidades, 6,7 % de cuota, precio medio de venta de 927 euros
     {
         "categoria": "smartphone",
         "marca": "Apple",
@@ -79,7 +83,6 @@ productos_catalogo = [
         "precio": "1179.00€",
         "imagen": "",
     },
-
     # 6) En el top 20 de abril de 2026; el Android de gama alta más vendido
     {
         "categoria": "smartphone",
@@ -174,7 +177,6 @@ def obtener_o_crear_categoria(nombre_cat_input):
     cat_endpoint = f"{WP_URL}/wp-json/wp/v2/categories"
     
     try:
-        # Buscar si ya existe
         res = requests.get(cat_endpoint, params={"search": nombre_categoria}, auth=(WP_USER, WP_APP_PASSWORD), timeout=15)
         if res.status_code == 200:
             categorias = res.json()
@@ -182,7 +184,6 @@ def obtener_o_crear_categoria(nombre_cat_input):
                 if cat['name'].lower() == nombre_categoria.lower():
                     return cat['id']
         
-        # Si no existe, crearla
         payload_cat = {"name": nombre_categoria}
         res_crear = requests.post(cat_endpoint, json=payload_cat, auth=(WP_USER, WP_APP_PASSWORD), timeout=15)
         if res_crear.status_code == 201:
@@ -194,8 +195,8 @@ def obtener_o_crear_categoria(nombre_cat_input):
 
 
 def llamar_gemini_con_respaldo(prompt):
-    """Intenta generar el JSON con gemini-3.8-flash y usa gemini-3.5-flash-lite como respaldo."""
-    modelos_a_probar = ['gemini-3.8-flash', 'gemini-3.5-flash-lite']
+    """Usa los modelos vigentes de Google AI Studio (gemini-3.5-flash-lite primero por velocidad y cuota gratuita, y gemini-3.8-flash como respaldo)."""
+    modelos_a_probar = ['gemini-3.5-flash-lite', 'gemini-3.8-flash', 'gemini-2.5-flash-lite']
     
     for modelo in modelos_a_probar:
         for intento in range(1, 3):
@@ -214,7 +215,7 @@ def llamar_gemini_con_respaldo(prompt):
                     return json.loads(response.text)
             except Exception as e:
                 print(f"   ⚠️ Fallo con {modelo} (Intento {intento}): {type(e).__name__} -> {e}")
-                time.sleep(3)
+                time.sleep(2)
     return None
 
 
@@ -409,7 +410,7 @@ def procesar_y_publicar(producto):
 
     if not datos_ia:
         print(f"❌ ABORTANDO PUBLICACIÓN de '{producto['modelo_corto']}': Gemini no devolvió datos válidos.")
-        return
+        return False
 
     s = datos_ia.get('specs', {})
 
@@ -514,7 +515,6 @@ def procesar_y_publicar(producto):
     </div>
     """
 
-    # Obtener el ID de la categoría dinámicamente en WordPress
     categoria_id = obtener_o_crear_categoria(categoria_str)
 
     meta_payload = {
@@ -551,34 +551,40 @@ def procesar_y_publicar(producto):
         "meta": meta_payload
     }
 
-    # Asignar la categoría en WordPress si se encontró/creó con éxito
     if categoria_id:
         payload["categories"] = [categoria_id]
 
     try:
-        # TIMEOUT DE 30 SEGUNDOS PARA EVITAR BLOQUEOS INFINITOS EN GITHUB
         res = requests.post(wp_endpoint, json=payload, auth=(WP_USER, WP_APP_PASSWORD), timeout=30)
         if res.status_code == 201:
             print(f"✅ ¡Publicación detallada creada exitosamente para {producto['titulo']} (Categoría ID: {categoria_id})!")
+            return True
         else:
             print(f"❌ Error al publicar en WordPress ({res.status_code}): {res.text}")
+            return False
     except requests.exceptions.Timeout:
         print(f"❌ Error de tiempo de espera (Timeout) al conectar con WordPress para {producto['titulo']}.")
+        return False
     except Exception as e:
         print(f"❌ Error crítico de red al publicar en WordPress: {e}")
+        return False
 
 
 if __name__ == "__main__":
     total_productos = len(productos_catalogo)
+    publicados_ok = 0
     print(f"🚀 Iniciando procesamiento de {total_productos} productos...")
     
     for index, item in enumerate(productos_catalogo):
         print(f"\n[{index + 1}/{total_productos}] Procesando: {item['modelo_corto']}")
-        procesar_y_publicar(item)
+        exito = procesar_y_publicar(item)
+        if exito:
+            publicados_ok += 1
         
-        # Pausa de seguridad de 6 segundos entre productos para respetar los límites RPM de la IA
         if index < total_productos - 1:
-            print("⏳ Esperando 6 segundos para respetar los límites de la IA y asegurar una entrega limpia...")
-            time.sleep(6)
+            print("⏳ Esperando 4 segundos para respetar los límites de la IA...")
+            time.sleep(4)
             
-    print("\n✨ ¡Proceso de publicación completado con éxito!")
+    print(f"\n📊 Resumen: {publicados_ok}/{total_productos} entradas publicadas correctamente.")
+    if publicados_ok == 0 and total_productos > 0:
+        sys.exit(1)
