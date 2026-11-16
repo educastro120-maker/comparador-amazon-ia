@@ -96,19 +96,6 @@ productos_catalogo = [
         "precio": "1549.00€",
         "imagen": "",
     },
-    # 7) En el top 20 de abril de 2026
-    {
-        "categoria": "smartphone",
-        "marca": "Samsung",
-        "modelo_corto": "Galaxy A57 5G",
-        "busqueda": "Samsung Galaxy A57 5G 256GB",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Samsung Galaxy A57 5G - Smartphone Android de Gama Media Premium con Pantalla Super AMOLED Plus de 6,7 Pulgadas",
-        "especificaciones": "Aparece en el top 20 de ventas de abril de 2026 y está entre los más vendidos del año según Compra Smartphone, que lo describe como buen precio y buenas prestaciones. Pantalla Super AMOLED Plus FHD+ de 6,7 pulgadas. Xataka lo define como equilibrio total para quien no quiere gastar de más. PVP de 589 €; en Amazon se ha visto a 471 € en el Prime Day de 2026. Samsung ha subido el precio de los Galaxy A en Estados Unidos, así que conviene comprobar el precio actual.",
-        "precio": "589.00€",
-        "imagen": "",
-    },
     # 8) En el top 20 de abril de 2026
     {
         "categoria": "smartphone",
@@ -120,19 +107,6 @@ productos_catalogo = [
         "titulo": "Samsung Galaxy A56 5G (8 GB + 256 GB) - Smartphone con Pantalla Super AMOLED de 6,7 Pulgadas, Cámara de 50 MP y Batería de 5.000 mAh",
         "especificaciones": "Aparece en el top 20 de ventas de abril de 2026. Pantalla Super AMOLED FHD+ de 6,7 pulgadas con 1.200 nits de brillo máximo, cámara principal de 50 MP y batería de 5.000 mAh en la versión de 8 GB + 256 GB. Su PVP era de 529 € y en el Prime Day de 2026 bajó a 369 € en Amazon. Compra Smartphone lo describe como un todo en uno por unos 400 €. Es el predecesor del A57, que lo va sustituyendo.",
         "precio": "529.00€",
-        "imagen": "",
-    },
-    # 9) En el top 20 de abril de 2026
-    {
-        "categoria": "smartphone",
-        "marca": "Apple",
-        "modelo_corto": "iPhone 16",
-        "busqueda": "Apple iPhone 16 128GB",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Apple iPhone 16 (128 GB) - Smartphone con Apple Intelligence, Control de Cámara y Pantalla de 6,1 Pulgadas",
-        "especificaciones": "Aparece en el top 20 de ventas de abril de 2026: Apple coloca siete modelos en ese ranking, entre ellos el iPhone 16, el 16e y el 15. Es el iPhone más barato de esta lista. Apple subió su precio el 9 de septiembre de 2026, de 859 a 1.009 € (128 GB), pero en otras tiendas se ha visto a 799 €, y reacondicionado en Back Market a 569 €. Es la entrada a iPhone si no quieres pagar los 1.109 € del iPhone 17.",
-        "precio": "1009.00€",
         "imagen": "",
     },
     # 10) Entre los más vendidos del año según Compra Smartphone; precio mínimo histórico en Amazon en septiembre
