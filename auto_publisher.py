@@ -31,6 +31,19 @@ client = genai.Client(
 # 2. CATÁLOGO MULTI-CATEGORÍA
 # ==========================================
 productos_catalogo = [
+    # 1) Abril de 2026: 44.387 unidades, 6,7 % de cuota, precio medio de venta de 927 euros
+    {
+        "categoria": "smartphone",
+        "marca": "Apple",
+        "modelo_corto": "iPhone 17",
+        "busqueda": "Apple iPhone 17 256GB",
+        "link_afiliado": "",
+        "asin": "",
+        "titulo": "Apple iPhone 17 (256 GB) - Pantalla de 6,3 Pulgadas con ProMotion, Chip A19, Cámara Frontal Center Stage y Mayor Resistencia a los Arañazos",
+        "especificaciones": "El móvil más vendido de España en abril de 2026 (último ranking público por modelo): 44.387 unidades, un 6,7 % del mercado y un precio medio de venta de 927 €. Pantalla de 6,3 pulgadas con ProMotion, chip A19, cámara frontal Center Stage y autonomía para todo el día; viene con 256 GB de serie. Apple subió su precio oficial en España el 9 de septiembre de 2026, de 959 a 1.109 €, así que conviene comparar con otras tiendas, donde puede estar por debajo. Es también el iPhone más vendido del mundo en el segundo trimestre de 2026.",
+        "precio": "1109.00€",
+        "imagen": "",
+    },
 
     # 4) Abril de 2026: 22.241 unidades, 3,4 %, precio medio de 1.303 euros
     {
@@ -44,34 +57,8 @@ productos_catalogo = [
         "especificaciones": "Cuarto del ranking de abril de 2026 en España: 22.241 unidades, un 3,4 % del mercado y un precio medio de 1.303 €. Pantalla de 6,3 pulgadas con ProMotion, chip A19 Pro y sistema de cámaras Pro Fusion. Apple lo retiró de su tienda el 9 de septiembre de 2026 tras lanzar el iPhone 18 Pro (1.469 €); en otras tiendas se vendía a unos 1.179 € justo antes de ese cambio, y puede quedar poco stock. Es la opción para quien quiere un iPhone Pro compacto por menos que el 18 Pro.",
         "precio": "1179.00€",
         "imagen": "",
-    },
-
-    # 8) En el top 20 de abril de 2026
-    {
-        "categoria": "smartphone",
-        "marca": "Samsung",
-        "modelo_corto": "Galaxy A56 5G",
-        "busqueda": "Samsung Galaxy A56 5G 256GB",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Samsung Galaxy A56 5G (8 GB + 256 GB) - Smartphone con Pantalla Super AMOLED de 6,7 Pulgadas, Cámara de 50 MP y Batería de 5.000 mAh",
-        "especificaciones": "Aparece en el top 20 de ventas de abril de 2026. Pantalla Super AMOLED FHD+ de 6,7 pulgadas con 1.200 nits de brillo máximo, cámara principal de 50 MP y batería de 5.000 mAh en la versión de 8 GB + 256 GB. Su PVP era de 529 € y en el Prime Day de 2026 bajó a 369 € en Amazon. Compra Smartphone lo describe como un todo en uno por unos 400 €. Es el predecesor del A57, que lo va sustituyendo.",
-        "precio": "529.00€",
-        "imagen": "",
-    },
-    # 10) Entre los más vendidos del año según Compra Smartphone; precio mínimo histórico en Amazon en septiembre
-    {
-        "categoria": "smartphone",
-        "marca": "Xiaomi",
-        "modelo_corto": "Redmi Note 15 Pro 5G",
-        "busqueda": "Xiaomi Redmi Note 15 Pro 5G 8GB 256GB",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Xiaomi Redmi Note 15 Pro 5G (8 GB + 256 GB) - Smartphone con Pantalla AMOLED 1.5K de 6,83 Pulgadas, Cámara de 200 MP con OIS y Batería de 6.580 mAh",
-        "especificaciones": "Uno de los móviles más vendidos del año en España según Compra Smartphone (esta posición se basa en esa selección, no en el ranking de abril). Pantalla AMOLED 1.5K de 6,83 pulgadas a 120 Hz, procesador MediaTek Dimensity 7400-Ultra, cámara principal de 200 MP con estabilización óptica, batería de 6.580 mAh y 8 GB de RAM con 256 GB. Salió a unos 399-429 € y en Amazon se ha visto a 319,99 € el 8 de septiembre de 2026, su mínimo histórico en ese momento, y a unos 255-278 € en verano.",
-        "precio": "399.00€",
-        "imagen": "",
     }
+
 ]
 
 
