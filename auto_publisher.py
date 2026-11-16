@@ -79,19 +79,7 @@ productos_catalogo = [
         "precio": "1179.00€",
         "imagen": "",
     },
-    # 5) Abril de 2026: las tres variantes suman 47.288 unidades (17.290 + 15.883 + 14.115)
-    {
-        "categoria": "smartphone",
-        "marca": "Xiaomi",
-        "modelo_corto": "Redmi 15C 5G",
-        "busqueda": "Xiaomi Redmi 15C 5G 4GB 128GB",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Xiaomi Redmi 15C 5G (4 GB + 128 GB) - Smartphone con Pantalla de 6,9 Pulgadas a 120 Hz, Dimensity 6300 y NFC",
-        "especificaciones": "El móvil de Xiaomi más vendido de España: en abril de 2026 sus tres variantes sumaron 47.288 unidades (128 GB con 5G, 128 GB solo con 4G y 256 GB con 5G), de modo que como modelo agrupado es uno de los más vendidos del país. Pantalla de 6,9 pulgadas a 120 Hz, procesador MediaTek Dimensity 6300, 4 GB de RAM y almacenamiento eMMC 5.1. PVP de 180 €, y en tiendas se ve desde unos 130-150 €. ATENCIÓN: existen versiones con y sin 5G; un comprador denunció en PcComponentes que el anuncio de una versión no tenía 5G, así que comprueba la variante exacta antes de comprar.",
-        "precio": "150.00€",
-        "imagen": "",
-    },
+
     # 6) En el top 20 de abril de 2026; el Android de gama alta más vendido
     {
         "categoria": "smartphone",
