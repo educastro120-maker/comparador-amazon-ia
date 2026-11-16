@@ -31,45 +31,7 @@ client = genai.Client(
 # 2. CATÁLOGO MULTI-CATEGORÍA
 # ==========================================
 productos_catalogo = [
-    # 1) Abril de 2026: 44.387 unidades, 6,7 % de cuota, precio medio de venta de 927 euros
-    {
-        "categoria": "smartphone",
-        "marca": "Apple",
-        "modelo_corto": "iPhone 17",
-        "busqueda": "Apple iPhone 17 256GB",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Apple iPhone 17 (256 GB) - Pantalla de 6,3 Pulgadas con ProMotion, Chip A19, Cámara Frontal Center Stage y Mayor Resistencia a los Arañazos",
-        "especificaciones": "El móvil más vendido de España en abril de 2026 (último ranking público por modelo): 44.387 unidades, un 6,7 % del mercado y un precio medio de venta de 927 €. Pantalla de 6,3 pulgadas con ProMotion, chip A19, cámara frontal Center Stage y autonomía para todo el día; viene con 256 GB de serie. Apple subió su precio oficial en España el 9 de septiembre de 2026, de 959 a 1.109 €, así que conviene comparar con otras tiendas, donde puede estar por debajo. Es también el iPhone más vendido del mundo en el segundo trimestre de 2026.",
-        "precio": "1109.00€",
-        "imagen": "",
-    },
-    # 2) Abril de 2026: 30.413 unidades, 4,6 %, precio medio de 1.445 euros
-    {
-        "categoria": "smartphone",
-        "marca": "Apple",
-        "modelo_corto": "iPhone 17 Pro Max",
-        "busqueda": "Apple iPhone 17 Pro Max 256GB",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Apple iPhone 17 Pro Max (256 GB) - Smartphone con Pantalla de 6,9 Pulgadas ProMotion, Chip A19 Pro y Sistema de Cámaras Pro Fusion",
-        "especificaciones": "Segundo del ranking de abril de 2026 en España: 30.413 unidades, un 4,6 % del mercado y un precio medio de 1.445 €. Pantalla de 6,9 pulgadas con ProMotion, chip A19 Pro, sistema de cámaras Pro Fusion y la mayor autonomía de la gama iPhone 17. Apple lo retiró de su tienda oficial el 9 de septiembre de 2026 tras presentar el iPhone 18 Pro Max (1.619 €), pero se sigue vendiendo en otras tiendas: se ha visto a 1.319 € en Amazon, su mínimo histórico en ese momento. Comprueba disponibilidad y garantía.",
-        "precio": "1319.00€",
-        "imagen": "",
-    },
-    # 3) Abril de 2026: 27.529 unidades, 4,2 %, precio medio de 177 euros. El Android más vendido.
-    {
-        "categoria": "smartphone",
-        "marca": "Samsung",
-        "modelo_corto": "Galaxy A17 5G",
-        "busqueda": "Samsung Galaxy A17 5G 128GB",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Samsung Galaxy A17 5G (128 GB) - Smartphone Android con Pantalla Super AMOLED de 6,7 Pulgadas a 90 Hz y Cámara Principal de 50 MP",
-        "especificaciones": "El móvil Android más vendido de España y tercero en el ranking de abril de 2026: 27.529 unidades, un 4,2 % del mercado y un precio medio de venta de solo 177 €. Pantalla Super AMOLED de 6,7 pulgadas con refresco de 90 Hz, cámara principal de 50 MP y 192 g de peso. Se vende desde unos 159 € en la versión de 4 GB + 128 GB (hay otra de 8 GB + 256 GB desde unos 280 €); su precio original era de 309 €. Samsung ha subido el precio de los Galaxy A en Estados Unidos, así que puede subir también aquí.",
-        "precio": "159.00€",
-        "imagen": "",
-    },
+
     # 4) Abril de 2026: 22.241 unidades, 3,4 %, precio medio de 1.303 euros
     {
         "categoria": "smartphone",
@@ -83,19 +45,7 @@ productos_catalogo = [
         "precio": "1179.00€",
         "imagen": "",
     },
-    # 6) En el top 20 de abril de 2026; el Android de gama alta más vendido
-    {
-        "categoria": "smartphone",
-        "marca": "Samsung",
-        "modelo_corto": "Galaxy S26 Ultra",
-        "busqueda": "Samsung Galaxy S26 Ultra 256GB",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Samsung Galaxy S26 Ultra (256 GB) - Smartphone con Cámara Principal de 200 MP, Doble Teleobjetivo 3x y 5x, Pantalla QHD+ de 6,9 Pulgadas y Galaxy AI",
-        "especificaciones": "El Android premium más vendido: aparece en el top 20 de ventas de España de abril de 2026 y fue el cuarto móvil más vendido del mundo en el primer trimestre de 2026, según Counterpoint. Pantalla de 6,9 pulgadas QHD+, cámara principal de 200 MP con ultra gran angular de 50 MP y dos teleobjetivos (10 MP 3x y 50 MP 5x), Snapdragon 8 Elite Gen 5 y batería de 5.000 mAh. PVP de 1.549 € (256 GB); se ha visto a 1.098,99 € en PcComponentes antes del Black Friday.",
-        "precio": "1549.00€",
-        "imagen": "",
-    },
+
     # 8) En el top 20 de abril de 2026
     {
         "categoria": "smartphone",
