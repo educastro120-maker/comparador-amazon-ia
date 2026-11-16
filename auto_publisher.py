@@ -195,7 +195,7 @@ def obtener_o_crear_categoria(nombre_cat_input):
 
 
 def llamar_gemini_con_respaldo(prompt):
-    """Usa los modelos vigentes de Google AI Studio (gemini-3.5-flash-lite primero por velocidad y cuota gratuita, y gemini-3.8-flash como respaldo)."""
+    """Gestiona automáticamente los límites de cuota por minuto (429) de Google AI Studio."""
     modelos_a_probar = ['gemini-3.5-flash-lite', 'gemini-3.8-flash', 'gemini-2.5-flash-lite']
     
     for modelo in modelos_a_probar:
@@ -214,8 +214,15 @@ def llamar_gemini_con_respaldo(prompt):
                 if response and response.text:
                     return json.loads(response.text)
             except Exception as e:
-                print(f"   ⚠️ Fallo con {modelo} (Intento {intento}): {type(e).__name__} -> {e}")
-                time.sleep(2)
+                error_str = str(e)
+                print(f"   ⚠️ Fallo con {modelo} (Intento {intento}): {type(e).__name__} -> {error_str}")
+                
+                # Si es límite de cuota por minuto (429), esperar 62 segundos a que se reinicie el minuto
+                if "429" in error_str or "RESOURCE_EXHAUSTED" in error_str:
+                    print("   🛑 Límite de cuota por minuto alcanzado. Esperando 62 segundos para reanudar...")
+                    time.sleep(62)
+                else:
+                    time.sleep(4)
     return None
 
 
@@ -582,8 +589,8 @@ if __name__ == "__main__":
             publicados_ok += 1
         
         if index < total_productos - 1:
-            print("⏳ Esperando 4 segundos para respetar los límites de la IA...")
-            time.sleep(4)
+            print("⏳ Esperando 15 segundos para no saturar los tokens por minuto de la capa gratuita...")
+            time.sleep(15)
             
     print(f"\n📊 Resumen: {publicados_ok}/{total_productos} entradas publicadas correctamente.")
     if publicados_ok == 0 and total_productos > 0:
