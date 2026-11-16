@@ -31,19 +31,6 @@ client = genai.Client(
 # 2. CATÁLOGO MULTI-CATEGORÍA
 # ==========================================
 productos_catalogo = [
-    # 1) Abril de 2026: 44.387 unidades, 6,7 % de cuota, precio medio de venta de 927 euros
-    {
-        "categoria": "smartphone",
-        "marca": "Apple",
-        "modelo_corto": "iPhone 17",
-        "busqueda": "Apple iPhone 17 256GB",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Apple iPhone 17 (256 GB) - Pantalla de 6,3 Pulgadas con ProMotion, Chip A19, Cámara Frontal Center Stage y Mayor Resistencia a los Arañazos",
-        "especificaciones": "El móvil más vendido de España en abril de 2026 (último ranking público por modelo): 44.387 unidades, un 6,7 % del mercado y un precio medio de venta de 927 €. Pantalla de 6,3 pulgadas con ProMotion, chip A19, cámara frontal Center Stage y autonomía para todo el día; viene con 256 GB de serie. Apple subió su precio oficial en España el 9 de septiembre de 2026, de 959 a 1.109 €, así que conviene comparar con otras tiendas, donde puede estar por debajo. Es también el iPhone más vendido del mundo en el segundo trimestre de 2026.",
-        "precio": "1109.00€",
-        "imagen": "",
-    },
 
     # 4) Abril de 2026: 22.241 unidades, 3,4 %, precio medio de 1.303 euros
     {
