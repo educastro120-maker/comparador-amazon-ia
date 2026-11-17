@@ -1,4 +1,7 @@
 # productos que ya tengo
+
+#Smartwatches
+
 Amazfit GTS 4 Mini
 Amazfit Pop 3S
 Amazfit active 2
@@ -82,3 +85,31 @@ Xiaomi Redmi Watch 6
 Xiaomi Smart Band 8 PRO
 Xiaomi Watch 2
 Xiaomi Watch 5
+
+#Smartphones
+Apple Iphone 16
+Apple Iphone 17
+Apple Iphone 17 PRO
+Apple Iphone 17 PRO MAX
+Apple Iphone 18 PRO
+Google pixel 10A
+Google pixel 11 PRO
+Huawei Pura 80 ULTRA
+Motorola Edge 70 Fusion
+Motorola Signature
+Nothing Phone 4A
+Oppo Find x9 Ultra
+Samsung Galaxy a17
+Samsung Galaxy a56
+Samsung Galaxy a57
+Samsung Galaxy S26 Ultra
+Vivo x300 PRO
+Vivo x300 Ultra
+Xiaomi 17T
+Xiaomi 17 Ultra
+Xiaomi Poco x8 PRO
+Xiaomi Redmi 15C
+Xiaomi Redmi Note 15 
+Xiaomi Redmi Note 15 PRO
+Xiaomi Redmi Note 15 PRO Plus
+
