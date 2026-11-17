@@ -46,7 +46,7 @@ productos_catalogo = [
 # ==========================================
 # Cuántos productos NUEVOS se publican como máximo en cada ejecución. Es la clave para trabajar con
 # cuotas gratuitas: el catálogo se completa poco a poco, día a día, sin agotar el límite diario.
-MAX_NUEVOS_POR_EJECUCION = int(os.environ.get("MAX_NUEVOS", "5"))
+MAX_NUEVOS_POR_EJECUCION = int(os.environ.get("MAX_NUEVOS", "4"))
 PAUSA_ENTRE_PRODUCTOS = int(os.environ.get("PAUSA_ENTRE_PRODUCTOS", "15"))
 
 # Carpeta del repositorio donde se guarda la "memoria" del programa
@@ -174,7 +174,7 @@ def titulos_publicados_en_wp():
                 break
             for p in lote:
                 t = (p.get("title") or {}).get("raw") or ""
-                titulos[slugify(t)] = {"link": p.get("link", ""), "id": p.get("id")}
+                titulos[slugify(t)] = {"link": p.get("link", ""), "id": p.get("id"), "titulo": t}
             if len(lote) < 100:
                 break
             pagina += 1
@@ -183,16 +183,65 @@ def titulos_publicados_en_wp():
     return titulos
 
 
+PALABRAS_VARIANTE = {"pro", "plus", "ultra", "max", "lite", "classic", "fe", "mini", "se", "air", "neo", "turbo", "edge", "fold", "flip", "gt", "active"}
+RUTA_YA_CREADOS = os.path.join(CARPETA_DATOS, "ya_creados.txt")   # TÚ: lista de productos que ya tienen entrada (uno por línea)
+
+
+def _tokens(texto):
+    """Palabras normalizadas de un nombre: '40 mm' y '40mm' cuentan igual, 'Pro+' se lee 'pro plus'."""
+    t = str(texto).lower().replace("+", " plus ")
+    t = re.sub(r"(\d)\s*(mm|gb|tb|mah)\b", r"\1\2", t)
+    return set(slugify(t).split("-")) - {""}
+
+
+def _coincide(buscado, texto):
+    """Todas las palabras del modelo están en el texto y el texto no añade otra variante (Pro, Ultra, Classic...)."""
+    if not buscado or not buscado <= texto:
+        return False
+    return not ((texto - buscado) & PALABRAS_VARIANTE)
+
+
+def leer_ya_creados():
+    """data/ya_creados.txt: un producto por línea ('Marca Modelo'). Las líneas con # se ignoran."""
+    if not os.path.exists(RUTA_YA_CREADOS):
+        return []
+    with open(RUTA_YA_CREADOS, "r", encoding="utf-8") as fh:
+        return [l.split("#")[0].strip() for l in fh if l.split("#")[0].strip()]
+
+
+def buscar_post_existente(producto, titulos_wp):
+    """Busca en WordPress la entrada de este producto: 1) título exacto, 2) por parecido (marca + modelo)."""
+    exacto = titulos_wp.get(slugify(f"Análisis y Opinión: {producto['titulo']}"))
+    if exacto:
+        return exacto, "exacto"
+    buscado = _tokens(f"{producto['marca']} {producto['modelo_corto']}")
+    candidatos = [i for i in titulos_wp.values() if _coincide(buscado, _tokens(i.get("titulo", "")))]
+    if len(candidatos) == 1:
+        return candidatos[0], "parecido"
+    if len(candidatos) > 1:
+        print(f"   ⚠️ {producto['marca']} {producto['modelo_corto']}: varias entradas parecidas, se usa la primera ({candidatos[0].get('titulo','')[:70]}).")
+        return candidatos[0], "parecido"
+    return None, ""
+
+
 def producto_ya_publicado(pid, producto, registro, titulos_wp):
-    """True si el producto está en la memoria o ya existe una entrada con su título en WordPress."""
+    """True si el producto está en la memoria, en tu lista data/ya_creados.txt o ya existe su entrada en WordPress."""
     if pid in registro:
         return True
-    clave = slugify(f"Análisis y Opinión: {producto['titulo']}")
-    if clave in titulos_wp:
-        info = titulos_wp[clave]
+    info, modo = buscar_post_existente(producto, titulos_wp)
+    if info:
+        if modo == "parecido":
+            print(f"🔎 Ya existe entrada para {producto['marca']} {producto['modelo_corto']} (por parecido): «{info.get('titulo','')[:80]}». No se crea otra.")
         registrar_publicado(pid, producto, info["link"], construir_link_afiliado(producto), post_id=info["id"])
         registro[pid] = True
         return True
+    buscado = _tokens(f"{producto['marca']} {producto['modelo_corto']}")
+    for linea in leer_ya_creados():
+        if pid == slugify(linea) or _coincide(_tokens(linea), buscado) and _coincide(buscado, _tokens(linea)):
+            print(f"📋 {producto['marca']} {producto['modelo_corto']}: está en data/ya_creados.txt. No se crea otra entrada.")
+            registrar_publicado(pid, producto, "", construir_link_afiliado(producto))
+            registro[pid] = True
+            return True
     return False
 
 # ---------- Rankings (páginas Top 10), etiquetas y sincronización ----------
@@ -909,7 +958,7 @@ def registrar_miembros_existentes(titulos_wp):
             r = reg.get(pid)
             if isinstance(r, dict) and r.get("post_id"):
                 continue
-            info = titulos_wp.get(slugify(f"Análisis y Opinión: {m.get('titulo', '')}"))
+            info, _ = buscar_post_existente({"marca": m["marca"], "modelo_corto": m["modelo_corto"], "titulo": m.get("titulo", "")}, titulos_wp)
             if not info:
                 continue
             producto = {"categoria": rk.get("categoria", ""), "marca": m["marca"], "modelo_corto": m["modelo_corto"],
