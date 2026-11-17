@@ -32,19 +32,7 @@ client = genai.Client(
 # ==========================================
 productos_catalogo = [
 
-   # 2) Mejor calidad-precio de gama media según Compra Smartphone; ya en el catálogo de más vendidos
-    {
-        "categoria": "smartphone",
-        "marca": "Xiaomi",
-        "modelo_corto": "Redmi Note 15 Pro 5G",
-        "busqueda": "Xiaomi Redmi Note 15 Pro 5G 8GB 256GB",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Xiaomi Redmi Note 15 Pro 5G (8 GB + 256 GB) - Smartphone con Pantalla AMOLED 1.5K de 6,83 Pulgadas, Cámara de 200 MP con OIS y Batería de 6.580 mAh",
-        "especificaciones": "Compra Smartphone lo elige como el mejor calidad-precio de la gama media y el mejor móvil barato por menos de 300 euros. Pantalla AMOLED 1.5K de 6,83 pulgadas a 120 Hz, procesador MediaTek Dimensity 7400-Ultra, cámara principal de 200 MP con estabilización óptica, batería de 6.580 mAh, resistencia IP68 y NFC. La carga de 45 W es su punto flojo. Salió en España a 399 € (8 GB + 256 GB); en Amazon se ha visto entre 278 y 320 € durante 2026.",
-        "precio": "399.00€",
-        "imagen": "",
-    }
+
 
 ]
 
