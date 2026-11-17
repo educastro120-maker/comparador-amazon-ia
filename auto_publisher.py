@@ -32,31 +32,17 @@ client = genai.Client(
 # ==========================================
 productos_catalogo = [
 
-    # 1) Primero en la mayoría de guías de compra y en el listado de más vendidos de Kimovil de noviembre de 2026
+   # 2) Mejor calidad-precio de gama media según Compra Smartphone; ya en el catálogo de más vendidos
     {
         "categoria": "smartphone",
         "marca": "Xiaomi",
-        "modelo_corto": "POCO X8 Pro",
-        "busqueda": "Xiaomi POCO X8 Pro 8GB 256GB",
+        "modelo_corto": "Redmi Note 15 Pro 5G",
+        "busqueda": "Xiaomi Redmi Note 15 Pro 5G 8GB 256GB",
         "link_afiliado": "",
         "asin": "",
-        "titulo": "Xiaomi POCO X8 Pro (8 GB + 256 GB) - Smartphone 5G con Dimensity 8500-Ultra, Pantalla AMOLED 1.5K de 6,59 Pulgadas a 120 Hz, Batería de 6.500 mAh y Carga de 100 W",
-        "especificaciones": "Es el favorito de las guías de calidad-precio de 2026: potencia de gama alta con procesador MediaTek Dimensity 8500-Ultra, memoria UFS 4.1, pantalla AMOLED 1.5K de 6,59 pulgadas a 120 Hz con hasta 3.500 nits, batería de silicio-carbono de 6.500 mAh con carga de 100 W (Xataka comprobó que llega a tres días), cámara principal Sony IMX882 de 50 MP con estabilización óptica y NFC. Pesa 201 g. Su punto débil es la cámara secundaria. Salió en España a 340 € (8 GB + 256 GB); en Amazon se ha visto a 379 € y a 289 € en el Prime Day de 2026, y Kimovil lo sitúa desde unos 265 €.",
-        "precio": "340.00€",
-        "imagen": "",
-    },
-
-    # 8) El más potente de la lista (gama media-alta); su precio real baja mucho en ofertas
-    {
-        "categoria": "smartphone",
-        "marca": "Xiaomi",
-        "modelo_corto": "17T",
-        "busqueda": "Xiaomi 17T 12GB 256GB",
-        "link_afiliado": "",
-        "asin": "",
-        "titulo": "Xiaomi 17T (12 GB + 256 GB) - Smartphone con Cámara Leica y Teleobjetivo 5x, Dimensity 8500-Ultra, Pantalla AMOLED 1.5K de 6,59 Pulgadas y Batería de 6.500 mAh",
-        "especificaciones": "Es el móvil de gama media-alta de la lista: triple cámara Leica con cámara principal de 50 MP con OIS, teleobjetivo periscópico 5x de 50 MP y gran angular de 12 MP, procesador Dimensity 8500-Ultra, pantalla AMOLED 1.5K de 6,59 pulgadas a 120 Hz con hasta 3.500 nits, batería de silicio-carbono de 6.500 mAh con carga de 67 W e IP68. Xiaomi adelantó su lanzamiento de septiembre a mayo de 2026. Su PVP en España es de 749,99 €, pero se ha visto a 399 € en Amazon con un descuento de 200 € en el carrito, y entre 477 y 519 € en otras ofertas, así que solo compensa si lo encuentras rebajado.",
-        "precio": "749.99€",
+        "titulo": "Xiaomi Redmi Note 15 Pro 5G (8 GB + 256 GB) - Smartphone con Pantalla AMOLED 1.5K de 6,83 Pulgadas, Cámara de 200 MP con OIS y Batería de 6.580 mAh",
+        "especificaciones": "Compra Smartphone lo elige como el mejor calidad-precio de la gama media y el mejor móvil barato por menos de 300 euros. Pantalla AMOLED 1.5K de 6,83 pulgadas a 120 Hz, procesador MediaTek Dimensity 7400-Ultra, cámara principal de 200 MP con estabilización óptica, batería de 6.580 mAh, resistencia IP68 y NFC. La carga de 45 W es su punto flojo. Salió en España a 399 € (8 GB + 256 GB); en Amazon se ha visto entre 278 y 320 € durante 2026.",
+        "precio": "399.00€",
         "imagen": "",
     }
 
