@@ -1,64 +1,75 @@
-name: Publicador Automatico de Comparativas
+name: Robot TopComparador
 
 on:
-  schedule:
-    # Se ejecutará automáticamente todos los días a las 08:00 AM UTC
-    - cron: '0 8 * * *'
-  # Permite ejecutarlo manualmente con un botón cuando quieras probarlo
   workflow_dispatch:
     inputs:
-      regenerar:
-        description: 'Regenerar TODOS los productos aunque ya estén guardados'
-        type: boolean
-        default: false
+      max_nuevos:
+        description: "Entradas nuevas a crear en esta ejecución"
+        default: "2"
+      estado_entradas:
+        description: "draft (borrador) o publish (publicada)"
+        default: "draft"
+      forzar_rankings:
+        description: "Rankings a (re)generar como borrador: ids separados por coma, o 'todos'"
+        default: ""
+  schedule:
+    - cron: "17 7 * * *"   # cada día (hora UTC)
 
-# NUEVO: permiso para que el workflow pueda GUARDAR archivos (los JSON de productos) en tu repositorio.
-# Sin esto, el paso final de guardado fallaría con un error de permisos.
 permissions:
   contents: write
 
+concurrency:
+  group: robot-topcomparador
+  cancel-in-progress: false
+
 jobs:
-  run-python-script:
+  robot:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 40
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      WP_URL: ${{ secrets.WP_URL }}
+      WP_USER: ${{ secrets.WP_USER }}
+      WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
+      MAX_NUEVOS: ${{ github.event.inputs.max_nuevos || '2' }}
+      ESTADO_ENTRADAS: ${{ github.event.inputs.estado_entradas || 'draft' }}
+      FORZAR_RANKINGS: ${{ github.event.inputs.forzar_rankings || '' }}
     steps:
-      - name: Descargar el código del repositorio
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Configurar Entorno de Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.11"
 
-      - name: Instalar Librerías
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+      - name: Instalar dependencias
+        run: pip install requests google-genai
 
-      - name: Ejecutar Script de IA y Publicar
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          WP_URL: ${{ secrets.WP_URL }}
-          WP_USER: ${{ secrets.WP_USER }}
-          WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
-          # NUEVO: si marcas la casilla al ejecutarlo a mano, se regeneran todos los productos.
-          # En las ejecuciones automáticas diarias vale '0' (solo se procesan los productos nuevos).
-          REGENERAR: ${{ inputs.regenerar && '1' || '0' }}
+      - name: 1) Descubrir productos nuevos (si falla, no pasa nada)
+        continue-on-error: true
+        run: python descubrir_catalogo.py
+
+      - name: 2) Publicar entradas (categoría y etiquetas automáticas)
+        id: publicar
+        continue-on-error: true
         run: python auto_publisher.py
 
-      # NUEVO: guarda los JSON de productos (data/products-smartwatch.json, etc.) en tu repositorio.
-      # "if: always()" hace que se guarde aunque algún producto haya fallado en el paso anterior.
-      - name: Guardar los JSON de productos en el repositorio
+      - name: 3) Generar páginas Top 10 en borrador
+        continue-on-error: true
+        run: python generar_rankings.py
+
+      - name: Guardar la memoria (carpeta data/)
         if: always()
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          if ls data/products-*.json >/dev/null 2>&1; then
-            git add data/products-*.json
-            # Solo hace commit si algún archivo ha cambiado (evita errores cuando no hay novedades)
-            git diff --staged --quiet || git commit -m "Actualizar JSON de productos"
-            git pull --rebase
-            git push
-          else
-            echo "Todavía no hay archivos data/products-*.json; no hay nada que guardar."
-          fi
+          git config user.name "robot-topcomparador"
+          git config user.email "robot@users.noreply.github.com"
+          git add data/
+          git diff --cached --quiet || git commit -m "Robot: actualizar memoria (data/)"
+          git pull --rebase || true
+          git push || true
+
+      - name: Marcar fallo si falló la publicación
+        if: steps.publicar.outcome == 'failure'
+        run: |
+          echo "Hubo productos que fallaron; revisa data/fallos.json y el log del paso 2."
+          exit 1
