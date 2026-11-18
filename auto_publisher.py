@@ -70,7 +70,7 @@ CAMPOS_OBLIGATORIOS = ("categoria", "marca", "modelo_corto", "busqueda", "titulo
 # creado el secreto GROQ_API_KEY. Los nombres de modelo se pueden cambiar sin tocar el código con las
 # variables GEMINI_MODELS (separados por comas) y GROQ_MODEL. Compruébalos en Google AI Studio.
 PROVEEDORES = [p.strip().lower() for p in os.environ.get("PROVEEDORES", "gemini,groq").split(",") if p.strip()]
-MODELOS_GEMINI = [m.strip() for m in os.environ.get("GEMINI_MODELS", "gemini-3.1-flash-lite,gemini-3-flash-preview").split(",") if m.strip()]
+MODELOS_GEMINI = [m.strip() for m in os.environ.get("GEMINI_MODELS", "gemini-3.8-flash,gemini-3.5-flash-lite,gemini-3.1-flash-lite").split(",") if m.strip()]
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "").strip()
 GROQ_MODEL = os.environ.get("GROQ_MODEL", "llama-3.3-70b-versatile")
 
@@ -210,13 +210,20 @@ def leer_ya_creados():
         return [l.split("#")[0].strip() for l in fh if l.split("#")[0].strip()]
 
 
+def _nombre_en_titulo(titulo):
+    """Solo la parte del título que nombra el producto (antes de ' - ', ' – ' o ':'), sin 'Análisis y Opinión:'.
+    Así 'Apple Watch Ultra 4 - ... 3.000 nits' no se confunde con el Ultra 3."""
+    t = re.sub(r"^\s*an[aá]lisis y opini[oó]n\s*:\s*", "", str(titulo), flags=re.I)
+    return re.split(r"\s[-–—|]\s|:\s", t)[0]
+
+
 def buscar_post_existente(producto, titulos_wp):
     """Busca en WordPress la entrada de este producto: 1) título exacto, 2) por parecido (marca + modelo)."""
     exacto = titulos_wp.get(slugify(f"Análisis y Opinión: {producto['titulo']}"))
     if exacto:
         return exacto, "exacto"
     buscado = _tokens(f"{producto['marca']} {producto['modelo_corto']}")
-    candidatos = [i for i in titulos_wp.values() if _coincide(buscado, _tokens(i.get("titulo", "")))]
+    candidatos = [i for i in titulos_wp.values() if _coincide(buscado, _tokens(_nombre_en_titulo(i.get("titulo", ""))))]
     if len(candidatos) == 1:
         return candidatos[0], "parecido"
     if len(candidatos) > 1:
