@@ -5,7 +5,7 @@ on:
     inputs:
       max_nuevos:
         description: "Entradas nuevas a crear en esta ejecución"
-        default: "5"
+        default: "2"
       estado_entradas:
         description: "draft (borrador) o publish (publicada)"
         default: "draft"
@@ -15,6 +15,9 @@ on:
       descubrir:
         description: "Descubrir productos nuevos con Tavily: prueba (no guarda nada), si, no"
         default: "prueba"
+      videos:
+        description: "Añadir vídeos de YouTube a los borradores: si, prueba (solo muestra), no"
+        default: "si"
       forzar_rankings:
         description: "Rankings a (re)generar como borrador: ids separados por coma, o 'todos'"
         default: ""
@@ -44,6 +47,8 @@ jobs:
       TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
       # Ejecuciones automáticas (sin formulario): 'prueba' hasta que cambies esta palabra por 'si'
       DESCUBRIR_MODO: ${{ github.event.inputs.descubrir || 'prueba' }}
+      YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+      VIDEOS_MODO: ${{ github.event.inputs.videos || 'si' }}
       FORZAR_RANKINGS: ${{ github.event.inputs.forzar_rankings || '' }}
     steps:
       - uses: actions/checkout@v4
@@ -65,7 +70,12 @@ jobs:
         continue-on-error: true
         run: python auto_publisher.py
 
-      - name: 3) Generar páginas Top 10 en borrador
+      - name: 3) Añadir vídeos de YouTube a los borradores
+        if: ${{ (github.event.inputs.videos || 'si') != 'no' }}
+        continue-on-error: true
+        run: python anadir_videos.py
+
+      - name: 4) Generar páginas Top 10 en borrador
         continue-on-error: true
         run: python generar_rankings.py
 
