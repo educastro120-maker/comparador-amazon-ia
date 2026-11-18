@@ -53,6 +53,7 @@ PAUSA_ENTRE_PRODUCTOS = int(os.environ.get("PAUSA_ENTRE_PRODUCTOS", "15"))
 CARPETA_DATOS = os.environ.get("CARPETA_DATOS", "data")
 RUTA_PUBLICADOS = os.path.join(CARPETA_DATOS, "publicados.json")        # qué productos ya están publicados
 RUTA_COLA = os.path.join(CARPETA_DATOS, "cola_catalogo.json")           # productos pendientes (la rellena descubrir_catalogo.py)
+CATEGORIA_FILTRO = os.environ.get("SOLO_CATEGORIA", "").strip().lower()   # "", "smartwatch" o "smartphone": publica solo esa categoría
 RUTA_ENLACES = os.path.join(CARPETA_DATOS, "enlaces_manual.csv")        # TÚ rellenas aquí el enlace corto y la imagen de cada producto
 RUTA_FALLOS = os.path.join(CARPETA_DATOS, "fallos.json")                # cuántas veces ha fallado cada producto
 MAX_FALLOS_POR_PRODUCTO = 3   # tras 3 fallos seguidos se aparta el producto para que no bloquee a los demás
@@ -1004,6 +1005,8 @@ def main():
             print(f"⚠️ {it['modelo_corto']}: la categoría '{it['categoria']}' aún no tiene prompt en este script. Se deja pendiente.")
             descartados += 1
             continue
+        if CATEGORIA_FILTRO and CATEGORIA_FILTRO != "todas" and it["categoria"].lower() != CATEGORIA_FILTRO:
+            continue   # fuera del filtro de esta ejecución: se deja para otra
         pid = slug_producto(it)
         if pid in vistos:   # el mismo producto en el archivo y en la cola: solo se cuenta una vez
             continue
