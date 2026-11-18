@@ -1285,7 +1285,8 @@
     "video_titulo": "iPhone 18 Pro Max, Análisis a Fondo: OPINIÓN Sincera",
     "video_canal": "Topes de Gama",
     "video_fecha": "2026-11-18",
-    "video_estado": "auto"
+    "video_estado": "auto",
+    "video_posicion": "final"
   },
   "apple-iphone-air": {
     "categoria": "smartphone",
@@ -1307,7 +1308,8 @@
     "video_titulo": "Reseña iPhone Air - Para quién es?",
     "video_canal": "Tech Santos",
     "video_fecha": "2026-11-18",
-    "video_estado": "auto"
+    "video_estado": "auto",
+    "video_posicion": "final"
   },
   "apple-iphone-17e": {
     "categoria": "smartphone",
@@ -1329,7 +1331,8 @@
     "video_titulo": "iPhone 17e Review: El iPhone para los próximos 5 años",
     "video_canal": "Victor Abarca",
     "video_fecha": "2026-11-18",
-    "video_estado": "auto"
+    "video_estado": "auto",
+    "video_posicion": "final"
   },
   "samsung-galaxy-s26": {
     "categoria": "smartphone",
@@ -1351,7 +1354,8 @@
     "video_titulo": "SAMSUNG GALAXY S26 PLUS REVIEW: ¿TIENE SENTIDO POR 1.200€? 📱❌ ¡CUIDADO CON ESTO!",
     "video_canal": "Topes de Gama",
     "video_fecha": "2026-11-18",
-    "video_estado": "auto"
+    "video_estado": "auto",
+    "video_posicion": "final"
   },
   "samsung-galaxy-watch-ultra-2-lte-47mm": {
     "categoria": "smartwatch",
@@ -1373,7 +1377,8 @@
     "video_titulo": "ELIGE BIEN!✅SAMSUNG GALAXY WATCH ULTRA 2 vs GALAXY WATCH ULTRA",
     "video_canal": "eSavants",
     "video_fecha": "2026-11-18",
-    "video_estado": "auto"
+    "video_estado": "auto",
+    "video_posicion": "final"
   },
   "xiaomi-17t-pro": {
     "categoria": "smartphone",
@@ -1395,7 +1400,8 @@
     "video_titulo": "NO TIRES TU DINERO! iPhone 17 vs Xiaomi 17T Pro",
     "video_canal": "Topes de Gama",
     "video_fecha": "2026-11-18",
-    "video_estado": "auto"
+    "video_estado": "auto",
+    "video_posicion": "final"
   },
   "xiaomi-redmi-15c-4g": {
     "categoria": "smartphone",
@@ -1417,6 +1423,7 @@
     "video_titulo": "Xiaomi REDMI 15C 📱 El teléfono más BARATO de Xiaomi en 2025 ¿Merece la pena? | Review",
     "video_canal": "GrupoReviews",
     "video_fecha": "2026-11-18",
-    "video_estado": "auto"
+    "video_estado": "auto",
+    "video_posicion": "final"
   }
 }
