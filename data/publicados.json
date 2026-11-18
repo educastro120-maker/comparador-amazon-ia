@@ -1019,7 +1019,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-mas-vendidos-espana"
+    ]
   },
   "xiaomi-redmi-note-15-pro-5g": {
     "categoria": "smartphone",
@@ -1036,7 +1039,11 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-calidad-precio",
+      "smartphones-mas-vendidos-espana"
+    ]
   },
   "xiaomi-poco-x8-pro": {
     "categoria": "smartphone",
@@ -1053,7 +1060,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-calidad-precio"
+    ]
   },
   "google-pixel-10a": {
     "categoria": "smartphone",
@@ -1070,7 +1080,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-calidad-precio"
+    ]
   },
   "nothing-phone-4a": {
     "categoria": "smartphone",
@@ -1087,7 +1100,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-calidad-precio"
+    ]
   },
   "motorola-edge-70-fusion": {
     "categoria": "smartphone",
@@ -1104,7 +1120,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-calidad-precio"
+    ]
   },
   "xiaomi-17t": {
     "categoria": "smartphone",
@@ -1121,7 +1140,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-calidad-precio"
+    ]
   },
   "xiaomi-redmi-note-15-5g": {
     "categoria": "smartphone",
@@ -1138,7 +1160,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-calidad-precio"
+    ]
   },
   "coros-pace-4": {
     "categoria": "smartwatch",
@@ -1189,7 +1214,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-18"
+    "fecha": "2026-11-18",
+    "rankings_sincronizados": [
+      "smartwatches-mejor-por-deporte"
+    ]
   },
   "garmin-descent-g2": {
     "categoria": "smartwatch",
@@ -1206,7 +1234,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-18"
+    "fecha": "2026-11-18",
+    "rankings_sincronizados": [
+      "smartwatches-mejor-por-deporte"
+    ]
   },
   "apple-watch-ultra-3": {
     "categoria": "smartwatch",
@@ -1223,6 +1254,9 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-18"
+    "fecha": "2026-11-18",
+    "rankings_sincronizados": [
+      "smartwatches-mejor-por-deporte"
+    ]
   }
 }
