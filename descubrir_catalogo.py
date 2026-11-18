@@ -235,20 +235,29 @@ Reglas:
 
 TEXTO ENCONTRADO:
 {contexto}"""
-    for modelo in MODELOS:
-        try:
-            print(f"   🤖 Estructurando con {modelo}...")
-            r = client.models.generate_content(
-                model=modelo, contents=prompt,
-                config=types.GenerateContentConfig(response_mime_type="application/json", temperature=0.1, max_output_tokens=8192))
-            productos = json_desde_texto(r.text).get("productos", [])
-            if not isinstance(productos, list):
-                raise ValueError("'productos' no es una lista")
-            return productos
-        except Exception as e:
-            txt = str(e)
-            print(f"   ⚠️ Fallo con {modelo}: {type(e).__name__} -> {txt[:200]}")
-            time.sleep(3)   # 404, 429, 503...: se prueba el siguiente modelo
+    for ronda in (1, 2):
+        sobrecarga = False
+        for modelo in MODELOS:
+            try:
+                print(f"   🤖 Estructurando con {modelo}...")
+                r = client.models.generate_content(
+                    model=modelo, contents=prompt,
+                    config=types.GenerateContentConfig(response_mime_type="application/json", temperature=0.1, max_output_tokens=8192))
+                productos = json_desde_texto(r.text).get("productos", [])
+                if not isinstance(productos, list):
+                    raise ValueError("'productos' no es una lista")
+                return productos
+            except Exception as e:
+                txt = str(e)
+                print(f"   ⚠️ Fallo con {modelo}: {type(e).__name__} -> {txt[:200]}")
+                if "503" in txt or "UNAVAILABLE" in txt:
+                    sobrecarga = True
+                time.sleep(3)   # 404, 429, 503...: se prueba el siguiente modelo
+        if ronda == 1 and sobrecarga:
+            print("   ⏳ Los modelos están saturados (503): se espera 45 segundos y se reintenta una vez.")
+            time.sleep(45)
+        else:
+            break
     return None
 
 
