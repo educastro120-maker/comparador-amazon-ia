@@ -1,0 +1,71 @@
+name: Retocar entradas existentes
+
+# Se lanza SOLO a mano. Retoca por lotes entradas ya creadas (borradores o publicadas):
+# quita el título duplicado del cuadro gris y añade un vídeo de YouTube debajo del botón de Amazon.
+
+on:
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "prueba (no toca nada), si (aplica) o restaurar (deshace)"
+        default: "prueba"
+      lote:
+        description: "Cuántas entradas retocar en esta ejecución"
+        default: "10"
+      ranking:
+        description: "Solo los productos de este Top 10 (id de data/rankings.json) o vacío para todos"
+        default: ""
+      acciones:
+        description: "titulo, video o titulo,video"
+        default: "titulo,video"
+      estados:
+        description: "draft, publish o draft,publish"
+        default: "draft,publish"
+      restaurar_ids:
+        description: "Solo en modo restaurar: IDs de entrada separados por coma, o todos"
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: robot-topcomparador
+  cancel-in-progress: false
+
+jobs:
+  retocar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      WP_URL: ${{ secrets.WP_URL }}
+      WP_USER: ${{ secrets.WP_USER }}
+      WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
+      YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+      RETOCAR_MODO: ${{ github.event.inputs.modo }}
+      LOTE: ${{ github.event.inputs.lote }}
+      RANKING: ${{ github.event.inputs.ranking }}
+      ACCIONES: ${{ github.event.inputs.acciones }}
+      ESTADOS: ${{ github.event.inputs.estados }}
+      RESTAURAR_IDS: ${{ github.event.inputs.restaurar_ids }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Instalar dependencias
+        run: pip install requests
+
+      - name: Retocar entradas
+        run: python retocar_entradas.py
+
+      - name: Guardar la memoria y las copias (carpeta data/)
+        if: always()
+        run: |
+          git config user.name "robot-topcomparador"
+          git config user.email "robot@users.noreply.github.com"
+          git add data/
+          git diff --cached --quiet || git commit -m "Retocar entradas: actualizar memoria y copias (data/)"
+          git pull --rebase || true
+          git push || true
