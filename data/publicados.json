@@ -515,7 +515,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartwatches-calidad-precio"
+    ]
   },
   "huawei-watch-fit-3": {
     "categoria": "smartwatch",
@@ -532,7 +535,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartwatches-calidad-precio"
+    ]
   },
   "garmin-vivoactive-5": {
     "categoria": "smartwatch",
@@ -549,7 +555,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartwatches-calidad-precio"
+    ]
   },
   "garmin-forerunner-55": {
     "categoria": "smartwatch",
@@ -566,7 +575,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartwatches-calidad-precio"
+    ]
   },
   "xiaomi-redmi-watch-5-lite": {
     "categoria": "smartwatch",
@@ -583,7 +595,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartwatches-calidad-precio"
+    ]
   },
   "garmin-approach-s72": {
     "categoria": "smartwatch",
@@ -600,7 +615,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartwatches-mejor-por-deporte"
+    ]
   },
   "mibro-gs-pro-2": {
     "categoria": "smartwatch",
@@ -617,7 +635,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartwatches-mejor-por-deporte"
+    ]
   },
   "garmin-fenix-e-47-mm": {
     "categoria": "smartwatch",
@@ -634,7 +655,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartwatches-mejor-por-deporte"
+    ]
   },
   "coros-apex-4-42-mm": {
     "categoria": "smartwatch",
@@ -651,7 +675,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartwatches-mejor-por-deporte"
+    ]
   },
   "huawei-pura-80-ultra": {
     "categoria": "smartphone",
@@ -668,7 +695,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-mejor-camara"
+    ]
   },
   "motorola-signature-27": {
     "categoria": "smartphone",
@@ -685,7 +715,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-mejor-camara"
+    ]
   },
   "apple-iphone-18-pro": {
     "categoria": "smartphone",
@@ -702,7 +735,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-mejor-camara"
+    ]
   },
   "vivo-x300-pro": {
     "categoria": "smartphone",
@@ -719,7 +755,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-mejor-camara"
+    ]
   },
   "oppo-find-x9-ultra": {
     "categoria": "smartphone",
@@ -736,7 +775,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-mejor-camara"
+    ]
   },
   "vivo-x300-ultra": {
     "categoria": "smartphone",
@@ -753,7 +795,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-mejor-camara"
+    ]
   },
   "google-pixel-11-pro-xl": {
     "categoria": "smartphone",
@@ -770,7 +815,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-mejor-camara"
+    ]
   },
   "apple-iphone-17-pro-max": {
     "categoria": "smartphone",
@@ -787,7 +835,11 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-mas-vendidos-espana",
+      "smartphones-mejor-camara"
+    ]
   },
   "xiaomi-17-ultra": {
     "categoria": "smartphone",
@@ -804,7 +856,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-mejor-camara"
+    ]
   },
   "samsung-galaxy-s26-ultra": {
     "categoria": "smartphone",
@@ -821,7 +876,11 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-mas-vendidos-espana",
+      "smartphones-mejor-camara"
+    ]
   },
   "apple-iphone-17": {
     "categoria": "smartphone",
@@ -838,7 +897,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-mas-vendidos-espana"
+    ]
   },
   "samsung-galaxy-a17-5g": {
     "categoria": "smartphone",
@@ -855,7 +917,11 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-calidad-precio",
+      "smartphones-mas-vendidos-espana"
+    ]
   },
   "apple-iphone-17-pro": {
     "categoria": "smartphone",
@@ -872,7 +938,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-mas-vendidos-espana"
+    ]
   },
   "xiaomi-redmi-15c-5g": {
     "categoria": "smartphone",
@@ -889,7 +958,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-mas-vendidos-espana"
+    ]
   },
   "samsung-galaxy-a57-5g": {
     "categoria": "smartphone",
@@ -906,7 +978,11 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-calidad-precio",
+      "smartphones-mas-vendidos-espana"
+    ]
   },
   "samsung-galaxy-a56-5g": {
     "categoria": "smartphone",
@@ -923,7 +999,10 @@
     "resumen": "",
     "badge": "",
     "puntuacion": null,
-    "fecha": "2026-11-17"
+    "fecha": "2026-11-17",
+    "rankings_sincronizados": [
+      "smartphones-mas-vendidos-espana"
+    ]
   },
   "apple-iphone-16": {
     "categoria": "smartphone",
@@ -1094,5 +1173,56 @@
     "badge": "REFERENCIA MULTIDEPORTE PREMIUM",
     "puntuacion": 9.3,
     "fecha": "2026-11-17"
+  },
+  "garmin-swim-2": {
+    "categoria": "smartwatch",
+    "marca": "Garmin",
+    "modelo": "Swim 2",
+    "titulo": "Garmin Swim 2 - Reloj GPS de Natación para Piscina y Aguas Abiertas con Pulsómetro, Detección de Brazada y SWOLF",
+    "url_post": "https://topcomparador.es/analisis-y-opinion-garmin-swim-2-reloj-gps-de-natacion-para-piscina-y-aguas-abiertas-con-pulsometro-deteccion-de-brazada-y-swolf/",
+    "post_id": 1229,
+    "link_afiliado": "https://www.amazon.es/s?k=Garmin+Swim+2&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "250.00€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "",
+    "badge": "",
+    "puntuacion": null,
+    "fecha": "2026-11-18"
+  },
+  "garmin-descent-g2": {
+    "categoria": "smartwatch",
+    "marca": "Garmin",
+    "modelo": "Descent G2",
+    "titulo": "Garmin Descent G2 - Ordenador de Buceo Tipo Reloj con Pantalla AMOLED, hasta 100 m, Modos Recreativo, Técnico y Apnea y 10 Días de Batería",
+    "url_post": "https://topcomparador.es/analisis-y-opinion-garmin-descent-g2-ordenador-de-buceo-tipo-reloj-con-pantalla-amoled-hasta-100-m-modos-recreativo-tecnico-y-apnea-y-10-dias-de-bateria/",
+    "post_id": 1230,
+    "link_afiliado": "https://www.amazon.es/s?k=Garmin+Descent+G2&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "679.90€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "",
+    "badge": "",
+    "puntuacion": null,
+    "fecha": "2026-11-18"
+  },
+  "apple-watch-ultra-3": {
+    "categoria": "smartwatch",
+    "marca": "Apple",
+    "modelo": "Watch Ultra 3",
+    "titulo": "Apple Watch Ultra 3 (GPS + Cellular, 49 mm) - Smartwatch de Titanio con 100 m de Resistencia, GPS de Doble Frecuencia y Conectividad Satelital, solo para iPhone",
+    "url_post": "https://topcomparador.es/analisis-y-opinion-apple-watch-ultra-4-caja-de-titanio-de-49-mm-chip-s11-pantalla-ltpo3-de-3-000-nits-conectividad-satelital-resistencia-100-m/",
+    "post_id": 985,
+    "link_afiliado": "https://www.amazon.es/s?k=Apple+Watch+Ultra+3+GPS+%2B+Cellular+49mm&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "899.00€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "",
+    "badge": "",
+    "puntuacion": null,
+    "fecha": "2026-11-18"
   }
 }
