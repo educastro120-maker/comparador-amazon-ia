@@ -12,6 +12,9 @@ on:
       solo_categoria:
         description: "smartwatch, smartphone o todas"
         default: "todas"
+      descubrir:
+        description: "Descubrir productos nuevos con Tavily: prueba (no guarda nada), si, no"
+        default: "prueba"
       forzar_rankings:
         description: "Rankings a (re)generar como borrador: ids separados por coma, o 'todos'"
         default: ""
@@ -38,6 +41,9 @@ jobs:
       MAX_NUEVOS: ${{ github.event.inputs.max_nuevos || '2' }}
       ESTADO_ENTRADAS: ${{ github.event.inputs.estado_entradas || 'draft' }}
       SOLO_CATEGORIA: ${{ github.event.inputs.solo_categoria || 'todas' }}
+      TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+      # Ejecuciones automáticas (sin formulario): 'prueba' hasta que cambies esta palabra por 'si'
+      DESCUBRIR_MODO: ${{ github.event.inputs.descubrir || 'prueba' }}
       FORZAR_RANKINGS: ${{ github.event.inputs.forzar_rankings || '' }}
     steps:
       - uses: actions/checkout@v4
@@ -49,7 +55,8 @@ jobs:
       - name: Instalar dependencias
         run: pip install requests google-genai
 
-      - name: 1) Descubrir productos nuevos (si falla, no pasa nada)
+      - name: 1) Descubrir productos nuevos (Tavily + Gemini, gratis)
+        if: ${{ (github.event.inputs.descubrir || 'prueba') != 'no' }}
         continue-on-error: true
         run: python descubrir_catalogo.py
 
