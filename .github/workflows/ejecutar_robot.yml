@@ -5,7 +5,7 @@ on:
     inputs:
       max_nuevos:
         description: "Entradas nuevas a crear en esta ejecución"
-        default: "2"
+        default: "5"
       estado_entradas:
         description: "draft (borrador) o publish (publicada)"
         default: "draft"
