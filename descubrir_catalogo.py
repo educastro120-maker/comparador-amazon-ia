@@ -1,40 +1,49 @@
 """
-DESCUBRIR CATÁLOGO
-==================
-Rellena AUTOMÁTICAMENTE la cola de productos (data/cola_catalogo.json) que luego publica auto_publisher.py.
+DESCUBRIR CATÁLOGO (versión con Tavily, 100 % gratuita)
+=======================================================
+Rellena la cola de productos (data/cola_catalogo.json) que luego publica auto_publisher.py.
 
 Cómo funciona:
-  1. Por cada categoría (smartphone, smartwatch...) coge la SIGUIENTE marca de una lista y le pide a
-     Gemini, con búsqueda de Google en tiempo real, los modelos de esa marca que se venden hoy en España.
-  2. Descarta lo que ya conoce (publicado o ya en la cola) para no repetir nada.
-  3. Aplica filtros de calidad: sin fuentes de búsqueda no entra nada, y se descartan rumores, productos
-     no vendidos en España, fechas de lanzamiento futuras y fichas demasiado pobres.
-  4. Guarda los productos nuevos en la cola con estado "pendiente".
+  1. Por cada categoría (smartphone, smartwatch) coge la SIGUIENTE marca de una lista y busca en internet
+     con Tavily (plan gratuito: 1.000 créditos al mes, sin tarjeta) los modelos de esa marca a la venta en España.
+  2. Le pasa a Gemini SOLO ese texto (sin herramienta de búsqueda: así es gratis) y le pide la ficha en JSON.
+  3. Comprueba MECÁNICAMENTE que la ficha no se inventa nada:
+       - el nombre del modelo aparece en el texto encontrado,
+       - al menos el 80 % de las cifras de la ficha (mAh, pulgadas, Hz, gramos...) aparecen en ese texto,
+       - hay indicios de venta en España (menciona España, Amazon.es o precios en euros),
+       - el precio solo se acepta si aparece en el texto; si no, queda "Consultar".
+     Lo que no pasa estos filtros se descarta.
+  4. Guarda lo que pasa en la cola con estado "pendiente", con las direcciones web de las fuentes.
 
-Cada ejecución avanza una marca por categoría, así que el mercado se va completando marca a marca,
-con muy pocas llamadas (una por categoría y ejecución).
-
-NO inventa productos "de memoria": si la búsqueda no devuelve fuentes, no añade nada.
+MODOS (variable DESCUBRIR_MODO):
+  - "prueba": hace todo y lo muestra por pantalla, pero NO guarda nada (para la primera vez).
+  - "si"    : guarda en la cola.
 
 LÍMITES (léelos):
-  - Necesita la herramienta de búsqueda de Google de Gemini. En algunos modelos o cuentas gratuitas puede
-    no estar disponible; el programa lo detecta, no añade nada e imprime el motivo.
-  - No obtiene imágenes ni enlaces de afiliado: esos campos quedan vacíos (ver data/pendientes_manual.csv).
-  - Revisa de vez en cuando la cola: una IA con búsqueda puede equivocarse con precios o variantes.
+  - Tavily devuelve fragmentos de páginas, no fichas completas: las fichas serán más cortas que las de un catálogo
+    hecho a mano. Las entradas se crean en borrador: revísalas.
+  - No obtiene imágenes ni enlaces de afiliado (se rellenan en data/enlaces_manual.csv).
+  - Gasto de créditos: por defecto 2 créditos por marca (búsqueda "advanced"). Se frena sola al llegar a TAVILY_MAX_MES.
 """
 
 import os
 import re
 import sys
 import json
+import time
 import unicodedata
-from datetime import datetime, date
+from datetime import date
+import requests
 from google import genai
 from google.genai import types
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
+TAVILY_API_KEY = os.environ.get("TAVILY_API_KEY", "").strip()
 if not GEMINI_API_KEY:
     sys.exit("❌ Falta la variable de entorno GEMINI_API_KEY.")
+if not TAVILY_API_KEY:
+    print("ℹ️ No hay TAVILY_API_KEY (secreto de GitHub): se omite el descubrimiento de productos nuevos.")
+    sys.exit(0)
 
 client = genai.Client(api_key=GEMINI_API_KEY, http_options={"timeout": int(os.environ.get("GEMINI_TIMEOUT_MS", "120000"))})
 
@@ -46,17 +55,23 @@ RUTA_COLA = os.path.join(CARPETA_DATOS, "cola_catalogo.json")
 RUTA_PUBLICADOS = os.path.join(CARPETA_DATOS, "publicados.json")
 RUTA_ESTADO = os.path.join(CARPETA_DATOS, "estado_descubrimiento.json")
 
-# Modelos con búsqueda de Google, por orden. Compruébalos en Google AI Studio y cámbialos con la
-# variable DISCOVERY_MODELS (separados por comas) si alguno no existe.
-MODELOS = [m.strip() for m in os.environ.get("DISCOVERY_MODELS", "gemini-3.8-flash,gemini-3.5-flash-lite,gemini-3.1-flash-lite").split(",") if m.strip()]
+MODO_PRUEBA = os.environ.get("DESCUBRIR_MODO", "si").strip().lower() == "prueba"
+TAVILY_URL = os.environ.get("TAVILY_URL", "https://api.tavily.com/search")
+TAVILY_PROFUNDIDAD = os.environ.get("TAVILY_PROFUNDIDAD", "advanced")      # "basic" = 1 crédito, "advanced" = 2 créditos (más texto)
+TAVILY_MAX_RESULTADOS = int(os.environ.get("TAVILY_MAX_RESULTADOS", "8"))
+TAVILY_MAX_MES = int(os.environ.get("TAVILY_MAX_MES", "900"))               # tope de seguridad (el plan gratuito da 1.000)
+
+# Para ESTRUCTURAR texto (no hace falta el modelo más potente): primero los lite.
+MODELOS = [m.strip() for m in os.environ.get("DISCOVERY_MODELS", "gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.8-flash").split(",") if m.strip()]
 MARCAS_POR_EJECUCION = int(os.environ.get("MARCAS_POR_EJECUCION", "1"))
-MODELOS_POR_MARCA = int(os.environ.get("MODELOS_POR_MARCA", "12"))
-MAX_FALLOS_MARCA = 3          # tras 3 errores seguidos con una marca, se pasa a la siguiente
-MIN_CARACTERES_FICHA = 300    # fichas más cortas se descartan por pobres
+MODELOS_POR_MARCA = int(os.environ.get("MODELOS_POR_MARCA", "6"))
+MAX_FALLOS_MARCA = 3
+MIN_CARACTERES_FICHA = int(os.environ.get("MIN_CARACTERES_FICHA", "300"))
+MIN_PORCENTAJE_CIFRAS = float(os.environ.get("MIN_PORCENTAJE_CIFRAS", "0.8"))
+MIN_CIFRAS_FICHA = 4
+MAX_CONTEXTO = 16000
 CATEGORIAS_ACTIVAS = [c.strip() for c in os.environ.get("DESCUBRIR_CATEGORIAS", "smartphone,smartwatch").split(",") if c.strip()]
 
-# Categorías y marcas a recorrer. Para añadir marcas, añádelas a la lista. Solo smartphone y smartwatch
-# tienen prompt y tabla en auto_publisher.py: no actives monitores, TV, etc. hasta que lo tenga.
 CATEGORIAS = {
     "smartphone": {
         "descripcion": "smartphones (móviles)",
@@ -69,6 +84,10 @@ CATEGORIAS = {
                    "Honor", "OnePlus", "Withings", "Mibro", "CMF by Nothing", "OPPO", "realme", "Fossil", "Casio", "Fitbit"],
     },
 }
+
+
+class SinCupo(Exception):
+    """Tavily no permite más búsquedas (límite del plan o clave no válida)."""
 
 
 def slugify(texto):
@@ -101,70 +120,139 @@ def json_desde_texto(texto):
     return json.loads(texto[a:b + 1])
 
 
-def fuentes_de_busqueda(respuesta):
-    """Webs que Google Search ha usado. Si no hay ninguna, la respuesta no está respaldada por la búsqueda."""
+# ---------- Verificación mecánica de cifras ----------
+def _normalizar_cifra(c):
+    c = c.replace(",", ".")
+    if re.fullmatch(r"\d{1,3}(\.\d{3})+", c):   # 5.000 -> 5000 (separador de miles)
+        c = c.replace(".", "")
+    return c.rstrip(".")
+
+
+def cifras_de(texto):
+    """Números de al menos 2 caracteres (los de 1 dígito, como el '5' de 5G, no demuestran nada)."""
+    brutas = re.findall(r"\d+(?:[.,]\d+)*", str(texto))
+    return {n for n in (_normalizar_cifra(b) for b in brutas) if len(n) >= 2}
+
+
+def verificar_ficha(producto, contexto):
+    """Devuelve (True, '') si la ficha se apoya en el texto encontrado; si no, (False, motivo)."""
+    palabras_contexto = set(slugify(contexto).split("-"))
+    palabras_modelo = {w for w in slugify(f"{producto['marca']} {producto['modelo_corto']}").split("-") if w}
+    if not palabras_modelo <= palabras_contexto:
+        return False, "el nombre del modelo no aparece en el texto encontrado"
+    ficha = cifras_de(producto["especificaciones"])
+    if len(ficha) < MIN_CIFRAS_FICHA:
+        return False, f"la ficha trae pocas cifras ({len(ficha)})"
+    en_texto = cifras_de(contexto)
+    verificadas = ficha & en_texto
+    ratio = len(verificadas) / len(ficha)
+    if ratio < MIN_PORCENTAJE_CIFRAS:
+        sin = sorted(ficha - en_texto)[:6]
+        return False, f"solo {ratio:.0%} de las cifras están en las fuentes (sin respaldo: {', '.join(sin)})"
+    ctx = contexto.lower()
+    if not any(k in ctx for k in ("españa", "espana", "amazon.es", "€", " eur")):
+        return False, "las fuentes no indican venta en España"
+    return True, ""
+
+
+# ---------- Tavily ----------
+def _creditos_por_busqueda():
+    return 2 if TAVILY_PROFUNDIDAD == "advanced" else 1
+
+
+def buscar_tavily(consulta, estado):
+    """Una búsqueda. Devuelve la lista de resultados [{title, url, content}]. Lanza SinCupo si ya no se puede."""
+    mes = date.today().strftime("%Y-%m")
+    uso = estado.setdefault("tavily", {})
+    if uso.get("mes") != mes:
+        uso.update({"mes": mes, "creditos": 0})
+    if uso["creditos"] + _creditos_por_busqueda() > TAVILY_MAX_MES:
+        raise SinCupo(f"tope mensual propio alcanzado ({uso['creditos']}/{TAVILY_MAX_MES} créditos)")
+
+    cuerpo = {"query": consulta, "search_depth": TAVILY_PROFUNDIDAD, "max_results": TAVILY_MAX_RESULTADOS,
+              "include_answer": False, "include_raw_content": False}
+    if TAVILY_PROFUNDIDAD == "advanced":
+        cuerpo["chunks_per_source"] = 3
+    cabeceras = {"Authorization": f"Bearer {TAVILY_API_KEY}", "Content-Type": "application/json"}
+    r = None
+    for intento in (1, 2):
+        try:
+            r = requests.post(TAVILY_URL, headers=cabeceras, json=cuerpo, timeout=60)
+        except requests.RequestException as err:
+            print(f"   ⚠️ Error de conexión con Tavily: {err}")
+            return None
+        if r.status_code == 400 and intento == 1:   # por si algún parámetro opcional no lo acepta tu plan: se repite con lo mínimo
+            cuerpo = {"query": consulta, "max_results": TAVILY_MAX_RESULTADOS}
+            continue
+        break
+    if r.status_code in (401, 403):
+        raise SinCupo("la clave TAVILY_API_KEY no es válida (revisa el secreto de GitHub)")
+    if r.status_code in (429, 432, 433):
+        raise SinCupo(f"Tavily indica que no quedan créditos o se ha superado el límite ({r.status_code})")
+    if r.status_code != 200:
+        print(f"   ⚠️ Tavily respondió {r.status_code}: {r.text[:200]}")
+        return None
+    uso["creditos"] += _creditos_por_busqueda()
     try:
-        chunks = respuesta.candidates[0].grounding_metadata.grounding_chunks or []
-        return sorted({(c.web.title or c.web.uri) for c in chunks if c.web and (c.web.title or c.web.uri)})
-    except Exception:
-        return []
+        return r.json().get("results", [])
+    except ValueError:
+        return None
 
 
-def pedir_modelos(descripcion, marca, conocidos):
-    """Una llamada con búsqueda en tiempo real. Devuelve (lista_de_productos, fuentes) o (None, [])."""
+def construir_contexto(resultados):
+    trozos, total = [], 0
+    for i, res in enumerate(resultados, 1):
+        texto = f"[{i}] {res.get('title', '')}\nURL: {res.get('url', '')}\n{str(res.get('content', ''))[:1800]}\n"
+        if total + len(texto) > MAX_CONTEXTO:
+            break
+        trozos.append(texto)
+        total += len(texto)
+    return "\n".join(trozos)
+
+
+# ---------- Gemini (SIN búsqueda: gratis) ----------
+def estructurar_con_gemini(descripcion, marca, conocidos, contexto):
     hoy = date.today().strftime("%d/%m/%Y")
     lista_conocidos = "\n".join(f"- {c}" for c in conocidos[:80]) or "- (ninguno todavía)"
-    prompt = f"""Hoy es {hoy}. Usa Google Search AHORA (haz varias búsquedas si hace falta) para listar los modelos de la marca "{marca}" en la categoría "{descripcion}" que se VENDEN actualmente en España y que son relevantes para un comparador de compra (lanzados en los últimos 3 años, o anteriores que sigan siendo muy vendidos o recomendados).
+    prompt = f"""Hoy es {hoy}. Tienes TEXTO ENCONTRADO EN INTERNET sobre la marca "{marca}" (categoría: {descripcion}). Usa EXCLUSIVAMENTE ese texto; no uses nada de memoria.
 
-Excluye estos modelos, que ya tengo:
+Extrae los modelos de la marca que el texto presenta como a la venta en España (o con precio en euros). Excluye los que ya tengo:
 {lista_conocidos}
 
-Devuelve como máximo {MODELOS_POR_MARCA} modelos NUEVOS, priorizando los más vendidos o recomendados y los lanzamientos recientes. No incluyas rumores, modelos sin lanzar ni modelos que no se vendan en España. Si no hay más modelos nuevos, devuelve una lista vacía.
+Devuelve como máximo {MODELOS_POR_MARCA} modelos. No incluyas rumores ni productos sin lanzar. Si el texto no permite un producto con datos concretos, no lo incluyas. Si no hay modelos nuevos, devuelve una lista vacía.
 
-Responde ÚNICAMENTE con un JSON válido (sin ``` ni texto extra) con esta forma:
+Responde ÚNICAMENTE con un JSON válido con esta forma:
 {{"productos": [{{"marca": "...", "modelo_corto": "...", "busqueda": "...", "titulo": "...", "especificaciones": "...", "precio_eur": 0, "disponible_en_espana": true, "fecha_lanzamiento": "AAAA-MM"}}]}}
 
-Reglas de cada campo:
+Reglas:
 - modelo_corto: nombre del modelo SIN la marca (por ejemplo "Galaxy A57 5G").
-- busqueda: texto para buscar el producto en Amazon.es (marca + modelo + variante principal).
-- titulo: título descriptivo en español al estilo de Amazon.es (marca, modelo y 2-3 características clave).
-- especificaciones: ficha técnica densa en español, de 800 a 1500 caracteres, con CIFRAS REALES comprobadas en las fuentes (en móviles: pantalla, procesador, RAM y almacenamiento, cámaras, batería y carga, conectividad, peso, sistema operativo y años de actualizaciones; en relojes: pantalla, batería, GPS, sensores, resistencia al agua, compatibilidad). No inventes ningún dato: omite lo que no encuentres.
-- precio_eur: precio actual o PVP en España en euros, como número. Pon 0 si no lo encuentras.
-- disponible_en_espana: true solo si las fuentes confirman que se vende en España.
-- fecha_lanzamiento: mes de lanzamiento en formato AAAA-MM."""
+- busqueda: marca + modelo + variante principal, para buscar en Amazon.es.
+- titulo: título descriptivo en español al estilo de Amazon.es (marca, modelo y 2-3 características clave del texto).
+- especificaciones: ficha en español de 300 a 1200 caracteres, redactada con tus palabras (NO copies frases del texto) y con SOLO cifras que aparezcan literalmente en el texto. Si un dato no está en el texto, omítelo. No inventes ni redondees cifras.
+- precio_eur: precio en euros SOLO si aparece en el texto (número). Si no, 0.
+- disponible_en_espana: true solo si el texto lo indica (España, Amazon.es o precio en euros).
+- fecha_lanzamiento: AAAA-MM si aparece en el texto; si no, "".
 
+TEXTO ENCONTRADO:
+{contexto}"""
     for modelo in MODELOS:
         try:
-            print(f"   🤖 Buscando con {modelo}...")
+            print(f"   🤖 Estructurando con {modelo}...")
             r = client.models.generate_content(
                 model=modelo, contents=prompt,
-                config=types.GenerateContentConfig(
-                    tools=[types.Tool(google_search=types.GoogleSearch())],
-                    temperature=0.2))
-            fuentes = fuentes_de_busqueda(r)
-            if not fuentes:
-                print("   ⚠️ La respuesta no viene respaldada por fuentes de búsqueda: se descarta.")
-                return None, []
-            datos = json_desde_texto(r.text)
-            productos = datos.get("productos", [])
+                config=types.GenerateContentConfig(response_mime_type="application/json", temperature=0.1, max_output_tokens=8192))
+            productos = json_desde_texto(r.text).get("productos", [])
             if not isinstance(productos, list):
                 raise ValueError("'productos' no es una lista")
-            return productos, fuentes
+            return productos
         except Exception as e:
             txt = str(e)
-            print(f"   ⚠️ Fallo con {modelo}: {type(e).__name__} -> {txt[:300]}")
-            if "404" in txt or "NOT_FOUND" in txt:
-                continue   # el modelo no existe: se prueba el siguiente
-            if "429" in txt or "RESOURCE_EXHAUSTED" in txt:
-                print("   🛑 Cuota agotada. Se detiene el descubrimiento; se reintentará en la próxima ejecución.")
-                raise SystemExit(0)
-            if "google_search" in txt.lower() or "tool" in txt.lower() or "400" in txt or "403" in txt:
-                print("   ℹ️ Puede que este modelo o tu cuenta no permitan la búsqueda de Google (en el nivel gratuito suele no estar "
-                      "disponible para los modelos más nuevos). Revisa los límites en Google AI Studio.")
-    return None, []
+            print(f"   ⚠️ Fallo con {modelo}: {type(e).__name__} -> {txt[:200]}")
+            time.sleep(3)   # 404, 429, 503...: se prueba el siguiente modelo
+    return None
 
 
-def validar(p, hoy):
+def validar(p, hoy, contexto):
     """Filtros de calidad. Devuelve (producto_normalizado | None, motivo_si_se_descarta)."""
     for campo in ("marca", "modelo_corto", "busqueda", "titulo", "especificaciones"):
         if not str(p.get(campo, "")).strip():
@@ -177,10 +265,15 @@ def validar(p, hoy):
     m = re.match(r"^(\d{4})-(\d{2})$", fecha)
     if m and (int(m.group(1)), int(m.group(2))) > (hoy.year, hoy.month):
         return None, f"fecha de lanzamiento futura ({fecha}): posible rumor"
+    ok, motivo = verificar_ficha(p, contexto)
+    if not ok:
+        return None, motivo
     try:
         precio = float(p.get("precio_eur") or 0)
     except (TypeError, ValueError):
         precio = 0
+    if precio > 0 and _normalizar_cifra(f"{precio:g}") not in cifras_de(contexto) and _normalizar_cifra(f"{precio:.2f}") not in cifras_de(contexto):
+        precio = 0   # un precio que no está en las fuentes no se acepta
     return {
         "marca": str(p["marca"]).strip(),
         "modelo_corto": str(p["modelo_corto"]).strip(),
@@ -198,6 +291,8 @@ def main():
     publicados = cargar_json(RUTA_PUBLICADOS, {})
     ids_conocidos = set(publicados.keys()) | {slugify(f"{c['marca']} {c['modelo_corto']}") for c in cola}
     total_nuevos = 0
+    if MODO_PRUEBA:
+        print("🧪 MODO PRUEBA: se muestra todo pero NO se guarda nada.\n")
 
     try:
         for categoria in CATEGORIAS_ACTIVAS:
@@ -212,9 +307,19 @@ def main():
                 marca = marcas[st["indice"] % len(marcas)]
                 print(f"\n🔎 [{categoria}] Marca: {marca}  (posición {st['indice'] % len(marcas) + 1}/{len(marcas)})")
 
-                conocidos_marca = [f"{c['marca']} {c['modelo_corto']}" for c in cola if c.get("categoria") == categoria]
-                conocidos_marca += [f"{r['marca']} {r['modelo']}" for r in publicados.values() if isinstance(r, dict) and r.get("categoria") == categoria]
-                productos, fuentes = pedir_modelos(cfg["descripcion"], marca, conocidos_marca)
+                conocidos = [f"{c['marca']} {c['modelo_corto']}" for c in cola if c.get("categoria") == categoria]
+                conocidos += [f"{r['marca']} {r['modelo']}" for r in publicados.values() if isinstance(r, dict) and r.get("categoria") == categoria]
+
+                consulta = f"{marca} {cfg['descripcion']} modelos disponibles en España precio características técnicas {hoy.year}"
+                resultados = buscar_tavily(consulta, estado)
+                productos, contexto = None, ""
+                if resultados:
+                    contexto = construir_contexto(resultados)
+                    print(f"   🌐 Tavily: {len(resultados)} resultados, {len(contexto)} caracteres de texto "
+                          f"(créditos este mes: {estado['tavily']['creditos']}/{TAVILY_MAX_MES}).")
+                    productos = estructurar_con_gemini(cfg["descripcion"], marca, conocidos, contexto)
+                else:
+                    print("   ⚠️ Tavily no devolvió resultados.")
 
                 if productos is None:
                     st["fallos"] += 1
@@ -223,9 +328,10 @@ def main():
                         break   # se reintenta la misma marca en la próxima ejecución
                     print("   ➡️ Se pasa a la siguiente marca.")
                 else:
+                    fuentes = [r.get("url", "") for r in resultados if r.get("url")][:6]
                     añadidos = 0
                     for p in productos:
-                        entrada, motivo = validar(p, hoy)
+                        entrada, motivo = validar(p, hoy, contexto)
                         if not entrada:
                             print(f"   ⏭️ Descartado '{p.get('modelo_corto', '?')}': {motivo}")
                             continue
@@ -235,12 +341,15 @@ def main():
                             continue
                         entrada.update({
                             "categoria": categoria, "link_afiliado": "", "asin": "", "imagen": "",
-                            "estado": "pendiente", "fuentes": fuentes[:6], "descubierto_el": hoy.isoformat(),
+                            "estado": "pendiente", "fuentes": fuentes, "descubierto_el": hoy.isoformat(),
+                            "verificar": True,
                         })
                         cola.append(entrada)
                         ids_conocidos.add(pid)
                         añadidos += 1
-                        print(f"   ✅ Añadido a la cola: {entrada['marca']} {entrada['modelo_corto']} ({entrada['precio']})")
+                        print(f"   ✅ {'(prueba) ' if MODO_PRUEBA else ''}Añadido a la cola: {entrada['marca']} {entrada['modelo_corto']} ({entrada['precio']})")
+                        if MODO_PRUEBA:
+                            print(f"      Ficha: {entrada['especificaciones'][:400]}")
                     total_nuevos += añadidos
                     print(f"   📥 {añadidos} productos nuevos de {marca}.")
 
@@ -249,13 +358,16 @@ def main():
                 if st["indice"] % len(marcas) == 0:
                     st["vueltas"] += 1
                 st["ultima_ejecucion"] = hoy.isoformat()
-
+    except SinCupo as err:
+        print(f"🛑 Se detiene el descubrimiento: {err}. Se reintentará en la próxima ejecución.")
     finally:
-        # Se guarda siempre, incluso si se detiene por falta de cuota, para no perder lo ya descubierto
-        guardar_json(RUTA_COLA, cola)
-        guardar_json(RUTA_ESTADO, estado)
+        if MODO_PRUEBA:
+            print("\n🧪 Prueba terminada: no se ha guardado nada.")
+        else:
+            guardar_json(RUTA_COLA, cola)
+            guardar_json(RUTA_ESTADO, estado)
     pendientes = sum(1 for c in cola if c.get("estado", "pendiente") == "pendiente")
-    print(f"\n📊 Productos nuevos añadidos: {total_nuevos} | Pendientes de publicar en la cola: {pendientes}")
+    print(f"\n📊 Productos nuevos {'detectados' if MODO_PRUEBA else 'añadidos'}: {total_nuevos} | Pendientes de publicar en la cola: {pendientes}")
 
 
 if __name__ == "__main__":
