@@ -1280,7 +1280,12 @@
     "resumen": "El Apple iPhone 18 Pro Max redefine los estándares de la industria móvil al integrar el revolucionario chip Apple A20 Pro de 2 nanómetros, diseñado para ofrecer un rendimiento sin precedentes y una eficiencia energética óptima. Su impresionante pantalla Super Retina XDR OLED de 6,9 pulgadas con tecnología ProMotion de hasta 120 Hz garantiza una fluidez absoluta en cada interacción. Equipado con un",
     "badge": "MÁXIMA POTENCIA Y TECNOLOGÍA APPLE",
     "puntuacion": 9.4,
-    "fecha": "2026-11-18"
+    "fecha": "2026-11-18",
+    "video_id": "l0FTCu9AKSs",
+    "video_titulo": "iPhone 18 Pro Max, Análisis a Fondo: OPINIÓN Sincera",
+    "video_canal": "Topes de Gama",
+    "video_fecha": "2026-11-18",
+    "video_estado": "auto"
   },
   "apple-iphone-air": {
     "categoria": "smartphone",
@@ -1297,7 +1302,12 @@
     "resumen": "El Apple iPhone Air redefine los estándares de la industria móvil al combinar un perfil extraordinariamente ultrafino de tan solo 5,6 milímetros con un rendimiento de auténtica vanguardia. Su deslumbrante pantalla OLED de 6,5 pulgadas con 120 Hz y un brillo pico de 3.000 nits ofrece una experiencia visual sobresaliente. En su interior, el potente chip Apple A19 Pro respaldado por 12 GB de RAM gara",
     "badge": "MÁXIMA INNOVACIÓN EN DISEÑO",
     "puntuacion": 9.4,
-    "fecha": "2026-11-18"
+    "fecha": "2026-11-18",
+    "video_id": "FQTGDGHaS0E",
+    "video_titulo": "Reseña iPhone Air - Para quién es?",
+    "video_canal": "Tech Santos",
+    "video_fecha": "2026-11-18",
+    "video_estado": "auto"
   },
   "apple-iphone-17e": {
     "categoria": "smartphone",
@@ -1314,7 +1324,12 @@
     "resumen": "El Apple iPhone 17e se posiciona como una propuesta de valor excepcional dentro del ecosistema de Apple, combinando un diseño ergonómico y compacto con la potencia bruta del chip A19. Este dispositivo está diseñado para usuarios que priorizan la eficiencia y la integración total con Apple Intelligence, ofreciendo una experiencia de usuario fluida y optimizada. Con una pantalla OLED de 6,1 pulgadas",
     "badge": "COMPACTO DE ALTO RENDIMIENTO",
     "puntuacion": 9.4,
-    "fecha": "2026-11-18"
+    "fecha": "2026-11-18",
+    "video_id": "Va8pcJfMwSw",
+    "video_titulo": "iPhone 17e Review: El iPhone para los próximos 5 años",
+    "video_canal": "Victor Abarca",
+    "video_fecha": "2026-11-18",
+    "video_estado": "auto"
   },
   "samsung-galaxy-s26": {
     "categoria": "smartphone",
@@ -1331,7 +1346,12 @@
     "resumen": "El Samsung Galaxy S26+ se posiciona como un referente absoluto en la gama alta, integrando el revolucionario procesador Snapdragon 8 Elite Gen 5 que redefine los límites de la potencia móvil. Su pantalla Dynamic AMOLED 2X de 6.7 pulgadas ofrece una experiencia visual inmersiva con un brillo pico de 2.600 nits, garantizando legibilidad perfecta incluso bajo luz solar directa. Con la integración nat",
     "badge": "POTENCIA Y EFICIENCIA DE NUEVA GENERACIÓN",
     "puntuacion": 9.4,
-    "fecha": "2026-11-18"
+    "fecha": "2026-11-18",
+    "video_id": "44fCjXzy-vA",
+    "video_titulo": "SAMSUNG GALAXY S26 PLUS REVIEW: ¿TIENE SENTIDO POR 1.200€? 📱❌ ¡CUIDADO CON ESTO!",
+    "video_canal": "Topes de Gama",
+    "video_fecha": "2026-11-18",
+    "video_estado": "auto"
   },
   "samsung-galaxy-watch-ultra-2-lte-47mm": {
     "categoria": "smartwatch",
@@ -1348,6 +1368,55 @@
     "resumen": "El Samsung Galaxy Watch Ultra 2 LTE 47mm se posiciona como el smartwatch definitivo para deportistas exigentes y entusiastas de la tecnología que buscan el máximo rendimiento sin concesiones. Su imponente chasis de titanio aeroespacial alberga una brillante pantalla Super AMOLED de 1,5 pulgadas protegida para soportar las condiciones más extremas, incluyendo certificación de buceo hasta 40 metros.",
     "badge": "ULTRA DEPORTIVO PREMIUM",
     "puntuacion": 9.3,
-    "fecha": "2026-11-18"
+    "fecha": "2026-11-18",
+    "video_id": "SJXKWAd5Nrk",
+    "video_titulo": "ELIGE BIEN!✅SAMSUNG GALAXY WATCH ULTRA 2 vs GALAXY WATCH ULTRA",
+    "video_canal": "eSavants",
+    "video_fecha": "2026-11-18",
+    "video_estado": "auto"
+  },
+  "xiaomi-17t-pro": {
+    "categoria": "smartphone",
+    "marca": "Xiaomi",
+    "modelo": "17T Pro",
+    "titulo": "Xiaomi 17T Pro Smartphone 12 GB RAM 512 GB AMOLED 1.5K 144Hz Dimensity 9500 Batería 7000 mAh",
+    "url_post": "https://topcomparador.es/?p=1469",
+    "post_id": 1469,
+    "link_afiliado": "https://www.amazon.es/s?k=Xiaomi+17T+Pro+5G&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "689.99€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "El Xiaomi 17T Pro se posiciona como un referente absoluto en el segmento de gama alta, combinando una potencia bruta excepcional con una autonomía que redefine los estándares del mercado. Equipado con el procesador Dimensity 9500 y una generosa batería de 7000 mAh, este dispositivo garantiza un rendimiento fluido en tareas de alta exigencia y una longevidad operativa superior. Su sistema fotográfi",
+    "badge": "POTENCIA Y AUTONOMÍA DE VANGUARDIA",
+    "puntuacion": 9.4,
+    "fecha": "2026-11-18",
+    "video_id": "DRW1RrWL1dg",
+    "video_titulo": "NO TIRES TU DINERO! iPhone 17 vs Xiaomi 17T Pro",
+    "video_canal": "Topes de Gama",
+    "video_fecha": "2026-11-18",
+    "video_estado": "auto"
+  },
+  "xiaomi-redmi-15c-4g": {
+    "categoria": "smartphone",
+    "marca": "Xiaomi",
+    "modelo": "Redmi 15C 4G",
+    "titulo": "Xiaomi Redmi 15C 4G Smartphone 256 GB 8 GB RAM Pantalla 6.9 Pulgadas Batería 6000 mAh",
+    "url_post": "https://topcomparador.es/?p=1470",
+    "post_id": 1470,
+    "link_afiliado": "https://www.amazon.es/s?k=Xiaomi+Redmi+15C+4G&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "139.00€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "El Xiaomi Redmi 15C 4G se posiciona como una opción imbatible para usuarios que priorizan la autonomía y la capacidad multimedia en el segmento de entrada. Con una impresionante pantalla de 6,9 pulgadas, este dispositivo ofrece una experiencia visual inmersiva ideal para el consumo de contenido streaming. Su batería de 6000 mAh, combinada con una carga rápida de 33 W, garantiza jornadas de uso int",
+    "badge": "GAMA DE ENTRADA CON AUTONOMÍA SUPERIOR",
+    "puntuacion": 9.4,
+    "fecha": "2026-11-18",
+    "video_id": "d9jQ3wQ6hxc",
+    "video_titulo": "Xiaomi REDMI 15C 📱 El teléfono más BARATO de Xiaomi en 2025 ¿Merece la pena? | Review",
+    "video_canal": "GrupoReviews",
+    "video_fecha": "2026-11-18",
+    "video_estado": "auto"
   }
 }

@@ -118,5 +118,53 @@
     "descubierto_el": "2026-11-18",
     "verificar": true,
     "publicado_el": "2026-11-18"
+  },
+  {
+    "marca": "Xiaomi",
+    "modelo_corto": "17T Pro",
+    "busqueda": "Xiaomi 17T Pro 5G",
+    "titulo": "Xiaomi 17T Pro Smartphone 12 GB RAM 512 GB AMOLED 1.5K 144Hz Dimensity 9500 Batería 7000 mAh",
+    "especificaciones": "El Xiaomi 17T Pro cuenta con una pantalla AMOLED de 6,83 pulgadas con resolución 1,5K y 144 Hz de tasa de refresco. En su interior integra el procesador Dimensity 9500 acompañado de 12 GB de memoria RAM y 512 GB de almacenamiento interno. Su apartado fotográfico incluye una cámara principal de 50 MP, un teleobjetivo 5x y una cámara ultra gran angular de 12 MP firmada por Leica. Ofrece una batería de 7000 mAh con soporte para carga rápida de 100 W y carga de 50 W. Se comercializa en España con un precio de 689,99 euros.",
+    "precio": "689.99€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://tiendamovilspain.com/blog/mejores-moviles-xiaomi-de-2026-modelos-y-cual-elegir-b94.html",
+      "https://www.vodafone.es/c/conectate/dispositivos/mejores-moviles-xiaomi",
+      "https://www.mediamarkt.es/es/category/m%C3%B3viles-xiaomi-2634.html",
+      "https://nanoreview.net/en/phone-list/all-xiaomi",
+      "https://www.mediamarkt.es/es/brand/xiaomi/smartphones",
+      "https://www.youtube.com/watch?v=_s3HadSL2hM"
+    ],
+    "descubierto_el": "2026-11-18",
+    "verificar": true,
+    "publicado_el": "2026-11-18"
+  },
+  {
+    "marca": "Xiaomi",
+    "modelo_corto": "Redmi 15C 4G",
+    "busqueda": "Xiaomi Redmi 15C 4G",
+    "titulo": "Xiaomi Redmi 15C 4G Smartphone 256 GB 8 GB RAM Pantalla 6.9 Pulgadas Batería 6000 mAh",
+    "especificaciones": "El Xiaomi Redmi 15C 4G está equipado con una pantalla de 6,9 pulgadas y un procesador octa-core. Cuenta con versiones de 8 GB de RAM y 256 GB de almacenamiento interno ampliable. Integra una batería de 6000 mAh con tecnología de carga rápida de 33 W e incluye el cargador en la caja. Se encuentra disponible en color negro y verde menta.",
+    "precio": "139.00€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://tiendamovilspain.com/blog/mejores-moviles-xiaomi-de-2026-modelos-y-cual-elegir-b94.html",
+      "https://www.vodafone.es/c/conectate/dispositivos/mejores-moviles-xiaomi",
+      "https://www.mediamarkt.es/es/category/m%C3%B3viles-xiaomi-2634.html",
+      "https://nanoreview.net/en/phone-list/all-xiaomi",
+      "https://www.mediamarkt.es/es/brand/xiaomi/smartphones",
+      "https://www.youtube.com/watch?v=_s3HadSL2hM"
+    ],
+    "descubierto_el": "2026-11-18",
+    "verificar": true,
+    "publicado_el": "2026-11-18"
   }
 ]
