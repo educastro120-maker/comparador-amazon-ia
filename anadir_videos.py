@@ -90,15 +90,29 @@ def _tokens(texto):
     return set(slugify(t).split("-")) - {""}
 
 
+IGNORABLES = {"lte", "5g", "4g", "wifi", "bluetooth", "esim", "gps", "nfc"}
+
+
+def _esencial(tokens):
+    """Quita lo que casi nunca aparece en el título de un vídeo (LTE, 5G, tamaños como 47mm, 256gb...)."""
+    ess = {t for t in tokens if t not in IGNORABLES and not re.fullmatch(r"\d+(mm|gb|tb|mah)", t)}
+    return ess or tokens
+
+
 def titulo_coincide(marca, modelo, titulo_video):
-    buscado = _tokens(f"{marca} {modelo}")
-    # el nombre del modelo puede aparecer sin la marca en el título (por ejemplo "Galaxy A57 5G review")
-    solo_modelo = _tokens(modelo)
     t = _tokens(titulo_video)
-    for conjunto in (buscado, solo_modelo):
+    # el nombre del modelo puede aparecer sin la marca en el título (por ejemplo "Galaxy A57 review")
+    for conjunto in (_esencial(_tokens(f"{marca} {modelo}")), _esencial(_tokens(modelo))):
         if conjunto and conjunto <= t and not ((t - conjunto) & PALABRAS_VARIANTE):
             return True
     return False
+
+
+def modelo_para_buscar(modelo):
+    """Texto de búsqueda sin sufijos que no suelen aparecer en los vídeos."""
+    m = re.sub(r"\b\d+\s?(mm|gb|tb)\b", "", modelo, flags=re.I)
+    m = re.sub(r"\b(LTE|5G|4G|WiFi|eSIM)\b", "", m, flags=re.I)
+    return re.sub(r"\s+", " ", m).strip() or modelo
 
 
 def minutos_iso(duracion):
@@ -131,7 +145,7 @@ def yt_get(ruta, params):
 
 def elegir_video(marca, modelo):
     """Devuelve el mejor vídeo candidato (dict) o None."""
-    q = f"{marca} {modelo} análisis review en español"
+    q = f"{marca} {modelo_para_buscar(modelo)} análisis review en español"
     res = yt_get("search", {"part": "snippet", "type": "video", "q": q, "maxResults": 10, "relevanceLanguage": "es",
                             "regionCode": "ES", "videoEmbeddable": "true", "safeSearch": "moderate", "order": "relevance"})
     if res is None:
@@ -218,7 +232,8 @@ def main():
         print("🧪 MODO PRUEBA: se muestra qué vídeo se elegiría, pero NO se toca ninguna entrada.\n")
     hechos, sin_video, saltados, revisadas = 0, 0, 0, 0
 
-    candidatos = [(pid, r) for pid, r in registro.items() if isinstance(r, dict) and r.get("post_id") and r.get("marca")]
+    # Las entradas más recientes primero: así las que acabas de crear no esperan detrás de las antiguas
+    candidatos = [(pid, r) for pid, r in registro.items() if isinstance(r, dict) and r.get("post_id") and r.get("marca")][::-1]
     try:
         for pid, r in candidatos:
             if hechos + sin_video >= MAX_POR_EJECUCION:
