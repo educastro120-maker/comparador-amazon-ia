@@ -780,9 +780,7 @@ def procesar_y_publicar(producto):
         🔥 {datos_ia.get('badge', 'DESTACADO')}
       </div>
 
-      <h2 style="margin-top: 0; color: #111; font-size: 1.6em; line-height: 1.3;">{producto['titulo']}</h2>
-      
-      <p style="font-size: 1.08em; color: #334155; line-height: 1.65;">
+      <p style="font-size: 1.08em; color: #334155; line-height: 1.65; margin-top: 0;">
         {datos_ia.get('resumen_ejecutivo', '')}
       </p>
 
