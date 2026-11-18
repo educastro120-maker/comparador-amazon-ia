@@ -48,7 +48,7 @@ RUTA_ESTADO = os.path.join(CARPETA_DATOS, "estado_descubrimiento.json")
 
 # Modelos con búsqueda de Google, por orden. Compruébalos en Google AI Studio y cámbialos con la
 # variable DISCOVERY_MODELS (separados por comas) si alguno no existe.
-MODELOS = [m.strip() for m in os.environ.get("DISCOVERY_MODELS", "gemini-3-flash-preview,gemini-3.1-flash-lite").split(",") if m.strip()]
+MODELOS = [m.strip() for m in os.environ.get("DISCOVERY_MODELS", "gemini-3.8-flash,gemini-3.5-flash-lite,gemini-3.1-flash-lite").split(",") if m.strip()]
 MARCAS_POR_EJECUCION = int(os.environ.get("MARCAS_POR_EJECUCION", "1"))
 MODELOS_POR_MARCA = int(os.environ.get("MODELOS_POR_MARCA", "12"))
 MAX_FALLOS_MARCA = 3          # tras 3 errores seguidos con una marca, se pasa a la siguiente
