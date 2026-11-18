@@ -1286,7 +1286,11 @@
     "video_canal": "Topes de Gama",
     "video_fecha": "2026-11-18",
     "video_estado": "auto",
-    "video_posicion": "final"
+    "video_posicion": "final",
+    "retocado": "2026-11-18",
+    "retoque_acciones": [
+      "título"
+    ]
   },
   "apple-iphone-air": {
     "categoria": "smartphone",
@@ -1309,7 +1313,11 @@
     "video_canal": "Tech Santos",
     "video_fecha": "2026-11-18",
     "video_estado": "auto",
-    "video_posicion": "final"
+    "video_posicion": "final",
+    "retocado": "2026-11-18",
+    "retoque_acciones": [
+      "título"
+    ]
   },
   "apple-iphone-17e": {
     "categoria": "smartphone",
@@ -1332,7 +1340,11 @@
     "video_canal": "Victor Abarca",
     "video_fecha": "2026-11-18",
     "video_estado": "auto",
-    "video_posicion": "final"
+    "video_posicion": "final",
+    "retocado": "2026-11-18",
+    "retoque_acciones": [
+      "título"
+    ]
   },
   "samsung-galaxy-s26": {
     "categoria": "smartphone",
@@ -1355,7 +1367,11 @@
     "video_canal": "Topes de Gama",
     "video_fecha": "2026-11-18",
     "video_estado": "auto",
-    "video_posicion": "final"
+    "video_posicion": "final",
+    "retocado": "2026-11-18",
+    "retoque_acciones": [
+      "título"
+    ]
   },
   "samsung-galaxy-watch-ultra-2-lte-47mm": {
     "categoria": "smartwatch",
@@ -1378,7 +1394,11 @@
     "video_canal": "eSavants",
     "video_fecha": "2026-11-18",
     "video_estado": "auto",
-    "video_posicion": "final"
+    "video_posicion": "final",
+    "retocado": "2026-11-18",
+    "retoque_acciones": [
+      "título"
+    ]
   },
   "xiaomi-17t-pro": {
     "categoria": "smartphone",
@@ -1401,7 +1421,11 @@
     "video_canal": "Topes de Gama",
     "video_fecha": "2026-11-18",
     "video_estado": "auto",
-    "video_posicion": "final"
+    "video_posicion": "final",
+    "retocado": "2026-11-18",
+    "retoque_acciones": [
+      "título"
+    ]
   },
   "xiaomi-redmi-15c-4g": {
     "categoria": "smartphone",
@@ -1424,6 +1448,10 @@
     "video_canal": "GrupoReviews",
     "video_fecha": "2026-11-18",
     "video_estado": "auto",
-    "video_posicion": "final"
+    "video_posicion": "final",
+    "retocado": "2026-11-18",
+    "retoque_acciones": [
+      "título"
+    ]
   }
 }
