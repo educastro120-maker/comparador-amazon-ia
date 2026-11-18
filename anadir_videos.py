@@ -44,6 +44,7 @@ YT_BASE = os.environ.get("YOUTUBE_API_BASE", "https://www.googleapis.com/youtube
 CARPETA_DATOS = os.environ.get("CARPETA_DATOS", "data")
 RUTA_PUBLICADOS = os.path.join(CARPETA_DATOS, "publicados.json")
 MODO_PRUEBA = os.environ.get("VIDEOS_MODO", "si").strip().lower() == "prueba"
+POSICION = "inicio" if os.environ.get("VIDEO_POSICION", "final").strip().lower() == "inicio" else "final"   # final = tras el botón de Amazon
 SOLO_BORRADORES = os.environ.get("VIDEOS_SOLO_BORRADORES", "si").strip().lower() != "no"
 MAX_POR_EJECUCION = int(os.environ.get("YOUTUBE_MAX_POR_EJECUCION", "10"))
 MIN_VISUALIZACIONES = int(os.environ.get("VIDEO_MIN_VISUALIZACIONES", "1000"))
@@ -199,7 +200,7 @@ def bloque_video(video, marca, modelo):
     canal = html.escape(video["canal"])
     titulo = html.escape(video["titulo"])
     return (f'<!-- tc-video:{vid} -->\n'
-            f'<div class="tc-video" style="max-width:800px;margin:0 auto 28px;">'
+            f'<div class="tc-video" style="max-width:780px;margin:28px auto 20px;">'
             f'<h2 style="margin:0 0 12px;">Vídeo: análisis de {nombre}</h2>'
             f'<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">'
             f'<iframe src="https://www.youtube-nocookie.com/embed/{vid}" title="{titulo}" loading="lazy" '
@@ -225,12 +226,57 @@ def leer_entrada(post_id):
     return r.json()
 
 
+PATRON_BLOQUE = re.compile(r"<!-- tc-video:[^>]*-->.*?<!-- /tc-video -->\n?", re.S)
+
+
+def reubicar_existentes(registro):
+    """Mueve los vídeos que insertó el robot (en borradores) a la posición elegida. Solo se hace una vez por entrada."""
+    movidos = 0
+    for pid, r in registro.items():
+        if not (isinstance(r, dict) and r.get("post_id") and r.get("video_estado") == "auto"):
+            continue
+        if r.get("video_posicion", "inicio") == POSICION:
+            continue
+        post = leer_entrada(r["post_id"])
+        if not post or (SOLO_BORRADORES and post.get("status") != "draft"):
+            continue
+        contenido = (post.get("content") or {}).get("raw", "")
+        m = PATRON_BLOQUE.search(contenido)
+        if not m:   # lo quitaste a mano: no se toca más
+            r["video_posicion"] = POSICION
+            continue
+        bloque = m.group(0).strip("\n") + "\n"
+        resto = (contenido[:m.start()] + contenido[m.end():]).strip("\n")
+        nuevo = (resto + "\n" + bloque) if POSICION == "final" else (bloque + resto)
+        print(f"↕️ {r.get('marca', '')} {r.get('modelo', '')}: el vídeo pasa a {'después del botón de Amazon' if POSICION == 'final' else 'el principio'}.")
+        if MODO_PRUEBA:
+            movidos += 1
+            continue
+        try:
+            u = requests.post(f"{WP_URL}/wp-json/wp/v2/posts/{r['post_id']}", json={"content": nuevo},
+                              auth=(WP_USER, WP_APP_PASSWORD), timeout=60)
+        except requests.RequestException as err:
+            print(f"   ❌ Error de conexión: {err}")
+            continue
+        if u.status_code == 200:
+            r["video_posicion"] = POSICION
+            movidos += 1
+        else:
+            print(f"   ❌ WordPress respondió {u.status_code}: {u.text[:150]}")
+    if movidos and not MODO_PRUEBA:
+        guardar_json(RUTA_PUBLICADOS, registro)
+    return movidos
+
+
 def main():
     registro = cargar_json(RUTA_PUBLICADOS, {})
     hoy = date.today()
     if MODO_PRUEBA:
         print("🧪 MODO PRUEBA: se muestra qué vídeo se elegiría, pero NO se toca ninguna entrada.\n")
     hechos, sin_video, saltados, revisadas = 0, 0, 0, 0
+    movidos = reubicar_existentes(registro)
+    if movidos:
+        print(f"↕️ Vídeos reubicados: {movidos}\n")
 
     # Las entradas más recientes primero: así las que acabas de crear no esperan detrás de las antiguas
     candidatos = [(pid, r) for pid, r in registro.items() if isinstance(r, dict) and r.get("post_id") and r.get("marca")][::-1]
@@ -280,7 +326,8 @@ def main():
                 hechos += 1
                 continue
 
-            nuevo = bloque_video(video, r["marca"], r["modelo"]) + contenido
+            bloque = bloque_video(video, r["marca"], r["modelo"])
+            nuevo = (contenido.rstrip() + "\n" + bloque) if POSICION == "final" else (bloque + contenido)
             try:
                 u = requests.post(f"{WP_URL}/wp-json/wp/v2/posts/{r['post_id']}", json={"content": nuevo},
                                   auth=(WP_USER, WP_APP_PASSWORD), timeout=60)
@@ -296,7 +343,7 @@ def main():
                       "Usa un usuario Administrador. Se detiene la inserción de vídeos.")
                 raise SinCuota("WordPress no permite iframes con este usuario")
             r.update({"video_id": video["id"], "video_titulo": video["titulo"], "video_canal": video["canal"],
-                      "video_fecha": hoy.isoformat(), "video_estado": "auto"})
+                      "video_fecha": hoy.isoformat(), "video_estado": "auto", "video_posicion": POSICION})
             guardar_json(RUTA_PUBLICADOS, registro)
             hechos += 1
             print("   📝 Vídeo insertado en el borrador.")
