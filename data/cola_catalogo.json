@@ -1,1 +1,74 @@
-[]
+[
+  {
+    "marca": "Apple",
+    "modelo_corto": "iPhone 18 Pro Max",
+    "busqueda": "Apple iPhone 18 Pro Max 256GB",
+    "titulo": "Apple iPhone 18 Pro Max 256GB Pantalla 6,9 Pulgadas Chip A20 Pro",
+    "especificaciones": "El Apple iPhone 18 Pro Max cuenta con una pantalla Super Retina XDR OLED de 6,9 pulgadas con tecnología ProMotion de hasta 120 Hz. Incorpora el chip Apple A20 Pro, fabricado con un proceso de 2 nanómetros, acompañado de una CPU de seis núcleos y una GPU de siete núcleos. En el apartado fotográfico, dispone de un sistema de cámaras Pro Fusion de 48 MP con apertura variable y un teleobjetivo Fusion de 48 MP con zoom óptico de 4x. Ofrece Apple Intelligence e iOS 27, junto con opciones de almacenamiento de 256 GB, 512 GB, 1 TB y 2 TB. Su autonomía alcanza hasta 29 horas de uso normal.",
+    "precio": "1619.00€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://tiendamovilspain.com/blog/mejores-iphone-de-2026-comparativa-y-cual-comprar-b99.html",
+      "https://www.applesfera.com/seleccion/que-iphone-comprar-1",
+      "https://www.xataka.com/moviles/iphone-18-pro-iphone-18-pro-max-caracteristicas-precio-ficha-tecnica",
+      "https://www.apple.com/es/newsroom/2026/09/apple-debuts-iphone-18-pro-and-iphone-18-pro-max",
+      "https://www.youtube.com/watch?v=w-h9RML1Rn0&vl=en-US",
+      "https://www.youtube.com/watch?v=1tMvkkIuk0E"
+    ],
+    "descubierto_el": "2026-11-18",
+    "verificar": true,
+    "publicado_el": "2026-11-18"
+  },
+  {
+    "marca": "Apple",
+    "modelo_corto": "iPhone Air",
+    "busqueda": "Apple iPhone Air 256GB",
+    "titulo": "Apple iPhone Air 256GB Pantalla 6,5 Pulgadas Chip A20 Pro",
+    "especificaciones": "El Apple iPhone Air destaca por su diseño ultrafino con un grosor de 5,6 mm. Incorpora una pantalla OLED de 6,5 pulgadas con 120 Hz y 3.000 nits de brillo máximo. Cuenta con el procesador Apple A19 Pro, 12 GB de RAM y opciones de almacenamiento de 256 GB y 512 GB. En su parte trasera incluye una cámara principal de 48 Mpx con zoom óptico x2, mientras que la cámara delantera es de 18 Mpx. Su batería ofrece una autonomía de hasta 27 horas.",
+    "precio": "1319.00€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://tiendamovilspain.com/blog/mejores-iphone-de-2026-comparativa-y-cual-comprar-b99.html",
+      "https://www.applesfera.com/seleccion/que-iphone-comprar-1",
+      "https://www.xataka.com/moviles/iphone-18-pro-iphone-18-pro-max-caracteristicas-precio-ficha-tecnica",
+      "https://www.apple.com/es/newsroom/2026/09/apple-debuts-iphone-18-pro-and-iphone-18-pro-max",
+      "https://www.youtube.com/watch?v=w-h9RML1Rn0&vl=en-US",
+      "https://www.youtube.com/watch?v=1tMvkkIuk0E"
+    ],
+    "descubierto_el": "2026-11-18",
+    "verificar": true,
+    "publicado_el": "2026-11-18"
+  },
+  {
+    "marca": "Apple",
+    "modelo_corto": "iPhone 17e",
+    "busqueda": "Apple iPhone 17e 256GB",
+    "titulo": "Apple iPhone 17e 256GB Pantalla 6,1 Pulgadas Chip A19",
+    "especificaciones": "El Apple iPhone 17e presenta un formato compacto con una pantalla OLED de 6,1 pulgadas, 60 Hz y 1.200 nits de brillo. Integra el procesador Apple A19 junto con 8 GB de RAM y capacidades de almacenamiento de 256 GB y 512 GB. En el apartado fotográfico cuenta con una cámara trasera principal de 48 Mpx con zoom óptico x2 y una cámara delantera de 12 Mpx. Proporciona una batería con una duración de hasta 26 horas y compatibilidad con Apple Intelligence.",
+    "precio": "859.00€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://tiendamovilspain.com/blog/mejores-iphone-de-2026-comparativa-y-cual-comprar-b99.html",
+      "https://www.applesfera.com/seleccion/que-iphone-comprar-1",
+      "https://www.xataka.com/moviles/iphone-18-pro-iphone-18-pro-max-caracteristicas-precio-ficha-tecnica",
+      "https://www.apple.com/es/newsroom/2026/09/apple-debuts-iphone-18-pro-and-iphone-18-pro-max",
+      "https://www.youtube.com/watch?v=w-h9RML1Rn0&vl=en-US",
+      "https://www.youtube.com/watch?v=1tMvkkIuk0E"
+    ],
+    "descubierto_el": "2026-11-18",
+    "verificar": true,
+    "publicado_el": "2026-11-18"
+  }
+]

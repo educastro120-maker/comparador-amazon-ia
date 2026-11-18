@@ -1165,40 +1165,6 @@
       "smartphones-calidad-precio"
     ]
   },
-  "coros-pace-4": {
-    "categoria": "smartwatch",
-    "marca": "COROS",
-    "modelo": "PACE 4",
-    "titulo": "COROS PACE 4 - Reloj GPS de Running Ultraligero con Pantalla AMOLED, GPS de Doble Frecuencia, 5 ATM y hasta 41 Horas de Batería",
-    "url_post": "https://topcomparador.es/?p=1460",
-    "post_id": 1460,
-    "link_afiliado": "https://www.amazon.es/s?k=COROS+PACE+4&tag=topcomparad00-21",
-    "tiene_link_corto": false,
-    "precio": "269.00€",
-    "imagen": "",
-    "tiene_imagen": false,
-    "resumen": "El COROS PACE 4 se posiciona como la referencia absoluta en el segmento de relojes deportivos de gama media, ofreciendo un equilibrio técnico difícil de igualar. Su integración de GPS de doble frecuencia garantiza una precisión milimétrica en entornos urbanos densos o bosques cerrados, superando a competidores de mayor coste. Con un peso pluma de solo 27 gramos, su diseño ergonómico es ideal para ",
-    "badge": "MEJOR RELACIÓN CALIDAD-PRECIO PARA RUNNING",
-    "puntuacion": 9.3,
-    "fecha": "2026-11-17"
-  },
-  "garmin-forerunner-970": {
-    "categoria": "smartwatch",
-    "marca": "Garmin",
-    "modelo": "Forerunner 970",
-    "titulo": "Garmin Forerunner 970 - Reloj GPS Multideporte Premium para Triatlón, Ciclismo y Running con Pantalla AMOLED, GPS Multibanda y Mapas",
-    "url_post": "https://topcomparador.es/?p=1461",
-    "post_id": 1461,
-    "link_afiliado": "https://www.amazon.es/s?k=Garmin+Forerunner+970&tag=topcomparad00-21",
-    "tiene_link_corto": false,
-    "precio": "749.99€",
-    "imagen": "",
-    "tiene_imagen": false,
-    "resumen": "El Garmin Forerunner 970 se posiciona como la herramienta definitiva para atletas de alto rendimiento que exigen precisión absoluta en triatlón, ciclismo y running. Este dispositivo integra la tecnología más avanzada de la serie fēnix en un formato optimizado, destacando por su vibrante pantalla AMOLED y un sistema de GPS multibanda que garantiza una precisión milimétrica en entornos complejos. Su",
-    "badge": "REFERENCIA MULTIDEPORTE PREMIUM",
-    "puntuacion": 9.3,
-    "fecha": "2026-11-17"
-  },
   "garmin-swim-2": {
     "categoria": "smartwatch",
     "marca": "Garmin",
@@ -1258,5 +1224,96 @@
     "rankings_sincronizados": [
       "smartwatches-mejor-por-deporte"
     ]
+  },
+  "coros-pace-4": {
+    "categoria": "smartwatch",
+    "marca": "COROS",
+    "modelo": "PACE 4",
+    "titulo": "COROS PACE 4 - Reloj GPS de Running Ultraligero con Pantalla AMOLED, GPS de Doble Frecuencia, 5 ATM y hasta 41 Horas de Batería",
+    "url_post": "https://topcomparador.es/analisis-y-opinion-coros-pace-4-reloj-gps-de-running-ultraligero-con-pantalla-amoled-gps-de-doble-frecuencia-5-atm-y-hasta-41-horas-de-bateria/",
+    "post_id": 1227,
+    "link_afiliado": "https://www.amazon.es/s?k=COROS+PACE+4&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "269.00€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "",
+    "badge": "",
+    "puntuacion": null,
+    "fecha": "2026-11-18",
+    "rankings_sincronizados": [
+      "smartwatches-mejor-por-deporte"
+    ]
+  },
+  "garmin-forerunner-970": {
+    "categoria": "smartwatch",
+    "marca": "Garmin",
+    "modelo": "Forerunner 970",
+    "titulo": "Garmin Forerunner 970 - Reloj GPS Multideporte Premium para Triatlón, Ciclismo y Running con Pantalla AMOLED, GPS Multibanda y Mapas",
+    "url_post": "https://topcomparador.es/analisis-y-opinion-garmin-forerunner-970-reloj-gps-multideporte-premium-para-triatlon-ciclismo-y-running-con-pantalla-amoled-gps-multibanda-y-mapas/",
+    "post_id": 1228,
+    "link_afiliado": "https://www.amazon.es/s?k=Garmin+Forerunner+970&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "749.99€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "",
+    "badge": "",
+    "puntuacion": null,
+    "fecha": "2026-11-18",
+    "rankings_sincronizados": [
+      "smartwatches-mejor-por-deporte"
+    ]
+  },
+  "apple-iphone-18-pro-max": {
+    "categoria": "smartphone",
+    "marca": "Apple",
+    "modelo": "iPhone 18 Pro Max",
+    "titulo": "Apple iPhone 18 Pro Max 256GB Pantalla 6,9 Pulgadas Chip A20 Pro",
+    "url_post": "https://topcomparador.es/?p=1464",
+    "post_id": 1464,
+    "link_afiliado": "https://www.amazon.es/s?k=Apple+iPhone+18+Pro+Max+256GB&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "1619.00€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "El Apple iPhone 18 Pro Max redefine los estándares de la industria móvil al integrar el revolucionario chip Apple A20 Pro de 2 nanómetros, diseñado para ofrecer un rendimiento sin precedentes y una eficiencia energética óptima. Su impresionante pantalla Super Retina XDR OLED de 6,9 pulgadas con tecnología ProMotion de hasta 120 Hz garantiza una fluidez absoluta en cada interacción. Equipado con un",
+    "badge": "MÁXIMA POTENCIA Y TECNOLOGÍA APPLE",
+    "puntuacion": 9.4,
+    "fecha": "2026-11-18"
+  },
+  "apple-iphone-air": {
+    "categoria": "smartphone",
+    "marca": "Apple",
+    "modelo": "iPhone Air",
+    "titulo": "Apple iPhone Air 256GB Pantalla 6,5 Pulgadas Chip A20 Pro",
+    "url_post": "https://topcomparador.es/?p=1465",
+    "post_id": 1465,
+    "link_afiliado": "https://www.amazon.es/s?k=Apple+iPhone+Air+256GB&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "1319.00€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "El Apple iPhone Air redefine los estándares de la industria móvil al combinar un perfil extraordinariamente ultrafino de tan solo 5,6 milímetros con un rendimiento de auténtica vanguardia. Su deslumbrante pantalla OLED de 6,5 pulgadas con 120 Hz y un brillo pico de 3.000 nits ofrece una experiencia visual sobresaliente. En su interior, el potente chip Apple A19 Pro respaldado por 12 GB de RAM gara",
+    "badge": "MÁXIMA INNOVACIÓN EN DISEÑO",
+    "puntuacion": 9.4,
+    "fecha": "2026-11-18"
+  },
+  "apple-iphone-17e": {
+    "categoria": "smartphone",
+    "marca": "Apple",
+    "modelo": "iPhone 17e",
+    "titulo": "Apple iPhone 17e 256GB Pantalla 6,1 Pulgadas Chip A19",
+    "url_post": "https://topcomparador.es/?p=1466",
+    "post_id": 1466,
+    "link_afiliado": "https://www.amazon.es/s?k=Apple+iPhone+17e+256GB&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "859.00€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "El Apple iPhone 17e se posiciona como una propuesta de valor excepcional dentro del ecosistema de Apple, combinando un diseño ergonómico y compacto con la potencia bruta del chip A19. Este dispositivo está diseñado para usuarios que priorizan la eficiencia y la integración total con Apple Intelligence, ofreciendo una experiencia de usuario fluida y optimizada. Con una pantalla OLED de 6,1 pulgadas",
+    "badge": "COMPACTO DE ALTO RENDIMIENTO",
+    "puntuacion": 9.4,
+    "fecha": "2026-11-18"
   }
 }
