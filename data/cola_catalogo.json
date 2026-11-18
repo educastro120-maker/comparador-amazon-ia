@@ -70,5 +70,53 @@
     "descubierto_el": "2026-11-18",
     "verificar": true,
     "publicado_el": "2026-11-18"
+  },
+  {
+    "marca": "Samsung",
+    "modelo_corto": "Galaxy S26+",
+    "busqueda": "Samsung Galaxy S26+",
+    "titulo": "Samsung Galaxy S26+ Pantalla QHD+ Dynamic AMOLED 2X de 6.7 pulgadas y Snapdragon 8 Elite Gen 5",
+    "especificaciones": "El Galaxy S26+ incluye una pantalla QHD+ Dynamic AMOLED 2X de 6.7 pulgadas con un brillo máximo de 2.600 nits y frecuencia de actualización adaptativa de 120 Hz. Funciona con el procesador Qualcomm Snapdragon 8 Elite Gen 5 y Android 16, disponiendo de una cámara frontal de 12 MP y sistema de triple cámara trasera con gran angular de 50 MP, ultra gran angular de 12 MP y teleobjetivo de 10 MP, además de una batería de 4.900 mAh.",
+    "precio": "Consultar",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.xatakamovil.com/guias-de-compra/mejor-movil-samsung-calidad-precio",
+      "https://www.xataka.com/seleccion/que-movil-samsung-comprar-2026-recomendacion-cada-rango-precio",
+      "https://www.vodafone.es/c/conectate/dispositivos/mejores-moviles-samsung",
+      "https://es.t-mobile.com/dialed-in/devices/best-samsung-phones",
+      "https://www.samsung.com/es/smartphones/galaxy-s26-ultra",
+      "https://www.samsung.com/es/smartphones/galaxy-s26"
+    ],
+    "descubierto_el": "2026-11-18",
+    "verificar": true,
+    "publicado_el": "2026-11-18"
+  },
+  {
+    "marca": "Samsung",
+    "modelo_corto": "Galaxy Watch Ultra 2 LTE 47mm",
+    "busqueda": "Samsung Galaxy Watch Ultra 2 LTE 47mm",
+    "titulo": "Samsung Galaxy Watch Ultra 2 LTE 47mm - Smartwatch Deportivo, Pantalla 1.5\" Super AMOLED, Batería 800 mAh, Caja de Titánio",
+    "especificaciones": "El smartwatch Samsung Galaxy Watch Ultra 2 LTE 47mm cuenta con pantalla Super AMOLED de 1,5 pulgadas y resolución de 498x498 píxeles. Incorpora el procesador Snapdragon Wear Elite de 3 nm, acompañado por 2 GB de memoria y 64 GB de almacenamiento. Su batería tiene una capacidad de 800 mAh, ofreciendo una autonomía de hasta 80 horas o 60 horas con AOD. Dispone de conectividad LTE, Wi-Fi de 2,4 GHz + 5 GHz, Bluetooth 6.0, NFC y GPS de doble frecuencia L1 + L5. Su chasis de titanio aeroespacial cuenta con certificación para buceo de 40m y un peso de 61,5g. Integra sensores como el sensor Samsung BioActive, sensor de temperatura, acelerómetro, barómetro, giroscopio, sensor geomagnético y sensor de luz.",
+    "precio": "265.20€",
+    "categoria": "smartwatch",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://news.samsung.com/es/samsung-presenta-galaxy-watch-ultra2-y-galaxy-watch9-tus-aliados-para-cuidar-de-tu-salud-desde-la-muneca",
+      "https://www.vodafone.es/c/conectate/dispositivos/mejores-relojes-con-esim",
+      "https://www.chollometro.com/categorias/smartwatch-samsung",
+      "https://www.correrunamaraton.com/comparar/relojes/samsung-galaxy-watch-6",
+      "https://www.samsung.com/es/watches/all-watches",
+      "https://www.youtube.com/watch?v=00WQacQ0jjY&vl=en-US"
+    ],
+    "descubierto_el": "2026-11-18",
+    "verificar": true,
+    "publicado_el": "2026-11-18"
   }
 ]
