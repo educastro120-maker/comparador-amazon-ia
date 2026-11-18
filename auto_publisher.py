@@ -154,12 +154,16 @@ def registrar_publicado(pid, producto, url_post, affiliate_link, post_id=None, d
     guardar_json(RUTA_PUBLICADOS, registro)
 
 
+_wp = {"completo": False, "ids": set()}   # ¿se leyó bien la lista de entradas de WordPress? y los IDs que existen
+
+
 def titulos_publicados_en_wp():
     """
     Lee los títulos de las entradas que YA existen en WordPress (una vez por ejecución) para reconocer
     productos publicados antes de que existiera la memoria y no duplicarlos. Devuelve {titulo_slug: {link, id}}.
     """
     titulos = {}
+    _wp["completo"], _wp["ids"] = False, set()
     try:
         pagina = 1
         while pagina <= 20:
@@ -172,11 +176,14 @@ def titulos_publicados_en_wp():
                 break
             lote = res.json()
             if not lote:
+                _wp["completo"] = True
                 break
             for p in lote:
+                _wp["ids"].add(p.get("id"))
                 t = (p.get("title") or {}).get("raw") or ""
                 titulos[slugify(t)] = {"link": p.get("link", ""), "id": p.get("id"), "titulo": t}
             if len(lote) < 100:
+                _wp["completo"] = True
                 break
             pagina += 1
     except (requests.RequestException, ValueError) as err:
@@ -232,9 +239,22 @@ def buscar_post_existente(producto, titulos_wp):
     return None, ""
 
 
+def olvidar_publicado(pid):
+    reg = cargar_json(RUTA_PUBLICADOS, {})
+    if pid in reg:
+        del reg[pid]
+        guardar_json(RUTA_PUBLICADOS, reg)
+
+
 def producto_ya_publicado(pid, producto, registro, titulos_wp):
     """True si el producto está en la memoria, en tu lista data/ya_creados.txt o ya existe su entrada en WordPress."""
-    if pid in registro:
+    reg = registro.get(pid)
+    if isinstance(reg, dict) and reg.get("post_id") and _wp["completo"] and reg["post_id"] not in _wp["ids"]:
+        # La entrada que recordábamos ya no existe en WordPress (la borraste). Se olvida y se vuelve a evaluar.
+        print(f"♻️ {producto['marca']} {producto['modelo_corto']}: su entrada (ID {reg['post_id']}) ya no existe en WordPress. Se revisa de nuevo.")
+        olvidar_publicado(pid)
+        registro.pop(pid, None)
+    elif pid in registro:
         return True
     info, modo = buscar_post_existente(producto, titulos_wp)
     if info:
@@ -324,7 +344,7 @@ def sincronizar_taxonomias():
             res = requests.get(f"{WP_URL}/wp-json/wp/v2/posts/{r['post_id']}", params={"context": "edit", "_fields": "tags"},
                                auth=(WP_USER, WP_APP_PASSWORD), timeout=20)
             if res.status_code != 200:
-                print(f"   ⚠️ No se pudo leer la entrada {r['post_id']} ({res.status_code}).")
+                print(f"   ⚠️ No se pudo leer la entrada {r['post_id']} de {r.get('marca', '')} {r.get('modelo', '')} ({res.status_code}).")
                 continue
             actuales = res.json().get("tags", [])
             nuevas_ids = [i for i in (obtener_o_crear_etiqueta(rk["etiqueta"]) for rk in faltan) if i]
