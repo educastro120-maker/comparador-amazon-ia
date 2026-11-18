@@ -9,6 +9,9 @@ on:
       estado_entradas:
         description: "draft (borrador) o publish (publicada)"
         default: "draft"
+      solo_categoria:
+        description: "smartwatch, smartphone o todas"
+        default: "todas"
       forzar_rankings:
         description: "Rankings a (re)generar como borrador: ids separados por coma, o 'todos'"
         default: ""
@@ -34,6 +37,7 @@ jobs:
       WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
       MAX_NUEVOS: ${{ github.event.inputs.max_nuevos || '2' }}
       ESTADO_ENTRADAS: ${{ github.event.inputs.estado_entradas || 'draft' }}
+      SOLO_CATEGORIA: ${{ github.event.inputs.solo_categoria || 'todas' }}
       FORZAR_RANKINGS: ${{ github.event.inputs.forzar_rankings || '' }}
     steps:
       - uses: actions/checkout@v4
