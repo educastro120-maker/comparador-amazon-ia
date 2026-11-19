@@ -1,0 +1,17 @@
+name: Prueba de programacion (borrar despues)
+
+# Workflow de diagnostico: NO publica nada ni usa ninguna clave. Solo escribe la hora.
+# Sirve para comprobar si GitHub ejecuta tareas programadas en este repositorio.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"   # cada 30 minutos (hora UTC)
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Evento: ${{ github.event_name }}"
+          echo "Hora UTC: $(date -u)"
+          echo "Rama: ${{ github.ref_name }}"
