@@ -5,7 +5,7 @@ name: Prueba de programacion (borrar despues)
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/30 * * * *"   # cada 30 minutos (hora UTC)
+    - cron: "*/10 * * * *"   # cada 10 minutos (hora UTC)
 
 jobs:
   ping:
