@@ -10,10 +10,16 @@ on:
         description: "prueba (no toca nada), si (aplica) o restaurar (deshace)"
         default: "prueba"
       lote:
-        description: "Cuántas entradas retocar en esta ejecución"
-        default: "10"
+        description: "Cuántas entradas retocar en esta ejecución (un número, o todas)"
+        default: "todas"
+      ids:
+        description: "IDs de entrada de WordPress separados por coma (ej. 1234,1240). Vacío = todas las pendientes"
+        default: ""
       ranking:
-        description: "Solo los productos de este Top 10 (id de data/rankings.json) o vacío para todos"
+        description: "Opcional: id de TEXTO de un Top 10 (ej. smartwatches-mejor-bateria), NO un ID numérico"
+        default: ""
+      categoria:
+        description: "Opcional: smartwatch o smartphone. Vacío = todas"
         default: ""
       acciones:
         description: "titulo, video o titulo,video"
@@ -43,7 +49,9 @@ jobs:
       YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
       RETOCAR_MODO: ${{ github.event.inputs.modo }}
       LOTE: ${{ github.event.inputs.lote }}
+      IDS: ${{ github.event.inputs.ids }}
       RANKING: ${{ github.event.inputs.ranking }}
+      CATEGORIA: ${{ github.event.inputs.categoria }}
       ACCIONES: ${{ github.event.inputs.acciones }}
       ESTADOS: ${{ github.event.inputs.estados }}
       RESTAURAR_IDS: ${{ github.event.inputs.restaurar_ids }}
