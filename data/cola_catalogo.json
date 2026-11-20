@@ -166,5 +166,100 @@
     "descubierto_el": "2026-11-18",
     "verificar": true,
     "publicado_el": "2026-11-18"
+  },
+  {
+    "marca": "POCO",
+    "modelo_corto": "F7 Ultra",
+    "busqueda": "POCO F7 Ultra",
+    "titulo": "POCO F7 Ultra Procesador Snapdragon 8 Elite Pantalla 1440x3200",
+    "especificaciones": "El terminal cuenta con un panel OLED de 6.67 pulgadas con una resolución de 1440x3200 píxeles y una tasa de refresco de 120 Hz, protegido con Longjing Glass V2. En su interior integra el procesador Qualcomm Snapdragon 8 Elite, acompañado de configuraciones de 12GB o 16GB de RAM y opciones de almacenamiento de 256GB, 512GB o 1TB UFS 4.0. En el apartado fotográfico dispone de una cámara principal de 50 MP, un telefoto de 50 MP con zoom 2.5x y un ultra gran angular de 32 MP. Su batería tiene una capacidad de 5.300 mAh y soporta carga rápida de 120W. Funciona con Android 15 bajo la capa HyperOS 2 y ofrece certificación de resistencia IP68, además de conectividad Wi-Fi 7 y Bluetooth 6.0.",
+    "precio": "749.00€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.larazon.es/tecnologia-consumo/compras/guia-compra-moviles-pocophone_202501276a955d604941316b1e720ea9.html",
+      "https://www.movilzona.es/reportajes/listas/moviles-poco",
+      "https://androidpremium.es/mejores-poco-2026-cual-comprar",
+      "https://tiendamovilspain.com/blog/mejores-moviles-xiaomi-2026-xiaomi-redmi-y-poco-b93.html",
+      "https://www.mundoxiaomi.com/noticias/nuevo-poco-x8-pro-caracteristicas-precio-ficha-tecnica",
+      "https://www.youtube.com/watch?v=tUDEBQOvKwA"
+    ],
+    "descubierto_el": "2026-11-20",
+    "verificar": true,
+    "publicado_el": "2026-11-20"
+  },
+  {
+    "marca": "POCO",
+    "modelo_corto": "F7 Pro",
+    "busqueda": "POCO F7 Pro",
+    "titulo": "POCO F7 Pro Pantalla OLED 120 Hz Batería 6000 mAh",
+    "especificaciones": "Este dispositivo incorpora una pantalla OLED de 6.67 pulgadas con resolución de 1440x3200 píxeles, frecuencia de actualización de 120 Hz y protección Gorilla Glass 7i. Incorpora el procesador Qualcomm Snapdragon 8 Gen 3, junto con memorias RAM de 12GB o 16GB y capacidades de almacenamiento UFS 4.0 de 256GB, 512GB o 1TB. Su configuración de cámaras traseras incluye un sensor principal de 50 MP, un ultra gran angular de 8 MP y zoom digital de hasta 30x. Cuenta con una batería de 6.000 mAh dotada de carga rápida de 90W. Trabaja con Android 15 y HyperOS 2, dispone de protección IP68 e incluye conectividad Wi-Fi 6 y Bluetooth 5.3.",
+    "precio": "599.00€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.larazon.es/tecnologia-consumo/compras/guia-compra-moviles-pocophone_202501276a955d604941316b1e720ea9.html",
+      "https://www.movilzona.es/reportajes/listas/moviles-poco",
+      "https://androidpremium.es/mejores-poco-2026-cual-comprar",
+      "https://tiendamovilspain.com/blog/mejores-moviles-xiaomi-2026-xiaomi-redmi-y-poco-b93.html",
+      "https://www.mundoxiaomi.com/noticias/nuevo-poco-x8-pro-caracteristicas-precio-ficha-tecnica",
+      "https://www.youtube.com/watch?v=tUDEBQOvKwA"
+    ],
+    "descubierto_el": "2026-11-20",
+    "verificar": true,
+    "publicado_el": "2026-11-20"
+  },
+  {
+    "marca": "POCO",
+    "modelo_corto": "F8 Ultra",
+    "busqueda": "POCO F8 Ultra",
+    "titulo": "POCO F8 Ultra Pantalla HyperRGB Snapdragon 8 Elite Gen 5",
+    "especificaciones": "El modelo de gama alta cuenta con una pantalla HyperRGB de 6.9 pulgadas con tasa de refresco de 120 Hz. Está impulsado por el procesador Snapdragon 8 Elite Gen 5 con el chipset VisionBoost D8 y ofrece refrigeración avanzada. Su sistema de cámaras incluye un sensor principal de 50 MP con estabilización óptica, un teleobjetivo de 50 MP y un ultra gran angular de 8 MP, permitiendo grabación de vídeo en 8K a 30 fps y 4K a 60 fps. Dispone de una batería de 6.500 mAh con soporte para carga rápida de 100W y carga inalámbrica de 50W.",
+    "precio": "Consultar",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "pendiente",
+    "fuentes": [
+      "https://www.larazon.es/tecnologia-consumo/compras/guia-compra-moviles-pocophone_202501276a955d604941316b1e720ea9.html",
+      "https://www.movilzona.es/reportajes/listas/moviles-poco",
+      "https://androidpremium.es/mejores-poco-2026-cual-comprar",
+      "https://tiendamovilspain.com/blog/mejores-moviles-xiaomi-2026-xiaomi-redmi-y-poco-b93.html",
+      "https://www.mundoxiaomi.com/noticias/nuevo-poco-x8-pro-caracteristicas-precio-ficha-tecnica",
+      "https://www.youtube.com/watch?v=tUDEBQOvKwA"
+    ],
+    "descubierto_el": "2026-11-20",
+    "verificar": true
+  },
+  {
+    "marca": "POCO",
+    "modelo_corto": "X8 Pro",
+    "busqueda": "POCO X8 Pro",
+    "titulo": "POCO X8 Pro Pantalla AMOLED 1.5K 120 Hz Batería 6500 mAh",
+    "especificaciones": "Este teléfono cuenta con unas dimensiones de 157.53 x 75.19 x 8.38 mm y un peso de 201,47 gramos. Su pantalla AMOLED ultra-brillante mide 6.59 pulgadas, ofrece una resolución de 1.5K de 2.756 x 1.268 píxeles, tasa de refresco de 120 Hz, muestreo táctil de 480 Hz con picos instantáneos de hasta 2560 Hz, profundidad de 12 bits con 68 mil millones de colores, gama DCI-P3, brillo pico de 3.500 nits, atenuación PWM de 3.840 Hz, compatibilidad con HDR10+ y Dolby Vision, y protección Corning Gorilla Glass 7i. Está gobernado por el procesador MediaTek Dimensity 8500-Ultra de 4 nm, acompañado por opciones de 8 o 12 GB de RAM LPDDR5X y almacenamiento UFS 4.1 de 256 o 512 GB. Su sistema fotográfico trasero se compone de una cámara principal Sony IMX882 de 50 MP con apertura f/1.5 y estabilización óptica OIS, además de un ultra gran angular de 8 MP con f/2.2. Integra una batería de 6.500 mAh. Funciona con el sistema operativo Xiaomi HyperOS 3 e incluye conectividad Dual SIM 5G, Wi-Fi 6, Bluetooth 6.0, GPS, Galileo, GLONASS, BeiDou, NavIC, NFC, infrarrojos y puerto USB tipo C. Presenta certificación de resistencia IP68, altavoces estéreo con Dolby Atmos, sistema de refrigeración POCO 3D IceLoop, sensor de huellas en pantalla y Xiaomi Offline Communication.",
+    "precio": "399.00€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.larazon.es/tecnologia-consumo/compras/guia-compra-moviles-pocophone_202501276a955d604941316b1e720ea9.html",
+      "https://www.movilzona.es/reportajes/listas/moviles-poco",
+      "https://androidpremium.es/mejores-poco-2026-cual-comprar",
+      "https://tiendamovilspain.com/blog/mejores-moviles-xiaomi-2026-xiaomi-redmi-y-poco-b93.html",
+      "https://www.mundoxiaomi.com/noticias/nuevo-poco-x8-pro-caracteristicas-precio-ficha-tecnica",
+      "https://www.youtube.com/watch?v=tUDEBQOvKwA"
+    ],
+    "descubierto_el": "2026-11-20",
+    "verificar": true,
+    "publicado_el": "2026-11-20"
   }
 ]
