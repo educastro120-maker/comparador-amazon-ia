@@ -201,6 +201,10 @@ def quitar_titulo_duplicado(contenido, nombre):
     return contenido, False
 
 
+def nombre_para(p, reg, titulo):
+    return f"{reg[1].get('marca', '')} {reg[1].get('modelo', '')}".strip() if reg else nombre_desde_titulo(titulo)
+
+
 def restaurar(registro, retocadas):
     if "todos" in RESTAURAR_IDS:
         ids = [f[:-5] for f in os.listdir(CARPETA_COPIAS) if f.endswith(".html")] if os.path.isdir(CARPETA_COPIAS) else []
@@ -269,7 +273,12 @@ def main():
             fuera_estado += 1
             continue
         est = reg[1] if reg else retocadas.setdefault(str(pid_wp), {})
-        if est.get("retocado") and not ids_explicitos:
+        # Se decide por el CONTENIDO real de la entrada, no por marcas antiguas de la memoria
+        tiene_video = bool(re.search(r"youtube(-nocookie)?\.com/embed|youtu\.be/|tc-video", contenido))
+        necesita_titulo = "titulo" in ACCIONES and quitar_titulo_duplicado(contenido, nombre_para(p, reg, titulo))[1]
+        necesita_video = (av is not None and "video" in ACCIONES and not tiene_video
+                          and (ids_explicitos or est.get("video_estado") not in ("sin_resultado", "manual")))
+        if not (necesita_titulo or necesita_video) and not ids_explicitos:
             ya_retocadas += 1
             continue
         cats = [nombres_cat.get(c, "").lower() for c in p.get("categories", [])]
@@ -288,7 +297,7 @@ def main():
     print(f"{'🧪 MODO PRUEBA (no se toca nada)' if PRUEBA else '✏️ MODO REAL'} | acciones: {', '.join(sorted(ACCIONES))} | "
           f"estados: {', '.join(sorted(ESTADOS))} | lote: {'todas' if LOTE >= 10**9 else LOTE}")
     print(f"📚 Entradas en WordPress: {len(posts)} | no parecen fichas de producto: {no_producto} | fuera de los estados elegidos: {fuera_estado} "
-          f"| ya retocadas: {ya_retocadas} | POR RETOCAR con tus filtros: {len(candidatos)}")
+          f"| ya correctas (sin doble título y con vídeo, o sin vídeo disponible): {ya_retocadas} | POR RETOCAR con tus filtros: {len(candidatos)}")
     if IDS:
         no_enc = [i for i in IDS if not i.isdigit() or int(i) not in {p['id'] for p in posts}]
         if no_enc:
@@ -322,7 +331,7 @@ def main():
                     cambios.append("título duplicado quitado")
 
             video, reintentar = None, False   # si YouTube falla, la entrada no se da por terminada
-            if video_activo and nombre and not est.get("video_id") and est.get("video_estado") != "manual":
+            if video_activo and nombre and (est.get("video_estado") != "manual") and (ids_explicitos or est.get("video_estado") != "sin_resultado"):
                 if re.search(r"youtube(-nocookie)?\.com/embed|youtu\.be/|tc-video", nuevo):
                     print("   ⏭️ Ya tiene un vídeo de YouTube: no se añade otro.")
                     est["video_estado"] = "manual"
