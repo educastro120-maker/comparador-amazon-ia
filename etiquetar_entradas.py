@@ -50,6 +50,8 @@ def main():
     lista = etiquetado.cargar()
     if not lista:
         sys.exit("❌ No hay data/etiquetas.json. Créalo (hay una plantilla) y vuelve a lanzar.")
+    registro = ap.cargar_json(ap.RUTA_PUBLICADOS, {})
+    por_post = {r["post_id"]: r for r in registro.values() if isinstance(r, dict) and r.get("post_id")}
     nombres_lista = {e["nombre"].strip().lower() for e in lista}
     tags = todos("tags", "id,name")
     cats = todos("categories", "id,name")
@@ -79,11 +81,10 @@ def main():
             break
         contenido = (p.get("content") or {}).get("raw", "")
         titulo = html.unescape((p.get("title") or {}).get("raw", ""))
-        m = re.search(r"Precio orientativo:\s*(?:<[^>]+>\s*)*([^<|]+)", contenido)
-        precio = m.group(1) if m else ""
+        precio = etiquetado.precio_de_contenido(contenido, por_post.get(p["id"], {}).get("precio", ""))
         nombres = etiquetado.nombres_para(cat, precio, f"{titulo}. {texto_limpio(contenido)}", ap.llamar_gemini_con_respaldo)
         ids = [id_tag[n.strip().lower()] for n in nombres if n.strip().lower() in id_tag]
-        print(f"📄 {titulo[:70]} (entrada {p['id']}) → {', '.join(nombres) or '(ninguna)'}")
+        print(f"📄 {titulo[:70]} (entrada {p['id']}) | precio leído: {precio.strip() or 'NO ENCONTRADO'} → {', '.join(nombres) or '(ninguna)'}")
         hechas += 1
         if PRUEBA or not ids:
             continue
