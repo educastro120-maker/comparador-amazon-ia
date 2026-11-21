@@ -1,6 +1,6 @@
 [
   {
-    "nombre": "Smartphones económicos (menos de 200€)",
+    "nombre": "Top Smartphones económicos (menos de 200€)",
     "categoria": "smartphone",
     "tipo": "precio",
     "criterio": "",
@@ -9,7 +9,7 @@
     "max": 200
   },
   {
-    "nombre": "Smartphones de gama media (entre 200€ y 500€)",
+    "nombre": "Top Smartphones gama media (entre 200€ y 500€)",
     "categoria": "smartphone",
     "tipo": "precio",
     "criterio": "",
@@ -18,7 +18,7 @@
     "max": 500
   },
   {
-    "nombre": "Smartphones de gama alta (más de 500€)",
+    "nombre": "Top smartphones gama alta (más de 500€)",
     "categoria": "smartphone",
     "tipo": "precio",
     "criterio": "",
@@ -27,7 +27,7 @@
     "max": ""
   },
   {
-    "nombre": "Smartwatches económicos (menos de 100€)",
+    "nombre": "Top smartwatches económicos (menos de 100€)",
     "categoria": "smartwatch",
     "tipo": "precio",
     "criterio": "",
@@ -36,7 +36,7 @@
     "max": 100
   },
   {
-    "nombre": "Smartwatches de gama media (entre 100€ y 300€)",
+    "nombre": "Top Smartwatches gama media (entre 100€ y 300€)",
     "categoria": "smartwatch",
     "tipo": "precio",
     "criterio": "",
@@ -45,7 +45,7 @@
     "max": 300
   },
   {
-    "nombre": "Smartwatches de gama alta (más de 300€)",
+    "nombre": "Top Smartwatches gama alta (más de 300€)",
     "categoria": "smartwatch",
     "tipo": "precio",
     "criterio": "",
@@ -83,13 +83,6 @@
   },
   {
     "nombre": "Top 10 smartwatches calidad-precio",
-    "categoria": "smartwatch",
-    "tipo": "criterio",
-    "criterio": "Muchas prestaciones (GPS, pulsómetro, AMOLED) a precio contenido",
-    "pagina": "manual"
-  },
-  {
-    "nombre": "Buenos smartwatches calidad-precio",
     "categoria": "smartwatch",
     "tipo": "criterio",
     "criterio": "Muchas prestaciones (GPS, pulsómetro, AMOLED) a precio contenido",
