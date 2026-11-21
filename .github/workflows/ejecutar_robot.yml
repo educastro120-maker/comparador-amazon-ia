@@ -5,7 +5,7 @@ on:
     inputs:
       max_nuevos:
         description: "Entradas nuevas a crear en esta ejecución"
-        default: "5"
+        default: "2"
       estado_entradas:
         description: "draft (borrador) o publish (publicada)"
         default: "draft"
@@ -41,12 +41,12 @@ jobs:
       WP_URL: ${{ secrets.WP_URL }}
       WP_USER: ${{ secrets.WP_USER }}
       WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
-      MAX_NUEVOS: ${{ github.event.inputs.max_nuevos || '5' }}
+      MAX_NUEVOS: ${{ github.event.inputs.max_nuevos || '2' }}
       ESTADO_ENTRADAS: ${{ github.event.inputs.estado_entradas || 'draft' }}
       SOLO_CATEGORIA: ${{ github.event.inputs.solo_categoria || 'todas' }}
       TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
       # Ejecuciones automáticas (sin formulario): 'prueba' hasta que cambies esta palabra por 'si'
-      DESCUBRIR_MODO: ${{ github.event.inputs.descubrir || 'si' }}
+      DESCUBRIR_MODO: ${{ github.event.inputs.descubrir || 'prueba' }}
       YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
       VIDEOS_MODO: ${{ github.event.inputs.videos || 'si' }}
       FORZAR_RANKINGS: ${{ github.event.inputs.forzar_rankings || '' }}
@@ -78,6 +78,10 @@ jobs:
       - name: 4) Generar páginas Top 10 en borrador
         continue-on-error: true
         run: python generar_rankings.py
+
+      - name: 5) Páginas Top 10 por etiqueta (borrador; se publican al llegar a 10)
+        continue-on-error: true
+        run: python generar_paginas_etiqueta.py
 
       - name: Guardar la memoria (carpeta data/)
         if: always()
