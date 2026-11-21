@@ -99,3 +99,19 @@ def nombres_para(categoria, precio, ficha_texto, llamar_ia):
     if not nombres:
         print("   ⚠️ Este producto se queda SIN etiqueta (precio no legible y ningún criterio encaja). Revísalo a mano.")
     return nombres
+
+
+def precio_de_contenido(contenido, precio_registro=""):
+    """Precio de una entrada: memoria del robot -> 'Precio orientativo' -> 'Precio ...: N €' -> primer 'N €' del texto."""
+    if a_numero(precio_registro):
+        return str(precio_registro)
+    texto = re.sub(r"<[^>]+>", " ", contenido or "")
+    texto = texto.replace("&nbsp;", " ").replace("&euro;", "€")
+    for patron in (r"Precio\s+orientativo\s*:?\s*(?:desde\s*)?(\d[\d.,]*\s*(?:€|EUR|euros)?)",
+                   r"Precio[^\d€]{0,40}?(\d[\d.,]*\s*€)",
+                   r"(\d[\d.,]*\s*€)",
+                   r"(€\s*\d[\d.,]*)"):
+        m = re.search(patron, texto, flags=re.I)
+        if m and a_numero(m.group(1)):
+            return m.group(1)
+    return ""
