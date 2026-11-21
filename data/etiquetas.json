@@ -1,0 +1,133 @@
+[
+  {
+    "nombre": "Smartphones económicos (menos de 200€)",
+    "categoria": "smartphone",
+    "tipo": "precio",
+    "criterio": "",
+    "pagina": "auto",
+    "min": 0,
+    "max": 200
+  },
+  {
+    "nombre": "Smartphones de gama media (entre 200€ y 500€)",
+    "categoria": "smartphone",
+    "tipo": "precio",
+    "criterio": "",
+    "pagina": "auto",
+    "min": 200,
+    "max": 500
+  },
+  {
+    "nombre": "Smartphones de gama alta (más de 500€)",
+    "categoria": "smartphone",
+    "tipo": "precio",
+    "criterio": "",
+    "pagina": "auto",
+    "min": 500,
+    "max": ""
+  },
+  {
+    "nombre": "Smartwatches económicos (menos de 100€)",
+    "categoria": "smartwatch",
+    "tipo": "precio",
+    "criterio": "",
+    "pagina": "auto",
+    "min": 0,
+    "max": 100
+  },
+  {
+    "nombre": "Smartwatches de gama media (entre 100€ y 300€)",
+    "categoria": "smartwatch",
+    "tipo": "precio",
+    "criterio": "",
+    "pagina": "auto",
+    "min": 100,
+    "max": 300
+  },
+  {
+    "nombre": "Smartwatches de gama alta (más de 300€)",
+    "categoria": "smartwatch",
+    "tipo": "precio",
+    "criterio": "",
+    "pagina": "auto",
+    "min": 300,
+    "max": ""
+  },
+  {
+    "nombre": "Top 10 novedades en Smartphones",
+    "categoria": "smartphone",
+    "tipo": "criterio",
+    "criterio": "Modelo presentado en los últimos 12 meses (año del modelo y chip lo indican con claridad)",
+    "pagina": "auto"
+  },
+  {
+    "nombre": "Top 10 novedades en Smartwatches",
+    "categoria": "smartwatch",
+    "tipo": "criterio",
+    "criterio": "Modelo presentado en los últimos 12 meses (año del modelo y chip lo indican con claridad)",
+    "pagina": "auto"
+  },
+  {
+    "nombre": "Top 10 smartphones con mejor cámara",
+    "categoria": "smartphone",
+    "tipo": "criterio",
+    "criterio": "Cámara principal y teleobjetivo destacados: sensor grande, estabilización óptica, zoom óptico o certificación/ajuste de marca fotográfica",
+    "pagina": "manual"
+  },
+  {
+    "nombre": "Top 10 Smartphones calidad-precio",
+    "categoria": "smartphone",
+    "tipo": "criterio",
+    "criterio": "Rendimiento y prestaciones muy por encima de lo habitual para su precio (gama media/alta a precio contenido)",
+    "pagina": "manual"
+  },
+  {
+    "nombre": "Top 10 smartwatches calidad-precio",
+    "categoria": "smartwatch",
+    "tipo": "criterio",
+    "criterio": "Muchas prestaciones (GPS, pulsómetro, AMOLED) a precio contenido",
+    "pagina": "manual"
+  },
+  {
+    "nombre": "Buenos smartwatches calidad-precio",
+    "categoria": "smartwatch",
+    "tipo": "criterio",
+    "criterio": "Muchas prestaciones (GPS, pulsómetro, AMOLED) a precio contenido",
+    "pagina": "manual"
+  },
+  {
+    "nombre": "Top 10 smartwatches con mejor batería",
+    "categoria": "smartwatch",
+    "tipo": "criterio",
+    "criterio": "Autonomía de 5 días o más en uso típico",
+    "pagina": "manual"
+  },
+  {
+    "nombre": "Top 10 Smartwatches más potentes y de gama alta",
+    "categoria": "smartwatch",
+    "tipo": "criterio",
+    "criterio": "Gama alta: materiales premium (titanio, zafiro), procesador potente, muchas funciones de salud y deporte",
+    "pagina": "manual"
+  },
+  {
+    "nombre": "Top 10 Smartwatches para deportes",
+    "categoria": "smartwatch",
+    "tipo": "criterio",
+    "criterio": "Orientado al deporte: GPS multibanda, muchos modos deportivos, resistencia, métricas avanzadas de entrenamiento",
+    "pagina": "manual"
+  },
+  {
+    "nombre": "Top 10 smartwatches para mayores con detección de caídas",
+    "categoria": "smartwatch",
+    "tipo": "criterio",
+    "criterio": "Detección de caídas, pantalla legible, alertas SOS o funciones de salud pensadas para mayores",
+    "pagina": "manual"
+  },
+  {
+    "nombre": "Top 10 Smartphones más vendidos en España",
+    "categoria": "smartphone",
+    "tipo": "manual",
+    "criterio": "",
+    "pagina": "manual"
+  }
+]
