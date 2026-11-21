@@ -88,6 +88,9 @@ RE_ASIN = re.compile(r"^[A-Z0-9]{10}$")
 _estado = {"gemini_agotado": False, "groq_agotado": False, "modelos_descartados": set()}
 
 
+import etiquetado   # etiquetas SOLO de tu lista (data/etiquetas.json)
+
+
 def slugify(texto):
     """'Fitbit Versa 4' -> 'fitbit-versa-4'. Sirve como identificador único de cada producto."""
     texto = unicodedata.normalize("NFKD", str(texto)).encode("ascii", "ignore").decode()
@@ -304,7 +307,9 @@ def obtener_o_crear_etiqueta(nombre):
                 if html.unescape(t.get("name", "")).strip().lower() == nombre.strip().lower():
                     etiqueta_id = t["id"]
                     break
-        if etiqueta_id is None:
+        if etiqueta_id is None and etiquetado.activo():
+            print(f"   ⚠️ La etiqueta «{nombre}» NO existe en WordPress y el robot no crea etiquetas. Créala tú con ese nombre exacto.")
+        elif etiqueta_id is None:
             res = requests.post(endpoint, json={"name": nombre}, auth=(WP_USER, WP_APP_PASSWORD), timeout=15)
             if res.status_code == 201:
                 etiqueta_id = res.json()["id"]
@@ -823,7 +828,13 @@ def procesar_y_publicar(producto):
     """
 
     categoria_id = obtener_o_crear_categoria(categoria_str)
-    etiquetas_ids = etiquetas_para_producto(pid)   # NUEVO: etiquetas de los Top 10 en los que aparece
+    etiquetas_ids = etiquetas_para_producto(pid)   # etiquetas de los Top 10 de rankings.json en los que aparece
+    if etiquetado.activo():   # + etiquetas por precio y por criterio (solo de tu lista)
+        ficha = f"{producto['marca']} {producto['modelo_corto']} ({producto['titulo']}). Precio: {producto['precio']}. " + json.dumps(
+            {k: v for k, v in datos_ia.items() if k in ("resumen_ejecutivo", "specs", "pros", "contras", "badge")}, ensure_ascii=False)
+        nombres = etiquetado.nombres_para(categoria_str, producto["precio"], ficha, llamar_gemini_con_respaldo)
+        print(f"   🏷️ Etiquetas elegidas: {', '.join(nombres) or '(ninguna)'}")
+        etiquetas_ids = sorted(set(etiquetas_ids) | {i for i in (obtener_o_crear_etiqueta(n) for n in nombres) if i})
 
     meta_payload = {
         "top_marca": producto['marca'],
