@@ -56,16 +56,16 @@
   {
     "nombre": "Top 10 novedades en Smartphones",
     "categoria": "smartphone",
-    "tipo": "criterio",
+    "tipo": "manual",
     "criterio": "Modelo presentado en los últimos 12 meses (año del modelo y chip lo indican con claridad)",
-    "pagina": "auto"
+    "pagina": "manual"
   },
   {
     "nombre": "Top 10 novedades en Smartwatches",
     "categoria": "smartwatch",
-    "tipo": "criterio",
+    "tipo": "manual",
     "criterio": "Modelo presentado en los últimos 12 meses (año del modelo y chip lo indican con claridad)",
-    "pagina": "auto"
+    "pagina": "manual"
   },
   {
     "nombre": "Top 10 smartphones con mejor cámara",
@@ -113,7 +113,7 @@
     "nombre": "Top 10 smartwatches para mayores con detección de caídas",
     "categoria": "smartwatch",
     "tipo": "criterio",
-    "criterio": "Detección de caídas, pantalla legible, alertas SOS o funciones de salud pensadas para mayores",
+    "criterio": "Producto pensado expresamente para personas mayores (reloj o pulsera senior, localizador, SOS dedicado, pantalla y uso muy simples). No basta con tener detección de caídas",
     "pagina": "manual"
   },
   {
