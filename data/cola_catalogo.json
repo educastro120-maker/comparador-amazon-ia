@@ -226,7 +226,7 @@
     "link_afiliado": "",
     "asin": "",
     "imagen": "",
-    "estado": "pendiente",
+    "estado": "publicado",
     "fuentes": [
       "https://www.larazon.es/tecnologia-consumo/compras/guia-compra-moviles-pocophone_202501276a955d604941316b1e720ea9.html",
       "https://www.movilzona.es/reportajes/listas/moviles-poco",
@@ -236,7 +236,8 @@
       "https://www.youtube.com/watch?v=tUDEBQOvKwA"
     ],
     "descubierto_el": "2026-11-20",
-    "verificar": true
+    "verificar": true,
+    "publicado_el": "2026-11-21"
   },
   {
     "marca": "POCO",
