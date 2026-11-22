@@ -1,0 +1,100 @@
+{
+  "_ayuda": "Edita este archivo para activar/pausar categorías, cambiar prioridades o añadir nuevas. Mira categorias.py para ver los campos.",
+  "smartphone": {
+    "nombre": "Smartphones",
+    "descripcion": "smartphones (móviles)",
+    "activa": true,
+    "marcas_por_ejecucion": 2,
+    "marcas": [
+      "Apple",
+      "Samsung",
+      "Xiaomi",
+      "POCO",
+      "Redmi",
+      "Google Pixel",
+      "Motorola",
+      "OnePlus",
+      "OPPO",
+      "vivo",
+      "realme",
+      "Honor",
+      "Huawei",
+      "Nothing",
+      "ASUS",
+      "Sony",
+      "HMD",
+      "ZTE nubia",
+      "Tecno",
+      "Infinix"
+    ]
+  },
+  "smartwatch": {
+    "nombre": "Smartwatches",
+    "descripcion": "smartwatches y relojes deportivos con GPS",
+    "activa": true,
+    "marcas_por_ejecucion": 1,
+    "marcas": [
+      "Apple",
+      "Samsung",
+      "Garmin",
+      "Huawei",
+      "Xiaomi",
+      "Amazfit",
+      "COROS",
+      "Suunto",
+      "Polar",
+      "Google Pixel Watch",
+      "Honor",
+      "OnePlus",
+      "Withings",
+      "Mibro",
+      "CMF by Nothing",
+      "OPPO",
+      "realme",
+      "Fossil",
+      "Casio",
+      "Fitbit"
+    ]
+  },
+  "monitor": {
+    "nombre": "Monitores",
+    "descripcion": "monitores para ordenador",
+    "activa": false,
+    "marcas_por_ejecucion": 1,
+    "marcas": [
+      "Samsung",
+      "LG",
+      "Dell",
+      "ASUS",
+      "Acer",
+      "BenQ",
+      "MSI",
+      "Gigabyte",
+      "AOC",
+      "Philips",
+      "ViewSonic",
+      "Lenovo",
+      "HP",
+      "Xiaomi",
+      "Corsair"
+    ]
+  },
+  "tv": {
+    "nombre": "Televisores",
+    "descripcion": "televisores smart TV",
+    "activa": false,
+    "marcas_por_ejecucion": 1,
+    "marcas": [
+      "Samsung",
+      "LG",
+      "Sony",
+      "Hisense",
+      "TCL",
+      "Philips",
+      "Xiaomi",
+      "Panasonic",
+      "Xiaomi",
+      "Toshiba"
+    ]
+  }
+}
