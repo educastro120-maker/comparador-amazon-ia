@@ -251,15 +251,19 @@ def buscar_entrada(m):
 
 def reparar_registro(rankings, registro, guardar):
     """Si la entrada que el robot recordaba ya no existe, la sustituye por la entrada actual del mismo producto."""
-    pares = []
+    pares, fijadas = [], []
     for rk in rankings:
         for m in rk.get("miembros", []):
             clave = slugify(f"{m['marca']} {m['modelo_corto']}")
             reg = registro.get(clave)
             if isinstance(reg, dict) and reg.get("post_id"):
+                if m.get("post_id") and reg["post_id"] != m["post_id"]:   # entrada fijada a mano en rankings.json
+                    print(f"📌 {m['marca']} {m['modelo_corto']}: se usa la entrada {m['post_id']} (fijada en rankings.json).")
+                    reg["post_id"], reg["url_post"] = m["post_id"], ""
+                    fijadas.append(1)
                 pares.append((m, reg))
     vivos = datos_de_entradas([reg["post_id"] for _, reg in pares])
-    cambios = 0
+    cambios = len(fijadas)
     for m, reg in pares:
         if reg["post_id"] in vivos:
             continue
