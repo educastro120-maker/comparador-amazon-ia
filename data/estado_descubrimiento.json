@@ -1,16 +1,16 @@
 {
   "smartphone": {
-    "indice": 6,
+    "indice": 8,
     "fallos": 0,
     "vueltas": 0,
     "ultima_ejecucion": "2026-11-22"
   },
   "tavily": {
     "mes": "2026-11",
-    "creditos": 22
+    "creditos": 28
   },
   "smartwatch": {
-    "indice": 5,
+    "indice": 6,
     "fallos": 0,
     "vueltas": 0,
     "ultima_ejecucion": "2026-11-22"

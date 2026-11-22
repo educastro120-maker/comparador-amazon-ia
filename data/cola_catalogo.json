@@ -404,5 +404,28 @@
     "descubierto_el": "2026-11-22",
     "verificar": true,
     "publicado_el": "2026-11-22"
+  },
+  {
+    "marca": "Amazfit",
+    "modelo_corto": "Active 3 Premium",
+    "busqueda": "Amazfit Active 3 Premium",
+    "titulo": "Amazfit Active 3 Premium, pantalla AMOLED 1,32\", cristal de zafiro, bisel de acero inoxidable y GPS",
+    "especificaciones": "Reloj inteligente con pantalla AMOLED de 1,32 pulgadas y un brillo máximo de 3.000 nits. Cuenta con cristal de zafiro y bisel de acero inoxidable. Su peso sin correa es de 38 g con un grosor de 11 mm. Ofrece una autonomía típica de hasta 12 días y hasta 24 horas de GPS continuo. Incluye 4 GB de almacenamiento interno, resistencia al agua de 5 ATM y funciones avanzadas como la estimación del umbral de lactato, mapas offline gratuitos y reproducción de música o podcasts sin conexión.",
+    "precio": "169.90€",
+    "categoria": "smartwatch",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.correrunamaraton.com/amazfit-guia-compra",
+      "https://www.androidcentral.com/wearables/amazfit/best-amazfit-smartwatches",
+      "https://es.amazfit.com",
+      "https://www.facebook.com/elociovirtual/posts/-amazfit-2026-un-smartwatch-para-cada-estilo-de-vidabuscas-un-reloj-inteligente-/1819909103468106",
+      "https://www.runnea.com/articulos/running-news/relojes-deportivos-amazfit-pueden-competir-20493",
+      "https://www.amazon.es/Amazfit/s?k=Amazfit"
+    ],
+    "descubierto_el": "2026-11-22",
+    "verificar": true
   }
 ]
