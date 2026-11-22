@@ -44,14 +44,13 @@ def nombre_desde_titulo(titulo):
     return " ".join(t.split()[:6]).strip()
 
 
-def fila_de_post(p, reg):
+def fila_de_post(p, reg, medios=None):
     c = (p.get("content") or {}).get("raw", "")
     titulo = html.unescape((p.get("title") or {}).get("raw", ""))
     nombre = f"{reg['marca']} {reg['modelo']}".strip() if reg else nombre_desde_titulo(titulo)
     precio = etiquetado.precio_de_contenido(c, (reg or {}).get("precio", ""))
-    m = re.search(r'href="([^"]+)"[^>]*>\s*Ver precio actualizado en Amazon', c)
-    amazon = (reg or {}).get("link_afiliado") or (m.group(1) if m else "")
-    m = re.search(r'<img[^>]+src="([^"]+)"', c)
+    amazon = gr.extraer_enlace_amazon(c) or (reg or {}).get("link_afiliado", "")   # manda el enlace que hay en la entrada
+    imagen_entrada = (medios or {}).get(p.get("featured_media")) or gr.extraer_imagen(c)   # destacada > primera imagen de la entrada
     puntos = (reg or {}).get("puntuacion")
     if puntos is None:
         m2 = re.search(r"Puntuaci[oó]n:\s*(?:<[^>]+>\s*)*⭐\s*(?:<[^>]+>\s*)*([\d.,]+)", c)
@@ -60,8 +59,8 @@ def fila_de_post(p, reg):
         puntos = float(puntos or 0)
     except (TypeError, ValueError):
         puntos = 0
-    return {"nombre": nombre, "precio": gr.precio_es(precio), "amazon": amazon, "imagen": (reg or {}).get("imagen") or (m.group(1) if m else ""),
-            "resumen": gr.recortar_frase((reg or {}).get("resumen", "")), "analisis": p.get("link", ""), "puntos": puntos,
+    return {"nombre": nombre, "precio": gr.precio_es(precio), "amazon": amazon, "imagen": imagen_entrada or (reg or {}).get("imagen") or gr.imagen_de_biblioteca(nombre),
+            "resumen": gr.recortar_frase((reg or {}).get("resumen", ""), 150), "analisis": p.get("link", ""), "puntos": puntos,
             "status": p.get("status", ""), "motivo": (reg or {}).get("badge", "")}
 
 
@@ -72,10 +71,17 @@ def main():
         return 0
     paginas = gr.listar_paginas()
     tags = paginar("tags", {"_fields": "id,name"})
-    posts = paginar("posts", {"status": "publish,draft,pending,private,future", "context": "edit", "_fields": "id,title,status,tags,link,content"})
+    posts = paginar("posts", {"status": "publish,draft,pending,private,future", "context": "edit", "_fields": "id,title,status,tags,link,content,featured_media"})
     if paginas is None or tags is None or posts is None:
         print("🛑 No se pudo leer WordPress: no se crea nada (para no duplicar).")
         return 1
+    medios = {}
+    ids_m = sorted({p.get("featured_media") for p in posts if p.get("featured_media")})
+    for i in range(0, len(ids_m), 50):
+        r = requests.get(f"{WP}/wp-json/wp/v2/media", params={"include": ",".join(map(str, ids_m[i:i + 50])), "per_page": 100, "_fields": "id,source_url"},
+                         auth=AUTH, timeout=30)
+        if r.status_code == 200:
+            medios.update({m["id"]: m.get("source_url", "") for m in r.json()})
     registro = gr.cargar_json(gr.RUTA_PUBLICADOS, {})
     por_post = {r["post_id"]: r for r in registro.values() if isinstance(r, dict) and r.get("post_id")}
     id_tag = {html.unescape(t["name"]).strip().lower(): t["id"] for t in tags}
@@ -89,7 +95,7 @@ def main():
         if not tid:
             print(f"⚠️ {nombre}: la etiqueta no existe en WordPress (créala con ese nombre exacto).")
             continue
-        filas = [fila_de_post(p, por_post.get(p["id"])) for p in posts if tid in p.get("tags", [])]
+        filas = [fila_de_post(p, por_post.get(p["id"]), medios) for p in posts if tid in p.get("tags", [])]
         titulo = e.get("titulo_pagina") or nombre
         slug = gr.slugify(titulo)
         existente = por_slug.get(slug) or por_titulo.get(slug)
@@ -115,7 +121,7 @@ def main():
             f["amazon"] = f["amazon"] or f"https://www.amazon.es/s?k={requests.utils.quote(f['nombre'])}&tag={gr.AMAZON_TAG}"
         publicadas = sum(1 for f in top if f["status"] == "publish")
         completa = len(top) >= MINIMO and publicadas >= MINIMO
-        rk = {"intro": e.get("intro") or f"Estos son los productos de nuestra selección «{nombre}». Los analizamos uno a uno y te dejamos el enlace a Amazon.",
+        rk = {"slug": slug, "titulo": titulo, "categoria": e.get("categoria", ""), "intro": e.get("intro") or f"Estos son los productos de nuestra selección «{nombre}». Los analizamos uno a uno y te dejamos el enlace a Amazon.",
               "criterio": e.get("criterio") or "Selección según las características y el precio de cada producto.",
               "datos_de": gr.datetime.now().strftime("%d/%m/%Y")}
         contenido = MARCA.format(slug) + gr.construir_html(rk, top)
