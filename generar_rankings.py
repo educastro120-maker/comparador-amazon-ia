@@ -229,6 +229,55 @@ def datos_de_entradas(ids):
     return info
 
 
+def buscar_entrada(m):
+    """Busca en WordPress la entrada de un producto cuando la que recordaba el robot ya no existe (p. ej. un duplicado borrado)."""
+    marca, modelo = slugify(m["marca"]), slugify(m["modelo_corto"])
+    try:
+        r = requests.get(f"{WP_URL}/wp-json/wp/v2/posts",
+                         params={"search": f"{m['marca']} {m['modelo_corto']}", "per_page": 20, "status": "publish,draft,pending,private,future",
+                                 "_fields": "id,link,status,title"}, auth=(WP_USER, WP_APP_PASSWORD), timeout=30)
+        if r.status_code != 200:
+            return None
+        candidatas = []
+        for p in r.json():
+            t = slugify(html.unescape((p.get("title") or {}).get("rendered", "")))
+            if marca in t and modelo in t:
+                candidatas.append(p)
+        candidatas.sort(key=lambda p: (p["status"] != "publish", p["id"]))
+        return candidatas[0] if candidatas else None
+    except (requests.RequestException, ValueError):
+        return None
+
+
+def reparar_registro(rankings, registro, guardar):
+    """Si la entrada que el robot recordaba ya no existe, la sustituye por la entrada actual del mismo producto."""
+    pares = []
+    for rk in rankings:
+        for m in rk.get("miembros", []):
+            clave = slugify(f"{m['marca']} {m['modelo_corto']}")
+            reg = registro.get(clave)
+            if isinstance(reg, dict) and reg.get("post_id"):
+                pares.append((m, reg))
+    vivos = datos_de_entradas([reg["post_id"] for _, reg in pares])
+    cambios = 0
+    for m, reg in pares:
+        if reg["post_id"] in vivos:
+            continue
+        nombre = f"{m['marca']} {m['modelo_corto']}"
+        n = buscar_entrada(m)
+        if n:
+            print(f"🔧 {nombre}: la entrada {reg['post_id']} ya no existe; se usa la entrada {n['id']}.")
+            reg["post_id"], reg["url_post"] = n["id"], n.get("link", "")
+            cambios += 1
+        else:
+            print(f"⚠️ {nombre}: la entrada {reg['post_id']} ya no existe y no encuentro otra con ese nombre.")
+    if cambios and guardar:
+        with open(RUTA_PUBLICADOS, "w", encoding="utf-8") as f:
+            json.dump(registro, f, ensure_ascii=False, indent=1)
+        print(f"💾 Memoria del robot actualizada ({cambios} entradas).")
+    return cambios
+
+
 def fila_de_miembro(n, m, reg, post):
     """Una fila del Top 10. Enlace de Amazon: el de la entrada > memoria > asin > búsqueda. Imagen: entrada > memoria > biblioteca."""
     nombre = f"{m['marca']} {m['modelo_corto']}"
@@ -332,7 +381,7 @@ def construir_html(rk, filas):
 
     # Fichas compactas: cuadrícula con varias por línea
     h.append('<h2 style="margin-top:28px;">Análisis de cada producto</h2>')
-    h.append('<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;align-items:stretch;">')
+    h.append('<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;align-items:stretch;">')
     boton_s = ("background-color:#ffa41c;color:#111;text-decoration:none;font-weight:bold;padding:7px 12px;border-radius:8px;"
                "border:1px solid #ff8f00;display:inline-block;font-size:.85em;")
     for f in filas:
@@ -340,13 +389,17 @@ def construir_html(rk, filas):
         if f.get("imagen"):
             img = (f'<div style="text-align:center;"><img src="{esc(f["imagen"])}" alt="{esc(f["nombre"])}" loading="lazy" '
                    f'referrerpolicy="no-referrer" style="height:110px;max-width:100%;object-fit:contain;"></div>')
+            if f.get("analisis"):
+                img = f'<a href="{esc(f["analisis"])}" title="Leer el análisis de {esc(f["nombre"])}" style="text-decoration:none;">{img}</a>'
         rot = (f'<span style="background:#ff9900;color:#fff;font-weight:bold;padding:2px 8px;border-radius:10px;font-size:.7em;'
                f'margin-left:6px;white-space:nowrap;">{esc(f["rotulo"])}</span>') if f.get("rotulo") else ""
+        nombre_h = (f'<a href="{esc(f["analisis"])}" style="color:inherit;text-decoration:none;">{esc(f["nombre"])}</a>'
+                    if f.get("analisis") else esc(f["nombre"]))
         resumen = f'<p style="margin:0;font-size:.82em;line-height:1.45;color:#475569;">{esc(f["resumen"])}</p>' if f.get("resumen") else ""
         analisis = (f'<a href="{esc(f["analisis"])}" style="font-size:.82em;display:block;margin-top:6px;">Leer el análisis →</a>') if f.get("analisis") else ""
         h.append(f'<div id="puesto-{f["n"]}" style="border:1px solid #e2e8f0;border-radius:10px;padding:12px;background:#fff;'
                  f'display:flex;flex-direction:column;gap:6px;">{img}'
-                 f'<h3 style="margin:0;font-size:1em;line-height:1.3;">{f["n"]}. {esc(f["nombre"])}{rot}</h3>'
+                 f'<h3 style="margin:0;font-size:1em;line-height:1.3;">{f["n"]}. {nombre_h}{rot}</h3>'
                  f'<p style="margin:0;font-size:.85em;font-weight:600;color:#334155;">{esc(f.get("motivo", ""))}</p>{resumen}'
                  f'<div style="margin-top:auto;padding-top:6px;"><div style="margin-bottom:6px;"><span style="color:#64748b;font-size:.78em;">Precio orientativo:</span> '
                  f'<strong style="color:#b12704;">{esc(f["precio"])}</strong></div>'
@@ -442,6 +495,7 @@ def main():
     if paginas is None:
         print("🛑 Sin la lista de páginas no se crea nada (para no duplicar). Se reintentará en la próxima ejecución.")
         return 1
+    reparar_registro(rankings, registro, guardar=(UNIFICAR_MODO == "si" or not UNIFICAR))
     if UNIFICAR:
         return unificar(rankings, registro, paginas)
     por_slug = {p["slug"]: p for p in paginas}
