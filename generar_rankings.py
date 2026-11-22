@@ -3,9 +3,14 @@ GENERAR RANKINGS (páginas Top 10 en borrador)
 =============================================
 Crea en WordPress, como BORRADOR, una PÁGINA por cada ranking definido en data/rankings.json:
   - Resumen rápido (tabla) + ficha corta de cada producto, con su botón de Amazon y el enlace a su entrada.
-  - Sección "Cómo hemos elegido", fecha de los datos y avisos de afiliado y de precios.
+  - Introducción con palabras clave en negrita (la redacta Gemini una vez por página y se guarda en data/intros.json),
+    fichas compactas en cuadrícula, fecha de los datos y avisos de afiliado y de precios.
+  - El botón de Amazon usa SIEMPRE el enlace que tengas puesto en la entrada del producto; la imagen sale de la entrada
+    (imagen destacada o primera imagen) y, si no hay, de la biblioteca de medios.
+  - UNIFICAR="id1,id2" (o "todos") + UNIFICAR_MODO=prueba|si|restaurar: rehace con este mismo diseño las páginas que ya
+    tenías (guarda antes una copia en data/copias_paginas/ y se puede restaurar).
 
-NO usa ninguna IA ni gasta cuota: monta la página con los datos que ya tiene.
+Solo usa Gemini (1 llamada, una única vez por página) para la introducción; el resto lo monta con los datos que ya tiene.
 
 Reglas de seguridad (para no estropear lo que ya tienes):
   - NO toca una página que ya existe (mismo título o mismo slug): la salta. Así no duplica tus páginas hechas a mano.
@@ -41,12 +46,19 @@ CARPETA_DATOS = os.environ.get("CARPETA_DATOS", "data")
 RUTA_RANKINGS = os.path.join(CARPETA_DATOS, "rankings.json")
 RUTA_PUBLICADOS = os.path.join(CARPETA_DATOS, "publicados.json")
 ESTADO_PAGINAS = os.environ.get("ESTADO_PAGINAS", "draft")
+UNIFICAR = {x.strip() for x in os.environ.get("UNIFICAR", "").split(",") if x.strip()}
+UNIFICAR_MODO = os.environ.get("UNIFICAR_MODO", "prueba").strip().lower()
+CARPETA_COPIAS_PAG = os.path.join(CARPETA_DATOS, "copias_paginas")
 FORZAR = {x.strip() for x in os.environ.get("FORZAR_RANKINGS", "").split(",") if x.strip()}
 PREFIJOS_LINK_CORTO = ("https://link.amazon/", "https://amzn.to/", "https://amzn.eu/")
-NOTA_METODOLOGIA = os.environ.get(
-    "NOTA_METODOLOGIA",
-    "Las cifras proceden de las fichas de los fabricantes y de pruebas publicadas por medios especializados; "
-    "no hemos probado personalmente estos productos. Si detectas un dato incorrecto, avísanos.")
+RUTA_INTROS = os.path.join(CARPETA_DATOS, "intros.json")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
+INTRO_IA = os.environ.get("INTRO_IA", "si").strip().lower() != "no"
+REGENERAR_INTROS = os.environ.get("REGENERAR_INTROS", "").strip().lower() in ("si", "1", "true")
+MODELOS_INTRO = [m.strip() for m in os.environ.get("INTRO_MODELS", "gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.8-flash").split(",") if m.strip()]
+AVISO_ARRIBA = os.environ.get("AVISO_ARRIBA", "si").strip().lower() != "no"
+FRASE_AFILIADO = ("Como afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables, "
+                  "sin que esto suponga ningún coste adicional para ti.")
 
 
 def slugify(texto):
@@ -102,6 +114,50 @@ def enlace_amazon(miembro, reg):
     return link or f"https://www.amazon.es/s?k={urllib.parse.quote_plus(miembro['busqueda'])}&tag={AMAZON_TAG}"
 
 
+def extraer_enlace_amazon(contenido):
+    """Enlace de Amazon que hay en la entrada (el botón 'Ver precio...'): es el que tú has puesto, y manda sobre cualquier otro."""
+    c = contenido or ""
+    for m in re.finditer(r'<a\b[^>]*?href=["\']([^"\']+)["\'][^>]*>(.*?)</a>', c, re.S | re.I):
+        href, texto = html.unescape(m.group(1)), re.sub(r"<[^>]+>", " ", m.group(2)).lower()
+        if re.search(r"amzn\.|link\.amazon|amazon\.", href, re.I) and ("amazon" in texto or "precio" in texto):
+            return href
+    for m in re.finditer(r'href=["\']([^"\']+)["\']', c, re.I):
+        href = html.unescape(m.group(1))
+        if re.search(r"amzn\.(to|eu)|link\.amazon|amazon\.[a-z.]+/(dp|gp)/", href, re.I):
+            return href
+    return ""
+
+
+def extraer_imagen(contenido):
+    m = re.search(r'<img\b[^>]*?src=["\']([^"\']+)["\']', contenido or "", re.I)
+    return html.unescape(m.group(1)) if m else ""
+
+
+_cache_medios = {}
+
+
+def imagen_de_biblioteca(nombre):
+    """Último recurso: busca en la biblioteca de medios una imagen cuyo nombre contenga todas las palabras del modelo."""
+    if nombre in _cache_medios:
+        return _cache_medios[nombre]
+    resultado = ""
+    palabras = [p for p in slugify(nombre).split("-") if p]
+    try:
+        r = requests.get(f"{WP_URL}/wp-json/wp/v2/media", params={"search": nombre, "per_page": 20, "media_type": "image",
+                                                                  "_fields": "id,slug,source_url,title"},
+                         auth=(WP_USER, WP_APP_PASSWORD), timeout=30)
+        if r.status_code == 200:
+            for med in r.json():
+                texto = slugify(f"{med.get('slug', '')} {(med.get('title') or {}).get('rendered', '')}")
+                if palabras and all(p in texto.split("-") for p in palabras):
+                    resultado = med.get("source_url", "")
+                    break
+    except (requests.RequestException, ValueError):
+        pass
+    _cache_medios[nombre] = resultado
+    return resultado
+
+
 def recortar_frase(texto, limite=300):
     texto = " ".join(str(texto or "").split())
     if len(texto) <= limite:
@@ -141,22 +197,111 @@ def listar_paginas():
 
 
 def datos_de_entradas(ids):
-    """Enlace actual y estado de cada entrada (el enlace de un borrador cambia al publicarse)."""
-    info = {}
+    """Estado, enlace, imagen y enlace de Amazon actuales de cada entrada (lo que hay ahora en WordPress, no en la memoria)."""
+    info, medios = {}, {}
     ids = sorted(set(ids))
     for i in range(0, len(ids), 50):
         trozo = ids[i:i + 50]
         try:
             r = requests.get(f"{WP_URL}/wp-json/wp/v2/posts",
-                             params={"include": ",".join(map(str, trozo)), "per_page": 100,
-                                     "status": "publish,draft,pending,private,future", "_fields": "id,link,status"},
-                             auth=(WP_USER, WP_APP_PASSWORD), timeout=30)
+                             params={"include": ",".join(map(str, trozo)), "per_page": 100, "context": "edit",
+                                     "status": "publish,draft,pending,private,future",
+                                     "_fields": "id,link,status,featured_media,content"},
+                             auth=(WP_USER, WP_APP_PASSWORD), timeout=60)
             if r.status_code == 200:
                 for p in r.json():
-                    info[p["id"]] = {"link": p.get("link", ""), "status": p.get("status", "")}
+                    c = (p.get("content") or {}).get("raw", "")
+                    info[p["id"]] = {"link": p.get("link", ""), "status": p.get("status", ""), "amazon": extraer_enlace_amazon(c),
+                                     "imagen": extraer_imagen(c), "destacada": p.get("featured_media") or 0}
         except (requests.RequestException, ValueError) as err:
             print(f"   ⚠️ No se pudo comprobar el estado de algunas entradas: {err}")
+    ids_medios = sorted({v["destacada"] for v in info.values() if v["destacada"]})
+    for i in range(0, len(ids_medios), 50):
+        try:
+            r = requests.get(f"{WP_URL}/wp-json/wp/v2/media", params={"include": ",".join(map(str, ids_medios[i:i + 50])), "per_page": 100,
+                                                                      "_fields": "id,source_url"}, auth=(WP_USER, WP_APP_PASSWORD), timeout=30)
+            if r.status_code == 200:
+                medios.update({m["id"]: m.get("source_url", "") for m in r.json()})
+        except (requests.RequestException, ValueError):
+            pass
+    for v in info.values():
+        v["imagen"] = medios.get(v["destacada"]) or v["imagen"]   # la imagen destacada manda; si no, la primera de la entrada
     return info
+
+
+def fila_de_miembro(n, m, reg, post):
+    """Una fila del Top 10. Enlace de Amazon: el de la entrada > memoria > asin > búsqueda. Imagen: entrada > memoria > biblioteca."""
+    nombre = f"{m['marca']} {m['modelo_corto']}"
+    amazon = post.get("amazon") or enlace_amazon(m, reg)
+    imagen = post.get("imagen") or reg.get("imagen", "") or m.get("imagen", "") or imagen_de_biblioteca(nombre)
+    return {"n": n, "nombre": nombre, "rotulo": m.get("rotulo", ""), "motivo": m.get("motivo", ""), "precio": precio_es(m.get("precio")),
+            "amazon": amazon, "imagen": imagen, "resumen": recortar_frase(reg.get("resumen", ""), 150),
+            "analisis": post.get("link") or reg.get("url_post", "")}
+
+
+def negritas(texto):
+    """Escapa el texto y convierte **palabra** en negrita (lo único de formato que se admite)."""
+    t = esc(texto)
+    return re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", t)
+
+
+def _intro_valida(t):
+    return isinstance(t, str) and 250 <= len(t) <= 1100 and t.count("**") >= 6 and "\n\n" not in t.strip()
+
+
+def _intro_con_ia(titulo, categoria, criterio):
+    if not (GEMINI_API_KEY and INTRO_IA):
+        return ""
+    try:
+        from google import genai
+        from google.genai import types
+        cliente = genai.Client(api_key=GEMINI_API_KEY, http_options={"timeout": 90000})
+    except Exception as e:
+        print(f"   ⚠️ Introducción: no se pudo iniciar Gemini ({type(e).__name__}).")
+        return ""
+    prompt = f"""Escribe el texto introductorio de una página web española llamada «{titulo}» (categoría: {categoria or 'tecnología'}) de un comparador con enlaces de afiliado de Amazon.
+Criterio de la selección: {criterio or 'según características y precio'}.
+Reglas:
+- Un solo párrafo de 70 a 110 palabras, en español de España, tono cercano y claro.
+- Marca entre 5 y 7 palabras clave o expresiones clave con **doble asterisco** (ej.: **autonomía**, **GPS**). Nada más de formato: sin listas, sin títulos, sin emojis.
+- Explica para quién es útil la selección y qué puede comparar el lector (características y precios).
+- NO digas que hemos probado, testeado o analizado los productos en persona. NO inventes cifras, modelos ni datos.
+- No prometas «mejores ofertas» ni precios; basta con invitar a consultar el precio actualizado en Amazon.
+Devuelve solo el párrafo."""
+    for modelo in MODELOS_INTRO:
+        try:
+            r = cliente.models.generate_content(model=modelo, contents=prompt,
+                                                config=types.GenerateContentConfig(temperature=0.6, max_output_tokens=1024))
+            t = re.sub(r"\s+", " ", (r.text or "")).strip().strip('"«»')
+            if _intro_valida(t):
+                return t
+            print(f"   ⚠️ Introducción con {modelo}: formato no válido, se prueba otro modelo.")
+        except Exception as e:
+            print(f"   ⚠️ Introducción con {modelo}: {type(e).__name__} -> {str(e)[:120]}")
+    return ""
+
+
+def texto_introduccion(rk):
+    """Introducción con palabras clave en negrita. Se genera una vez por página y se guarda en data/intros.json."""
+    clave = rk.get("slug") or slugify(rk.get("titulo", ""))
+    guardadas = cargar_json(RUTA_INTROS, {})
+    if clave in guardadas and not REGENERAR_INTROS:
+        return guardadas[clave]
+    titulo = rk.get("titulo", "")
+    t = _intro_con_ia(titulo, rk.get("categoria", ""), rk.get("criterio", ""))
+    if t:
+        guardadas[clave] = t
+        os.makedirs(CARPETA_DATOS, exist_ok=True)
+        with open(RUTA_INTROS, "w", encoding="utf-8") as f:
+            json.dump(guardadas, f, ensure_ascii=False, indent=1)
+        print(f"   ✍️ Introducción generada para «{titulo}».")
+        return t
+    # Sin IA: se usa la que haya en rankings.json o una genérica (sin guardarla, para reintentar la próxima vez)
+    if rk.get("intro"):
+        return rk["intro"]
+    tema = re.sub(r"\s*\(\d{4}\)\s*$", "", re.sub(r"^Top\s*\d+\s*", "", titulo, flags=re.I)).strip() or "esta categoría"
+    return (f"Si buscas **{tema}**, aquí tienes nuestra selección. Puedes **comparar** de un vistazo sus características y su "
+            f"**precio orientativo**, leer el análisis de cada producto y consultar el **precio actualizado en Amazon**.")
 
 
 def construir_html(rk, filas):
@@ -164,10 +309,10 @@ def construir_html(rk, filas):
     caja = "border:1px solid #e2e8f0;border-radius:12px;padding:18px;margin:0 0 18px 0;background:#fff;"
     boton = ("background-color:#ffa41c;color:#111;text-decoration:none;font-weight:bold;padding:10px 18px;border-radius:8px;"
              "border:1px solid #ff8f00;display:inline-block;")
-    h = ['<div style="max-width:900px;margin:0 auto;font-family:system-ui,-apple-system,sans-serif;color:#1e293b;">']
-    if rk.get("lema"):
-        h.append(f'<p style="font-size:1.2em;font-weight:bold;color:#b45309;margin:0 0 10px;">{esc(rk["lema"])}</p>')
-    h.append(f'<p style="font-size:1.05em;line-height:1.7;">{esc(rk.get("intro", ""))}</p>')
+    h = ['<div style="max-width:1100px;margin:0 auto;font-family:system-ui,-apple-system,sans-serif;color:#1e293b;">']
+    h.append(f'<p style="font-size:1.05em;line-height:1.7;">{negritas(texto_introduccion(rk))}</p>')
+    if AVISO_ARRIBA:
+        h.append(f'<p style="font-size:.8em;color:#64748b;line-height:1.5;margin:0 0 6px;">Esta página contiene enlaces de afiliado de Amazon.es. {esc(FRASE_AFILIADO)}</p>')
 
     # Resumen rápido
     h.append('<h2 style="margin-top:28px;">Resumen rápido</h2>')
@@ -185,34 +330,106 @@ def construir_html(rk, filas):
                  f'rel="sponsored nofollow noopener" style="font-weight:bold;">Ver en Amazon</a></td></tr>')
     h.append("</table></div>")
 
-    # Cómo hemos elegido
-    h.append('<h2 style="margin-top:28px;">Cómo hemos elegido</h2>')
-    h.append(f'<p style="line-height:1.7;">{esc(rk.get("criterio", ""))}</p>')
-    h.append(f'<p style="line-height:1.7;color:#475569;">{esc(NOTA_METODOLOGIA)}</p>')
-    h.append(f'<p style="color:#64748b;font-size:.9em;">Datos recopilados: {esc(rk.get("datos_de", ""))}. Página generada el {hoy}.</p>')
-
-    # Fichas
+    # Fichas compactas: cuadrícula con varias por línea
     h.append('<h2 style="margin-top:28px;">Análisis de cada producto</h2>')
+    h.append('<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;align-items:stretch;">')
+    boton_s = ("background-color:#ffa41c;color:#111;text-decoration:none;font-weight:bold;padding:7px 12px;border-radius:8px;"
+               "border:1px solid #ff8f00;display:inline-block;font-size:.85em;")
     for f in filas:
         img = ""
         if f.get("imagen"):
-            img = (f'<div style="text-align:center;margin-bottom:12px;"><img src="{esc(f["imagen"])}" alt="{esc(f["nombre"])}" '
-                   f'loading="lazy" referrerpolicy="no-referrer" style="max-height:200px;max-width:100%;object-fit:contain;"></div>')
-        rot = (f'<span style="background:#ff9900;color:#fff;font-weight:bold;padding:3px 10px;border-radius:12px;font-size:.8em;'
-               f'margin-left:8px;">{esc(f["rotulo"])}</span>') if f.get("rotulo") else ""
-        resumen = f'<p style="line-height:1.6;">{esc(f["resumen"])}</p>' if f.get("resumen") else ""
-        analisis = (f'<a href="{esc(f["analisis"])}" style="margin-left:14px;">Leer el análisis completo →</a>') if f.get("analisis") else ""
-        h.append(f'<div id="puesto-{f["n"]}" style="{caja}">{img}'
-                 f'<h3 style="margin:0 0 6px;">{f["n"]}. {esc(f["nombre"])}{rot}</h3>'
-                 f'<p style="margin:0 0 8px;font-weight:600;color:#334155;">{esc(f.get("motivo", ""))}</p>{resumen}'
-                 f'<p style="margin:10px 0;"><span style="color:#64748b;font-size:.85em;">Precio orientativo:</span> '
-                 f'<strong style="color:#b12704;">{esc(f["precio"])}</strong></p>'
-                 f'<a href="{esc(f["amazon"])}" target="_blank" rel="sponsored nofollow noopener" style="{boton}">Ver precio en Amazon 🛒</a>{analisis}</div>')
+            img = (f'<div style="text-align:center;"><img src="{esc(f["imagen"])}" alt="{esc(f["nombre"])}" loading="lazy" '
+                   f'referrerpolicy="no-referrer" style="height:110px;max-width:100%;object-fit:contain;"></div>')
+        rot = (f'<span style="background:#ff9900;color:#fff;font-weight:bold;padding:2px 8px;border-radius:10px;font-size:.7em;'
+               f'margin-left:6px;white-space:nowrap;">{esc(f["rotulo"])}</span>') if f.get("rotulo") else ""
+        resumen = f'<p style="margin:0;font-size:.82em;line-height:1.45;color:#475569;">{esc(f["resumen"])}</p>' if f.get("resumen") else ""
+        analisis = (f'<a href="{esc(f["analisis"])}" style="font-size:.82em;display:block;margin-top:6px;">Leer el análisis →</a>') if f.get("analisis") else ""
+        h.append(f'<div id="puesto-{f["n"]}" style="border:1px solid #e2e8f0;border-radius:10px;padding:12px;background:#fff;'
+                 f'display:flex;flex-direction:column;gap:6px;">{img}'
+                 f'<h3 style="margin:0;font-size:1em;line-height:1.3;">{f["n"]}. {esc(f["nombre"])}{rot}</h3>'
+                 f'<p style="margin:0;font-size:.85em;font-weight:600;color:#334155;">{esc(f.get("motivo", ""))}</p>{resumen}'
+                 f'<div style="margin-top:auto;padding-top:6px;"><div style="margin-bottom:6px;"><span style="color:#64748b;font-size:.78em;">Precio orientativo:</span> '
+                 f'<strong style="color:#b12704;">{esc(f["precio"])}</strong></div>'
+                 f'<a href="{esc(f["amazon"])}" target="_blank" rel="sponsored nofollow noopener" style="{boton_s}">Ver precio en Amazon 🛒</a>{analisis}</div></div>')
+    h.append("</div>")
 
-    h.append(f'<p style="font-size:.85em;color:#64748b;line-height:1.6;">Los precios son orientativos a fecha de {esc(rk.get("datos_de", hoy))} y '
-             'pueden variar: consulta siempre el precio actual en Amazon. Los botones de Amazon son enlaces de afiliado: como afiliado de Amazon '
-             'obtengo ingresos por las compras adscritas, sin coste extra para ti.</p></div>')
+    h.append(f'<p style="font-size:.85em;color:#64748b;line-height:1.6;margin-top:18px;">Los precios son orientativos a fecha de {esc(rk.get("datos_de", hoy))} y '
+             f'pueden variar: consulta siempre el precio actual en Amazon. Los botones de Amazon son enlaces de afiliado. {esc(FRASE_AFILIADO)}</p></div>')
     return "".join(h)
+
+
+def unificar(rankings, registro, paginas):
+    """Rehace con el diseño actual las páginas que ya existen (las tuyas incluidas). Copia de seguridad y restauración incluidas."""
+    por_slug = {p["slug"]: p for p in paginas}
+    por_titulo = {slugify((p.get("title") or {}).get("raw", "")): p for p in paginas}
+    por_id = {p["id"]: p for p in paginas}
+    objetivos = rankings if "todos" in UNIFICAR else [r for r in rankings if r["id"] in UNIFICAR]
+    if not objetivos:
+        ids = ", ".join(r["id"] for r in rankings)
+        print(f"ℹ️ Ningún ranking coincide con UNIFICAR. Los ids son: {ids}")
+        return 1
+    print(f"{'🧪 MODO PRUEBA (no se toca nada)' if UNIFICAR_MODO != 'si' and UNIFICAR_MODO != 'restaurar' else '✏️ MODO ' + UNIFICAR_MODO.upper()}")
+    sin_pagina = False
+    for rk in objetivos:
+        pagina = (por_id.get(rk.get("pagina_id")) or por_slug.get(rk.get("slug", "")) or por_titulo.get(slugify(rk["titulo"]))
+                  or por_titulo.get(slugify(rk.get("etiqueta", ""))))
+        if not pagina:
+            sin_pagina = True
+            print(f"⚠️ {rk['titulo']}: no encuentro su página. Añade en data/rankings.json el campo \"pagina_id\": <número de la página> "
+                  f"(lo ves en la barra del navegador al editarla: post=NNN).")
+            continue
+        pid = pagina["id"]
+        ruta = os.path.join(CARPETA_COPIAS_PAG, f"{pid}.html")
+        if UNIFICAR_MODO == "restaurar":
+            if not os.path.exists(ruta):
+                print(f"⚠️ {rk['titulo']}: no hay copia de seguridad de la página {pid}.")
+                continue
+            r = requests.post(f"{WP_URL}/wp-json/wp/v2/pages/{pid}", json={"content": open(ruta, encoding="utf-8").read()},
+                              auth=(WP_USER, WP_APP_PASSWORD), timeout=60)
+            print(f"{'↩️ Restaurada' if r.status_code == 200 else '❌ Error ' + str(r.status_code)}: {rk['titulo']} (página {pid})")
+            continue
+        ids, faltan = [], []
+        for m in rk.get("miembros", []):
+            reg = registro.get(slugify(f"{m['marca']} {m['modelo_corto']}"))
+            if isinstance(reg, dict) and reg.get("post_id"):
+                ids.append(reg["post_id"])
+            else:
+                faltan.append(f"{m['marca']} {m['modelo_corto']}")
+        info = datos_de_entradas(ids)
+        filas = []
+        for m in rk.get("miembros", []):
+            reg = registro.get(slugify(f"{m['marca']} {m['modelo_corto']}"))
+            if isinstance(reg, dict) and reg.get("post_id"):
+                filas.append(fila_de_miembro(len(filas) + 1, m, reg, info.get(reg["post_id"], {})))
+        if not filas:
+            print(f"⚠️ {rk['titulo']}: ningún producto del ranking tiene entrada en la memoria del robot. No se toca.")
+            continue
+        sin_img = [f["nombre"] for f in filas if not f["imagen"]]
+        generica = [f["nombre"] for f in filas if "amazon.es/s?" in f["amazon"]]
+        print(f"📄 {rk['titulo']} → página {pid} ({pagina['status']}): {len(filas)} productos"
+              + (f" | sin entrada (no aparecen): {', '.join(faltan)}" if faltan else "")
+              + (f" | SIN IMAGEN: {', '.join(sin_img)}" if sin_img else "")
+              + (f" | enlace genérico de búsqueda: {', '.join(generica)}" if generica else ""))
+        if UNIFICAR_MODO != "si":
+            continue
+        os.makedirs(CARPETA_COPIAS_PAG, exist_ok=True)
+        if not os.path.exists(ruta):
+            r0 = requests.get(f"{WP_URL}/wp-json/wp/v2/pages/{pid}", params={"context": "edit", "_fields": "content"},
+                              auth=(WP_USER, WP_APP_PASSWORD), timeout=30)
+            if r0.status_code != 200:
+                print("   ❌ No se pudo guardar la copia de seguridad: no se toca esta página.")
+                continue
+            open(ruta, "w", encoding="utf-8").write((r0.json().get("content") or {}).get("raw", ""))
+        r = requests.post(f"{WP_URL}/wp-json/wp/v2/pages/{pid}", json={"content": construir_html(rk, filas)},
+                          auth=(WP_USER, WP_APP_PASSWORD), timeout=60)
+        print(f"   {'✅ Página rehecha (copia guardada en data/copias_paginas/)' if r.status_code == 200 else '❌ WordPress respondió ' + str(r.status_code)}")
+    if sin_pagina:
+        print("\nPáginas de tu WordPress (id · estado · título):")
+        for p in paginas:
+            print(f"   {p['id']} · {p['status']} · {(p.get('title') or {}).get('raw', '')}")
+    if UNIFICAR_MODO == "prueba":
+        print("\n🧪 PRUEBA: no se ha modificado nada. Repite con modo 'si' para aplicar.")
+    return 0
 
 
 def main():
@@ -225,6 +442,8 @@ def main():
     if paginas is None:
         print("🛑 Sin la lista de páginas no se crea nada (para no duplicar). Se reintentará en la próxima ejecución.")
         return 1
+    if UNIFICAR:
+        return unificar(rankings, registro, paginas)
     por_slug = {p["slug"]: p for p in paginas}
     por_titulo = {slugify((p.get("title") or {}).get("raw", "")): p for p in paginas}
     creadas, actualizadas, errores = 0, 0, 0
@@ -259,10 +478,7 @@ def main():
             post = info.get(reg["post_id"], {})
             if post.get("status") and post["status"] != "publish":
                 no_publicadas.append(f"{m['marca']} {m['modelo_corto']}")
-            filas.append({"n": n, "nombre": f"{m['marca']} {m['modelo_corto']}", "rotulo": m.get("rotulo", ""),
-                          "motivo": m.get("motivo", ""), "precio": precio_es(m.get("precio")), "amazon": enlace_amazon(m, reg),
-                          "imagen": reg.get("imagen", "") or m.get("imagen", ""), "resumen": recortar_frase(reg.get("resumen", "")),
-                          "analisis": post.get("link") or reg.get("url_post", "")})
+            filas.append(fila_de_miembro(n, m, reg, post))
         contenido = construir_html(rk, filas)
         payload = {"title": titulo, "content": contenido, "status": ESTADO_PAGINAS, "slug": rk["slug"]}
         try:
