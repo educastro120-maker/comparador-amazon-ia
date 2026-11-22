@@ -27,6 +27,7 @@ LÍMITES (léelos):
 """
 
 import os
+import categorias
 import re
 import sys
 import json
@@ -63,6 +64,7 @@ TAVILY_MAX_MES = int(os.environ.get("TAVILY_MAX_MES", "900"))               # to
 
 # Para ESTRUCTURAR texto (no hace falta el modelo más potente): primero los lite.
 MODELOS = [m.strip() for m in os.environ.get("DISCOVERY_MODELS", "gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.8-flash").split(",") if m.strip()]
+COLA_MINIMA = int(os.environ.get("COLA_MINIMA", "12"))   # si una categoría ya tiene tantos pendientes, no se busca más (modo automático)
 MARCAS_POR_EJECUCION = int(os.environ.get("MARCAS_POR_EJECUCION", "1"))
 MODELOS_POR_MARCA = int(os.environ.get("MODELOS_POR_MARCA", "6"))
 MAX_FALLOS_MARCA = 3
@@ -70,21 +72,11 @@ MIN_CARACTERES_FICHA = int(os.environ.get("MIN_CARACTERES_FICHA", "300"))
 MIN_PORCENTAJE_CIFRAS = float(os.environ.get("MIN_PORCENTAJE_CIFRAS", "0.8"))
 MIN_CIFRAS_FICHA = 4
 MAX_CONTEXTO = 16000
-CATEGORIAS_ACTIVAS = [c.strip() for c in os.environ.get("DESCUBRIR_CATEGORIAS", "smartphone,smartwatch").split(",") if c.strip()]
-
-CATEGORIAS = {
-    "smartphone": {
-        "descripcion": "smartphones (móviles)",
-        "marcas": ["Apple", "Samsung", "Xiaomi", "POCO", "Redmi", "Google Pixel", "Motorola", "OnePlus", "OPPO", "vivo",
-                   "realme", "Honor", "Huawei", "Nothing", "ASUS", "Sony", "HMD", "ZTE nubia", "Tecno", "Infinix"],
-    },
-    "smartwatch": {
-        "descripcion": "smartwatches y relojes deportivos con GPS",
-        "marcas": ["Apple", "Samsung", "Garmin", "Huawei", "Xiaomi", "Amazfit", "COROS", "Suunto", "Polar", "Google Pixel Watch",
-                   "Honor", "OnePlus", "Withings", "Mibro", "CMF by Nothing", "OPPO", "realme", "Fossil", "Casio", "Fitbit"],
-    },
-}
-
+_pedidas = [c.strip().lower() for c in os.environ.get("DESCUBRIR_CATEGORIAS", "").split(",") if c.strip()]
+if not _pedidas or _pedidas == ["todas"]:
+    CATEGORIAS_ACTIVAS = [k for k, v in categorias.cargar().items() if v.get("activa", True)]   # las activas de data/categorias.json
+else:
+    CATEGORIAS_ACTIVAS = _pedidas   # a mano: cualquier categoría, esté o no en el archivo (incluso pausada)
 
 class SinCupo(Exception):
     """Tavily no permite más búsquedas (límite del plan o clave no válida)."""
@@ -211,12 +203,14 @@ def construir_contexto(resultados):
 
 
 # ---------- Gemini (SIN búsqueda: gratis) ----------
-def estructurar_con_gemini(descripcion, marca, conocidos, contexto):
+def estructurar_con_gemini(descripcion, marca, conocidos, contexto, por_tema=False):
     hoy = date.today().strftime("%d/%m/%Y")
     lista_conocidos = "\n".join(f"- {c}" for c in conocidos[:80]) or "- (ninguno todavía)"
-    prompt = f"""Hoy es {hoy}. Tienes TEXTO ENCONTRADO EN INTERNET sobre la marca "{marca}" (categoría: {descripcion}). Usa EXCLUSIVAMENTE ese texto; no uses nada de memoria.
+    sobre = (f'el tema "{marca}" (categoría: {descripcion})' if por_tema else f'la marca "{marca}" (categoría: {descripcion})')
+    de_quien = "los modelos de la categoría (de cualquier marca)" if por_tema else "los modelos de la marca"
+    prompt = f"""Hoy es {hoy}. Tienes TEXTO ENCONTRADO EN INTERNET sobre {sobre}. Usa EXCLUSIVAMENTE ese texto; no uses nada de memoria.
 
-Extrae los modelos de la marca que el texto presenta como a la venta en España (o con precio en euros). Excluye los que ya tengo:
+Extrae {de_quien} que el texto presenta como a la venta en España (o con precio en euros). Excluye los que ya tengo:
 {lista_conocidos}
 
 Devuelve como máximo {MODELOS_POR_MARCA} modelos. No incluyas rumores ni productos sin lanzar. Si el texto no permite un producto con datos concretos, no lo incluyas. Si no hay modelos nuevos, devuelve una lista vacía.
@@ -305,28 +299,36 @@ def main():
 
     try:
         for categoria in CATEGORIAS_ACTIVAS:
-            cfg = CATEGORIAS.get(categoria)
-            if not cfg:
-                print(f"⚠️ Categoría desconocida: {categoria}")
+            cfg = categorias.info(categoria)   # si no está en el archivo: categoría genérica con búsquedas libres
+            pendientes_cat = sum(1 for c in cola if c.get("categoria") == categoria and c.get("estado", "pendiente") == "pendiente")
+            minimo = int(cfg.get("cola_minima") or COLA_MINIMA)
+            if not _pedidas and pendientes_cat >= minimo:   # automático: no se gastan créditos si ya hay suficiente cola
+                print(f"⏭️ [{categoria}] ya hay {pendientes_cat} productos pendientes en la cola (mínimo {minimo}): no se busca hoy.")
                 continue
-            marcas = cfg["marcas"]
+            marcas = list(cfg.get("marcas") or [])
+            por_tema = not marcas
+            if por_tema:   # sin marcas: búsquedas libres (de data/categorias.json o genéricas)
+                d = cfg["descripcion"]
+                marcas = list(cfg.get("consultas") or [f"mejores {d} calidad precio", f"{d} más vendidos Amazon.es",
+                                                      f"{d} novedades", f"{d} gama alta", f"{d} económicos"])
             st = estado.setdefault(categoria, {"indice": 0, "fallos": 0, "vueltas": 0})
 
-            for _ in range(MARCAS_POR_EJECUCION):
+            for _ in range(int(cfg.get('marcas_por_ejecucion') or MARCAS_POR_EJECUCION)):
                 marca = marcas[st["indice"] % len(marcas)]
                 print(f"\n🔎 [{categoria}] Marca: {marca}  (posición {st['indice'] % len(marcas) + 1}/{len(marcas)})")
 
                 conocidos = [f"{c['marca']} {c['modelo_corto']}" for c in cola if c.get("categoria") == categoria]
                 conocidos += [f"{r['marca']} {r['modelo']}" for r in publicados.values() if isinstance(r, dict) and r.get("categoria") == categoria]
 
-                consulta = f"{marca} {cfg['descripcion']} modelos disponibles en España precio características técnicas {hoy.year}"
+                consulta = (f"{marca} España precio características técnicas {hoy.year}" if por_tema
+                            else f"{marca} {cfg['descripcion']} modelos disponibles en España precio características técnicas {hoy.year}")
                 resultados = buscar_tavily(consulta, estado)
                 productos, contexto = None, ""
                 if resultados:
                     contexto = construir_contexto(resultados)
                     print(f"   🌐 Tavily: {len(resultados)} resultados, {len(contexto)} caracteres de texto "
                           f"(créditos este mes: {estado['tavily']['creditos']}/{TAVILY_MAX_MES}).")
-                    productos = estructurar_con_gemini(cfg["descripcion"], marca, conocidos, contexto)
+                    productos = estructurar_con_gemini(cfg["descripcion"], marca, conocidos, contexto, por_tema)
                 else:
                     print("   ⚠️ Tavily no devolvió resultados.")
 
