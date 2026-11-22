@@ -63,7 +63,7 @@ MAX_SINCRONIZACIONES = int(os.environ.get("MAX_SINCRONIZACIONES", "25"))  # entr
 
 # Categorías para las que este archivo tiene prompt y tabla propios. Otras (monitores, TV...) se
 # saltan con un aviso, porque saldrían con secciones que no tienen sentido.
-CATEGORIAS_SOPORTADAS = {"smartphone", "smartwatch"}
+CATEGORIAS_SOPORTADAS = {"smartphone", "smartwatch"}   # con prompt propio; el resto usan un prompt genérico (categorias.json)
 CAMPOS_OBLIGATORIOS = ("categoria", "marca", "modelo_corto", "busqueda", "titulo", "especificaciones", "precio")
 
 # Proveedores de IA, por orden. Si Gemini agota su cuota, el programa pasa a Groq (gratuito) si has
@@ -88,6 +88,7 @@ RE_ASIN = re.compile(r"^[A-Z0-9]{10}$")
 _estado = {"gemini_agotado": False, "groq_agotado": False, "modelos_descartados": set()}
 
 
+import categorias   # categorías configurables (data/categorias.json)
 import etiquetado   # etiquetas SOLO de tu lista (data/etiquetas.json)
 
 
@@ -509,20 +510,16 @@ def render_bullets(items):
 
 
 def obtener_o_crear_categoria(nombre_cat_input):
-    """Busca la categoría en WordPress por su nombre (ej: 'Smartphones'). Si no existe, la crea."""
-    nombre_categoria = nombre_cat_input.capitalize()
-    if nombre_categoria.lower() == 'smartphone':
-        nombre_categoria = 'Smartphones'
-    elif nombre_categoria.lower() == 'smartwatch':
-        nombre_categoria = 'Smartwatches'
+    """Busca la categoría en WordPress por su nombre (ej: 'Smartphones', de data/categorias.json). Si no existe, la crea."""
+    nombre_categoria = categorias.nombre_wp(nombre_cat_input)
 
     cat_endpoint = f"{WP_URL}/wp-json/wp/v2/categories"
     
     try:
         res = requests.get(cat_endpoint, params={"search": nombre_categoria}, auth=(WP_USER, WP_APP_PASSWORD), timeout=15)
         if res.status_code == 200:
-            categorias = res.json()
-            for cat in categorias:
+            lista_cats = res.json()
+            for cat in lista_cats:
                 if cat['name'].lower() == nombre_categoria.lower():
                     return cat['id']
         
@@ -630,7 +627,7 @@ def procesar_y_publicar(producto):
             "puntuacion": 9.4
         }}
         """
-    else:
+    elif categoria_str == 'smartwatch':
         prompt = f"""
         Actúa como un analista experto en wearables, deporte, SEO técnico y CRO para una web comparadora de productos de Amazon.
         Analiza en máxima profundidad este smartwatch basándote en los datos aportados y tu conocimiento técnico del modelo exacto:
@@ -719,6 +716,36 @@ def procesar_y_publicar(producto):
         }}
         """
 
+    else:
+        _cfg = categorias.info(categoria_str)
+        _sec = _cfg.get("secciones") or []
+        _sec_txt = (f"Usa estas secciones (claves en minúsculas sin tildes ni espacios): {', '.join(_sec)}." if _sec else
+                    "Elige 5 o 6 secciones adecuadas a este tipo de producto (claves en minúsculas, sin tildes ni espacios, p. ej. 'pantalla', 'conectividad').")
+        prompt = f"""
+        Actúa como un analista experto en {_cfg.get('descripcion', categoria_str)}, SEO técnico y CRO para una web comparadora de productos de Amazon.
+        Analiza en profundidad este producto basándote en los datos aportados y tu conocimiento técnico del modelo exacto:
+        - Marca y Modelo: {producto['marca']} {producto['modelo_corto']}
+        - Título: {producto['titulo']}
+        - Especificaciones base: {producto['especificaciones']}
+        - Precio: {producto['precio']}
+
+        REGLAS ESTRICTAS DE CONTENIDO (MUY IMPORTANTE):
+        1. Ficha técnica detallada: cada sección de "specs" con entre 4 y 8 viñetas. {_sec_txt}
+        2. Usa SIEMPRE el formato "Característica: Dato técnico exacto". Solo datos que conozcas con seguridad o que aparezcan arriba; si no, omite la línea.
+        3. El "resumen_ejecutivo" debe ser un párrafo rico, experto y persuasivo de unas 90-120 palabras.
+        4. Incluye exactamente 6 Pros detallados y 4 Contras detallados, con formato "Título corto: Explicación detallada".
+
+        Devuelve ÚNICAMENTE un objeto JSON válido con esta estructura exacta:
+        {{
+            "badge": "ETIQUETA CORTA EN MAYÚSCULAS",
+            "resumen_ejecutivo": "Párrafo de 90-120 palabras.",
+            "specs": {{ "seccion_1": ["Característica: dato", "..."], "seccion_2": ["..."] }},
+            "pros": ["Ventaja: explicación", "...", "...", "...", "...", "..."],
+            "contras": ["Desventaja: explicación", "...", "...", "..."],
+            "puntuacion": 9.0
+        }}
+        """
+
     print(f"   🔍 Analizando en profundidad ({categoria_str.upper()}): {producto['modelo_corto']}...")
     datos_ia = llamar_gemini_con_respaldo(prompt)
 
@@ -738,6 +765,11 @@ def procesar_y_publicar(producto):
             ("💾 Almacenamiento", s.get('almacenamiento', [])),
             ("🌐 Conectividad", s.get('conectividad', []))
         ]
+    elif categoria_str != 'smartwatch':   # categoría genérica: las secciones las decide la ficha
+        spec_rows = [(f"🔹 {str(k).replace('_', ' ').capitalize()}", v) for k, v in (s.items() if isinstance(s, dict) else []) if v][:8]
+        if not spec_rows:
+            print(f"❌ ABORTANDO PUBLICACIÓN de '{producto['modelo_corto']}': la ficha no trae secciones de especificaciones.")
+            return False
     else:
         spec_rows = [
             ("📺 Pantalla", s.get('pantalla', [])),
@@ -852,7 +884,7 @@ def procesar_y_publicar(producto):
             "spec_almacenamiento": str(s.get('almacenamiento', [])),
             "spec_conectiv": str(s.get('conectividad', []))
         })
-    else:
+    elif categoria_str == 'smartwatch':
         meta_payload.update({
             "spec_pantalla": str(s.get('pantalla', [])),
             "spec_bateria": str(s.get('bateria', [])),
@@ -1008,6 +1040,71 @@ def registrar_miembros_existentes(titulos_wp):
     return añadidos
 
 
+def _total_entradas_wp(nombre_cat):
+    """Entradas (cualquier estado) de una categoría de WordPress. None si no se pudo leer; 0 si la categoría aún no existe."""
+    try:
+        r = requests.get(f"{WP_URL}/wp-json/wp/v2/categories", params={"search": nombre_cat, "per_page": 100, "_fields": "id,name"},
+                         auth=(WP_USER, WP_APP_PASSWORD), timeout=20)
+        if r.status_code != 200:
+            return None
+        ids = [c["id"] for c in r.json() if html.unescape(c.get("name", "")).strip().lower() == nombre_cat.strip().lower()]
+        if not ids:
+            return 0
+        r = requests.get(f"{WP_URL}/wp-json/wp/v2/posts", params={"categories": ids[0], "per_page": 100, "status": "publish,draft,pending,private,future",
+                                                                  "_fields": "id"}, auth=(WP_USER, WP_APP_PASSWORD), timeout=30)
+        if r.status_code != 200:
+            return None
+        total = r.headers.get("X-WP-Total")
+        return int(total) if total and total.isdigit() else len(r.json())
+    except (requests.RequestException, ValueError):
+        return None
+
+
+def repartir_por_necesidad(pendientes, n):
+    """
+    Reparte los n huecos de esta ejecución entre las categorías que tienen algo pendiente:
+      1) 1 hueco garantizado para cada categoría (si n alcanza);
+      2) el resto, de uno en uno, para la categoría que tenga MENOS entradas en ese momento.
+    Ej. con n=5: smartphones 15 y smartwatches 40 -> 4 y 1; si añades Smart TV con 0 -> 3 TV, 1 smartphone y 1 smartwatch.
+    Devuelve la lista ordenada: primero los elegidos y luego el resto (por si alguno falla).
+    """
+    grupos = {}
+    for x in pendientes:
+        grupos.setdefault(x[1]["categoria"].lower(), []).append(x)
+    if len(grupos) <= 1:
+        return pendientes
+    cuentas = {}
+    for c in grupos:
+        t = _total_entradas_wp(categorias.nombre_wp(c))
+        if t is None:   # sin WordPress: se cuenta con la memoria del robot
+            reg = cargar_json(RUTA_PUBLICADOS, {})
+            t = sum(1 for r in reg.values() if isinstance(r, dict) and str(r.get("categoria", "")).lower() == c and r.get("post_id"))
+        cuentas[c] = t
+    cupos = {c: 0 for c in grupos}
+    virtual = dict(cuentas)
+    huecos = n
+    for c in sorted(grupos, key=lambda c: cuentas[c]):   # 1 por categoría, empezando por la que menos tiene
+        if huecos > 0 and grupos[c]:
+            cupos[c] += 1
+            virtual[c] += 1
+            huecos -= 1
+    while huecos > 0:
+        candidatas = [c for c in grupos if cupos[c] < len(grupos[c])]
+        if not candidatas:
+            break
+        c = min(candidatas, key=lambda c: (virtual[c], cuentas[c]))
+        cupos[c] += 1
+        virtual[c] += 1
+        huecos -= 1
+    print("📊 Entradas por categoría: " + " | ".join(f"{categorias.nombre_wp(c)} {cuentas[c]}" for c in grupos))
+    print("🎯 Reparto de hoy (más para la que menos tiene): " + " | ".join(f"{categorias.nombre_wp(c)} {cupos[c]}" for c in grupos))
+    elegidos, resto = [], []
+    for c, lista in grupos.items():
+        elegidos += lista[:cupos[c]]
+        resto += lista[cupos[c]:]
+    return elegidos + resto
+
+
 def main():
     registro = cargar_json(RUTA_PUBLICADOS, {})
     cola = cargar_json(RUTA_COLA, [])
@@ -1037,11 +1134,12 @@ def main():
             print(f"⚠️ Se descarta un producto por faltarle campos: {', '.join(faltan)}")
             descartados += 1
             continue
-        if it["categoria"].lower() not in CATEGORIAS_SOPORTADAS:
-            print(f"⚠️ {it['modelo_corto']}: la categoría '{it['categoria']}' aún no tiene prompt en este script. Se deja pendiente.")
+        _pedida = it["categoria"].lower() in [c.strip() for c in CATEGORIA_FILTRO.split(",")]
+        if categorias.esta_pausada(it["categoria"]) and not _pedida:
+            print(f"⏸️ {it['modelo_corto']}: la categoría '{it['categoria']}' está pausada en data/categorias.json. Se deja pendiente.")
             descartados += 1
             continue
-        if CATEGORIA_FILTRO and CATEGORIA_FILTRO != "todas" and it["categoria"].lower() != CATEGORIA_FILTRO:
+        if CATEGORIA_FILTRO and "todas" not in CATEGORIA_FILTRO.split(",") and it["categoria"].lower() not in [c.strip() for c in CATEGORIA_FILTRO.split(",")]:
             continue   # fuera del filtro de esta ejecución: se deja para otra
         pid = slug_producto(it)
         if pid in vistos:   # el mismo producto en el archivo y en la cola: solo se cuenta una vez
@@ -1061,6 +1159,9 @@ def main():
     sincronizadas = sincronizar_taxonomias()
     if sincronizadas:
         print(f"🏷️ Entradas ya publicadas etiquetadas en esta ejecución: {sincronizadas}")
+
+    # Reparto entre categorías: más huecos para la que menos entradas tiene
+    pendientes = repartir_por_necesidad(pendientes, MAX_NUEVOS_POR_EJECUCION)
 
     # Los productos que ya han fallado van al final, y los que han fallado demasiadas veces se apartan
     fallos = cargar_json(RUTA_FALLOS, {})
