@@ -1,0 +1,50 @@
+name: Unificar páginas Top 10
+
+on:
+  workflow_dispatch:
+    inputs:
+      modo:
+        description: "prueba (no toca nada), si (rehace las páginas) o restaurar (deshace)"
+        default: "prueba"
+      rankings:
+        description: "Ids de rankings separados por coma (ver data/rankings.json), o todos"
+        default: "todos"
+      regenerar_intros:
+        description: "si = vuelve a redactar la introducción de las páginas (por defecto se conserva la ya generada)"
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: robot-topcomparador
+  cancel-in-progress: false
+
+jobs:
+  unificar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      WP_URL: ${{ secrets.WP_URL }}
+      WP_USER: ${{ secrets.WP_USER }}
+      WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
+      UNIFICAR: ${{ github.event.inputs.rankings }}
+      REGENERAR_INTROS: ${{ github.event.inputs.regenerar_intros }}
+      UNIFICAR_MODO: ${{ github.event.inputs.modo }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install requests google-genai
+      - run: python generar_rankings.py
+      - name: Guardar copias de las páginas
+        if: always()
+        run: |
+          git config user.name "robot-topcomparador"
+          git config user.email "robot@users.noreply.github.com"
+          git add data/ || true
+          git diff --cached --quiet || git commit -m "Unificar páginas: copias de seguridad"
+          git pull --rebase || true
+          git push || true
