@@ -5,16 +5,16 @@ on:
     inputs:
       max_nuevos:
         description: "Entradas nuevas a crear en esta ejecución"
-        default: "2"
+        default: "5"
       estado_entradas:
         description: "draft (borrador) o publish (publicada)"
         default: "draft"
-      solo_categoria:
-        description: "smartwatch, smartphone o todas"
-        default: "todas"
+      categorias:
+        description: "SOLO esta(s) categoría(s), separadas por coma (smartphone, smartwatch, tv...). Vacío = todas las activas, repartiendo más entradas a las que menos tienen"
+        default: ""
       descubrir:
         description: "Descubrir productos nuevos con Tavily: prueba (no guarda nada), si, no"
-        default: "prueba"
+        default: "si"
       videos:
         description: "Añadir vídeos de YouTube a los borradores: si, prueba (solo muestra), no"
         default: "si"
@@ -41,9 +41,10 @@ jobs:
       WP_URL: ${{ secrets.WP_URL }}
       WP_USER: ${{ secrets.WP_USER }}
       WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
-      MAX_NUEVOS: ${{ github.event.inputs.max_nuevos || '2' }}
+      MAX_NUEVOS: ${{ github.event.inputs.max_nuevos || '5' }}
       ESTADO_ENTRADAS: ${{ github.event.inputs.estado_entradas || 'draft' }}
-      SOLO_CATEGORIA: ${{ github.event.inputs.solo_categoria || 'todas' }}
+      SOLO_CATEGORIA: ${{ github.event.inputs.categorias || 'todas' }}
+      DESCUBRIR_CATEGORIAS: ${{ github.event.inputs.categorias || '' }}
       TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
       # Ejecuciones automáticas (sin formulario): 'prueba' hasta que cambies esta palabra por 'si'
       DESCUBRIR_MODO: ${{ github.event.inputs.descubrir || 'si' }}
