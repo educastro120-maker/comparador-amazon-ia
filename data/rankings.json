@@ -1,6 +1,7 @@
 [
   {
     "id": "smartwatches-mejor-bateria",
+    "pagina_id": 1042,
     "categoria": "smartwatch",
     "titulo": "Top 10 smartwatches con mejor batería (2026)",
     "etiqueta": "Top 10 smartwatches con mejor batería (2026)",
@@ -135,6 +136,7 @@
   },
   {
     "id": "smartwatches-mayores-deteccion-caidas",
+    "pagina_id": 1172,
     "categoria": "smartwatch",
     "titulo": "Top 10 smartwatches para mayores con detección de caídas (2026)",
     "etiqueta": "Top 10 smartwatches para mayores con detección de caídas (2026)",
@@ -269,6 +271,7 @@
   },
   {
     "id": "smartwatches-calidad-precio",
+    "pagina_id": 590,
     "categoria": "smartwatch",
     "titulo": "Top 10 smartwatches calidad-precio (2026)",
     "etiqueta": "Top 10 smartwatches calidad-precio (2026)",
@@ -403,6 +406,7 @@
   },
   {
     "id": "smartwatches-mejor-por-deporte",
+    "pagina_id": 1265,
     "categoria": "smartwatch",
     "titulo": "El mejor smartwatch para cada deporte (2026)",
     "etiqueta": "El mejor smartwatch para cada deporte (2026)",
@@ -547,6 +551,7 @@
   },
   {
     "id": "smartphones-mejor-camara",
+    "pagina_id": 1269,
     "categoria": "smartphone",
     "titulo": "Top 10 smartphones con mejor cámara (2026)",
     "etiqueta": "Top 10 smartphones con mejor cámara (2026)",
