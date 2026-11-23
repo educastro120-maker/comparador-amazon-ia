@@ -56,7 +56,9 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
 INTRO_IA = os.environ.get("INTRO_IA", "si").strip().lower() != "no"
 REGENERAR_INTROS = os.environ.get("REGENERAR_INTROS", "").strip().lower() in ("si", "1", "true")
 MODELOS_INTRO = [m.strip() for m in os.environ.get("INTRO_MODELS", "gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.8-flash").split(",") if m.strip()]
-AVISO_ARRIBA = os.environ.get("AVISO_ARRIBA", "si").strip().lower() != "no"
+AVISO_ARRIBA = os.environ.get("AVISO_ARRIBA", "no").strip().lower() != "no"
+DISENO = "4"   # súbelo si cambia el diseño: el robot rehará solo sus páginas que lleven un diseño anterior
+MARCA_DISENO = f"<!-- tc-diseno:{DISENO} -->"
 FRASE_AFILIADO = ("Como afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables, "
                   "sin que esto suponga ningún coste adicional para ti.")
 
@@ -362,7 +364,7 @@ def construir_html(rk, filas):
     caja = "border:1px solid #e2e8f0;border-radius:12px;padding:18px;margin:0 0 18px 0;background:#fff;"
     boton = ("background-color:#ffa41c;color:#111;text-decoration:none;font-weight:bold;padding:10px 18px;border-radius:8px;"
              "border:1px solid #ff8f00;display:inline-block;")
-    h = ['<div style="max-width:1100px;margin:0 auto;font-family:system-ui,-apple-system,sans-serif;color:#1e293b;">']
+    h = [MARCA_DISENO, '<div style="max-width:1100px;margin:0 auto;font-family:system-ui,-apple-system,sans-serif;color:#1e293b;">']
     h.append(f'<p style="font-size:1.05em;line-height:1.7;">{negritas(texto_introduccion(rk))}</p>')
     if AVISO_ARRIBA:
         h.append(f'<p style="font-size:.8em;color:#64748b;line-height:1.5;margin:0 0 6px;">Esta página contiene enlaces de afiliado de Amazon.es. {esc(FRASE_AFILIADO)}</p>')
