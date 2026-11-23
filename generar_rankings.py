@@ -266,9 +266,11 @@ def reparar_registro(rankings, registro, guardar):
                 pares.append((m, reg))
     vivos = datos_de_entradas([reg["post_id"] for _, reg in pares])
     cambios = len(fijadas)
+    arregladas = set()   # un mismo producto puede estar en varios rankings: se arregla una sola vez
     for m, reg in pares:
-        if reg["post_id"] in vivos:
+        if reg["post_id"] in vivos or id(reg) in arregladas:
             continue
+        arregladas.add(id(reg))
         nombre = f"{m['marca']} {m['modelo_corto']}"
         n = buscar_entrada(m)
         if n:
