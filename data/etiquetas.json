@@ -33,7 +33,8 @@
     "criterio": "",
     "pagina": "auto",
     "min": 0,
-    "max": 100
+    "max": 100,
+    "pagina_id": 349
   },
   {
     "nombre": "Top Smartwatches gama media (entre 100€ y 300€)",
@@ -100,7 +101,8 @@
     "categoria": "smartwatch",
     "tipo": "criterio",
     "criterio": "Gama alta: materiales premium (titanio, zafiro), procesador potente, muchas funciones de salud y deporte",
-    "pagina": "manual"
+    "pagina": "auto",
+    "pagina_id": 405
   },
   {
     "nombre": "Top 10 Smartwatches para deportes",
