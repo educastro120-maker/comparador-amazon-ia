@@ -427,5 +427,28 @@
     ],
     "descubierto_el": "2026-11-22",
     "verificar": true
+  },
+  {
+    "marca": "COROS",
+    "modelo_corto": "PACE 3",
+    "busqueda": "COROS PACE 3",
+    "titulo": "COROS PACE 3 Reloj GPS Deportivo con Pantalla Táctil y Batería de 38 Horas",
+    "especificaciones": "El COROS PACE 3 es un reloj deportivo con GPS diseñado para corredores que buscan precisión y ligereza. Pesa 39 g con correa de nylon y 30 g con correa de silicona. Cuenta con una pantalla táctil MIP de 1.2 pulgadas con resolución de 260x260 píxeles y cristal mineral. Dispone de GPS dual-band multi-GNSS, resistencia al agua de 5 ATM y ofrece hasta 38 horas de autonomía en modo GPS y 24 días en modo smartwatch. Incluye funciones como métricas avanzadas de entrenamiento y running power nativo desde la muñeca.",
+    "precio": "229.00€",
+    "categoria": "smartwatch",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.correrjuntos.com/blog/coros-pace-3-review",
+      "https://runnerpro.app/blogs/noticias/mejor-reloj-gps-running-calidad-precio-2026-gama-media-runnerpro",
+      "https://coros.com/es/products",
+      "https://coros.com/es/pace4",
+      "https://coros.com/products",
+      "https://www.i-run.es/electronica/relojes-deportivos/coros/Pace-4_fiche_146077.html"
+    ],
+    "descubierto_el": "2026-11-23",
+    "verificar": true
   }
 ]
