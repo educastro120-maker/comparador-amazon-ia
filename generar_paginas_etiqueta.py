@@ -87,6 +87,7 @@ def main():
     id_tag = {html.unescape(t["name"]).strip().lower(): t["id"] for t in tags}
     por_slug = {p["slug"]: p for p in paginas}
     por_titulo = {gr.slugify((p.get("title") or {}).get("raw", "")): p for p in paginas}
+    por_id = {p["id"]: p for p in paginas}
     errores = 0
 
     for e in etiquetas:
@@ -98,21 +99,29 @@ def main():
         filas = [fila_de_post(p, por_post.get(p["id"]), medios) for p in posts if tid in p.get("tags", [])]
         titulo = e.get("titulo_pagina") or nombre
         slug = gr.slugify(titulo)
-        existente = por_slug.get(slug) or por_titulo.get(slug)
+        adoptada = por_id.get(e.get("pagina_id")) if e.get("pagina_id") else None   # página tuya que le encargas al robot
+        if e.get("pagina_id") and not adoptada:
+            print(f"⚠️ {nombre}: la página {e['pagina_id']} indicada en etiquetas.json no existe. Se ignora.")
+        existente = adoptada or por_slug.get(slug) or por_titulo.get(slug)
         if not filas:
             print(f"— {nombre}: todavía no hay productos con esta etiqueta.")
             continue
-        suyo = bool(existente) and MARCA.format(slug) in (existente.get("content") or {}).get("raw", "")
-        if existente and not suyo:
+        raw_existente = (existente.get("content") or {}).get("raw", "") if existente else ""
+        if existente and MARCA.format(slug) not in raw_existente:
             # el listado de páginas no trae el contenido: se lee para saber si es de este robot
             r = requests.get(f"{WP}/wp-json/wp/v2/pages/{existente['id']}", params={"context": "edit", "_fields": "content"}, auth=AUTH, timeout=30)
-            suyo = r.status_code == 200 and MARCA.format(slug) in (r.json().get("content") or {}).get("raw", "")
+            raw_existente = (r.json().get("content") or {}).get("raw", "") if r.status_code == 200 else ""
+        suyo = bool(existente) and (bool(adoptada) or MARCA.format(slug) in raw_existente)
         if existente and not suyo:
             print(f"⏭️ {titulo}: ya existe una página tuya ({existente['status']}, ID {existente['id']}). No se toca.")
             continue
+        rehacer_diseno = False
         if existente and existente["status"] == "publish":
-            print(f"⏭️ {titulo}: ya publicada por el robot. No se vuelve a tocar.")
-            continue
+            if gr.MARCA_DISENO in raw_existente:
+                print(f"⏭️ {titulo}: ya publicada por el robot con el diseño actual. No se toca.")
+                continue
+            rehacer_diseno = True   # publicada con un diseño anterior: se rehace con el actual, sin despublicarla
+            print(f"🎨 {titulo}: publicada con un diseño anterior; se rehace con el diseño actual.")
 
         filas.sort(key=lambda f: (-f["puntos"], f["nombre"]))
         top = filas[:MINIMO]
@@ -125,7 +134,11 @@ def main():
               "criterio": e.get("criterio") or "Selección según las características y el precio de cada producto.",
               "datos_de": gr.datetime.now().strftime("%d/%m/%Y")}
         contenido = MARCA.format(slug) + gr.construir_html(rk, top)
-        estado = "publish" if (completa and PUBLICAR) else "draft"
+        estado = "publish" if (rehacer_diseno or (completa and PUBLICAR)) else "draft"
+        if existente and raw_existente and not os.path.exists(os.path.join(gr.CARPETA_COPIAS_PAG, f"{existente['id']}.html")):
+            os.makedirs(gr.CARPETA_COPIAS_PAG, exist_ok=True)
+            with open(os.path.join(gr.CARPETA_COPIAS_PAG, f"{existente['id']}.html"), "w", encoding="utf-8") as f:
+                f.write(raw_existente)   # copia de seguridad de la página tal como estaba
         try:
             if existente:
                 r = requests.post(f"{WP}/wp-json/wp/v2/pages/{existente['id']}", json={"content": contenido, "status": estado}, auth=AUTH, timeout=60)
