@@ -60,7 +60,7 @@ def fila_de_post(p, reg, medios=None):
     except (TypeError, ValueError):
         puntos = 0
     return {"nombre": nombre, "precio": gr.precio_es(precio), "amazon": amazon, "imagen": imagen_entrada or (reg or {}).get("imagen") or gr.imagen_de_biblioteca(nombre),
-            "resumen": gr.recortar_frase((reg or {}).get("resumen", ""), 150), "analisis": p.get("link", ""), "puntos": puntos,
+            "resumen": gr.recortar_frase((reg or {}).get("resumen", "") or gr.resumen_de_contenido(c), 150), "analisis": p.get("link", ""), "puntos": puntos,
             "status": p.get("status", ""), "motivo": (reg or {}).get("badge", "")}
 
 
