@@ -3,6 +3,7 @@ ETIQUETAR ENTRADAS YA CREADAS (con tu lista de etiquetas)
 =========================================================
 Pone categoría-etiquetas a las entradas que NO tienen ninguna de tus etiquetas (por ejemplo las que salen "Sin etiquetas").
 Usa data/etiquetas.json: precio -> por reglas; criterio -> la IA elige solo entre tus etiquetas.
+Segunda pasada (sin IA): a las entradas que ya tienen alguna etiqueta tuya pero NO la de precio, les añade la que corresponda por su precio.
 Nunca quita etiquetas que ya tengan y nunca crea etiquetas nuevas.
   ETIQUETAR_MODO = prueba (por defecto, no toca nada) | si
   LOTE           = número o "todas" (cada llamada a la IA usa cuota gratuita: con muchas entradas, tanda a tanda)
@@ -13,6 +14,7 @@ import requests
 
 import auto_publisher as ap   # reutiliza la IA con respaldo y la lectura de etiquetas
 import etiquetado
+import categorias
 
 MODO = os.environ.get("ETIQUETAR_MODO", "prueba").strip().lower()
 PRUEBA = MODO != "si"
@@ -69,7 +71,8 @@ def main():
     for p in posts:
         if IDS and p["id"] not in IDS:
             continue
-        cat = next((c for c in ("smartwatch", "smartphone") if any(c in nombre_cat.get(i, "") for i in p["categories"])), None)
+        cat = next((k for k, v in categorias.cargar().items()
+                    if any(k in nombre_cat.get(i, "") or str(v.get("nombre", "")).lower() == nombre_cat.get(i, "") for i in p["categories"])), None)
         if not cat or (set(p["tags"]) & mios and not IDS):
             continue
         pendientes.append((p, cat))
@@ -91,6 +94,33 @@ def main():
         r = requests.post(f"{WP}/wp-json/wp/v2/posts/{p['id']}", json={"tags": sorted(set(p["tags"]) | set(ids))}, auth=AUTH, timeout=60)
         if r.status_code != 200:
             print(f"   ❌ WordPress respondió {r.status_code}")
+    # Segunda pasada: entradas con etiquetas tuyas pero sin etiqueta de precio (se añade por reglas, sin IA ni cuota)
+    nombres_precio = {e["nombre"].strip().lower() for e in lista if e.get("tipo") == "precio"}
+    ids_precio = {id_tag[n] for n in nombres_precio if n in id_tag}
+    ya = {p["id"] for p, _ in pendientes}
+    sin_precio = 0
+    if ids_precio:
+        print("\n💶 Entradas con etiquetas pero sin etiqueta de precio:")
+        for p in posts:
+            if p["id"] in ya or (IDS and p["id"] not in IDS) or set(p["tags"]) & ids_precio:
+                continue
+            cat = next((k for k, v in categorias.cargar().items()
+                        if any(k in nombre_cat.get(i, "") or str(v.get("nombre", "")).lower() == nombre_cat.get(i, "") for i in p["categories"])), None)
+            if not cat:
+                continue
+            contenido = (p.get("content") or {}).get("raw", "")
+            titulo = html.unescape((p.get("title") or {}).get("raw", ""))
+            precio = etiquetado.precio_de_contenido(contenido, por_post.get(p["id"], {}).get("precio", ""))
+            nombres = etiquetado.por_precio(cat, precio)
+            ids = [id_tag[n.strip().lower()] for n in nombres if n.strip().lower() in id_tag]
+            print(f"📄 {titulo[:70]} (entrada {p['id']}) | precio leído: {precio.strip() or 'NO ENCONTRADO'} → {', '.join(nombres) or '(ninguna: añádela a mano)'}")
+            sin_precio += 1
+            if PRUEBA or not ids:
+                continue
+            r = requests.post(f"{WP}/wp-json/wp/v2/posts/{p['id']}", json={"tags": sorted(set(p["tags"]) | set(ids))}, auth=AUTH, timeout=60)
+            if r.status_code != 200:
+                print(f"   ❌ WordPress respondió {r.status_code}")
+        print(f"💶 Entradas sin etiqueta de precio: {sin_precio}")
     print(f"\n📊 Entradas revisadas: {hechas} de {len(pendientes)}" + ("  (PRUEBA: repite con modo 'si')" if PRUEBA else ""))
 
 
