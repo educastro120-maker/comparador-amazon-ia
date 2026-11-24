@@ -450,5 +450,51 @@
     ],
     "descubierto_el": "2026-11-23",
     "verificar": true
+  },
+  {
+    "marca": "Suunto",
+    "modelo_corto": "Race 2",
+    "busqueda": "Suunto Race 2",
+    "titulo": "Suunto Race 2 Reloj Deportivo de Rendimiento con Pantalla AMOLED LTPO 1,5 pulgadas y GPS",
+    "especificaciones": "El Suunto Race 2 está enfocado al rendimiento deportivo e incluye 115 tipos de deportes, mapas y SuuntoPlus. Dispone de una pantalla AMOLED LTPO de 1,5 pulgadas con resolución de 466x466 píxeles y cristal de zafiro. Su autonomía GPS a máxima precisión llega hasta las 55 horas. Cuenta con resistencia al agua de 100m y un peso de 76g o 65g en titanio. Utiliza un diseño con 3 botones físicos y corona.",
+    "precio": "499.00€",
+    "categoria": "smartwatch",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "pendiente",
+    "fuentes": [
+      "https://www.globerada.com/cat/electronica/telecomunicaciones/smartwatches-y-relojes-inteligentes/marca/suunto",
+      "https://www.idealo.es/lista/118699136/relojes-deportivos-suunto.html",
+      "https://www.youtube.com/watch?v=0gyYO1VkEAU&vl=en-US",
+      "https://www.palabraderunner.com/suunto-vertical-2-analisis",
+      "https://www.runnersworld.com/es/zapatillas-correr-material-deportivo/g70186446/mejores-relojes-deportivos-corredores-2026",
+      "https://www.suunto.com/es-es/colecciones-suunto/suunto7"
+    ],
+    "descubierto_el": "2026-11-24",
+    "verificar": true
+  },
+  {
+    "marca": "Suunto",
+    "modelo_corto": "Run 2",
+    "busqueda": "Suunto Run 2",
+    "titulo": "Suunto Run 2 Reloj Deportivo para Corredores con Pantalla AMOLED de 1,32 pulgadas y Mapas",
+    "especificaciones": "El Suunto Run 2 es un reloj fitness pensado para quienes empiezan a correr. Cuenta con una pantalla táctil AMOLED de 1,32 pulgadas protegida con cristal Gorilla Glass, con una resolución de pantalla de 466x466 píxeles y un cuerpo ligero de 35 gramos con bisel de acero inoxidable. Incorpora mapas sin conexión, servicio de navegación GPS con doble frecuencia de máxima precisión, 24 horas de batería en modo GPS y unos 13 días en modo smartwatch. La longitud mínima de la correa es de 125 mm.",
+    "precio": "299.00€",
+    "categoria": "smartwatch",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "pendiente",
+    "fuentes": [
+      "https://www.globerada.com/cat/electronica/telecomunicaciones/smartwatches-y-relojes-inteligentes/marca/suunto",
+      "https://www.idealo.es/lista/118699136/relojes-deportivos-suunto.html",
+      "https://www.youtube.com/watch?v=0gyYO1VkEAU&vl=en-US",
+      "https://www.palabraderunner.com/suunto-vertical-2-analisis",
+      "https://www.runnersworld.com/es/zapatillas-correr-material-deportivo/g70186446/mejores-relojes-deportivos-corredores-2026",
+      "https://www.suunto.com/es-es/colecciones-suunto/suunto7"
+    ],
+    "descubierto_el": "2026-11-24",
+    "verificar": true
   }
 ]
