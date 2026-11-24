@@ -57,7 +57,7 @@ INTRO_IA = os.environ.get("INTRO_IA", "si").strip().lower() != "no"
 REGENERAR_INTROS = os.environ.get("REGENERAR_INTROS", "").strip().lower() in ("si", "1", "true")
 MODELOS_INTRO = [m.strip() for m in os.environ.get("INTRO_MODELS", "gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.8-flash").split(",") if m.strip()]
 AVISO_ARRIBA = os.environ.get("AVISO_ARRIBA", "no").strip().lower() != "no"
-DISENO = "4"   # súbelo si cambia el diseño: el robot rehará solo sus páginas que lleven un diseño anterior
+DISENO = "5"   # súbelo si cambia el diseño: el robot rehará solo sus páginas que lleven un diseño anterior
 MARCA_DISENO = f"<!-- tc-diseno:{DISENO} -->"
 MARCA_INTRO_PROVISIONAL = "<!-- tc-intro:provisional -->"
 _intro = {"provisional": False}
