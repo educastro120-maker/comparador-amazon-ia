@@ -1354,38 +1354,6 @@
       "vídeo"
     ]
   },
-  "samsung-galaxy-a17-5g": {
-    "categoria": "smartphone",
-    "marca": "Samsung",
-    "modelo": "Galaxy A17 5G",
-    "titulo": "Samsung Galaxy A17 5G (128 GB) - Smartphone Android con Pantalla Super AMOLED de 6,7 Pulgadas a 90 Hz y Cámara Principal de 50 MP",
-    "url_post": "https://topcomparador.es/analisis-y-opinion-samsung-galaxy-a17-5g-128-gb-smartphone-android-con-pantalla-super-amoled-de-67-pulgadas-a-90-hz-y-camara-principal-de-50-mp/",
-    "post_id": 1398,
-    "link_afiliado": "https://www.amazon.es/s?k=Samsung+Galaxy+A17+5G+128GB&tag=topcomparad00-21",
-    "tiene_link_corto": false,
-    "precio": "159.00€",
-    "imagen": "",
-    "tiene_imagen": false,
-    "resumen": "",
-    "badge": "",
-    "puntuacion": null,
-    "fecha": "2026-11-17",
-    "rankings_sincronizados": [
-      "smartphones-calidad-precio",
-      "smartphones-mas-vendidos-espana"
-    ],
-    "video_id": "eBWzuUe4i_Y",
-    "video_titulo": "Galaxy A17 Review | El Teléfono que ni tu Abuelo Merece 🧓💔",
-    "video_canal": "Domingo Gomes",
-    "video_fecha": "2026-11-19",
-    "video_estado": "auto",
-    "video_posicion": "final",
-    "retocado": "2026-11-19",
-    "retoque_acciones": [
-      "título",
-      "vídeo"
-    ]
-  },
   "apple-iphone-17-pro": {
     "categoria": "smartphone",
     "marca": "Apple",
@@ -2444,5 +2412,26 @@
     "video_fecha": "2026-11-24",
     "video_estado": "auto",
     "video_posicion": "final"
+  },
+  "samsung-galaxy-a17-5g": {
+    "categoria": "smartphone",
+    "marca": "Samsung",
+    "modelo": "Galaxy A17 5G",
+    "titulo": "Samsung Galaxy A17 5G (128 GB) - Smartphone Android con Pantalla Super AMOLED de 6,7 Pulgadas a 90 Hz y Cámara Principal de 50 MP",
+    "url_post": "https://topcomparador.es/analisis-y-opinion-samsung-galaxy-a17-5g-128-gb-smartphone-android-con-pantalla-super-amoled-de-67-pulgadas-a-90-hz-y-camara-principal-de-50-mp-2/",
+    "post_id": 1420,
+    "link_afiliado": "https://www.amazon.es/s?k=Samsung+Galaxy+A17+5G+128GB&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "159.00€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "",
+    "badge": "",
+    "puntuacion": null,
+    "fecha": "2026-11-24",
+    "rankings_sincronizados": [
+      "smartphones-calidad-precio",
+      "smartphones-mas-vendidos-espana"
+    ]
   }
 }
