@@ -117,11 +117,11 @@ def main():
             continue
         rehacer_diseno = False
         if existente and existente["status"] == "publish":
-            if gr.MARCA_DISENO in raw_existente:
+            if gr.MARCA_DISENO in raw_existente and gr.MARCA_INTRO_PROVISIONAL not in raw_existente:
                 print(f"⏭️ {titulo}: ya publicada por el robot con el diseño actual. No se toca.")
                 continue
             rehacer_diseno = True   # publicada con un diseño anterior: se rehace con el actual, sin despublicarla
-            print(f"🎨 {titulo}: publicada con un diseño anterior; se rehace con el diseño actual.")
+            print(f"🎨 {titulo}: publicada con un diseño anterior o con la introducción provisional; se rehace.")
 
         filas.sort(key=lambda f: (-f["puntos"], f["nombre"]))
         top = filas[:MINIMO]
