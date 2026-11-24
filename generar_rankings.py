@@ -59,6 +59,8 @@ MODELOS_INTRO = [m.strip() for m in os.environ.get("INTRO_MODELS", "gemini-3.5-f
 AVISO_ARRIBA = os.environ.get("AVISO_ARRIBA", "no").strip().lower() != "no"
 DISENO = "4"   # súbelo si cambia el diseño: el robot rehará solo sus páginas que lleven un diseño anterior
 MARCA_DISENO = f"<!-- tc-diseno:{DISENO} -->"
+MARCA_INTRO_PROVISIONAL = "<!-- tc-intro:provisional -->"
+_intro = {"provisional": False}
 FRASE_AFILIADO = ("Como afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables, "
                   "sin que esto suponga ningún coste adicional para ti.")
 
@@ -341,6 +343,7 @@ Devuelve solo el párrafo."""
 def texto_introduccion(rk):
     """Introducción con palabras clave en negrita. Se genera una vez por página y se guarda en data/intros.json."""
     clave = rk.get("slug") or slugify(rk.get("titulo", ""))
+    _intro["provisional"] = False
     guardadas = cargar_json(RUTA_INTROS, {})
     if clave in guardadas and not REGENERAR_INTROS:
         return guardadas[clave]
@@ -354,6 +357,7 @@ def texto_introduccion(rk):
         print(f"   ✍️ Introducción generada para «{titulo}».")
         return t
     # Sin IA: se usa la que haya en rankings.json o una genérica (sin guardarla, para reintentar la próxima vez)
+    _intro["provisional"] = True
     if rk.get("intro"):
         return rk["intro"]
     tema = re.sub(r"\s*\(\d{4}\)\s*$", "", re.sub(r"^Top\s*\d+\s*", "", titulo, flags=re.I)).strip() or "esta categoría"
@@ -366,8 +370,9 @@ def construir_html(rk, filas):
     caja = "border:1px solid #e2e8f0;border-radius:12px;padding:18px;margin:0 0 18px 0;background:#fff;"
     boton = ("background-color:#ffa41c;color:#111;text-decoration:none;font-weight:bold;padding:10px 18px;border-radius:8px;"
              "border:1px solid #ff8f00;display:inline-block;")
-    h = [MARCA_DISENO, '<div style="max-width:1100px;margin:0 auto;font-family:system-ui,-apple-system,sans-serif;color:#1e293b;">']
-    h.append(f'<p style="font-size:1.05em;line-height:1.7;">{negritas(texto_introduccion(rk))}</p>')
+    texto_intro = texto_introduccion(rk)
+    h = [MARCA_DISENO + (MARCA_INTRO_PROVISIONAL if _intro["provisional"] else ""), '<div style="max-width:1100px;margin:0 auto;font-family:system-ui,-apple-system,sans-serif;color:#1e293b;">']
+    h.append(f'<p style="font-size:1.05em;line-height:1.7;">{negritas(texto_intro)}</p>')
     if AVISO_ARRIBA:
         h.append(f'<p style="font-size:.8em;color:#64748b;line-height:1.5;margin:0 0 6px;">Esta página contiene enlaces de afiliado de Amazon.es. {esc(FRASE_AFILIADO)}</p>')
 
