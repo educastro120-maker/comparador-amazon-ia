@@ -259,7 +259,13 @@ def producto_ya_publicado(pid, producto, registro, titulos_wp):
         olvidar_publicado(pid)
         registro.pop(pid, None)
     elif pid in registro:
-        return True
+        r0 = registro.get(pid)
+        if isinstance(r0, dict) and not r0.get("post_id") and not r0.get("url_post"):
+            # apuntado solo por data/ya_creados.txt, sin entrada real: se vuelve a comprobar (si quitas la línea de ya_creados.txt, se crea)
+            olvidar_publicado(pid)
+            registro.pop(pid, None)
+        else:
+            return True
     info, modo = buscar_post_existente(producto, titulos_wp)
     if info:
         if modo == "parecido":
