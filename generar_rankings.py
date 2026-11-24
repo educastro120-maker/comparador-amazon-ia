@@ -132,6 +132,16 @@ def extraer_enlace_amazon(contenido):
     return ""
 
 
+def resumen_de_contenido(contenido):
+    """Primer párrafo con texto de la entrada (el resumen que hay bajo el titular), por si la memoria del robot no lo tiene."""
+    c = re.sub(r"<(style|script)\b.*?</\1>", " ", contenido or "", flags=re.S | re.I)
+    for m in re.finditer(r"<p\b[^>]*>(.*?)</p>", c, re.S | re.I):
+        t = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", m.group(1)))).strip()
+        if len(t) >= 80 and not re.match(r"(puntuaci[oó]n|precio)\b", t, re.I):
+            return t
+    return ""
+
+
 def extraer_imagen(contenido):
     m = re.search(r'<img\b[^>]*?src=["\']([^"\']+)["\']', contenido or "", re.I)
     return html.unescape(m.group(1)) if m else ""
@@ -216,7 +226,8 @@ def datos_de_entradas(ids):
                 for p in r.json():
                     c = (p.get("content") or {}).get("raw", "")
                     info[p["id"]] = {"link": p.get("link", ""), "status": p.get("status", ""), "amazon": extraer_enlace_amazon(c),
-                                     "imagen": extraer_imagen(c), "destacada": p.get("featured_media") or 0}
+                                     "imagen": extraer_imagen(c), "destacada": p.get("featured_media") or 0,
+                                     "resumen": resumen_de_contenido(c)}
         except (requests.RequestException, ValueError) as err:
             print(f"   ⚠️ No se pudo comprobar el estado de algunas entradas: {err}")
     ids_medios = sorted({v["destacada"] for v in info.values() if v["destacada"]})
@@ -294,7 +305,7 @@ def fila_de_miembro(n, m, reg, post):
     amazon = post.get("amazon") or enlace_amazon(m, reg)
     imagen = post.get("imagen") or reg.get("imagen", "") or m.get("imagen", "") or imagen_de_biblioteca(nombre)
     return {"n": n, "nombre": nombre, "rotulo": m.get("rotulo", ""), "motivo": m.get("motivo", ""), "precio": precio_es(m.get("precio")),
-            "amazon": amazon, "imagen": imagen, "resumen": recortar_frase(reg.get("resumen", ""), 150),
+            "amazon": amazon, "imagen": imagen, "resumen": recortar_frase(reg.get("resumen", "") or post.get("resumen", ""), 150),
             "analisis": post.get("link") or reg.get("url_post", "")}
 
 
