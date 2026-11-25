@@ -68,6 +68,22 @@ COLA_MINIMA = int(os.environ.get("COLA_MINIMA", "12"))   # si una categoría ya 
 MARCAS_POR_EJECUCION = int(os.environ.get("MARCAS_POR_EJECUCION", "1"))
 MODELOS_POR_MARCA = int(os.environ.get("MODELOS_POR_MARCA", "6"))
 MAX_FALLOS_MARCA = 3
+# Qué productos buscar: "mixto" (los que haya a la venta, como hasta ahora), "novedades" (lanzados hace menos de MESES_NOVEDAD meses)
+# o "antiguos" (lanzados hace más de MESES_ANTIGUO meses y que aún se venden). Si la fuente no dice la fecha, no se descarta.
+ENFOQUE = os.environ.get("DESCUBRIR_ENFOQUE", "mixto").strip().lower()
+if ENFOQUE not in ("mixto", "novedades", "antiguos"):
+    ENFOQUE = "mixto"
+MESES_NOVEDAD = int(os.environ.get("MESES_NOVEDAD", "9"))
+MESES_ANTIGUO = int(os.environ.get("MESES_ANTIGUO", "12"))
+# Gama de precio a buscar (opcional): economica | media | alta. Solo se aceptan productos cuyo precio aparezca en las fuentes y caiga en el tramo.
+GAMA = os.environ.get("DESCUBRIR_GAMA", "").strip().lower().replace("é", "e").replace("ó", "o")
+if GAMA not in ("economica", "media", "alta"):
+    GAMA = ""
+RANGOS_GAMA = {   # euros: (mínimo, máximo); los mismos tramos que tus etiquetas de precio
+    "smartphone": {"economica": (0, 200), "media": (200, 500), "alta": (500, 10**9)},
+    "smartwatch": {"economica": (0, 100), "media": (100, 300), "alta": (300, 10**9)},
+}
+TEXTO_GAMA = {"economica": "económicos baratos precio bajo", "media": "gama media calidad precio", "alta": "gama alta premium"}
 MIN_CARACTERES_FICHA = int(os.environ.get("MIN_CARACTERES_FICHA", "300"))
 MIN_PORCENTAJE_CIFRAS = float(os.environ.get("MIN_PORCENTAJE_CIFRAS", "0.8"))
 MIN_CIFRAS_FICHA = 4
@@ -208,12 +224,14 @@ def estructurar_con_gemini(descripcion, marca, conocidos, contexto, por_tema=Fal
     lista_conocidos = "\n".join(f"- {c}" for c in conocidos[:80]) or "- (ninguno todavía)"
     sobre = (f'el tema "{marca}" (categoría: {descripcion})' if por_tema else f'la marca "{marca}" (categoría: {descripcion})')
     de_quien = "los modelos de la categoría (de cualquier marca)" if por_tema else "los modelos de la marca"
+    enfoque_prompt = {"novedades": f"Da prioridad a los modelos lanzados en los últimos {MESES_NOVEDAD} meses. ",
+                      "antiguos": f"Da prioridad a modelos lanzados hace más de {MESES_ANTIGUO} meses que el texto presente como todavía a la venta. "}.get(ENFOQUE, "")
     prompt = f"""Hoy es {hoy}. Tienes TEXTO ENCONTRADO EN INTERNET sobre {sobre}. Usa EXCLUSIVAMENTE ese texto; no uses nada de memoria.
 
 Extrae {de_quien} que el texto presenta como a la venta en España (o con precio en euros). Excluye los que ya tengo:
 {lista_conocidos}
 
-Devuelve como máximo {MODELOS_POR_MARCA} modelos. No incluyas rumores ni productos sin lanzar. Si el texto no permite un producto con datos concretos, no lo incluyas. Si no hay modelos nuevos, devuelve una lista vacía.
+{enfoque_prompt}Devuelve como máximo {MODELOS_POR_MARCA} modelos. No incluyas rumores ni productos sin lanzar. Si el texto no permite un producto con datos concretos, no lo incluyas. Si no hay modelos nuevos, devuelve una lista vacía.
 
 Responde ÚNICAMENTE con un JSON válido con esta forma:
 {{"productos": [{{"marca": "...", "modelo_corto": "...", "busqueda": "...", "titulo": "...", "especificaciones": "...", "precio_eur": 0, "disponible_en_espana": true, "fecha_lanzamiento": "AAAA-MM"}}]}}
@@ -255,7 +273,7 @@ TEXTO ENCONTRADO:
     return None
 
 
-def validar(p, hoy, contexto):
+def validar(p, hoy, contexto, categoria=None):
     """Filtros de calidad. Devuelve (producto_normalizado | None, motivo_si_se_descarta)."""
     for campo in ("marca", "modelo_corto", "busqueda", "titulo", "especificaciones"):
         if not str(p.get(campo, "")).strip():
@@ -268,6 +286,12 @@ def validar(p, hoy, contexto):
     m = re.match(r"^(\d{4})-(\d{2})$", fecha)
     if m and (int(m.group(1)), int(m.group(2))) > (hoy.year, hoy.month):
         return None, f"fecha de lanzamiento futura ({fecha}): posible rumor"
+    if m and ENFOQUE != "mixto":
+        meses = (hoy.year - int(m.group(1))) * 12 + (hoy.month - int(m.group(2)))
+        if ENFOQUE == "novedades" and meses > MESES_NOVEDAD:
+            return None, f"no es una novedad (lanzado en {fecha}, hace {meses} meses)"
+        if ENFOQUE == "antiguos" and meses < MESES_ANTIGUO:
+            return None, f"es demasiado reciente para el enfoque «antiguos» (lanzado en {fecha})"
     ok, motivo = verificar_ficha(p, contexto)
     if not ok:
         return None, motivo
@@ -277,6 +301,12 @@ def validar(p, hoy, contexto):
         precio = 0
     if precio > 0 and _normalizar_cifra(f"{precio:g}") not in cifras_de(contexto) and _normalizar_cifra(f"{precio:.2f}") not in cifras_de(contexto):
         precio = 0   # un precio que no está en las fuentes no se acepta
+    rango = RANGOS_GAMA.get(categoria or "", {}).get(GAMA) if GAMA else None
+    if rango:
+        if precio <= 0:
+            return None, f"el precio no aparece en las fuentes y se busca la gama {GAMA}"
+        if not (rango[0] <= precio < rango[1]):
+            return None, f"precio {precio:g} € fuera de la gama {GAMA}"
     return {
         "marca": str(p["marca"]).strip(),
         "modelo_corto": str(p["modelo_corto"]).strip(),
@@ -320,8 +350,16 @@ def main():
                 conocidos = [f"{c['marca']} {c['modelo_corto']}" for c in cola if c.get("categoria") == categoria]
                 conocidos += [f"{r['marca']} {r['modelo']}" for r in publicados.values() if isinstance(r, dict) and r.get("categoria") == categoria]
 
-                consulta = (f"{marca} España precio características técnicas {hoy.year}" if por_tema
-                            else f"{marca} {cfg['descripcion']} modelos disponibles en España precio características técnicas {hoy.year}")
+                if ENFOQUE == "novedades":
+                    extra = f"últimos lanzamientos novedades {hoy.year}"
+                elif ENFOQUE == "antiguos":
+                    extra = f"modelos de {hoy.year - 3} {hoy.year - 2} {hoy.year - 1} generaciones anteriores todavía a la venta rebajados"
+                else:
+                    extra = str(hoy.year)
+                if GAMA and categoria in RANGOS_GAMA:
+                    extra = f"{extra} {TEXTO_GAMA[GAMA]}"
+                consulta = (f"{marca} España precio características técnicas {extra}" if por_tema
+                            else f"{marca} {cfg['descripcion']} modelos disponibles en España precio características técnicas {extra}")
                 resultados = buscar_tavily(consulta, estado)
                 productos, contexto = None, ""
                 if resultados:
@@ -342,7 +380,7 @@ def main():
                     fuentes = [r.get("url", "") for r in resultados if r.get("url")][:6]
                     añadidos = 0
                     for p in productos:
-                        entrada, motivo = validar(p, hoy, contexto)
+                        entrada, motivo = validar(p, hoy, contexto, categoria)
                         if not entrada:
                             print(f"   ⏭️ Descartado '{p.get('modelo_corto', '?')}': {motivo}")
                             continue
