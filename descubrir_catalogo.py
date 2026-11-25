@@ -343,7 +343,7 @@ def main():
                                                       f"{d} novedades", f"{d} gama alta", f"{d} económicos"])
             st = estado.setdefault(categoria, {"indice": 0, "fallos": 0, "vueltas": 0})
 
-            for _ in range(int(cfg.get('marcas_por_ejecucion') or MARCAS_POR_EJECUCION)):
+            for _ in range(int(os.environ.get('DESCUBRIR_MARCAS') or cfg.get('marcas_por_ejecucion') or MARCAS_POR_EJECUCION)):
                 marca = marcas[st["indice"] % len(marcas)]
                 print(f"\n🔎 [{categoria}] Marca: {marca}  (posición {st['indice'] % len(marcas) + 1}/{len(marcas)})")
 
