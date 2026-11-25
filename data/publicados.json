@@ -2548,5 +2548,28 @@
     "video_fecha": "2026-11-25",
     "video_estado": "auto",
     "video_posicion": "final"
+  },
+  "realme-c75": {
+    "categoria": "smartphone",
+    "marca": "Realme",
+    "modelo": "C75",
+    "titulo": "Realme C75 Batería 6000 mAh, Carga 45 W y Pantalla 90 Hz",
+    "url_post": "https://topcomparador.es/?p=1780",
+    "post_id": 1780,
+    "link_afiliado": "https://www.amazon.es/s?k=Realme+C75&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "169.00€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "El Realme C75 se posiciona como una de las opciones más atractivas dentro de la gama de entrada y media económica, destacando de forma sobresaliente por su imponente batería de 6000 mAh que garantiza jornadas de uso intensivo sin depender del cargador. Equipado con un eficiente procesador MediaTek Helio G100 y una fluida pantalla IPS LCD de 90 Hz con unas generosas 6.72 pulgadas, este dispositivo ",
+    "badge": "MÁXIMA AUTONOMÍA Y BATERÍA",
+    "puntuacion": 9.4,
+    "fecha": "2026-11-25",
+    "video_id": "PTCRmlf4EUM",
+    "video_titulo": "BARATO y SUPER RESISTENTE!! Realme C75 REVIEW a fondo!",
+    "video_canal": "Topes de Gama",
+    "video_fecha": "2026-11-25",
+    "video_estado": "auto",
+    "video_posicion": "final"
   }
 }
