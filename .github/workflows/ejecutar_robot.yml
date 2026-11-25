@@ -15,6 +15,12 @@ on:
       descubrir:
         description: "Descubrir productos nuevos con Tavily: prueba (no guarda nada), si, no"
         default: "si"
+      enfoque:
+        description: "Qué productos descubrir: mixto (los que haya a la venta), novedades (lanzados hace menos de 9 meses) o antiguos (más de 12 meses y aún a la venta)"
+        default: "mixto"
+      gama:
+        description: "Opcional: buscar solo una gama de precio (economica, media o alta). Vacío = cualquiera"
+        default: ""
       videos:
         description: "Añadir vídeos de YouTube a los borradores: si, prueba (solo muestra), no"
         default: "si"
@@ -47,6 +53,8 @@ jobs:
       DESCUBRIR_CATEGORIAS: ${{ github.event.inputs.categorias || '' }}
       TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
       # Ejecuciones automáticas (sin formulario): 'prueba' hasta que cambies esta palabra por 'si'
+      DESCUBRIR_GAMA: ${{ github.event.inputs.gama }}
+      DESCUBRIR_ENFOQUE: ${{ github.event.inputs.enfoque || 'mixto' }}
       DESCUBRIR_MODO: ${{ github.event.inputs.descubrir || 'si' }}
       YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
       VIDEOS_MODO: ${{ github.event.inputs.videos || 'si' }}
