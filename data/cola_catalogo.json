@@ -498,5 +498,51 @@
     "descubierto_el": "2026-11-24",
     "verificar": true,
     "publicado_el": "2026-11-25"
+  },
+  {
+    "marca": "Xiaomi",
+    "modelo_corto": "Redmi Note 14 4G",
+    "busqueda": "Xiaomi Redmi Note 14 4G",
+    "titulo": "Xiaomi Redmi Note 14 4G Pantalla AMOLED 120 Hz, 108 MP y 5500 mAh",
+    "especificaciones": "Este dispositivo de la marca Xiaomi cuenta con una pantalla AMOLED de 120 Hz para una visualización fluida. En el apartado fotográfico incluye una cámara principal de 108 megapíxeles. Su batería tiene una capacidad de 5500 mAh y soporta carga de 33 W. Se trata de un modelo enfocado en ofrecer una gran relación calidad-precio dentro de la gama económica.",
+    "precio": "129.00€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "pendiente",
+    "fuentes": [
+      "https://androidpremium.es/mejor-movil-menos-200-euros-2026",
+      "https://www.movilzona.es/reportajes/listas/mejores-moviles-200-euros",
+      "https://www.youtube.com/watch?v=zHrCUw0O_Os",
+      "https://www.kimovil.com/es/mejores-moviles-menos-200-euros",
+      "https://www.xataka.com/seleccion/mejores-moviles-200-euros-calidad-precio-cual-comprar-funcion-uso-seis-modelos-recomendados",
+      "https://www.youtube.com/watch?v=ujIyA6CzSsE"
+    ],
+    "descubierto_el": "2026-11-25",
+    "verificar": true
+  },
+  {
+    "marca": "Realme",
+    "modelo_corto": "C75",
+    "busqueda": "Realme C75",
+    "titulo": "Realme C75 Batería 6000 mAh, Carga 45 W y Pantalla 90 Hz",
+    "especificaciones": "El smartphone de Realme prioriza la autonomía al incorporar una batería de 6000 mAh junto a un sistema de carga de 45 W. Posee una pantalla IPS LCD de 90 Hz con unas dimensiones de 6.72 pulgadas. En su interior integra el procesador MediaTek Helio G100 acompañado de una cámara principal de 50 megapíxeles. Cuenta con 36 meses de garantía en España.",
+    "precio": "169.00€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "pendiente",
+    "fuentes": [
+      "https://androidpremium.es/mejor-movil-menos-200-euros-2026",
+      "https://www.movilzona.es/reportajes/listas/mejores-moviles-200-euros",
+      "https://www.youtube.com/watch?v=zHrCUw0O_Os",
+      "https://www.kimovil.com/es/mejores-moviles-menos-200-euros",
+      "https://www.xataka.com/seleccion/mejores-moviles-200-euros-calidad-precio-cual-comprar-funcion-uso-seis-modelos-recomendados",
+      "https://www.youtube.com/watch?v=ujIyA6CzSsE"
+    ],
+    "descubierto_el": "2026-11-25",
+    "verificar": true
   }
 ]
