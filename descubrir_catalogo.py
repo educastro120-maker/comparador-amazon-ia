@@ -83,6 +83,20 @@ RANGOS_GAMA = {   # euros: (mínimo, máximo); los mismos tramos que tus etiquet
     "smartphone": {"economica": (0, 200), "media": (200, 500), "alta": (500, 10**9)},
     "smartwatch": {"economica": (0, 100), "media": (100, 300), "alta": (300, 10**9)},
 }
+def consultas_gama(categoria, d, gama):
+    """Búsquedas por precio (sin marca) para rellenar una gama concreta."""
+    lo, hi = RANGOS_GAMA[categoria][gama]
+    if gama == "economica":
+        return [f"mejores {d} baratos por menos de {int(hi)} euros", f"{d} económicos Amazon.es más vendidos menos de {int(hi)} €",
+                f"{d} baratos calidad precio hasta {int(hi * 0.75)} euros", f"mejores {d} por menos de {int(hi * 0.6)} euros",
+                f"{d} gama de entrada menos de {int(hi)} euros análisis", f"{d} baratos Xiaomi Redmi Poco Samsung Galaxy A Motorola moto g precio"]
+    if gama == "media":
+        return [f"mejores {d} gama media entre {int(lo)} y {int(hi)} euros", f"{d} calidad precio {int(lo)} {int(hi)} euros Amazon.es",
+                f"mejores {d} por menos de {int(hi)} euros", f"{d} gama media más vendidos España",
+                f"{d} gama media Samsung Galaxy A5 Xiaomi Redmi Note Poco Motorola Edge precio", f"{d} gama media análisis y precio"]
+    return [f"mejores {d} gama alta más de {int(lo)} euros", f"{d} premium más vendidos España precio"]
+
+
 TEXTO_GAMA = {"economica": "económicos baratos precio bajo", "media": "gama media calidad precio", "alta": "gama alta premium"}
 MIN_CARACTERES_FICHA = int(os.environ.get("MIN_CARACTERES_FICHA", "300"))
 MIN_PORCENTAJE_CIFRAS = float(os.environ.get("MIN_PORCENTAJE_CIFRAS", "0.8"))
@@ -341,7 +355,11 @@ def main():
                 d = cfg["descripcion"]
                 marcas = list(cfg.get("consultas") or [f"mejores {d} calidad precio", f"{d} más vendidos Amazon.es",
                                                       f"{d} novedades", f"{d} gama alta", f"{d} económicos"])
-            st = estado.setdefault(categoria, {"indice": 0, "fallos": 0, "vueltas": 0})
+            clave_estado = categoria
+            if GAMA and categoria in RANGOS_GAMA:   # con gama: búsquedas por precio, sin depender de marcas
+                marcas, por_tema = consultas_gama(categoria, cfg["descripcion"], GAMA), True
+                clave_estado = f"{categoria}:{GAMA}"
+            st = estado.setdefault(clave_estado, {"indice": 0, "fallos": 0, "vueltas": 0})
 
             for _ in range(int(os.environ.get('DESCUBRIR_MARCAS') or cfg.get('marcas_por_ejecucion') or MARCAS_POR_EJECUCION)):
                 marca = marcas[st["indice"] % len(marcas)]
