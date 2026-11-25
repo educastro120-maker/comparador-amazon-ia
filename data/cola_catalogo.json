@@ -462,7 +462,7 @@
     "link_afiliado": "",
     "asin": "",
     "imagen": "",
-    "estado": "pendiente",
+    "estado": "publicado",
     "fuentes": [
       "https://www.globerada.com/cat/electronica/telecomunicaciones/smartwatches-y-relojes-inteligentes/marca/suunto",
       "https://www.idealo.es/lista/118699136/relojes-deportivos-suunto.html",
@@ -472,7 +472,8 @@
       "https://www.suunto.com/es-es/colecciones-suunto/suunto7"
     ],
     "descubierto_el": "2026-11-24",
-    "verificar": true
+    "verificar": true,
+    "publicado_el": "2026-11-25"
   },
   {
     "marca": "Suunto",
@@ -485,7 +486,7 @@
     "link_afiliado": "",
     "asin": "",
     "imagen": "",
-    "estado": "pendiente",
+    "estado": "publicado",
     "fuentes": [
       "https://www.globerada.com/cat/electronica/telecomunicaciones/smartwatches-y-relojes-inteligentes/marca/suunto",
       "https://www.idealo.es/lista/118699136/relojes-deportivos-suunto.html",
@@ -495,6 +496,7 @@
       "https://www.suunto.com/es-es/colecciones-suunto/suunto7"
     ],
     "descubierto_el": "2026-11-24",
-    "verificar": true
+    "verificar": true,
+    "publicado_el": "2026-11-25"
   }
 ]
