@@ -21,6 +21,9 @@ on:
       gama:
         description: "Opcional: buscar solo una gama de precio (economica, media o alta). Vacío = cualquiera"
         default: ""
+      marcas:
+        description: "Marcas a explorar por categoría en esta ejecución (vacío = las de siempre, 2). Para rellenar gamas, prueba 8"
+        default: ""
       videos:
         description: "Añadir vídeos de YouTube a los borradores: si, prueba (solo muestra), no"
         default: "si"
@@ -53,6 +56,7 @@ jobs:
       DESCUBRIR_CATEGORIAS: ${{ github.event.inputs.categorias || '' }}
       TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
       # Ejecuciones automáticas (sin formulario): 'prueba' hasta que cambies esta palabra por 'si'
+      DESCUBRIR_MARCAS: ${{ github.event.inputs.marcas }}
       DESCUBRIR_GAMA: ${{ github.event.inputs.gama }}
       DESCUBRIR_ENFOQUE: ${{ github.event.inputs.enfoque || 'mixto' }}
       DESCUBRIR_MODO: ${{ github.event.inputs.descubrir || 'si' }}
