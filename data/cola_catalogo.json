@@ -546,5 +546,52 @@
     "descubierto_el": "2026-11-25",
     "verificar": true,
     "publicado_el": "2026-11-25"
+  },
+  {
+    "marca": "realme",
+    "modelo_corto": "P4 Lite",
+    "busqueda": "realme P4 Lite",
+    "titulo": "realme P4 Lite Smartphone 6,67 pulgadas 120Hz 6000mAh",
+    "especificaciones": "Dispositivo con pantalla LCD IPS de 6,67 pulgadas que alcanza una tasa de refresco de 120 Hz y una respuesta táctil de hasta 240 Hz. Equipado con un procesador MediaTek, 4 GB de memoria RAM y 128 GB de almacenamiento interno. Destaca por su gran batería de 6000 mAh con capacidad de carga rápida de 45 W.",
+    "precio": "129.00€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.youtube.com/watch?v=Vm1j-kJ_wXo",
+      "https://comprasmartphone.com/listas/mejores-moviles-menos-150-euros",
+      "https://www.movilzona.es/reportajes/listas/mejores-moviles-150-euros",
+      "https://www.xatakamovil.com/guias-de-compra/mejores-moviles-baratos-cual-comprar-modelos-recomendados",
+      "https://www.geektopia.es/es/technology/2017/10/04/articulos/los-mejores-smartphones-y-telefonos-moviles-de-gama-baja.html",
+      "https://www.kineticmobiles.es/blogs/news/guia-de-moviles-baratos-y-buenos-en-espana-2026-los-5-modelos-mas-economicos-con-envio-gratis-24-48h"
+    ],
+    "descubierto_el": "2026-11-26",
+    "verificar": true,
+    "publicado_el": "2026-11-26"
+  },
+  {
+    "marca": "Xiaomi",
+    "modelo_corto": "Redmi Note 15",
+    "busqueda": "Xiaomi Redmi Note 15",
+    "titulo": "Xiaomi Redmi Note 15 Pantalla AMOLED Batería de gran capacidad",
+    "especificaciones": "El Xiaomi Redmi Note 15 cuenta con una excelente pantalla AMOLED orientada al consumo multimedia y mantiene el conector Jack de 3,5 mm junto con ranura para tarjeta micro SD. Se encuentra disponible habitualmente por debajo de su precio oficial de 199 euros, situándose por menos de 180 euros en diversas tiendas.",
+    "precio": "179.00€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.jazztel.com/novedades/mejor-movil-por-menos-de-200-euros",
+      "https://www.movilzona.es/reportajes/listas/mejores-moviles-200-euros",
+      "https://www.youtube.com/watch?v=WoveJPSv1uU&vl=en-US",
+      "https://www.xatakamovil.com/guias-de-compra/mejores-moviles-baratos-cual-comprar-modelos-recomendados",
+      "https://www.maxmovil.com/shop/category/moviles-libres-mas-baratos-386",
+      "https://www.instagram.com/reel/DbBDat0ilyE"
+    ],
+    "descubierto_el": "2026-11-26",
+    "verificar": true
   }
 ]
