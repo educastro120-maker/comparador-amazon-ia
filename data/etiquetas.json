@@ -34,7 +34,22 @@
     "pagina": "auto",
     "min": 0,
     "max": 100,
-    "pagina_id": 349
+    "pagina_id": 349,
+    "maximo": 10
+  },
+  {
+    "nombre": "Top smartwatches económicos (menos de 100€)",
+    "categoria": "smartwatch",
+    "tipo": "precio",
+    "criterio": "Todos los modelos analizados cuyo precio es inferior a 100 €, ordenados por nuestra puntuación.",
+    "pagina": "auto",
+    "min": 0,
+    "max": 100,
+    "pagina_id": 1627,
+    "maximo": 40,
+    "solo_pagina": true,
+    "titulo_pagina": "Todos los smartwatches económicos (menos de 100€)",
+    "intro": "Si tu presupuesto es ajustado, aquí tienes **todos los smartwatches económicos por menos de 100 euros** que hemos analizado, no solo los diez mejores. Compara precio, características y puntuación de cada uno para elegir el **smartwatch barato** que mejor encaje con lo que buscas."
   },
   {
     "nombre": "Top Smartwatches gama media (entre 100€ y 300€)",
