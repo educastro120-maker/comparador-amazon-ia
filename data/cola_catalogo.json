@@ -1097,5 +1097,30 @@
     "descubierto_el": "2026-11-26",
     "verificar": true,
     "publicado_el": "2026-11-26"
+  },
+  {
+    "marca": "Xiaomi",
+    "modelo_corto": "POCO C85",
+    "busqueda": "Xiaomi POCO C85",
+    "titulo": "Xiaomi POCO C85 Smartphone Batería 6000 mAh Carga 33W Pantalla 120 Hz",
+    "especificaciones": "Presenta una pantalla grande de 6,9\" con tasa de refresco de 120 Hz y certificado IP64 de resistencia. Su batería alcanza los 6.000 mAh con soporte de carga rápida de 33 W. Ofrece una cámara de 50 MP con IA, sistema HyperOS, jack de 3.5 mm, 6 GB de RAM y 128 GB de almacenamiento. Su precio es de 89,99 euros.",
+    "precio": "89.99€",
+    "fecha_lanzamiento": "",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.geektopia.es/es/technology/2017/10/04/articulos/los-mejores-smartphones-y-telefonos-moviles-de-gama-baja.html",
+      "https://www.rincondego.com/moviles/top6-moviles-baratos-2026.html",
+      "https://www.xataka.com/seleccion/mejores-moviles-baratos",
+      "https://www.xatakamovil.com/guias-de-compra/mejores-moviles-calidad-precio",
+      "https://alcalamagna.es/noticias/moviles-calidad-precio",
+      "https://www.youtube.com/watch?v=Vm1j-kJ_wXo"
+    ],
+    "descubierto_el": "2026-11-26",
+    "verificar": true,
+    "publicado_el": "2026-11-26"
   }
 ]
