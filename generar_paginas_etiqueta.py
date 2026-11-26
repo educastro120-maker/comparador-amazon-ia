@@ -65,7 +65,7 @@ def fila_de_post(p, reg, medios=None):
 
 
 def main():
-    etiquetas = [e for e in etiquetado.cargar() if e.get("pagina") == "auto"]
+    etiquetas = [e for e in etiquetado.cargar(con_paginas_extra=True) if e.get("pagina") == "auto"]
     if not etiquetas:
         print("ℹ️ No hay etiquetas con pagina=auto en data/etiquetas.json.")
         return 0
@@ -124,7 +124,8 @@ def main():
             print(f"🎨 {titulo}: publicada con un diseño anterior o con la introducción provisional; se rehace.")
 
         filas.sort(key=lambda f: (-f["puntos"], f["nombre"]))
-        top = filas[:MINIMO]
+        maximo = int(e.get("maximo") or MINIMO)   # "maximo": cuántos productos enseña la página (por defecto 10)
+        top = filas[:maximo]
         for n, f in enumerate(top, 1):
             f["n"] = n
             f["amazon"] = f["amazon"] or f"https://www.amazon.es/s?k={requests.utils.quote(f['nombre'])}&tag={gr.AMAZON_TAG}"
