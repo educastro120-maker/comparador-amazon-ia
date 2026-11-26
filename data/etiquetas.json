@@ -80,7 +80,8 @@
     "maximo": 20,
     "orden": "recientes",
     "actualizar": true,
-    "intro": "Descubre las **novedades en smartphones** más recientes: los últimos **móviles lanzados** al mercado, de cualquier precio y gama. Compara sus características, consulta el **precio actualizado en Amazon** y lee nuestro análisis de cada modelo."
+    "intro": "Descubre las **novedades en smartphones** más recientes: los últimos **móviles lanzados** al mercado, de cualquier precio y gama. Compara sus características, consulta el **precio actualizado en Amazon** y lee nuestro análisis de cada modelo.",
+    "novedad_meses": 3
   },
   {
     "nombre": "Top 10 novedades en Smartwatches",
