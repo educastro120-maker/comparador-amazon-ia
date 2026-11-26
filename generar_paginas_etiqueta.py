@@ -64,6 +64,20 @@ def fila_de_post(p, reg, medios=None):
             "status": p.get("status", ""), "fecha": p.get("date", ""), "motivo": (reg or {}).get("badge", "")}
 
 
+def fecha_efectiva(p, reg):
+    """Fecha para decidir si algo es novedad: la de lanzamiento (AAAA-MM) si se conoce; si no, la de la entrada."""
+    fl = ((reg or {}).get("fecha_lanzamiento") or "").strip()
+    if re.match(r"^\d{4}-\d{2}$", fl):
+        return fl + "-15"
+    return (p.get("date") or "")[:10]
+
+
+def corte_novedad(meses):
+    h = gr.datetime.now()
+    m = h.year * 12 + h.month - 1 - meses
+    return f"{m // 12:04d}-{m % 12 + 1:02d}-01"
+
+
 def main():
     etiquetas = [e for e in etiquetado.cargar(con_paginas_extra=True) if e.get("pagina") == "auto"]
     if not etiquetas:
@@ -96,7 +110,23 @@ def main():
         if not tid:
             print(f"⚠️ {nombre}: la etiqueta no existe en WordPress (créala con ese nombre exacto).")
             continue
-        filas = [fila_de_post(p, por_post.get(p["id"]), medios) for p in posts if tid in p.get("tags", [])]
+        meses_nov = int(e.get("novedad_meses") or 0)
+        if meses_nov:   # página de novedades: entran los lanzados en los últimos N meses (etiquetados o no); salen al pasar ese plazo
+            elegidos = []
+            for p in posts:
+                reg = por_post.get(p["id"])
+                f = fecha_efectiva(p, reg)
+                dentro = bool(f) and f >= corte_novedad(meses_nov)
+                lanzamiento_ok = bool(reg and reg.get("fecha_lanzamiento")) and (not e.get("categoria") or (reg.get("categoria") or "") == e["categoria"])
+                if dentro and (tid in p.get("tags", []) or lanzamiento_ok):
+                    elegidos.append((p, reg, f))
+            filas = []
+            for p, reg, f in elegidos:
+                fila = fila_de_post(p, reg, medios)
+                fila["fecha"] = f
+                filas.append(fila)
+        else:
+            filas = [fila_de_post(p, por_post.get(p["id"]), medios) for p in posts if tid in p.get("tags", [])]
         titulo = e.get("titulo_pagina") or nombre
         slug = gr.slugify(titulo)
         adoptada = por_id.get(e.get("pagina_id")) if e.get("pagina_id") else None   # página tuya que le encargas al robot
