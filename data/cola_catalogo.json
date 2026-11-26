@@ -510,7 +510,7 @@
     "link_afiliado": "",
     "asin": "",
     "imagen": "",
-    "estado": "pendiente",
+    "estado": "publicado",
     "fuentes": [
       "https://androidpremium.es/mejor-movil-menos-200-euros-2026",
       "https://www.movilzona.es/reportajes/listas/mejores-moviles-200-euros",
@@ -520,7 +520,8 @@
       "https://www.youtube.com/watch?v=ujIyA6CzSsE"
     ],
     "descubierto_el": "2026-11-25",
-    "verificar": true
+    "verificar": true,
+    "publicado_el": "2026-11-26"
   },
   {
     "marca": "Realme",

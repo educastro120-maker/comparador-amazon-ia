@@ -2571,5 +2571,28 @@
     "video_fecha": "2026-11-25",
     "video_estado": "auto",
     "video_posicion": "final"
+  },
+  "xiaomi-redmi-note-14-4g": {
+    "categoria": "smartphone",
+    "marca": "Xiaomi",
+    "modelo": "Redmi Note 14 4G",
+    "titulo": "Xiaomi Redmi Note 14 4G Pantalla AMOLED 120 Hz, 108 MP y 5500 mAh",
+    "url_post": "https://topcomparador.es/?p=1785",
+    "post_id": 1785,
+    "link_afiliado": "https://www.amazon.es/s?k=Xiaomi+Redmi+Note+14+4G&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "129.00€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "El Xiaomi Redmi Note 14 4G se posiciona como una opción imbatible para usuarios que buscan un rendimiento equilibrado sin realizar un desembolso excesivo. Este terminal destaca por integrar una pantalla AMOLED de 120 Hz que garantiza una fluidez visual excepcional, ideal tanto para el consumo multimedia como para la navegación diaria. Su impresionante batería de 5500 mAh asegura una autonomía prol",
+    "badge": "LÍDER EN RELACIÓN CALIDAD-PRECIO",
+    "puntuacion": 9.4,
+    "fecha": "2026-11-26",
+    "video_id": "pEg8wHJz6w0",
+    "video_titulo": "NO LO CREÍA!🤯Xiaomi REDMI NOTE 14 | REVIEW de LO MEJOR y PEOR",
+    "video_canal": "eSavants",
+    "video_fecha": "2026-11-26",
+    "video_estado": "auto",
+    "video_posicion": "final"
   }
 }
