@@ -892,7 +892,7 @@
     "link_afiliado": "",
     "asin": "",
     "imagen": "",
-    "estado": "pendiente",
+    "estado": "publicado",
     "fuentes": [
       "https://ahoraeg.com/radar/mejores-moviles-realme",
       "https://smmart.es/mejores-marcas-moviles-chinos/realme",
@@ -902,7 +902,8 @@
       "https://tiendamovilspain.com/marca/9-realme"
     ],
     "descubierto_el": "2026-11-26",
-    "verificar": true
+    "verificar": true,
+    "publicado_el": "2026-11-26"
   },
   {
     "marca": "realme",
@@ -915,7 +916,7 @@
     "link_afiliado": "",
     "asin": "",
     "imagen": "",
-    "estado": "pendiente",
+    "estado": "publicado",
     "fuentes": [
       "https://ahoraeg.com/radar/mejores-moviles-realme",
       "https://smmart.es/mejores-marcas-moviles-chinos/realme",
@@ -925,7 +926,8 @@
       "https://tiendamovilspain.com/marca/9-realme"
     ],
     "descubierto_el": "2026-11-26",
-    "verificar": true
+    "verificar": true,
+    "publicado_el": "2026-11-26"
   },
   {
     "marca": "realme",
@@ -938,7 +940,7 @@
     "link_afiliado": "",
     "asin": "",
     "imagen": "",
-    "estado": "pendiente",
+    "estado": "publicado",
     "fuentes": [
       "https://ahoraeg.com/radar/mejores-moviles-realme",
       "https://smmart.es/mejores-marcas-moviles-chinos/realme",
@@ -948,6 +950,7 @@
       "https://tiendamovilspain.com/marca/9-realme"
     ],
     "descubierto_el": "2026-11-26",
-    "verificar": true
+    "verificar": true,
+    "publicado_el": "2026-11-26"
   }
 ]
