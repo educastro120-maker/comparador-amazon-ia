@@ -593,5 +593,76 @@
     ],
     "descubierto_el": "2026-11-26",
     "verificar": true
+  },
+  {
+    "marca": "Xiaomi",
+    "modelo_corto": "Redmi Note 14 Pro+",
+    "busqueda": "Xiaomi Redmi Note 14 Pro+",
+    "titulo": "Xiaomi Redmi Note 14 Pro+ Móvil 5G Pantalla AMOLED Curva 120 Hz Cámara 200 MP",
+    "especificaciones": "El Xiaomi Redmi Note 14 Pro+ cuenta con una pantalla curva AMOLED FHD+ de 6,67 pulgadas a 120 Hz y un brillo pico de 3000 nits. En su interior integra el procesador Snapdragon 7s Gen 3 junto a una batería con carga rápida de 120 W. Su apartado fotográfico destaca por una cámara principal de 200 MP. Se vende en España por 299,99 euros.",
+    "precio": "299.99€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://computerhoy.20minutos.es/moviles/guia-compra-xiaomi-2026-los-moviles-redmi-poco-recomendados-por-menos-200-300-euros_7016087_0.html",
+      "https://tiendamovilspain.com/blog/mejores-moviles-xiaomi-de-2026-modelos-y-cual-elegir-b94.html",
+      "https://www.backmarket.es/es-es/c/xiaomi/best-xiaomi-quality-price",
+      "https://www.vodafone.es/c/conectate/dispositivos/mejores-moviles-xiaomi",
+      "https://www.yoigo.com/novedades/mejores-moviles-xiaomi-2026",
+      "https://www.mediamarkt.es/es/brand/xiaomi/smartphones"
+    ],
+    "descubierto_el": "2026-11-26",
+    "verificar": true,
+    "publicado_el": "2026-11-26"
+  },
+  {
+    "marca": "Xiaomi",
+    "modelo_corto": "Xiaomi 17",
+    "busqueda": "Xiaomi Xiaomi 17",
+    "titulo": "Xiaomi 17 Teléfono Móvil OLED 6,3 pulgadas Snapdragon 8 Elite Gen 5 Leica",
+    "especificaciones": "El Xiaomi 17 incorpora una pantalla OLED CrystalRes de 6,3 pulgadas con frecuencia de actualización de hasta 120 Hz. Está impulsado por el procesador Snapdragon 8 Elite Gen 5 y cuenta con un sistema de cámaras Leica que incluye un sensor principal de 50 MP, un teleobjetivo flotante de 50 MP y una cámara ultra gran angular de 50 MP. Integra una batería de 6.330 mAh con carga por cable de 100 W y se encuentra disponible en España desde 999,99 euros.",
+    "precio": "999.99€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://computerhoy.20minutos.es/moviles/guia-compra-xiaomi-2026-los-moviles-redmi-poco-recomendados-por-menos-200-300-euros_7016087_0.html",
+      "https://tiendamovilspain.com/blog/mejores-moviles-xiaomi-de-2026-modelos-y-cual-elegir-b94.html",
+      "https://www.backmarket.es/es-es/c/xiaomi/best-xiaomi-quality-price",
+      "https://www.vodafone.es/c/conectate/dispositivos/mejores-moviles-xiaomi",
+      "https://www.yoigo.com/novedades/mejores-moviles-xiaomi-2026",
+      "https://www.mediamarkt.es/es/brand/xiaomi/smartphones"
+    ],
+    "descubierto_el": "2026-11-26",
+    "verificar": true,
+    "publicado_el": "2026-11-26"
+  },
+  {
+    "marca": "Xiaomi",
+    "modelo_corto": "Xiaomi 17 Ultra",
+    "busqueda": "Xiaomi Xiaomi 17 Ultra",
+    "titulo": "Xiaomi 17 Ultra Smartphone Gama Alta Snapdragon 8 Elite Gen 5 Cámaras Leica",
+    "especificaciones": "El Xiaomi 17 Ultra integra el procesador Snapdragon 8 Elite Gen 5, una pantalla OLED de 6,9 pulgadas con hasta 120 Hz y una batería de 6000 mAh. Su sistema de cámaras Leica incluye una cámara principal de 50 MP con sensor de una pulgada y un teleobjetivo de 200 MP con zoom óptico mecánico de 75 a 100 mm. Está disponible en España desde 1.499,99 euros.",
+    "precio": "Consultar",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://computerhoy.20minutos.es/moviles/guia-compra-xiaomi-2026-los-moviles-redmi-poco-recomendados-por-menos-200-300-euros_7016087_0.html",
+      "https://tiendamovilspain.com/blog/mejores-moviles-xiaomi-de-2026-modelos-y-cual-elegir-b94.html",
+      "https://www.backmarket.es/es-es/c/xiaomi/best-xiaomi-quality-price",
+      "https://www.vodafone.es/c/conectate/dispositivos/mejores-moviles-xiaomi",
+      "https://www.yoigo.com/novedades/mejores-moviles-xiaomi-2026",
+      "https://www.mediamarkt.es/es/brand/xiaomi/smartphones"
+    ],
+    "descubierto_el": "2026-11-26",
+    "verificar": true
   }
 ]
