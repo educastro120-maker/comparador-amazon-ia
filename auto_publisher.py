@@ -154,6 +154,7 @@ def registrar_publicado(pid, producto, url_post, affiliate_link, post_id=None, d
         "badge": str(datos_ia.get("badge", "") or previo.get("badge", "")),
         "puntuacion": datos_ia.get("puntuacion", previo.get("puntuacion")),
         "fecha": previo.get("fecha") or datetime.now().strftime("%Y-%m-%d"),
+        "fecha_lanzamiento": producto.get("fecha_lanzamiento") or previo.get("fecha_lanzamiento", ""),   # AAAA-MM
     }
     guardar_json(RUTA_PUBLICADOS, registro)
 
