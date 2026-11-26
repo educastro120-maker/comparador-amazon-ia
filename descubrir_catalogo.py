@@ -328,6 +328,7 @@ def validar(p, hoy, contexto, categoria=None):
         "titulo": str(p["titulo"]).strip(),
         "especificaciones": str(p["especificaciones"]).strip(),
         "precio": f"{precio:.2f}€" if precio > 0 else "Consultar",
+        "fecha_lanzamiento": fecha if m else "",   # AAAA-MM; alimenta la página de novedades
     }, ""
 
 
