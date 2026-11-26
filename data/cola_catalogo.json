@@ -1072,5 +1072,30 @@
     "descubierto_el": "2026-11-26",
     "verificar": true,
     "publicado_el": "2026-11-26"
+  },
+  {
+    "marca": "Sony",
+    "modelo_corto": "Xperia 1 VIII",
+    "busqueda": "Sony Xperia 1 VIII",
+    "titulo": "Sony Xperia 1 VIII Smartphone de gama alta con pantalla OLED de 6,5 pulgadas, procesador Snapdragon y cámaras ZEISS",
+    "especificaciones": "El Sony Xperia 1 VIII es un smartphone de gama alta que cuenta con una pantalla OLED de 6,5 pulgadas con resolución Full HD+, formato 19,5:9, compatibilidad HDR y tasa de refresco de 120 Hz. Integra el procesador Qualcomm Snapdragon junto con versiones de memoria RAM de hasta 16 GB o 12 GB, y opciones de almacenamiento interno de 256 GB o 1 TB, ampliable mediante tarjetas microSD de hasta 2 TB. Dispone de un sistema de cámaras con ópticas ZEISS, altavoces estéreo frontales, puerto de auriculares de 3,5 mm, ranura para tarjetas SIM y un precio de 1.499 euros.",
+    "precio": "1499.00€",
+    "fecha_lanzamiento": "2026-05",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.xataka.com/moviles/sony-ha-lanzado-movil-anti-2026-gama-alta-idea-buena-como-arriesgada",
+      "https://www.kimovil.com/es/precios-telefonos-sony",
+      "https://www.enter.co/noticias/sony-xperia/feed",
+      "https://www.xatakamovil.com/sony/sony-xperia-1-llega-a-espana-precio-disponibilidad-oficiales",
+      "https://www.xataka.com/moviles/sony-xperia-l",
+      "https://www.fnac.es/Moviles-Sony/nsh130167"
+    ],
+    "descubierto_el": "2026-11-26",
+    "verificar": true,
+    "publicado_el": "2026-11-26"
   }
 ]

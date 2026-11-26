@@ -3084,5 +3084,29 @@
     "video_fecha": "2026-11-26",
     "video_estado": "auto",
     "video_posicion": "final"
+  },
+  "sony-xperia-1-viii": {
+    "categoria": "smartphone",
+    "marca": "Sony",
+    "modelo": "Xperia 1 VIII",
+    "titulo": "Sony Xperia 1 VIII Smartphone de gama alta con pantalla OLED de 6,5 pulgadas, procesador Snapdragon y cámaras ZEISS",
+    "url_post": "https://topcomparador.es/?p=1873",
+    "post_id": 1873,
+    "link_afiliado": "https://www.amazon.es/s?k=Sony+Xperia+1+VIII&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "1499.00€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "El Sony Xperia 1 VIII se posiciona como un referente absoluto dentro de la gama alta, diseñado para satisfacer las exigencias de los creadores de contenido y entusiastas de la tecnología más avanzados. Equipado con una imponente pantalla OLED de 6,5 pulgadas a 120 Hz, un potente procesador Snapdragon de Qualcomm y un sistema fotográfico desarrollado con óptica ZEISS, este dispositivo ofrece un ren",
+    "badge": "EXCELENCIA MULTIMEDIA Y ÓPTICA",
+    "puntuacion": 9.4,
+    "fecha": "2026-11-26",
+    "fecha_lanzamiento": "2026-05",
+    "video_id": "tMMEEcR-2Qc",
+    "video_titulo": "Estamos muy DECEPCIONADOS! Sony Xperia 1 VIII REVIEW",
+    "video_canal": "Topes de Gama",
+    "video_fecha": "2026-11-26",
+    "video_estado": "auto",
+    "video_posicion": "final"
   }
 }
