@@ -61,7 +61,7 @@ def fila_de_post(p, reg, medios=None):
         puntos = 0
     return {"nombre": nombre, "precio": gr.precio_es(precio), "amazon": amazon, "imagen": imagen_entrada or (reg or {}).get("imagen") or gr.imagen_de_biblioteca(nombre),
             "resumen": gr.recortar_frase((reg or {}).get("resumen", "") or gr.resumen_de_contenido(c), 150), "analisis": p.get("link", ""), "puntos": puntos,
-            "status": p.get("status", ""), "motivo": (reg or {}).get("badge", "")}
+            "status": p.get("status", ""), "fecha": p.get("date", ""), "motivo": (reg or {}).get("badge", "")}
 
 
 def main():
@@ -71,7 +71,7 @@ def main():
         return 0
     paginas = gr.listar_paginas()
     tags = paginar("tags", {"_fields": "id,name"})
-    posts = paginar("posts", {"status": "publish,draft,pending,private,future", "context": "edit", "_fields": "id,title,status,tags,link,content,featured_media"})
+    posts = paginar("posts", {"status": "publish,draft,pending,private,future", "context": "edit", "_fields": "id,title,status,tags,link,content,featured_media,date"})
     if paginas is None or tags is None or posts is None:
         print("🛑 No se pudo leer WordPress: no se crea nada (para no duplicar).")
         return 1
@@ -116,21 +116,27 @@ def main():
             print(f"⏭️ {titulo}: ya existe una página tuya ({existente['status']}, ID {existente['id']}). No se toca.")
             continue
         rehacer_diseno = False
-        if existente and existente["status"] == "publish":
+        if existente and existente["status"] == "publish" and e.get("actualizar"):
+            rehacer_diseno = True   # página viva (p. ej. novedades): se rehace en cada ejecución
+        elif existente and existente["status"] == "publish":
             if gr.MARCA_DISENO in raw_existente and gr.MARCA_INTRO_PROVISIONAL not in raw_existente:
                 print(f"⏭️ {titulo}: ya publicada por el robot con el diseño actual. No se toca.")
                 continue
             rehacer_diseno = True   # publicada con un diseño anterior: se rehace con el actual, sin despublicarla
             print(f"🎨 {titulo}: publicada con un diseño anterior o con la introducción provisional; se rehace.")
 
-        filas.sort(key=lambda f: (-f["puntos"], f["nombre"]))
+        if e.get("orden") == "recientes":   # más nuevas primero (por fecha de la entrada)
+            filas.sort(key=lambda f: f["fecha"], reverse=True)
+        else:
+            filas.sort(key=lambda f: (-f["puntos"], f["nombre"]))
+        minimo = int(e.get("minimo") or MINIMO)   # cuántas entradas publicadas hacen falta para publicar la página
         maximo = int(e.get("maximo") or MINIMO)   # "maximo": cuántos productos enseña la página (por defecto 10)
         top = filas[:maximo]
         for n, f in enumerate(top, 1):
             f["n"] = n
             f["amazon"] = f["amazon"] or f"https://www.amazon.es/s?k={requests.utils.quote(f['nombre'])}&tag={gr.AMAZON_TAG}"
         publicadas = sum(1 for f in top if f["status"] == "publish")
-        completa = len(top) >= MINIMO and publicadas >= MINIMO
+        completa = len(top) >= minimo and publicadas >= minimo
         rk = {"slug": slug, "titulo": titulo, "categoria": e.get("categoria", ""), "intro": e.get("intro") or f"Estos son los productos de nuestra selección «{nombre}». Los analizamos uno a uno y te dejamos el enlace a Amazon.",
               "criterio": e.get("criterio") or "Selección según las características y el precio de cada producto.",
               "datos_de": gr.datetime.now().strftime("%d/%m/%Y")}
@@ -155,10 +161,10 @@ def main():
             print(f"❌ {titulo}: WordPress respondió {r.status_code}: {r.text[:200]}")
             errores += 1
             continue
-        faltan = max(MINIMO - len(top), 0)
+        faltan = max(minimo - len(top), 0)
         sin_publicar = len(top) - publicadas
         print(f"✅ {titulo}: página {accion} como {'PUBLICADA' if estado == 'publish' else 'borrador'} "
-              f"({len(top)}/{MINIMO} productos{f'; faltan {faltan}' if faltan else ''}{f'; {sin_publicar} entradas aún sin publicar' if sin_publicar else ''}).")
+              f"({len(top)}/{minimo if minimo != MINIMO else MINIMO} productos{f'; faltan {faltan}' if faltan else ''}{f'; {sin_publicar} entradas aún sin publicar' if sin_publicar else ''}).")
     return 1 if errores else 0
 
 
