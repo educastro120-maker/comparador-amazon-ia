@@ -24,6 +24,9 @@ on:
       marcas:
         description: "Marcas a explorar por categoría en esta ejecución (vacío = las de siempre, 2). Para rellenar gamas, prueba 8"
         default: ""
+      modelos:
+        description: "Modelos de Gemini para redactar las fichas, separados por comas y en orden de preferencia"
+        default: "gemini-3.5-flash-lite,gemini-3.1-flash-lite,gemini-3.8-flash"
       videos:
         description: "Añadir vídeos de YouTube a los borradores: si, prueba (solo muestra), no"
         default: "si"
@@ -57,6 +60,7 @@ jobs:
       TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
       # Ejecuciones automáticas (sin formulario): 'prueba' hasta que cambies esta palabra por 'si'
       DESCUBRIR_MARCAS: ${{ github.event.inputs.marcas }}
+      GEMINI_MODELS: ${{ github.event.inputs.modelos || 'gemini-3.8-flash,gemini-3.5-flash-lite,gemini-3.1-flash-lite' }}
       DESCUBRIR_GAMA: ${{ github.event.inputs.gama }}
       DESCUBRIR_ENFOQUE: ${{ github.event.inputs.enfoque || 'mixto' }}
       DESCUBRIR_MODO: ${{ github.event.inputs.descubrir || 'si' }}
