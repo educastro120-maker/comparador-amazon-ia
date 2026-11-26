@@ -19,12 +19,14 @@ RUTA = os.path.join(os.environ.get("CARPETA_DATOS", "data"), "etiquetas.json")
 MAX_POR_CRITERIO = 2
 
 
-def cargar():
+def cargar(con_paginas_extra=False):
+    """Etiquetas de data/etiquetas.json. Las marcadas "solo_pagina": true (una segunda página que reutiliza una etiqueta
+    ya definida) no se usan para etiquetar entradas; solo las pide generar_paginas_etiqueta.py (con_paginas_extra=True)."""
     if not os.path.exists(RUTA):
         return []
     try:
         with open(RUTA, "r", encoding="utf-8") as fh:
-            return [e for e in json.load(fh) if isinstance(e, dict) and e.get("nombre")]
+            return [e for e in json.load(fh) if isinstance(e, dict) and e.get("nombre") and (con_paginas_extra or not e.get("solo_pagina"))]
     except (json.JSONDecodeError, OSError) as err:
         print(f"⚠️ No se pudo leer {RUTA}: {err}")
         return []
