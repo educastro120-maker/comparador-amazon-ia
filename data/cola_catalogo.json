@@ -664,5 +664,101 @@
     ],
     "descubierto_el": "2026-11-26",
     "verificar": true
+  },
+  {
+    "marca": "CMF",
+    "modelo_corto": "Phone 1",
+    "busqueda": "CMF Phone 1",
+    "titulo": "CMF Phone 1 6GB RAM 128GB Almacenamiento 120Hz Pantalla",
+    "especificaciones": "Este dispositivo destaca por su diseño modular con carcasas intercambiables. Cuenta con una pantalla AMOLED de 6.67 pulgadas con una tasa de refresco de 120 Hz. Ofrece una configuración de memoria de 6 GB de RAM y 128 GB de almacenamiento interno, conectividad 5G y se encuentra disponible en Europa con precios estimados entre 140 y 150 euros.",
+    "precio": "150.00€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.youtube.com/watch?v=Vm1j-kJ_wXo",
+      "https://siliconpin.com/topics/top-10-best-value-smartphones-under-150-in-europe-buyers-guide-2026",
+      "https://www.elgrupoinformatico.com/moviles/moviles-menos-150-euros",
+      "https://comprasmartphone.com/listas/mejores-moviles-menos-150-euros",
+      "https://www.movilzona.es/reportajes/listas/mejores-moviles-150-euros",
+      "https://www.techbook-magazine.com/mobile-lifestyle/smartphone/the-13-best-smartphones-under-150-euros-at-a-glance"
+    ],
+    "descubierto_el": "2026-11-26",
+    "verificar": true,
+    "publicado_el": "2026-11-26"
+  },
+  {
+    "marca": "Invens",
+    "modelo_corto": "Note TK01",
+    "busqueda": "Invens Note TK01",
+    "titulo": "Invens Note TK01 Smartphone Dual SIM 4+4 GB de RAM y 32 GB",
+    "especificaciones": "El Invens Note TK01 ofrece conectividad Dual SIM junto con OTG. Incorpora una pantalla de 6,52 pulgadas a 60 Hz y dispone de una configuración de memoria con 4+4 GB de RAM y 32 GB de almacenamiento. Su apartado fotográfico incluye una cámara de 16 MP y funciona con Android 12, alimentado por una batería de 4.250 mAh.",
+    "precio": "69.99€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.rincondego.com/moviles/top6-moviles-baratos-2026.html",
+      "https://www.xataka.com/seleccion/mejores-moviles-baratos",
+      "https://www.xatakamovil.com/guias-de-compra/mejores-moviles-calidad-precio",
+      "https://alcalamagna.es/noticias/moviles-calidad-precio",
+      "https://www.kineticmobiles.es/blogs/news/mejores-moviles-menos-250-euros-espana-2026",
+      "https://www.youtube.com/watch?v=Vm1j-kJ_wXo"
+    ],
+    "descubierto_el": "2026-11-26",
+    "verificar": true,
+    "publicado_el": "2026-11-26"
+  },
+  {
+    "marca": "realme",
+    "modelo_corto": "C71",
+    "busqueda": "realme C71",
+    "titulo": "realme C71 Smartphone con pantalla de 120Hz, batería de 6000mAh y carga rápida de 45W",
+    "especificaciones": "Dispositivo móvil inteligente dotado de una gran pantalla de 6,67 pulgadas con una frecuencia de actualización de 120 Hz. Incorpora una generosa batería con capacidad de 6000 mAh acompañada de un sistema de carga rápida de 45 W. En el apartado fotográfico incluye una cámara principal de 50 MP con inteligencia artificial. Cuenta con soporte para doble SIM, sensor de huella dactilar situado en el lateral y conectividad NFC.",
+    "precio": "169.99€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.movilzona.es/reportajes/listas/mejores-moviles-200-euros",
+      "https://www.abc.es/favorito/electronica/moviles-smartphones/abci-mejores-moviles-baratos-200-202202210912_noticia.html",
+      "https://www.xataka.com/seleccion/mejores-moviles-200-euros-calidad-precio-cual-comprar-funcion-uso-seis-modelos-recomendados",
+      "https://www.amazon.es/mejor-m%C3%B3vil-200-euros/s?k=mejor+m%C3%B3vil+por+menos+de+200+euros&page=3",
+      "https://www.youtube.com/watch?v=WoveJPSv1uU&vl=en-US",
+      "https://www.sport.es/es/noticias/shopping/mejores-moviles-mas-buscados-2026-128163512"
+    ],
+    "descubierto_el": "2026-11-26",
+    "verificar": true,
+    "publicado_el": "2026-11-26"
+  },
+  {
+    "marca": "realme",
+    "modelo_corto": "Note 70T",
+    "busqueda": "realme Note 70T",
+    "titulo": "realme Note 70T Smartphone 4G con batería de 6000mAh, pantalla HD+ de 90Hz y 256GB",
+    "especificaciones": "Teléfono inteligente compatible con redes 4G y doble SIM que integra un procesador de 8 núcleos. Dispone de una pantalla de 6,74 pulgadas con resolución HD+, tasa de refresco de 90 Hz y tecnología para el confort ocular. Ofrece una batería con una capacidad de 6000 mAh, con un grosor de 8 mm y un peso de 201 gramos. Cuenta con resistencia a impactos de grado militar.",
+    "precio": "132.99€",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.movilzona.es/reportajes/listas/mejores-moviles-200-euros",
+      "https://www.abc.es/favorito/electronica/moviles-smartphones/abci-mejores-moviles-baratos-200-202202210912_noticia.html",
+      "https://www.xataka.com/seleccion/mejores-moviles-200-euros-calidad-precio-cual-comprar-funcion-uso-seis-modelos-recomendados",
+      "https://www.amazon.es/mejor-m%C3%B3vil-200-euros/s?k=mejor+m%C3%B3vil+por+menos+de+200+euros&page=3",
+      "https://www.youtube.com/watch?v=WoveJPSv1uU&vl=en-US",
+      "https://www.sport.es/es/noticias/shopping/mejores-moviles-mas-buscados-2026-128163512"
+    ],
+    "descubierto_el": "2026-11-26",
+    "verificar": true,
+    "publicado_el": "2026-11-26"
   }
 ]
