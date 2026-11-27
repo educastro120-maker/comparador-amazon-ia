@@ -3204,5 +3204,29 @@
     "video_fecha": "2026-11-27",
     "video_estado": "auto",
     "video_posicion": "final"
+  },
+  "google-pixel-watch-5-41mm": {
+    "categoria": "smartwatch",
+    "marca": "Google",
+    "modelo": "Pixel Watch 5 (41mm)",
+    "titulo": "Google Pixel Watch 5 41mm - Smartwatch con GPS de doble frecuencia, pantalla con cristal Corning Gorilla Glass 5 y resistencia 5 ATM",
+    "url_post": "https://topcomparador.es/?p=1894",
+    "post_id": 1894,
+    "link_afiliado": "https://www.amazon.es/s?k=Google+Pixel+Watch+5+41mm&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "346.00€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "El Google Pixel Watch 5 de 41mm redefine la experiencia en wearables inteligentes al combinar un diseño sofisticado en aluminio con especificaciones técnicas de vanguardia. Este dispositivo destaca por su GPS de doble frecuencia, compatible con los principales sistemas de geolocalización global, garantizando un seguimiento ultrpreciso. Su construcción integra una pantalla protegida por Corning Gor",
+    "badge": "SMARTWATCH GOOGLE AVANZADO",
+    "puntuacion": 9.3,
+    "fecha": "2026-11-27",
+    "fecha_lanzamiento": "2026-08",
+    "video_id": "pgWxD4VD6dI",
+    "video_titulo": "El ÚNICO Apple Watch de ANDROID | Pixel Watch 5 Review",
+    "video_canal": "Topes de Gama",
+    "video_fecha": "2026-11-27",
+    "video_estado": "auto",
+    "video_posicion": "final"
   }
 }

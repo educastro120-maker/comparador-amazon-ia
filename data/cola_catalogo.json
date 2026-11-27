@@ -1197,5 +1197,30 @@
     "descubierto_el": "2026-11-27",
     "verificar": true,
     "publicado_el": "2026-11-27"
+  },
+  {
+    "marca": "Google",
+    "modelo_corto": "Pixel Watch 5 (41mm)",
+    "busqueda": "Google Pixel Watch 5 41mm",
+    "titulo": "Google Pixel Watch 5 41mm - Smartwatch con GPS de doble frecuencia, pantalla con cristal Corning Gorilla Glass 5 y resistencia 5 ATM",
+    "especificaciones": "El Google Pixel Watch 5 de 41 mm presenta una caja de aluminio con un diámetro de 41 mm, una altura de 12,3 mm y un peso de 31,0 gramos sin correa. Cuenta con GPS de doble frecuencia compatible con GPS, Galileo, Glonass, Beidou y QZSS. Su diseño incluye una pantalla protegida por Corning Gorilla Glass 5 en 3D a medida, resistencia al agua de 5 ATM y certificación IP68. Ofrece conectividad mediante micrófono y altavoz integrados, botón lateral, corona háptica, tecnología de vibración premium de 3.ª generación, sensor de temperatura cutánea de gran alcance, barómetro y magnetómetro. Es compatible con la mayoría de los teléfonos con Android 12.0 o posterior, requiriendo una cuenta de Google y la aplicación específica.",
+    "precio": "346.00€",
+    "fecha_lanzamiento": "2026-08",
+    "categoria": "smartwatch",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://store.google.com/es/product/pixel_watch_5_specs?hl=es",
+      "https://www.xataka.com/wearables/google-pixel-watch-caracteristicas-precio-ficha-tecnica",
+      "https://www.amazon.es/google-pixel-watch-lte/s?k=google+pixel+watch+lte",
+      "https://support.google.com/googlepixelwatch/answer/12651869?hl=en",
+      "https://www.xatakandroid.com/gadgets-android/esperado-google-se-olvida-espana-google-pixel-watch-fin-oficial",
+      "https://www.esquire.com/es/tecnologia/a69163321/google-pixel-watch-4-reloj-opiniones-diferencias-pixel-watch-3"
+    ],
+    "descubierto_el": "2026-11-27",
+    "verificar": true,
+    "publicado_el": "2026-11-27"
   }
 ]
