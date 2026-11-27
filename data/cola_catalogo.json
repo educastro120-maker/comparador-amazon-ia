@@ -1122,5 +1122,80 @@
     "descubierto_el": "2026-11-26",
     "verificar": true,
     "publicado_el": "2026-11-26"
+  },
+  {
+    "marca": "POCO",
+    "modelo_corto": "M7",
+    "busqueda": "POCO M7",
+    "titulo": "POCO M7 Pantalla LCD IPS de 6,9 pulgadas 144 Hz Snapdragon 685",
+    "especificaciones": "El POCO M7 está equipado con una pantalla LCD IPS de 6,9 pulgadas que ofrece resolución Full HD+ y una tasa de refresco de 144 Hz. En su interior integra un chip Qualcomm Snapdragon 685, acompañado por 8 GB de memoria RAM y 256 GB de almacenamiento interno. Su precio supera sutilmente los 100 euros en la mayoría de tiendas.",
+    "precio": "100.00€",
+    "fecha_lanzamiento": "",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.geektopia.es/es/technology/2014/04/14/noticias/los-mejores-smartphones-de-gama-media-y-baja-del-momento-telefonos-moviles-celulares.html",
+      "https://www.youtube.com/watch?v=iF_4Rts-Nl8",
+      "https://www.kimovil.com/es/mejores-moviles-menos-100-euros",
+      "https://www.movilzona.es/noticias/marcas/moviles-baratos-mas-vendidos-0426",
+      "https://es.t-mobile.com/cell-phone/motorola-moto-g-2026",
+      "https://hola.metrobyt-mobile.com/cell-phone/motorola-moto-g-2026"
+    ],
+    "descubierto_el": "2026-11-27",
+    "verificar": true,
+    "publicado_el": "2026-11-27"
+  },
+  {
+    "marca": "Samsung",
+    "modelo_corto": "Galaxy A15",
+    "busqueda": "Samsung Galaxy A15",
+    "titulo": "Samsung Galaxy A15 Móvil Económico con Panel AMOLED de 6.5 pulgadas",
+    "especificaciones": "El Samsung Galaxy A15 cuenta con un panel AMOLED de 6.5 pulgadas, resolución Full HD+, una tasa de refresco de 90 Hz y un brillo máximo de 800 nits. En su interior integra una batería de 5.000 mAh que ofrece hasta dos días de uso y compatibilidad con carga rápida de 25 W, posicionándose como una alternativa muy económica dentro de la firma.",
+    "precio": "112.00€",
+    "fecha_lanzamiento": "",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.geektopia.es/es/technology/2017/10/04/articulos/los-mejores-smartphones-y-telefonos-moviles-de-gama-baja.html",
+      "https://www.kineticmobiles.es/blogs/news/guia-de-moviles-baratos-y-buenos-en-espana-2026-los-5-modelos-mas-economicos-con-envio-gratis-24-48h",
+      "https://www.kineticmobiles.es/blogs/news/los-mejores-moviles-baratos-y-buenos-de-2026-guia-por-menos-de-120-200-y-300-en-espana",
+      "https://www.xatakamovil.com/guias-de-compra/mejores-moviles-baratos-cual-comprar-modelos-recomendados",
+      "https://topesdegama.com/actualidad/productos/moviles-baratos-menos-100-euros",
+      "https://www.pccomponentes.com/blog/mejores-smartphones-android"
+    ],
+    "descubierto_el": "2026-11-27",
+    "verificar": true,
+    "publicado_el": "2026-11-27"
+  },
+  {
+    "marca": "Xiaomi",
+    "modelo_corto": "Redmi 14C",
+    "busqueda": "Xiaomi Redmi 14C",
+    "titulo": "Xiaomi Redmi 14C Pantalla de 6.88 pulgadas y 120 Hz con MediaTek Helio G81-Ultra",
+    "especificaciones": "El Xiaomi Redmi 14C incorpora una pantalla grande de 6.88 pulgadas con resolución HD+ y una tasa de refresco de 120 Hz. Está impulsado por el procesador MediaTek Helio G81-Ultra y cuenta con una configuración básica de 4 GB de RAM y 128 GB de almacenamiento interno, ofreciendo un conjunto equilibrado para usuarios poco exigentes.",
+    "precio": "86.49€",
+    "fecha_lanzamiento": "",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.geektopia.es/es/technology/2017/10/04/articulos/los-mejores-smartphones-y-telefonos-moviles-de-gama-baja.html",
+      "https://www.kineticmobiles.es/blogs/news/guia-de-moviles-baratos-y-buenos-en-espana-2026-los-5-modelos-mas-economicos-con-envio-gratis-24-48h",
+      "https://www.kineticmobiles.es/blogs/news/los-mejores-moviles-baratos-y-buenos-de-2026-guia-por-menos-de-120-200-y-300-en-espana",
+      "https://www.xatakamovil.com/guias-de-compra/mejores-moviles-baratos-cual-comprar-modelos-recomendados",
+      "https://topesdegama.com/actualidad/productos/moviles-baratos-menos-100-euros",
+      "https://www.pccomponentes.com/blog/mejores-smartphones-android"
+    ],
+    "descubierto_el": "2026-11-27",
+    "verificar": true,
+    "publicado_el": "2026-11-27"
   }
 ]
