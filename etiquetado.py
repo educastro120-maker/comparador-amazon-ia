@@ -69,9 +69,10 @@ def por_precio(categoria, precio):
     return out
 
 
-def por_criterio(categoria, ficha_texto, llamar_ia):
+def por_criterio(categoria, ficha_texto, llamar_ia, solo=None):
     """La IA elige entre las etiquetas 'criterio' de la categoría. llamar_ia(prompt) -> dict o None."""
-    opciones = [e for e in cargar() if e.get("tipo") == "criterio" and e.get("categoria", "").lower() == categoria.lower()]
+    opciones = [e for e in cargar() if e.get("tipo") == "criterio" and e.get("categoria", "").lower() == categoria.lower()
+                and (solo is None or e["nombre"] in solo)]
     if not opciones or not llamar_ia:
         return []
     lista = "\n".join(f'- "{e["nombre"]}": {e.get("criterio", "")}' for e in opciones)
@@ -117,3 +118,17 @@ def precio_de_contenido(contenido, precio_registro=""):
         if m and a_numero(m.group(1)):
             return m.group(1)
     return ""
+
+
+def crear_etiqueta(wp, auth, nombre):
+    """Crea la etiqueta en WordPress (si ya existe, devuelve su ID). None si no se pudo."""
+    import requests
+    try:
+        r = requests.post(f"{wp}/wp-json/wp/v2/tags", json={"name": nombre}, auth=auth, timeout=30)
+        if r.status_code == 201:
+            return r.json()["id"]
+        if r.status_code == 400 and "term_exists" in r.text:
+            return r.json().get("data", {}).get("term_id")
+    except requests.RequestException as err:
+        print(f"   ⚠️ No se pudo crear la etiqueta «{nombre}»: {err}")
+    return None
