@@ -1726,6 +1726,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-calidad-precio"
     ]
   },
   "google-pixel-10a": {
@@ -1757,6 +1760,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-calidad-precio"
     ]
   },
   "nothing-phone-4a": {
@@ -1788,6 +1794,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-calidad-precio"
     ]
   },
   "motorola-edge-70-fusion": {
@@ -1819,6 +1828,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-calidad-precio"
     ]
   },
   "xiaomi-17t": {
@@ -1850,6 +1862,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-calidad-precio"
     ]
   },
   "xiaomi-redmi-note-15-5g": {
@@ -1881,6 +1896,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-calidad-precio"
     ]
   },
   "garmin-swim-2": {
@@ -1912,6 +1930,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartwatches-mejor-por-deporte"
     ]
   },
   "garmin-descent-g2": {
@@ -1943,6 +1964,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartwatches-mejor-por-deporte"
     ]
   },
   "apple-watch-ultra-3": {
@@ -1974,6 +1998,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartwatches-mejor-por-deporte"
     ]
   },
   "coros-pace-4": {
@@ -2005,6 +2032,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartwatches-mejor-por-deporte"
     ]
   },
   "garmin-forerunner-970": {
@@ -2036,6 +2066,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartwatches-mejor-por-deporte"
     ]
   },
   "apple-iphone-18-pro-max": {
@@ -2486,6 +2519,9 @@
     "video_posicion": "final",
     "rankings_sincronizados": [
       "smartwatches-mayores-deteccion-caidas"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartwatches-mayores-deteccion-caidas"
     ]
   },
   "coros-pace-3": {
@@ -2585,6 +2621,10 @@
     "puntuacion": null,
     "fecha": "2026-11-24",
     "rankings_sincronizados": [
+      "smartphones-calidad-precio",
+      "smartphones-mas-vendidos-espana"
+    ],
+    "rankings_sincronizados_v2": [
       "smartphones-calidad-precio",
       "smartphones-mas-vendidos-espana"
     ]
@@ -3403,6 +3443,126 @@
     "fecha_lanzamiento": "2026-11",
     "video_id": "oG1NtpzXe7c",
     "video_titulo": "Este SAMSUNG SI!! SAMSUNG GALAXY S26 FE REVIEW",
+    "video_canal": "Topes de Gama",
+    "video_fecha": "2026-11-28",
+    "video_estado": "auto",
+    "video_posicion": "final"
+  },
+  "honor-magic-v6": {
+    "categoria": "smartphone",
+    "marca": "Honor",
+    "modelo": "Magic V6",
+    "titulo": "Honor Magic V6 Móvil Plegable Tipo Libro Ultrafino 6000 mAh",
+    "url_post": "https://topcomparador.es/?p=1929",
+    "post_id": 1929,
+    "link_afiliado": "https://www.amazon.es/s?k=Honor+Magic+V6&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "1419.00€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "El Honor Magic V6 redefine los estándares de la telefonía móvil plegable tipo libro al combinar un diseño vanguardista ultrafino con un grosor de tan solo 4,55 milímetros desplegado y un peso pluma de 243 gramos. Este impresionante dispositivo integra una gran batería de alta densidad de 6.000 mAh, dotada de carga rápida por cable e inalámbrica para garantizar una autonomía sobresaliente en el uso",
+    "badge": "MÁXIMO EXPONENTE PLEGABLE",
+    "puntuacion": 9.4,
+    "fecha": "2026-11-28",
+    "fecha_lanzamiento": "",
+    "video_id": "a0EUWFH6wbY",
+    "video_titulo": "¡COMPRA ESTE! Honor Magic V6 REVIEW ",
+    "video_canal": "Geekdegafas",
+    "video_fecha": "2026-11-28",
+    "video_estado": "auto",
+    "video_posicion": "final"
+  },
+  "samsung-galaxy-z-fold8-ultra": {
+    "categoria": "smartphone",
+    "marca": "Samsung",
+    "modelo": "Galaxy Z Fold8 Ultra",
+    "titulo": "Samsung Galaxy Z Fold8 Ultra Plegable Tipo Libro Multitarea",
+    "url_post": "https://topcomparador.es/?p=1930",
+    "post_id": 1930,
+    "link_afiliado": "https://www.amazon.es/s?k=Samsung+Galaxy+Z+Fold8+Ultra&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "Consultar",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "El Samsung Galaxy Z Fold8 Ultra redefine los estándares de la telefonía móvil de alta gama gracias a su revolucionario formato plegable tipo libro ultradelgado. Con un grosor de tan solo 4,1 mm abierto y un peso pluma de 214 gramos, este dispositivo ofrece una ergonomía inigualable sin comprometer potencia ni versatilidad. Su imponente pantalla interior de 8 pulgadas, que alcanza hasta 3.000 nits,",
+    "badge": "MÁXIMO EXPONENTE PLEGABLE",
+    "puntuacion": 9.4,
+    "fecha": "2026-11-28",
+    "fecha_lanzamiento": "",
+    "video_id": "3lNJ6-Y83b8",
+    "video_titulo": "Samsung Galaxy Z Fold8 Ultra review A FONDO",
+    "video_canal": "Topes de Gama",
+    "video_fecha": "2026-11-28",
+    "video_estado": "auto",
+    "video_posicion": "final"
+  },
+  "samsung-galaxy-z-fold8": {
+    "categoria": "smartphone",
+    "marca": "Samsung",
+    "modelo": "Galaxy Z Fold8",
+    "titulo": "Samsung Galaxy Z Fold8 Plegable Ultracompacto Pantalla 7.6\"",
+    "url_post": "https://topcomparador.es/?p=1931",
+    "post_id": 1931,
+    "link_afiliado": "https://www.amazon.es/s?k=Samsung+Galaxy+Z+Fold8&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "Consultar",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "El Samsung Galaxy Z Fold8 redefine el estándar de la telefonía plegable con un diseño ultracompacto que destaca por un grosor abierto de solo 4,5 mm y un peso de 201 g. Integra una magnífica pantalla interior de cine de 7,6 pulgadas con relación de aspecto 4:3 y un panel exterior de 5,5 pulgadas con formato 16:10. En su interior, el potentísimo procesador Snapdragon 8 Elite Gen5 for Galaxy incorpo",
+    "badge": "MÁXIMA EXPRESIÓN PLEGABLE",
+    "puntuacion": 9.4,
+    "fecha": "2026-11-28",
+    "fecha_lanzamiento": "",
+    "video_id": "fFvqlhfBPXY",
+    "video_titulo": "Galaxy Z Fold8: ¿Te conviene comprarlo? | Review en Español",
+    "video_canal": "Carlos Vassan",
+    "video_fecha": "2026-11-28",
+    "video_estado": "auto",
+    "video_posicion": "final"
+  },
+  "nubia-flip-5g": {
+    "categoria": "smartphone",
+    "marca": "Nubia",
+    "modelo": "Flip 5G",
+    "titulo": "ZTE Nubia Flip 5G - Móvil plegable tipo concha con pantalla AMOLED y 256 GB",
+    "url_post": "https://topcomparador.es/?p=1932",
+    "post_id": 1932,
+    "link_afiliado": "https://www.amazon.es/s?k=Nubia+Flip+5G&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "Consultar",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "El ZTE Nubia Flip 5G redefine la accesibilidad en la categoría de smartphones plegables tipo concha, ofreciendo un diseño sofisticado y compacto sin comprometer la experiencia visual ni el rendimiento multitarea. En su interior, combina un solvente procesador Snapdragon 7 Gen 1 con 8 GB de RAM y un generoso almacenamiento de 256 GB, garantizando fluidez en el día a día. Destaca especialmente por s",
+    "badge": "MÓVIL PLEGABLE TIPO CONCHA ECONÓMICO",
+    "puntuacion": 9.4,
+    "fecha": "2026-11-28",
+    "fecha_lanzamiento": "",
+    "video_id": "Dn10shQhki4",
+    "video_titulo": "Es el MÁS BARATO pero... ¿VALE LA PENA? Nubia Flip 2",
+    "video_canal": "Topes de Gama",
+    "video_fecha": "2026-11-28",
+    "video_estado": "auto",
+    "video_posicion": "final"
+  },
+  "xiaomi-mix-flip": {
+    "categoria": "smartphone",
+    "marca": "Xiaomi",
+    "modelo": "MIX Flip",
+    "titulo": "Xiaomi MIX Flip móvil plegable tipo concha con doble pantalla AMOLED",
+    "url_post": "https://topcomparador.es/?p=1933",
+    "post_id": 1933,
+    "link_afiliado": "https://www.amazon.es/s?k=Xiaomi+MIX+Flip&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "1299.00€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "El Xiaomi MIX Flip representa la cúspide de la innovación en telefonía móvil plegable tipo concha, combinando un diseño elegante y compacto con especificaciones técnicas de auténtica gama alta. Destaca especialmente por su impresionante pantalla exterior AMOLED de 4 pulgadas que ocupa toda la zona superior, permitiendo interactuar con aplicaciones sin necesidad de abrir el dispositivo. En su inter",
+    "badge": "MÓVIL PLEGABLE TIPO CONCHA DE GAMA ALTA",
+    "puntuacion": 9.4,
+    "fecha": "2026-11-28",
+    "fecha_lanzamiento": "",
+    "video_id": "qtdqUU0Oo-M",
+    "video_titulo": "¿Es TAN BUENO como PARECE? Xiaomi Mix Flip Review",
     "video_canal": "Topes de Gama",
     "video_fecha": "2026-11-28",
     "video_estado": "auto",
