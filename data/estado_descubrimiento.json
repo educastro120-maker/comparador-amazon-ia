@@ -7,7 +7,7 @@
   },
   "tavily": {
     "mes": "2026-11",
-    "creditos": 174
+    "creditos": 190
   },
   "smartwatch": {
     "indice": 10,
@@ -20,5 +20,11 @@
     "fallos": 0,
     "vueltas": 5,
     "ultima_ejecucion": "2026-11-27"
+  },
+  "smartphone:alta": {
+    "indice": 8,
+    "fallos": 0,
+    "vueltas": 4,
+    "ultima_ejecucion": "2026-11-28"
   }
 }

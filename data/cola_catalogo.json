@@ -1222,5 +1222,30 @@
     "descubierto_el": "2026-11-27",
     "verificar": true,
     "publicado_el": "2026-11-27"
+  },
+  {
+    "marca": "Samsung",
+    "modelo_corto": "Galaxy S26 FE",
+    "busqueda": "Samsung Galaxy S26 FE",
+    "titulo": "Samsung Galaxy S26 FE smartphone gama alta rebajado con pantalla AMOLED",
+    "especificaciones": "Una alternativa equilibrada dentro de la gama alta que hereda las funciones clave de los modelos más avanzados de la familia pero con un ajuste en precio. Cuenta con una pantalla AMOLED capaz de alcanzar un brillo de 1.900 nits, acompañada de una configuración de cámaras que incluye un teleobjetivo 3x para acercamientos detallados. En su interior integra el procesador Exynos 2500 y destaca por ofrecer un compromiso de soporte con siete años de actualizaciones de software. Su precio oficial es de 799 euros, aunque se puede encontrar en tiendas desde 556 euros.",
+    "precio": "799.00€",
+    "fecha_lanzamiento": "2026-11",
+    "categoria": "smartphone",
+    "link_afiliado": "",
+    "asin": "",
+    "imagen": "",
+    "estado": "publicado",
+    "fuentes": [
+      "https://www.instagram.com/p/DgIdrPxjdVl",
+      "https://www.adslzone.net/noticias/moviles/moviles-vendidos-marcas-espana-2026",
+      "https://androidpremium.es/moviles-mas-vendidos-espana-amazon-2026",
+      "https://tiendamovilspain.com/blog/los-10-moviles-mas-nuevos-y-potentes-de-2026-novedades-caracteristicas-y-comparativa-b92.html",
+      "https://www.vodafone.es/c/conectate/dispositivos/mejores-moviles-calidad-precio",
+      "https://alcalamagna.es/noticias/moviles-calidad-precio"
+    ],
+    "descubierto_el": "2026-11-28",
+    "verificar": true,
+    "publicado_el": "2026-11-28"
   }
 ]

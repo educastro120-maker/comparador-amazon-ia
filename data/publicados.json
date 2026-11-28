@@ -869,6 +869,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartwatches-calidad-precio"
     ]
   },
   "garmin-vivoactive-5": {
@@ -900,6 +903,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartwatches-calidad-precio"
     ]
   },
   "garmin-forerunner-55": {
@@ -931,6 +937,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartwatches-calidad-precio"
     ]
   },
   "xiaomi-redmi-watch-5-lite": {
@@ -962,6 +971,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartwatches-calidad-precio"
     ]
   },
   "garmin-approach-s72": {
@@ -993,6 +1005,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartwatches-mejor-por-deporte"
     ]
   },
   "mibro-gs-pro-2": {
@@ -1023,6 +1038,9 @@
     "retocado": "2026-11-19",
     "retoque_acciones": [
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartwatches-mejor-por-deporte"
     ]
   },
   "garmin-fenix-e-47-mm": {
@@ -1054,6 +1072,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartwatches-mejor-por-deporte"
     ]
   },
   "coros-apex-4-42-mm": {
@@ -1085,6 +1106,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartwatches-mejor-por-deporte"
     ]
   },
   "huawei-pura-80-ultra": {
@@ -1116,6 +1140,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-mejor-camara"
     ]
   },
   "motorola-signature-27": {
@@ -1147,6 +1174,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-mejor-camara"
     ]
   },
   "apple-iphone-18-pro": {
@@ -1178,6 +1208,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-mejor-camara"
     ]
   },
   "vivo-x300-pro": {
@@ -1209,6 +1242,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-mejor-camara"
     ]
   },
   "oppo-find-x9-ultra": {
@@ -1240,6 +1276,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-mejor-camara"
     ]
   },
   "vivo-x300-ultra": {
@@ -1271,6 +1310,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-mejor-camara"
     ]
   },
   "google-pixel-11-pro-xl": {
@@ -1302,6 +1344,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-mejor-camara"
     ]
   },
   "apple-iphone-17-pro-max": {
@@ -1334,6 +1379,10 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-mas-vendidos-espana",
+      "smartphones-mejor-camara"
     ]
   },
   "xiaomi-17-ultra": {
@@ -1365,6 +1414,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-mejor-camara"
     ]
   },
   "samsung-galaxy-s26-ultra": {
@@ -1397,6 +1449,10 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-mas-vendidos-espana",
+      "smartphones-mejor-camara"
     ]
   },
   "apple-iphone-17": {
@@ -1428,6 +1484,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-mas-vendidos-espana"
     ]
   },
   "apple-iphone-17-pro": {
@@ -1459,6 +1518,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-mas-vendidos-espana"
     ]
   },
   "xiaomi-redmi-15c-5g": {
@@ -1490,6 +1552,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-mas-vendidos-espana"
     ]
   },
   "samsung-galaxy-a57-5g": {
@@ -1522,6 +1587,10 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-calidad-precio",
+      "smartphones-mas-vendidos-espana"
     ]
   },
   "samsung-galaxy-a56-5g": {
@@ -1553,6 +1622,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-mas-vendidos-espana"
     ]
   },
   "apple-iphone-16": {
@@ -1584,6 +1656,9 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-mas-vendidos-espana"
     ]
   },
   "xiaomi-redmi-note-15-pro-5g": {
@@ -1616,6 +1691,10 @@
     "retoque_acciones": [
       "título",
       "vídeo"
+    ],
+    "rankings_sincronizados_v2": [
+      "smartphones-calidad-precio",
+      "smartphones-mas-vendidos-espana"
     ]
   },
   "xiaomi-poco-x8-pro": {
@@ -3302,6 +3381,30 @@
     "video_titulo": "El ÚNICO Apple Watch de ANDROID | Pixel Watch 5 Review",
     "video_canal": "Topes de Gama",
     "video_fecha": "2026-11-27",
+    "video_estado": "auto",
+    "video_posicion": "final"
+  },
+  "samsung-galaxy-s26-fe": {
+    "categoria": "smartphone",
+    "marca": "Samsung",
+    "modelo": "Galaxy S26 FE",
+    "titulo": "Samsung Galaxy S26 FE smartphone gama alta rebajado con pantalla AMOLED",
+    "url_post": "https://topcomparador.es/?p=1920",
+    "post_id": 1920,
+    "link_afiliado": "https://www.amazon.es/s?k=Samsung+Galaxy+S26+FE&tag=topcomparad00-21",
+    "tiene_link_corto": false,
+    "precio": "799.00€",
+    "imagen": "",
+    "tiene_imagen": false,
+    "resumen": "El Samsung Galaxy S26 FE se posiciona como una alternativa sumamente equilibrada dentro de la gama alta, heredando las funciones clave de los modelos más avanzados de la familia Galaxy pero con un ajuste de precio sumamente atractivo. En su núcleo integra el potente procesador Exynos 2500, acompañado de una magnífica pantalla AMOLED que alcanza los 1.900 nits de brillo máximo. Su versátil configur",
+    "badge": "EQUILIBRIO EN GAMA ALTA",
+    "puntuacion": 9.4,
+    "fecha": "2026-11-28",
+    "fecha_lanzamiento": "2026-11",
+    "video_id": "oG1NtpzXe7c",
+    "video_titulo": "Este SAMSUNG SI!! SAMSUNG GALAXY S26 FE REVIEW",
+    "video_canal": "Topes de Gama",
+    "video_fecha": "2026-11-28",
     "video_estado": "auto",
     "video_posicion": "final"
   }
