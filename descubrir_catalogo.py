@@ -83,6 +83,32 @@ RANGOS_GAMA = {   # euros: (mínimo, máximo); los mismos tramos que tus etiquet
     "smartphone": {"economica": (0, 200), "media": (200, 500), "alta": (500, 10**9)},
     "smartwatch": {"economica": (0, 100), "media": (100, 300), "alta": (300, 10**9)},
 }
+# Nicho a buscar (opcional): búsquedas temáticas para rellenar las páginas Top de un tema concreto.
+NICHO = os.environ.get("DESCUBRIR_NICHO", "").strip().lower()
+NICHOS = {
+    "smartphone": {
+        "plegables": ["mejores móviles plegables tipo libro", "móviles plegables tipo concha flip", "Samsung Galaxy Z Fold Flip Honor Magic V Xiaomi Mix Flip Motorola razr plegable precio",
+                      "Oppo Find N vivo X Fold Huawei plegable España", "móviles plegables baratos"],
+        "resistentes-golpes": ["mejores móviles rugerizados resistentes a golpes MIL-STD-810", "móviles resistentes Ulefone Armor Blackview Doogee Oukitel precio",
+                               "móviles todoterreno resistentes caídas polvo agua", "Cat S75 Cat S62 Motorola Defy móvil resistente", "móviles con Gorilla Glass Victus y certificación militar"],
+        "resistentes-agua": ["mejores móviles resistentes al agua IP68 IP69", "móviles sumergibles IP69 certificación", "móviles baratos con IP68 IP69 resistencia al agua",
+                             "móviles gama media con IP68"],
+        "sonido": ["mejores móviles con mejor sonido altavoces estéreo", "móviles con altavoces estéreo Dolby Atmos potentes", "móviles con mejor audio JBL Harman Kardon altavoces",
+                   "móviles gaming con altavoces estéreo frontales", "móviles con jack 3,5 mm y buen sonido"],
+        "carga-rapida": ["móviles con carga rápida 100W 120W", "mejores móviles carga rápida 65W 80W", "móviles con carga ultrarrápida y carga inalámbrica", "móviles baratos con carga rápida 67W"],
+        "bateria": ["móviles con mejor batería autonomía 6000 mAh", "móviles con batería de silicio-carbono 7000 mAh", "móviles de gran batería 5000 mAh autonomía de dos días"],
+        "jugar": ["mejores móviles gaming para jugar", "ASUS ROG Phone RedMagic móvil gaming", "móviles para jugar Snapdragon 8 Elite 120 Hz refrigeración", "móviles gaming baratos"],
+        "pantalla": ["móviles con mejor pantalla AMOLED 120 Hz brillo", "móviles pantalla LTPO 3000 nits mejor panel"],
+        "compactos": ["mejores móviles compactos pequeños", "móviles pequeños pantalla 6,1 pulgadas", "móviles compactos gama alta una mano"],
+        "mayores": ["mejores móviles para personas mayores", "móviles sencillos para mayores pantalla grande botón SOS", "móviles para mayores con teclas grandes y modo fácil"],
+        "novedades": ["nuevos móviles lanzados este mes", "últimos móviles presentados novedades", "móviles recién lanzados disponibles en España"],
+    },
+    "smartwatch": {
+        "novedades": ["nuevos smartwatches lanzados este mes", "últimos relojes inteligentes presentados novedades", "smartwatches recién lanzados disponibles en España"],
+    },
+}
+
+
 def consultas_gama(categoria, d, gama):
     """Búsquedas por precio (sin marca) para rellenar una gama concreta."""
     lo, hi = RANGOS_GAMA[categoria][gama]
@@ -357,7 +383,12 @@ def main():
                 marcas = list(cfg.get("consultas") or [f"mejores {d} calidad precio", f"{d} más vendidos Amazon.es",
                                                       f"{d} novedades", f"{d} gama alta", f"{d} económicos"])
             clave_estado = categoria
-            if GAMA and categoria in RANGOS_GAMA:   # con gama: búsquedas por precio, sin depender de marcas
+            if NICHO and NICHO in NICHOS.get(categoria, {}):   # con nicho: búsquedas temáticas, sin depender de marcas
+                marcas, por_tema = list(NICHOS[categoria][NICHO]), True
+                clave_estado = f"{categoria}:nicho:{NICHO}"
+            elif NICHO and categoria in NICHOS:
+                print(f"⚠️ [{categoria}] El nicho «{NICHO}» no existe. Disponibles: {', '.join(NICHOS[categoria])}")
+            if GAMA and categoria in RANGOS_GAMA and not NICHO:   # con gama: búsquedas por precio, sin depender de marcas
                 marcas, por_tema = consultas_gama(categoria, cfg["descripcion"], GAMA), True
                 clave_estado = f"{categoria}:{GAMA}"
             st = estado.setdefault(clave_estado, {"indice": 0, "fallos": 0, "vueltas": 0})
