@@ -348,7 +348,7 @@ def sincronizar_taxonomias():
         if not isinstance(r, dict) or not r.get("post_id"):
             continue
         faltan = [rk for rk in rankings if rk.get("etiqueta") and pid in ids_miembros(rk)
-                  and rk["id"] not in r.get("rankings_sincronizados", [])]
+                  and rk["id"] not in r.get("rankings_sincronizados_v2", [])]
         if not faltan:
             continue
         if hechas >= MAX_SINCRONIZACIONES:
@@ -360,7 +360,11 @@ def sincronizar_taxonomias():
                 print(f"   ⚠️ No se pudo leer la entrada {r['post_id']} de {r.get('marca', '')} {r.get('modelo', '')} ({res.status_code}).")
                 continue
             actuales = res.json().get("tags", [])
-            nuevas_ids = [i for i in (obtener_o_crear_etiqueta(rk["etiqueta"]) for rk in faltan) if i]
+            con_id = [(rk, obtener_o_crear_etiqueta(rk["etiqueta"])) for rk in faltan]
+            nuevas_ids = [i for _, i in con_id if i]
+            faltan = [rk for rk, i in con_id if i]   # solo se anota como hecho lo que de verdad se pudo etiquetar
+            if not faltan:
+                continue
             union = sorted(set(actuales) | set(nuevas_ids))
             if union != sorted(actuales):
                 upd = requests.post(f"{WP_URL}/wp-json/wp/v2/posts/{r['post_id']}", json={"tags": union},
@@ -368,7 +372,7 @@ def sincronizar_taxonomias():
                 if upd.status_code != 200:
                     print(f"   ⚠️ No se pudo etiquetar la entrada {r['post_id']} ({upd.status_code}).")
                     continue
-            r["rankings_sincronizados"] = sorted(set(r.get("rankings_sincronizados", [])) | {rk["id"] for rk in faltan})
+            r["rankings_sincronizados_v2"] = sorted(set(r.get("rankings_sincronizados_v2", [])) | {rk["id"] for rk in faltan})
             hechas += 1
             print(f"   🏷️ Etiquetada: {r.get('marca', '')} {r.get('modelo', '')}")
         except (requests.RequestException, ValueError) as err:
