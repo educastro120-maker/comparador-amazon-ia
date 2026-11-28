@@ -108,8 +108,12 @@ def main():
         nombre = e["nombre"]
         tid = id_tag.get(nombre.strip().lower())
         if not tid:
-            print(f"⚠️ {nombre}: la etiqueta no existe en WordPress (créala con ese nombre exacto).")
-            continue
+            tid = etiquetado.crear_etiqueta(WP, AUTH, nombre)
+            if not tid:
+                print(f"⚠️ {nombre}: la etiqueta no existe en WordPress y no se pudo crear (créala con ese nombre exacto).")
+                continue
+            id_tag[nombre.strip().lower()] = tid
+            print(f"🏷️ Etiqueta creada en WordPress: «{nombre}».")
         meses_nov = int(e.get("novedad_meses") or 0)
         if meses_nov:   # página de novedades: entran los lanzados en los últimos N meses (etiquetados o no); salen al pasar ese plazo
             elegidos = []
