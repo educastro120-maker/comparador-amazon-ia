@@ -146,5 +146,85 @@
     "tipo": "manual",
     "criterio": "",
     "pagina": "manual"
+  },
+  {
+    "nombre": "Top 10 Smartphones con mejor batería",
+    "categoria": "smartphone",
+    "tipo": "criterio",
+    "criterio": "Batería de 5.000 mAh o más y autonomía destacada (aguanta día y medio o más de uso real); la carga rápida suma.",
+    "pagina": "auto",
+    "revisar_existentes": true
+  },
+  {
+    "nombre": "Top 10 Smartphones para jugar",
+    "categoria": "smartphone",
+    "tipo": "criterio",
+    "criterio": "Procesador de gama alta o específico para juegos, pantalla de 120 Hz o más, buena refrigeración y batería amplia; incluye móviles gaming.",
+    "pagina": "auto",
+    "revisar_existentes": true
+  },
+  {
+    "nombre": "Top 10 Smartphones con mejor pantalla",
+    "categoria": "smartphone",
+    "tipo": "criterio",
+    "criterio": "Panel OLED/AMOLED de alto brillo y 120 Hz o más, con resolución alta y buena calidad de imagen.",
+    "pagina": "auto",
+    "revisar_existentes": true
+  },
+  {
+    "nombre": "Top 10 Smartphones compactos",
+    "categoria": "smartphone",
+    "tipo": "criterio",
+    "criterio": "Pantalla de 6,3 pulgadas o menos y tamaño y peso contenidos: se manejan con una mano.",
+    "pagina": "auto",
+    "revisar_existentes": true
+  },
+  {
+    "nombre": "Top 10 Smartphones plegables",
+    "categoria": "smartphone",
+    "tipo": "criterio",
+    "criterio": "Móvil plegable (tipo libro o tipo concha).",
+    "pagina": "auto",
+    "revisar_existentes": true
+  },
+  {
+    "nombre": "Top 10 Smartphones para mayores",
+    "categoria": "smartphone",
+    "tipo": "criterio",
+    "criterio": "Pantalla grande y legible, interfaz sencilla o modo fácil, batería duradera, altavoz potente o botón SOS; o modelos pensados expresamente para mayores.",
+    "pagina": "auto",
+    "revisar_existentes": true
+  },
+  {
+    "nombre": "Top 10 Smartphones con carga rápida",
+    "categoria": "smartphone",
+    "tipo": "criterio",
+    "criterio": "Carga rápida de 45 W o más con cargador compatible, con la potencia indicada en la ficha; la carga inalámbrica suma.",
+    "pagina": "auto",
+    "revisar_existentes": true
+  },
+  {
+    "nombre": "Top 10 Smartphones resistentes a golpes",
+    "categoria": "smartphone",
+    "tipo": "criterio",
+    "criterio": "Diseño reforzado contra caídas y golpes: certificación militar MIL-STD-810, vidrio especialmente resistente (Gorilla Glass Victus o similar) o modelo rugerizado.",
+    "pagina": "auto",
+    "revisar_existentes": true
+  },
+  {
+    "nombre": "Top 10 Smartphones resistentes al agua",
+    "categoria": "smartphone",
+    "tipo": "criterio",
+    "criterio": "Certificación de resistencia al agua IP67, IP68 o IP69 indicada en la ficha técnica.",
+    "pagina": "auto",
+    "revisar_existentes": true
+  },
+  {
+    "nombre": "Top 10 Smartphones con mejor sonido",
+    "categoria": "smartphone",
+    "tipo": "criterio",
+    "criterio": "Altavoces estéreo potentes y de calidad destacada (o certificación de audio), y buena calidad de sonido en llamadas y multimedia.",
+    "pagina": "auto",
+    "revisar_existentes": true
   }
 ]
