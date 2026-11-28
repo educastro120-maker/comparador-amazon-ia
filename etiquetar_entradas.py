@@ -64,7 +64,16 @@ def main():
     mios = {id_tag[n] for n in nombres_lista if n in id_tag}
     for e in lista:
         if e["nombre"].strip().lower() not in id_tag:
-            print(f"⚠️ La etiqueta «{e['nombre']}» no existe en WordPress: créala con ese nombre exacto para que se pueda usar.")
+            if PRUEBA:
+                print(f"🏷️ La etiqueta «{e['nombre']}» no existe en WordPress: se creará al lanzar en modo 'si'.")
+                continue
+            nuevo = etiquetado.crear_etiqueta(WP, AUTH, e["nombre"])
+            if nuevo:
+                id_tag[e["nombre"].strip().lower()] = nuevo
+                mios.add(nuevo)
+                print(f"🏷️ Etiqueta creada en WordPress: «{e['nombre']}».")
+            else:
+                print(f"⚠️ No se pudo crear la etiqueta «{e['nombre']}»: créala tú con ese nombre exacto.")
     nombre_cat = {c["id"]: html.unescape(c["name"]).lower() for c in cats}
 
     pendientes = []
@@ -121,6 +130,40 @@ def main():
             if r.status_code != 200:
                 print(f"   ❌ WordPress respondió {r.status_code}")
         print(f"💶 Entradas sin etiqueta de precio: {sin_precio}")
+    # Tercera pasada: etiquetas de criterio NUEVAS (marcadas "revisar_existentes": true) para entradas que ya existían
+    nuevas = [e for e in lista if e.get("tipo") == "criterio" and e.get("revisar_existentes")]
+    revisadas = 0
+    if nuevas:
+        ruta_ev = os.path.join(ap.CARPETA_DATOS, "criterios_evaluados.json")
+        evaluados = ap.cargar_json(ruta_ev, {})   # {entrada_id: [etiquetas ya evaluadas]}
+        print("\n🧠 Etiquetas de criterio nuevas para entradas ya creadas:")
+        for p in posts:
+            if revisadas >= LOTE or (not PRUEBA and ap.ia_agotada()):
+                break
+            if p.get("status") not in ("publish", "draft", "pending", "private", "future") or (IDS and p["id"] not in IDS):
+                continue
+            cat = next((k for k, v in categorias.cargar().items()
+                        if any(k in nombre_cat.get(i, "") or str(v.get("nombre", "")).lower() == nombre_cat.get(i, "") for i in p["categories"])), None)
+            hechas_p = set(evaluados.get(str(p["id"]), []))
+            faltan = {e["nombre"] for e in nuevas if e.get("categoria", "").lower() == (cat or "") and e["nombre"] not in hechas_p}
+            if not cat or not faltan:
+                continue
+            contenido = (p.get("content") or {}).get("raw", "")
+            titulo = html.unescape((p.get("title") or {}).get("raw", ""))
+            nombres = etiquetado.por_criterio(cat, f"{titulo}. {texto_limpio(contenido)}", ap.llamar_gemini_con_respaldo, solo=faltan)
+            ids = [id_tag[n.strip().lower()] for n in nombres if n.strip().lower() in id_tag]
+            print(f"📄 {titulo[:70]} (entrada {p['id']}) → {', '.join(nombres) or '(ninguna)'}")
+            revisadas += 1
+            if PRUEBA:
+                continue
+            if ids:
+                r = requests.post(f"{WP}/wp-json/wp/v2/posts/{p['id']}", json={"tags": sorted(set(p["tags"]) | set(ids))}, auth=AUTH, timeout=60)
+                if r.status_code != 200:
+                    print(f"   ❌ WordPress respondió {r.status_code}")
+                    continue
+            evaluados[str(p["id"])] = sorted(hechas_p | faltan)
+            ap.guardar_json(ruta_ev, evaluados)
+        print(f"🧠 Entradas revisadas para criterios nuevos: {revisadas}")
     print(f"\n📊 Entradas revisadas: {hechas} de {len(pendientes)}" + ("  (PRUEBA: repite con modo 'si')" if PRUEBA else ""))
 
 
